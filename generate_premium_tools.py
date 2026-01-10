@@ -308,9 +308,7 @@ PREMIUM_TOOL_TEMPLATE = """<!DOCTYPE html>
                 if (document.getElementById('preferredName') && data.preferredName) {{
                     document.getElementById('preferredName').value = data.preferredName;
                 }}
-                if (document.getElementById('birthName') && data.birthName) {{
-                    document.getElementById('birthName').value = data.birthName;
-                }}
+                // birthName removed
                 if (document.getElementById('birthDate') && data.birthDate) {{
                     document.getElementById('birthDate').value = data.birthDate;
                 }}
@@ -331,7 +329,7 @@ PREMIUM_TOOL_TEMPLATE = """<!DOCTYPE html>
                 userData.preferredName = document.getElementById('preferredName').value;
             }}
             if (document.getElementById('birthName')) {{
-                userData.birthName = document.getElementById('birthName').value;
+                // birthName removed
             }}
             if (document.getElementById('birthDate')) {{
                 userData.birthDate = document.getElementById('birthDate').value;
@@ -370,11 +368,10 @@ PERSONAL_INFO_INPUTS = """
     <div class="input-group">
         <label for="preferredName">What name do you resonate with?</label>
         <input type="text" id="preferredName" placeholder="The name you identify with most" required>
-        <div class="helper-text">Use the name that feels most authentic to you - this could be your birth name, chosen name, or nickname</div>
+        
     </div>
     <div class="input-group">
-        <label for="birthName">Full birth name (as on birth certificate)</label>
-        <input type="text" id="birthName" placeholder="Your legal birth name">
+        
         <div class="helper-text">Optional but provides deeper insights into your soul's blueprint</div>
     </div>
 </div>
@@ -632,7 +629,7 @@ TOOLS = {
             saveUserData();
             
             const preferredName = document.getElementById('preferredName').value;
-            const birthName = document.getElementById('birthName').value || preferredName;
+            const birthName = preferredName;
             
             const destinyNumber = calculateNameNumber(birthName);
             
@@ -640,7 +637,7 @@ TOOLS = {
                 1: {
                     title: "The Innovator's Mission",
                     mission: "leadership, innovation, independence",
-                    description: `${preferredName}, your Destiny Number 1 reveals that you came to this Earth to lead and innovate. Your full birth name carries the vibrational frequency of pioneering energy, indicating that your life's mission is to break new ground and show others what's possible through courage and original thinking.`,
+                    description: `${preferredName}, your Destiny Number 1 reveals that you came to this Earth to lead and innovate. Your name carries the vibrational frequency of pioneering energy, indicating that your life's mission is to break new ground and show others what's possible through courage and original thinking.`,
                     calling: `Your soul signed up for a life of firsts. You're meant to initiate new projects, lead movements, or create something that never existed before. Whether in business, the arts, science, or social change, your destiny is to be a trailblazer. You're not here to follow traditional paths—you're here to create new ones.`,
                     gifts: `You were born with natural leadership abilities and an innovative mind. Your greatest gifts include your courage to stand alone, your ability to envision new possibilities, and your determination to make them real. You have an entrepreneurial spirit and the drive to turn ideas into tangible results. Your independence is magnetic and inspiring to others.`,
                     path: `Your path requires you to step into positions of leadership and authority. This might feel uncomfortable at first, especially if you're naturally humble or have been taught to blend in. But your destiny demands that you stand out, speak up, and take charge. Start projects, lead initiatives, or simply be willing to go first when others hesitate.`,
@@ -650,7 +647,7 @@ TOOLS = {
                 2: {
                     title: "The Diplomat's Mission",
                     mission: "peace, cooperation, harmony",
-                    description: `${preferredName}, your Destiny Number 2 reveals that you came to this Earth to unite and harmonize. Your birth name carries the vibrational frequency of the peacemaker, indicating that your life's mission is to bring people together, create cooperation, and heal divisions.`,
+                    description: `${preferredName}, your Destiny Number 2 reveals that you came to this Earth to unite and harmonize. Your name carries the vibrational frequency of the peacemaker, indicating that your life's mission is to bring people together, create cooperation, and heal divisions.`,
                     calling: `Your soul signed up for a life of bridge-building. You're meant to mediate conflicts, facilitate collaboration, or create environments where people can work together harmoniously. Whether in diplomacy, counseling, partnership work, or community building, your destiny is to demonstrate the power of cooperation and mutual understanding.`,
                     gifts: `You were born with extraordinary emotional intelligence and intuitive abilities. Your greatest gifts include your sensitivity to others' feelings, your ability to see multiple perspectives, and your talent for finding common ground. You're a natural mediator and your presence alone can calm tension. Your empathy and patience are superpowers.`,
                     path: `Your path requires you to step into roles that involve partnership, collaboration, and supporting others. This might mean being the person behind the scenes who makes things work smoothly, or being the mediator who resolves conflicts. Your destiny is fulfilled through relationships and cooperation, not solo achievement.`,
@@ -660,7 +657,7 @@ TOOLS = {
                 3: {
                     title: "The Creator's Mission",
                     mission: "expression, inspiration, joy",
-                    description: `${preferredName}, your Destiny Number 3 reveals that you came to this Earth to create and inspire. Your birth name carries the vibrational frequency of the artist and communicator, indicating that your life's mission is to express yourself authentically and bring more beauty and joy into the world.`,
+                    description: `${preferredName}, your Destiny Number 3 reveals that you came to this Earth to create and inspire. Your name carries the vibrational frequency of the artist and communicator, indicating that your life's mission is to express yourself authentically and bring more beauty and joy into the world.`,
                     calling: `Your soul signed up for a life of creative expression. You're meant to communicate, create, perform, or inspire through whatever medium calls to you. Whether through art, writing, speaking, entertainment, teaching, or design, your destiny is to show humanity the power of authentic self-expression and the importance of joy.`,
                     gifts: `You were born with natural creative talents and charisma. Your greatest gifts include your ability to communicate effectively, your creative imagination, and your capacity to uplift others. You have a way with words, images, or performance that touches people's hearts. Your enthusiasm and optimism are contagious and healing.`,
                     path: `Your path requires you to develop and share your creative gifts. This might mean pursuing arts professionally, or simply ensuring that creativity flows through whatever work you do. Your destiny is fulfilled through self-expression, not suppression. You must create, communicate, and share your unique vision with the world.`,
@@ -670,7 +667,7 @@ TOOLS = {
                 4: {
                     title: "The Architect's Mission",
                     mission: "structure, foundation, legacy",
-                    description: `${preferredName}, your Destiny Number 4 reveals that you came to this Earth to build lasting foundations. Your birth name carries the vibrational frequency of the master builder, indicating that your life's mission is to create structures, systems, and institutions that serve humanity for generations.`,
+                    description: `${preferredName}, your Destiny Number 4 reveals that you came to this Earth to build lasting foundations. Your name carries the vibrational frequency of the master builder, indicating that your life's mission is to create structures, systems, and institutions that serve humanity for generations.`,
                     calling: `Your soul signed up for a life of meaningful construction. You're meant to build businesses, create systems, establish institutions, or provide stability and structure in whatever field you enter. Whether in architecture, business, organization, education, or family, your destiny is to create foundations that endure.`,
                     gifts: `You were born with extraordinary discipline and practical wisdom. Your greatest gifts include your ability to plan effectively, your talent for organization, your reliability, and your capacity for sustained effort. You understand how to turn ideas into concrete reality. Your work ethic and integrity are exceptional.`,
                     path: `Your path requires you to commit to building something meaningful. This might mean developing a business, creating educational programs, establishing family traditions, or building physical structures. Your destiny is fulfilled through tangible achievement and lasting contribution. You're here to create things that outlive you.`,
@@ -680,7 +677,7 @@ TOOLS = {
                 5: {
                     title: "The Explorer's Mission",
                     mission: "freedom, progress, transformation",
-                    description: `${preferredName}, your Destiny Number 5 reveals that you came to this Earth to explore and liberate. Your birth name carries the vibrational frequency of the adventurer and change-maker, indicating that your life's mission is to experience life fully, embrace change, and inspire others to break free from limitation.`,
+                    description: `${preferredName}, your Destiny Number 5 reveals that you came to this Earth to explore and liberate. Your name carries the vibrational frequency of the adventurer and change-maker, indicating that your life's mission is to experience life fully, embrace change, and inspire others to break free from limitation.`,
                     calling: `Your soul signed up for a life of adventure and transformation. You're meant to explore new territories—whether physical, intellectual, or spiritual—and share what you discover. Whether through travel, entrepreneurship, innovation, teaching, or advocacy for freedom, your destiny is to show people that life is meant to be experienced, not just endured.`,
                     gifts: `You were born with extraordinary adaptability and versatility. Your greatest gifts include your ability to thrive in change, your quick learning capacity, your courage to try new things, and your talent for helping others transition. You're naturally progressive and forward-thinking. Your energy and enthusiasm for life itself are infectious.`,
                     path: `Your path requires you to embrace variety and change rather than resist them. This might mean having a portfolio career, traveling extensively, constantly learning new skills, or working in fields that are rapidly evolving. Your destiny is fulfilled through experience and growth, not through routine and repetition.`,
@@ -690,7 +687,7 @@ TOOLS = {
                 6: {
                     title: "The Healer's Mission",
                     mission: "love, service, harmony",
-                    description: `${preferredName}, your Destiny Number 6 reveals that you came to this Earth to nurture and heal. Your birth name carries the vibrational frequency of the caregiver and harmonizer, indicating that your life's mission is to create beauty, provide care, and heal through love and service.`,
+                    description: `${preferredName}, your Destiny Number 6 reveals that you came to this Earth to nurture and heal. Your name carries the vibrational frequency of the caregiver and harmonizer, indicating that your life's mission is to create beauty, provide care, and heal through love and service.`,
                     calling: `Your soul signed up for a life of loving service. You're meant to care for others, create harmonious environments, or bring healing through your presence. Whether in healthcare, counseling, education, hospitality, the arts, or family, your destiny is to demonstrate the transformative power of unconditional love and compassionate service.`,
                     gifts: `You were born with an enormous capacity for love and natural healing abilities. Your greatest gifts include your compassion, your ability to create beauty and comfort, your talent for counseling and advising, and your skill in bringing harmony to situations. You have an innate understanding of what people need to feel cared for and whole.`,
                     path: `Your path requires you to step into roles where you can nurture and serve others. This might mean working in healing professions, creating beautiful spaces, counseling those in need, or simply being the person who holds families and communities together. Your destiny is fulfilled through love expressed in action.`,
@@ -700,7 +697,7 @@ TOOLS = {
                 7: {
                     title: "The Mystic's Mission",
                     mission: "wisdom, truth, understanding",
-                    description: `${preferredName}, your Destiny Number 7 reveals that you came to this Earth to seek and share truth. Your birth name carries the vibrational frequency of the philosopher and mystic, indicating that your life's mission is to explore life's deeper mysteries and share the wisdom you discover.`,
+                    description: `${preferredName}, your Destiny Number 7 reveals that you came to this Earth to seek and share truth. Your name carries the vibrational frequency of the philosopher and mystic, indicating that your life's mission is to explore life's deeper mysteries and share the wisdom you discover.`,
                     calling: `Your soul signed up for a life of seeking and teaching. You're meant to explore the deeper questions of existence, uncover hidden truths, or help others understand what lies beneath the surface. Whether through research, teaching, spiritual work, analysis, or the arts, your destiny is to be a wisdom keeper and truth seeker.`,
                     gifts: `You were born with a brilliant analytical mind and deep intuitive knowing. Your greatest gifts include your ability to perceive what others miss, your talent for deep research and analysis, your spiritual sensitivity, and your capacity for profound understanding. You naturally see beyond the obvious to the essential truth beneath.`,
                     path: `Your path requires you to dedicate time to study, contemplation, and inner development. This might mean pursuing advanced education, engaging in spiritual practices, conducting research, or simply committing to lifelong learning. Your destiny is fulfilled through understanding, not through superficial knowledge or material success alone.`,
@@ -710,7 +707,7 @@ TOOLS = {
                 8: {
                     title: "The Leader's Mission",
                     mission: "power, abundance, achievement",
-                    description: `${preferredName}, your Destiny Number 8 reveals that you came to this Earth to master material reality and lead with integrity. Your birth name carries the vibrational frequency of the executive and manifestor, indicating that your life's mission is to create abundance and demonstrate ethical use of power.`,
+                    description: `${preferredName}, your Destiny Number 8 reveals that you came to this Earth to master material reality and lead with integrity. Your name carries the vibrational frequency of the executive and manifestor, indicating that your life's mission is to create abundance and demonstrate ethical use of power.`,
                     calling: `Your soul signed up for a life of achievement and leadership. You're meant to build successful enterprises, lead organizations, or demonstrate how to create and manage abundance responsibly. Whether in business, politics, finance, or organizational leadership, your destiny is to show that power and integrity can coexist.`,
                     gifts: `You were born with extraordinary executive abilities and manifesting power. Your greatest gifts include your strategic thinking, your ability to see the big picture, your talent for organization and management, and your capacity to turn vision into profitable reality. You naturally understand how systems, resources, and people work together.`,
                     path: `Your path requires you to step into positions of power and responsibility. This might mean starting businesses, leading organizations, managing large projects, or taking executive roles. Your destiny is fulfilled through achievement and the responsible exercise of power. You're here to create material success that serves a higher purpose.`,
@@ -720,7 +717,7 @@ TOOLS = {
                 9: {
                     title: "The Humanitarian's Mission",
                     mission: "compassion, service, transformation",
-                    description: `${preferredName}, your Destiny Number 9 reveals that you came to this Earth to serve humanity and facilitate healing. Your birth name carries the vibrational frequency of the humanitarian and universal lover, indicating that your life's mission is to work for the greater good and help transform collective consciousness.`,
+                    description: `${preferredName}, your Destiny Number 9 reveals that you came to this Earth to serve humanity and facilitate healing. Your name carries the vibrational frequency of the humanitarian and universal lover, indicating that your life's mission is to work for the greater good and help transform collective consciousness.`,
                     calling: `Your soul signed up for a life of service to humanity. You're meant to work for causes larger than yourself, help those in need, or contribute to collective healing and evolution. Whether through activism, healing arts, philanthropy, teaching, or the arts, your destiny is to make the world a better place for all.`,
                     gifts: `You were born with profound compassion and universal love. Your greatest gifts include your deep understanding of human nature, your ability to see the bigger picture, your compassion for all beings, and your capacity to let go and forgive. You naturally transcend petty concerns to focus on what truly matters.`,
                     path: `Your path requires you to dedicate yourself to service and collective wellbeing. This might mean working in nonprofit organizations, healing professions, education, activism, or the arts with a message. Your destiny is fulfilled through contribution to humanity, not through personal gain alone. You're here to serve the evolution of consciousness itself.`,
@@ -730,7 +727,7 @@ TOOLS = {
                 11: {
                     title: "The Illuminator's Mission",
                     mission: "inspiration, enlightenment, spiritual leadership",
-                    description: `${preferredName}, your Master Destiny Number 11 reveals that you came to this Earth to illuminate and inspire. Your birth name carries an exceptionally high vibrational frequency, indicating that your life's mission is to channel divine inspiration and help elevate human consciousness.`,
+                    description: `${preferredName}, your Master Destiny Number 11 reveals that you came to this Earth to illuminate and inspire. Your name carries an exceptionally high vibrational frequency, indicating that your life's mission is to channel divine inspiration and help elevate human consciousness.`,
                     calling: `Your soul signed up for a spiritually significant life. You're meant to inspire others, channel higher wisdom, or bring light to darkness in whatever form that takes. Whether through spiritual teaching, inspirational leadership, healing, or creative arts, your destiny is to be a beacon of light and hope for humanity.`,
                     gifts: `You were born with extraordinary intuitive and spiritual abilities. Your greatest gifts include your access to higher wisdom, your ability to inspire and uplift others, your spiritual sensitivity, and your visionary capacity. You can perceive and communicate truths that elevate consciousness. Your presence alone can shift energy and inspire transformation.`,
                     path: `Your path requires you to develop your spiritual gifts and share them with the world. This might mean becoming a spiritual teacher, inspirational speaker, healer, or creative artist with a message. Your destiny is fulfilled when you're channeling inspiration and helping others awaken. You're here to bridge heaven and earth.`,
@@ -740,7 +737,7 @@ TOOLS = {
                 22: {
                     title: "The Master Builder's Mission",
                     mission: "transformation, legacy, global impact",
-                    description: `${preferredName}, your Master Destiny Number 22 reveals that you came to this Earth to build transformative legacies. Your birth name carries the highest vibrational frequency for manifestation, indicating that your life's mission is to turn grand visions into lasting reality that serves humanity.`,
+                    description: `${preferredName}, your Master Destiny Number 22 reveals that you came to this Earth to build transformative legacies. Your name carries the highest vibrational frequency for manifestation, indicating that your life's mission is to turn grand visions into lasting reality that serves humanity.`,
                     calling: `Your soul signed up for a world-changing life. You're meant to build systems, institutions, or movements that transform how humanity operates. Whether through innovative business, social movements, educational systems, or architectural achievements, your destiny is to create structures that serve millions and last for generations.`,
                     gifts: `You were born with the rare combination of visionary thinking and practical mastery. Your greatest gifts include your ability to envision what others can't, your talent for manifesting large-scale projects, your strategic brilliance, and your capacity for sustained effort toward huge goals. You can bridge the spiritual and material like few others can.`,
                     path: `Your path requires you to think big and build accordingly. This might mean starting transformative businesses, creating social movements, developing new educational systems, or building physical structures that change how people live. Your destiny is fulfilled through achievements that impact humanity at scale.`,
@@ -750,7 +747,7 @@ TOOLS = {
                 33: {
                     title: "The Master Teacher's Mission",
                     mission: "unconditional love, healing, spiritual service",
-                    description: `${preferredName}, your Master Destiny Number 33 reveals that you came to this Earth to embody and teach unconditional love. Your birth name carries the highest vibrational frequency for compassionate service, indicating that your life's mission is to heal, teach, and serve at the most profound level.`,
+                    description: `${preferredName}, your Master Destiny Number 33 reveals that you came to this Earth to embody and teach unconditional love. Your name carries the highest vibrational frequency for compassionate service, indicating that your life's mission is to heal, teach, and serve at the most profound level.`,
                     calling: `Your soul signed up for a life of selfless service and spiritual teaching. You're meant to be a healer, teacher, or guide who helps others transform through love and wisdom. Whether through spiritual teaching, healing work, counseling, or compassionate leadership, your destiny is to demonstrate what unconditional love looks like in action.`,
                     gifts: `You were born with an exceptional capacity for love and healing. Your greatest gifts include your ability to see people's highest potential, your healing presence, your wisdom born of compassion, and your capacity to guide others through transformation. You embody the energy of the Christ consciousness—love without conditions.`,
                     path: `Your path requires you to develop your healing and teaching abilities to their highest level. This might mean becoming a spiritual teacher, master healer, transformational counselor, or compassionate leader. Your destiny is fulfilled when you're facilitating deep healing and transformation in others through your loving presence.`,
@@ -794,7 +791,7 @@ TOOLS = {
             saveUserData();
             
             const preferredName = document.getElementById('preferredName').value;
-            const birthName = document.getElementById('birthName').value || preferredName;
+            const birthName = preferredName;
             
             const soulUrge = calculateVowelNumber(birthName);
             
@@ -956,7 +953,7 @@ TOOLS = {
             saveUserData();
             
             const preferredName = document.getElementById('preferredName').value;
-            const birthName = document.getElementById('birthName').value || preferredName;
+            const birthName = preferredName;
             
             const personalityNumber = calculateConsonantNumber(birthName);
             
@@ -1118,7 +1115,7 @@ TOOLS = {
             saveUserData();
             
             const preferredName = document.getElementById('preferredName').value;
-            const birthName = document.getElementById('birthName').value || preferredName;
+            const birthName = preferredName;
             
             const nameNumber = calculateNameNumber(preferredName);
             const soulUrge = calculateVowelNumber(birthName);
@@ -1132,7 +1129,7 @@ TOOLS = {
                     description: `${preferredName}, the name you resonate with carries the vibration of the number 1—the energy of new beginnings, leadership, and original creation. Every time someone calls you by this name, they're invoking pioneering energy. This name empowers you to stand alone, lead courageously, and create something new in the world.`,
                     power: `This name gives you the power to initiate and lead. It strengthens your natural independence and courage. When you use this name, you're claiming your right to be first, to be original, to carve your own path. This is a name of personal power and self-determination. It supports you in standing out rather than fitting in.`,
                     resonance: `The energy of this name resonates with innovation, courage, and individual achievement. It attracts opportunities for leadership and creative expression. People responding to this name unconsciously expect confidence, capability, and new ideas. This name helps you manifest your unique vision and inspires others to find their own courage.`,
-                    comparison: `Your chosen name (${preferredName}) carries the vibration of ${nameNumber}, while your birth name carries ${destiny}. ${birthName !== preferredName ? `You've chosen to emphasize ${nameNumber} energy over your birth vibration of ${destiny}, which suggests you're consciously stepping into more pioneering, independent expression.` : 'Your chosen name and birth name are aligned, amplifying this powerful energy.'} Your Soul Urge (${soulUrge}) reveals what you truly want, while your Personality (${personality}) shows how others see you.`,
+                    comparison: `Your chosen name (${preferredName}) carries the vibration of ${nameNumber}, while your name carries ${destiny}. ${birthName !== preferredName ? `You've chosen to emphasize ${nameNumber} energy over your birth vibration of ${destiny}, which suggests you're consciously stepping into more pioneering, independent expression.` : 'Your chosen name and birth name are aligned, amplifying this powerful energy.'} Your Soul Urge (${soulUrge}) reveals what you truly want, while your Personality (${personality}) shows how others see you.`,
                     integration: `The name you've chosen to use is significant—it's not random. You've selected a vibration that supports who you're becoming. Using this name ${preferredName} regularly helps you embody the qualities of independence, leadership, and innovation. It's a tool for calling forth your most courageous, original self.`,
                     guidance: `Honor the power of this name by living up to its energy. Let it remind you to be courageous, to trust your unique vision, and to lead rather than follow. When you introduce yourself with this name, you're making a statement about who you are and who you're becoming. Use it consciously and proudly. Let it call forth your pioneering spirit.`
                 },
@@ -1143,7 +1140,7 @@ TOOLS = {
                     description: `${preferredName}, the name you resonate with carries the vibration of the number 2—the energy of cooperation, diplomacy, and bringing people together. Every time someone calls you by this name, they're invoking peaceful, harmonizing energy. This name empowers you to create unity, support others, and be a healing presence in conflict.`,
                     power: `This name gives you the power to unite and harmonize. It strengthens your natural sensitivity and diplomatic abilities. When you use this name, you're claiming your ability to understand multiple perspectives, to mediate conflicts, and to create cooperation. This is a name of partnership and emotional intelligence.`,
                     resonance: `The energy of this name resonates with peace, sensitivity, and collaboration. It attracts opportunities for partnership and mediation. People responding to this name unconsciously expect kindness, understanding, and support. This name helps you manifest harmonious relationships and create peaceful environments.`,
-                    comparison: `Your chosen name (${preferredName}) carries the vibration of ${nameNumber}, while your birth name carries ${destiny}. ${birthName !== preferredName ? `You've chosen to emphasize ${nameNumber} energy over your birth vibration of ${destiny}, which suggests you're consciously stepping into more diplomatic, harmonizing expression.` : 'Your chosen name and birth name are aligned, amplifying this peaceful energy.'} Your Soul Urge (${soulUrge}) reveals what you truly want, while your Personality (${personality}) shows how others see you.`,
+                    comparison: `Your chosen name (${preferredName}) carries the vibration of ${nameNumber}, while your name carries ${destiny}. ${birthName !== preferredName ? `You've chosen to emphasize ${nameNumber} energy over your birth vibration of ${destiny}, which suggests you're consciously stepping into more diplomatic, harmonizing expression.` : 'Your chosen name and birth name are aligned, amplifying this peaceful energy.'} Your Soul Urge (${soulUrge}) reveals what you truly want, while your Personality (${personality}) shows how others see you.`,
                     integration: `The name you've chosen is your tool for embodying peace and cooperation. Using ${preferredName} regularly helps you step into your role as mediator and harmonizer. It reminds others of your gentle strength and calls forth your diplomatic abilities.`,
                     guidance: `Honor the power of this name by being a force for peace and understanding. Let it remind you that your sensitivity is strength, that your ability to create harmony is a gift. When you introduce yourself with this name, you're offering peace. Use it consciously to call forth cooperation and mutual understanding.`
                 }

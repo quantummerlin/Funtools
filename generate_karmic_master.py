@@ -248,8 +248,7 @@ PREMIUM_TEMPLATE = """<!DOCTYPE html>
                     </div>
 
                     <div class="input-group">
-                        <label for="birthName">Full Birth Name</label>
-                        <input type="text" id="birthName" required>
+                        
                         <div class="helper-text">As it appears on your birth certificate</div>
                     </div>
                 </div>
@@ -372,7 +371,7 @@ PREMIUM_TEMPLATE = """<!DOCTYPE html>
             if (savedData) {{
                 const data = JSON.parse(savedData);
                 if (data.preferredName) document.getElementById('preferredName').value = data.preferredName;
-                if (data.birthName) document.getElementById('birthName').value = data.birthName;
+                // birthName removed
                 if (data.birthDate) document.getElementById('birthDate').value = data.birthDate;
                 if (data.birthTime) document.getElementById('birthTime').value = data.birthTime;
                 if (data.birthPlace) document.getElementById('birthPlace').value = data.birthPlace;
@@ -382,7 +381,7 @@ PREMIUM_TEMPLATE = """<!DOCTYPE html>
         function saveUserData() {{
             const userData = {{
                 preferredName: document.getElementById('preferredName').value,
-                birthName: document.getElementById('birthName').value,
+                // birthName removed,
                 birthDate: document.getElementById('birthDate').value,
                 birthTime: document.getElementById('birthTime').value,
                 birthPlace: document.getElementById('birthPlace').value

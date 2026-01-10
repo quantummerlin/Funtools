@@ -303,12 +303,9 @@
     <div class="input-group">
         <label for="preferredName">What name do you resonate with?</label>
         <input type="text" id="preferredName" placeholder="The name you identify with most" required>
-        <div class="helper-text">Use the name that feels most authentic to you - this could be your birth name, chosen name, or nickname</div>
+        
     </div>
-    <div class="input-group">
-        <label for="birthName">Full birth name (as on birth certificate)</label>
-        <input type="text" id="birthName" placeholder="Your legal birth name">
-        <div class="helper-text">Optional but provides deeper insights into your soul's blueprint</div>
+    <div class="input-group"><div class="helper-text">Optional but provides deeper insights into your soul's blueprint</div>
     </div>
 </div>
 
@@ -363,9 +360,7 @@
                 if (document.getElementById('preferredName') && data.preferredName) {
                     document.getElementById('preferredName').value = data.preferredName;
                 }
-                if (document.getElementById('birthName') && data.birthName) {
-                    document.getElementById('birthName').value = data.birthName;
-                }
+                // birthName field removed
                 if (document.getElementById('birthDate') && data.birthDate) {
                     document.getElementById('birthDate').value = data.birthDate;
                 }
@@ -385,9 +380,7 @@
             if (document.getElementById('preferredName')) {
                 userData.preferredName = document.getElementById('preferredName').value;
             }
-            if (document.getElementById('birthName')) {
-                userData.birthName = document.getElementById('birthName').value;
-            }
+            // birthName field removed
             if (document.getElementById('birthDate')) {
                 userData.birthDate = document.getElementById('birthDate').value;
             }
@@ -414,7 +407,7 @@
             
             const currentData = {
                 preferredName: document.getElementById('preferredName')?.value || '',
-                birthName: document.getElementById('birthName')?.value || '',
+                // birthName removed - using preferredName for all calculations,
                 birthDate: document.getElementById('birthDate')?.value || '',
                 birthTime: document.getElementById('birthTime')?.value || '',
                 birthPlace: document.getElementById('birthPlace')?.value || ''
@@ -440,9 +433,7 @@
             if (profileData.preferredName && document.getElementById('preferredName')) {
                 document.getElementById('preferredName').value = profileData.preferredName;
             }
-            if (profileData.birthName && document.getElementById('birthName')) {
-                document.getElementById('birthName').value = profileData.birthName;
-            }
+            // birthName field removed
             if (profileData.birthDate && document.getElementById('birthDate')) {
                 document.getElementById('birthDate').value = profileData.birthDate;
             }
@@ -624,7 +615,7 @@ ${profileNames.join('
             saveUserData();
             
             const preferredName = document.getElementById('preferredName').value;
-            const birthName = document.getElementById('birthName').value || preferredName;
+            const birthName = preferredName;
             
             const personalityNumber = calculateConsonantNumber(birthName);
             
