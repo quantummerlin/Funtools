@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔮 Quantum Merlin | Ancient Patterns. Modern Interfaces.</title>
+    <meta name="description" content="Quantum Merlin maps time, numbers, and celestial cycles into clear moments for aligned action — blending ancient pattern wisdom with modern interface clarity.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+            padding: 40px 20px;
+        }
+        
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(251, 191, 36, 0.3);
+            letter-spacing: 2px;
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.4)); }
+            50% { filter: drop-shadow(0 0 30px rgba(6, 182, 212, 0.6)); }
+        }
+        
+        .header .tagline {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: #06b6d4;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .header .subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3em;
+            opacity: 0.85;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 15px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            color: white;
+            border-color: #06b6d4;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(251, 191, 36, 0.5);
+            box-shadow: 
+                0 20px 60px rgba(6, 182, 212, 0.3),
+                0 0 40px rgba(251, 191, 36, 0.2);
+        }
+        
+        .tool-icon {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.5));
+        }
+        
+        .tool-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #fbbf24;
+            letter-spacing: 0.5px;
+        }
+        
+        .tool-description {
+            color: #d1d5db;
+            font-size: 1.05em;
+            line-height: 1.6;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        .tool-category {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(6, 182, 212, 0.3) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            color: #06b6d4;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-family: 'Cinzel', serif;
+            margin-top: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .search-bar {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 30px;
+            padding: 18px 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .search-bar input {
+            width: 100%;
+            border: none;
+            font-size: 1.15em;
+            outline: none;
+            background: transparent;
+            color: #e0e0e0;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        .search-bar input::placeholder {
+            color: #6b7280;
+        }
+        
+        .stats {
+            background: rgba(20, 20, 30, 0.6);
+            border: 2px solid rgba(251, 191, 36, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+        }
+        
+        .stat-item h3 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fbbf24 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-item p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1em;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #9ca3af;
+            padding: 40px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05em;
+            border-top: 1px solid rgba(6, 182, 212, 0.2);
+            margin-top: 40px;
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔮 QUANTUM MERLIN</h1>
+            <p class="tagline">Ancient Patterns. Modern Interfaces.</p>
+            <p class="subtitle">Mapping time, numbers, and celestial cycles into clear moments for aligned action</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>30+</h3>
+                    <p>Pattern Tools</p>
+                </div>
+                <div class="stat-item">
+                    <h3>∞</h3>
+                    <p>Timeless Wisdom</p>
+                </div>
+                <div class="stat-item">
+                    <h3>⚛️</h3>
+                    <p>Quantum Clarity</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="🔍 Search tools...">
+        </div>
+        
+        <div class="categories">
+            <button class="category-btn active" data-category="all">All Tools</button>
+            <button class="category-btn" data-category="numerology">Numerology</button>
+            <button class="category-btn" data-category="astrology">Astrology</button>
+            <button class="category-btn" data-category="personality">Personality</button>
+            <button class="category-btn" data-category="fortune">Fortune</button>
+            <button class="category-btn" data-category="life">Life</button>
+            <button class="category-btn" data-category="entertainment">Entertainment</button>
+        </div>
+        
+        <div class="tools-grid" id="toolsGrid">
+            <!-- Tools will be dynamically loaded here -->
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 Quantum Merlin | Revealing patterns already in motion</p>
+        </div>
+    </div>
+    
+    <script>
+        const tools = [
+            // Numerology Tools
+            {
+                icon: "🔢",
+                title: "Personal Year Calculator",
+                description: "Discover what personal year you're in and what it means for your journey.",
+                category: "numerology",
+                file: "personal-year-calculator.html"
+            },
+            {
+                icon: "✨",
+                title: "Life Path Number",
+                description: "Calculate your life path number and reveal your true purpose in life.",
+                category: "numerology",
+                file: "life-path-calculator.html"
+            },
+            {
+                icon: "🌟",
+                title: "Destiny Number",
+                description: "Uncover your destiny number and understand your life's mission.",
+                category: "numerology",
+                file: "destiny-number-calculator.html"
+            },
+            {
+                icon: "💫",
+                title: "Soul Urge Number",
+                description: "Reveal your soul urge number and discover your inner desires.",
+                category: "numerology",
+                file: "soul-urge-calculator.html"
+            },
+            {
+                icon: "🎯",
+                title: "Personality Number",
+                description: "Calculate your personality number and how others see you.",
+                category: "numerology",
+                file: "personality-number-calculator.html"
+            },
+            // Astrology Tools
+            {
+                icon: "♈",
+                title: "Zodiac Sign Calculator",
+                description: "Find your zodiac sign based on your birth date.",
+                category: "astrology",
+                file: "zodiac-calculator.html"
+            },
+            {
+                icon: "🌙",
+                title: "Moon Phase Calculator",
+                description: "Discover what moon phase you were born under.",
+                category: "astrology",
+                file: "moon-phase-calculator.html"
+            },
+            {
+                icon: "⭐",
+                title: "Sun Sign Profile",
+                description: "Get detailed insights about your sun sign personality.",
+                category: "astrology",
+                file: "sun-sign-profile.html"
+            },
+            {
+                icon: "🌍",
+                title: "Rising Sign Calculator",
+                description: "Calculate your rising sign (ascendant) for birth chart insights.",
+                category: "astrology",
+                file: "rising-sign-calculator.html"
+            },
+            {
+                icon: "🎲",
+                title: "Chinese Zodiac Calculator",
+                description: "Find your Chinese zodiac animal and its meaning.",
+                category: "astrology",
+                file: "chinese-zodiac-calculator.html"
+            },
+            {
+                icon: "🔥",
+                title: "Element Calculator",
+                description: "Discover which element (fire, earth, air, water) you are.",
+                category: "astrology",
+                file: "element-calculator.html"
+            },
+            {
+                icon: "💎",
+                title: "Birthstone Finder",
+                description: "Find your birthstone based on your birth month.",
+                category: "astrology",
+                file: "birthstone-finder.html"
+            },
+            {
+                icon: "🌸",
+                title: "Birth Flower Finder",
+                description: "Discover your birth flower and its symbolism.",
+                category: "astrology",
+                file: "birth-flower-finder.html"
+            },
+            // Personality Tools
+            {
+                icon: "🎨",
+                title: "Color Personality Test",
+                description: "What does your favorite color say about you?",
+                category: "personality",
+                file: "color-personality-test.html"
+            },
+            {
+                icon: "🐾",
+                title: "Spirit Animal Quiz",
+                description: "Discover your spirit animal and its guidance.",
+                category: "personality",
+                file: "spirit-animal-quiz.html"
+            },
+            {
+                icon: "🧠",
+                title: "Brain Type Test",
+                description: "Find out if you're left-brained or right-brained.",
+                category: "personality",
+                file: "brain-type-test.html"
+            },
+            {
+                icon: "🎭",
+                title: "Personality Type Test",
+                description: "Similar to MBTI - discover your personality type.",
+                category: "personality",
+                file: "personality-type-test.html"
+            },
+            {
+                icon: "🌊",
+                title: "Energy Level Test",
+                description: "Measure your current energy level and get tips.",
+                category: "personality",
+                file: "energy-level-test.html"
+            },
+            {
+                icon: "💪",
+                title: "Strength Finder",
+                description: "Discover your top 5 strengths and talents.",
+                category: "personality",
+                file: "strength-finder.html"
+            },
+            {
+                icon: "🎯",
+                title: "Life Purpose Quiz",
+                description: "Find clues about your life's purpose and mission.",
+                category: "personality",
+                file: "life-purpose-quiz.html"
+            },
+            {
+                icon: "❤️",
+                title: "Love Language Test",
+                description: "Discover your love language and how you express affection.",
+                category: "personality",
+                file: "love-language-test.html"
+            },
+            {
+                icon: "🤝",
+                title: "Communication Style",
+                description: "Learn about your communication style.",
+                category: "personality",
+                file: "communication-style.html"
+            },
+            {
+                icon: "🌈",
+                title: "Aura Color Test",
+                description: "What color is your aura? Take this fun quiz!",
+                category: "personality",
+                file: "aura-color-test.html"
+            },
+            // Fortune Tools
+            {
+                icon: "🎰",
+                title: "Daily Fortune",
+                description: "Get your daily fortune and lucky numbers.",
+                category: "fortune",
+                file: "daily-fortune.html"
+            },
+            {
+                icon: "🔮",
+                title: "Crystal Ball",
+                description: "Ask the crystal ball a yes/no question.",
+                category: "fortune",
+                file: "crystal-ball.html"
+            },
+            {
+                icon: "🃏",
+                title: "Card of the Day",
+                description: "Draw a card and get your daily guidance.",
+                category: "fortune",
+                file: "card-of-day.html"
+            },
+            {
+                icon: "🌟",
+                title: "Angel Number Generator",
+                description: "Generate angel numbers and their meanings.",
+                category: "fortune",
+                file: "angel-number-generator.html"
+            },
+            {
+                icon: "🎲",
+                title: "Dice Roller",
+                description: "Roll virtual dice for any game or decision.",
+                category: "fortune",
+                file: "dice-roller.html"
+            },
+            {
+                icon: "🪙",
+                title: "Coin Flip",
+                description: "Flip a coin for quick decisions.",
+                category: "fortune",
+                file: "coin-flip.html"
+            },
+            {
+                icon: "🎯",
+                title: "Decision Wheel",
+                description: "Spin the wheel to make decisions fun.",
+                category: "fortune",
+                file: "decision-wheel.html"
+            },
+            {
+                icon: "🔮",
+                title: "Fortune Cookie",
+                description: "Break a virtual fortune cookie for wisdom.",
+                category: "fortune",
+                file: "fortune-cookie.html"
+            },
+            {
+                icon: "⚖️",
+                title: "Yes No Oracle",
+                description: "Get instant yes/no answers to your questions.",
+                category: "fortune",
+                file: "yes-no-oracle.html"
+            },
+            {
+                icon: "🌙",
+                title: "Lunar Magic",
+                description: "Check today's moon phase and its influence.",
+                category: "fortune",
+                file: "lunar-magic.html"
+            },
+            {
+                icon: "🍀",
+                title: "Lucky Number Generator",
+                description: "Generate your personal lucky numbers.",
+                category: "fortune",
+                file: "lucky-numbers.html"
+            },
+            // Life Tools
+            {
+                icon: "📅",
+                title: "Age Calculator",
+                description: "Calculate your exact age in years, months, days.",
+                category: "life",
+                file: "age-calculator.html"
+            },
+            {
+                icon: "⏰",
+                title: "Time Until",
+                description: "Count down to any important date.",
+                category: "life",
+                file: "time-until.html"
+            },
+            {
+                icon: "🎂",
+                title: "Birthday Countdown",
+                description: "Count down days until your next birthday.",
+                category: "life",
+                file: "birthday-countdown.html"
+            },
+            {
+                icon: "📊",
+                title: "Life Progress",
+                description: "See how much of your life you've lived.",
+                category: "life",
+                file: "life-progress.html"
+            },
+            {
+                icon: "💰",
+                title: "Salary Calculator",
+                description: "Convert between hourly, monthly, annual salary.",
+                category: "life",
+                file: "salary-calculator.html"
+            },
+            {
+                icon: "🏃",
+                title: "BMI Calculator",
+                description: "Calculate your Body Mass Index.",
+                category: "life",
+                file: "bmi-calculator.html"
+            },
+            {
+                icon: "💧",
+                title: "Water Intake",
+                description: "Calculate your daily water needs.",
+                category: "life",
+                file: "water-intake.html"
+            },
+            {
+                icon: "😴",
+                title: "Sleep Calculator",
+                description: "Find optimal sleep and wake times.",
+                category: "life",
+                file: "sleep-calculator.html"
+            },
+            // Entertainment Tools
+            {
+                icon: "🎵",
+                title: "Song on Your Birthday",
+                description: "Find the #1 song on your birth date.",
+                category: "entertainment",
+                file: "song-birthday.html"
+            },
+            {
+                icon: "🎬",
+                title: "Movie This Week",
+                description: "What movie was #1 this week in history?",
+                category: "entertainment",
+                file: "movie-this-week.html"
+            },
+            {
+                icon: "📰",
+                title: "Headlines This Day",
+                description: "See news headlines from any date in history.",
+                category: "entertainment",
+                file: "headlines-this-day.html"
+            },
+            {
+                icon: "🎮",
+                title: "Random Fact Generator",
+                description: "Get random interesting facts.",
+                category: "entertainment",
+                file: "random-fact.html"
+            },
+            {
+                icon: "🎨",
+                title: "Color Generator",
+                description: "Generate random colors and palettes.",
+                category: "entertainment",
+                file: "color-generator.html"
+            },
+            {
+                icon: "🎲",
+                title: "Random Name Picker",
+                description: "Pick random names from a list.",
+                category: "entertainment",
+                file: "random-name-picker.html"
+            },
+            {
+                icon: "📝",
+                title: "Password Generator",
+                description: "Generate secure random passwords.",
+                category: "entertainment",
+                file: "password-generator.html"
+            }
+        ];
+        
+        function renderTools(filteredTools) {
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = '';
+            
+            filteredTools.forEach(tool => {
+                const card = document.createElement('div');
+                card.className = 'tool-card';
+                card.innerHTML = `
+                    <div class="tool-icon">${tool.icon}</div>
+                    <div class="tool-title">${tool.title}</div>
+                    <div class="tool-description">${tool.description}</div>
+                    <span class="tool-category">${tool.category}</span>
+                `;
+                card.onclick = () => {
+                    if (tool.file) {
+                        window.location.href = tool.file;
+                    } else {
+                        alert('This tool is coming soon! 🚧');
+                    }
+                };
+                grid.appendChild(card);
+            });
+        }
+        
+        function filterByCategory(category) {
+            if (category === 'all') {
+                return tools;
+            }
+            return tools.filter(tool => tool.category === category);
+        }
+        
+        function searchTools(query) {
+            const lowerQuery = query.toLowerCase();
+            return tools.filter(tool => 
+                tool.title.toLowerCase().includes(lowerQuery) ||
+                tool.description.toLowerCase().includes(lowerQuery) ||
+                tool.category.toLowerCase().includes(lowerQuery)
+            );
+        }
+        
+        // Initialize
+        renderTools(tools);
+        
+        // Category buttons
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const category = this.dataset.category;
+                renderTools(filterByCategory(category));
+            });
+        });
+        
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const query = this.value;
+            renderTools(searchTools(query));
+        });
+    </script>
+</body>
+</html>

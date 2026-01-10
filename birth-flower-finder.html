@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birth Flower Finder | Quantum Merlin</title>
+    <meta name="description" content="Reveal your birth flower and its botanical symbolic patterns through floral wisdom.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { 
+            text-align: center; 
+            margin-bottom: 30px; 
+        }
+        .header h1 { 
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em; 
+            margin-bottom: 10px; 
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        .header p { 
+            font-size: 1.1em; 
+            opacity: 0.9; 
+            color: #e0e0e0;
+        }
+        .tool-card {`n            background: rgba(17, 24, 39, 0.7);`n            backdrop-filter: blur(10px);`n            border: 1px solid rgba(6, 182, 212, 0.3);`n            border-radius: 20px;`n            padding: 40px;`n            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);`n            margin-bottom: 30px;`n        }
+        .input-group { margin-bottom: 25px; }
+        label { 
+            display: block; 
+            font-family: 'Cinzel', serif;
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            color: #fbbf24;
+            letter-spacing: 0.5px;
+        }
+        input[type="text"], input[type="number"], input[type="date"], select {
+            width: 100%;
+            padding: 15px;
+            background: rgba(10, 10, 20, 0.6);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            color: #e0e0e0;
+            transition: all 0.3s;
+        }
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+        button {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+            width: 100%;
+        }
+        button:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5);
+        }
+        .result {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 25px;
+            display: none;
+        }
+        .result.show { display: block; animation: fadeIn 0.5s; }
+        .result h3 { font-size: 2em; margin-bottom: 15px; }
+        .result p { font-size: 1.1em; line-height: 1.6; }
+        .back-btn { 
+            background: rgba(6, 182, 212, 0.1); 
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            margin-top: 20px; 
+        }
+        .back-btn:hover { 
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .share-buttons { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
+        .share-btn { background: #f0f0f0; color: #333; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+        .share-btn:hover { background: #e0e0e0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌸 Birth Flower Finder</h1>
+            <p>Discover your birth flower and its symbolism.</p>
+        </div>
+        
+        <div class="tool-card">
+            <div id="tool-content">
+            <div class="input-group">
+                <label for="birthMonth">Select Your Birth Month:</label>
+                <select id="birthMonth" required>
+                    <option value="">Select Month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+        </div>
+            <button id="calculate-btn">Find My Birth Flower</button>
+            <div id="result" class="result">
+                <h3 id="result-title"></h3>
+                <p id="result-text"></p>
+                <div class="share-buttons">
+                    <button class="share-btn" onclick="shareOnTwitter()">🐦 Twitter</button>
+                    <button class="share-btn" onclick="shareOnFacebook()">📘 Facebook</button>
+                    <button class="share-btn" onclick="copyLink()">📋 Copy Link</button>
+                </div>
+            </div>
+        </div>
+        
+        <button class="back-btn" onclick="goBack()">← Quantum Merlin Hub</button>
+    </div>
+    
+    <script>
+        function goBack() { window.location.href = 'tools_index.html'; }
+        function shareOnTwitter() {
+            const text = encodeURIComponent("I just used Birth Flower Finder! Check it out: ");
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard! 📋');
+        }
+        
+            document.getElementById('calculate-btn').addEventListener('click', function() {
+                const month = parseInt(document.getElementById('birthMonth').value);
+                if (!month) {
+                    alert('Please select your birth month');
+                    return;
+                }
+                
+                const birthFlowers = [
+                    { month: 'January', flower: 'Carnation', meaning: 'Love, fascination, distinction' },
+                    { month: 'February', flower: 'Violet', meaning: 'Faithfulness, wisdom, hope' },
+                    { month: 'March', flower: 'Daffodil', meaning: 'Rebirth, new beginnings, spring' },
+                    { month: 'April', flower: 'Daisy', meaning: 'Innocence, purity, true love' },
+                    { month: 'May', flower: 'Lily of the Valley', meaning: 'Sweetness, humility, happiness' },
+                    { month: 'June', flower: 'Rose', meaning: 'Love, passion, beauty' },
+                    { month: 'July', flower: 'Larkspur', meaning: 'Lightness, levity, positivity' },
+                    { month: 'August', flower: 'Gladiolus', meaning: 'Strength, integrity, remembrance' },
+                    { month: 'September', flower: 'Aster', meaning: 'Wisdom, valor, faith' },
+                    { month: 'October', flower: 'Marigold', meaning: 'Creativity, passion, warmth' },
+                    { month: 'November', flower: 'Chrysanthemum', meaning: 'Joy, optimism, longevity' },
+                    { month: 'December', flower: 'Narcissus', meaning: 'Hope, wealth, good fortune' }
+                ];
+                
+                const flower = birthFlowers[month - 1];
+                
+                document.getElementById('result-title').textContent = `🌸 ${flower.flower}`;
+                document.getElementById('result-text').textContent = `${flower.month} | Meaning: ${flower.meaning}`;
+                document.getElementById('result').classList.add('show');
+            });
+        
+    </script>
+</body>
+</html>

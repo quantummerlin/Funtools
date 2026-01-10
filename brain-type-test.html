@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Type Test | Quantum Merlin</title>
+    <meta name="description" content="Find out if you're left-brained or right-brained.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { 
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em; 
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+        .header p { 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2em; 
+            opacity: 0.85;
+            color: #06b6d4;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .input-group { margin-bottom: 25px; }
+        label { 
+            display: block; 
+            font-family: 'Cinzel', serif;
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            color: #fbbf24;
+            letter-spacing: 0.5px;
+        }
+        input[type="text"], input[type="number"], input[type="date"], select {
+            width: 100%;
+            padding: 15px;
+            background: rgba(10, 10, 20, 0.6);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            color: #e0e0e0;
+            transition: all 0.3s;
+        }
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        }
+        button {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+            width: 100%;
+        }
+        button:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5);
+        }
+        .result {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 25px;
+            display: none;
+        }
+        .result.show { display: block; animation: fadeIn 0.5s; }
+        .result h3 { font-size: 2em; margin-bottom: 15px; }
+        .result p { font-size: 1.1em; line-height: 1.6; }
+        .back-btn { 
+            background: rgba(6, 182, 212, 0.1); 
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            margin-top: 20px; 
+        }
+        .back-btn:hover { 
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .share-buttons { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
+        .share-btn { background: #f0f0f0; color: #333; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+        .share-btn:hover { background: #e0e0e0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Brain Type Test</h1>
+            <p>Find out if you're left-brained or right-brained.</p>
+        </div>
+        
+        <div class="tool-card">
+            <div id="tool-content">
+            <div class="input-group">
+                <label>Answer these questions:</label>
+                <div style="margin-top: 10px;">
+                    <p style="margin-bottom: 10px;">1. When solving a problem, do you:</p>
+                    <select id="q1" style="margin-bottom: 15px;">
+                        <option value="">Select answer</option>
+                        <option value="left">Analyze the facts logically</option>
+                        <option value="right">Trust your intuition</option>
+                    </select>
+                </div>
+                <div>
+                    <p style="margin-bottom: 10px;">2. Do you prefer:</p>
+                    <select id="q2" style="margin-bottom: 15px;">
+                        <option value="">Select answer</option>
+                        <option value="left">Lists and schedules</option>
+                        <option value="right">Flexibility and spontaneity</option>
+                    </select>
+                </div>
+                <div>
+                    <p style="margin-bottom: 10px;">3. When learning, do you prefer:</p>
+                    <select id="q3" style="margin-bottom: 15px;">
+                        <option value="">Select answer</option>
+                        <option value="left">Step-by-step instructions</option>
+                        <option value="right">Seeing the big picture first</option>
+                    </select>
+                </div>
+                <div>
+                    <p style="margin-bottom: 10px;">4. Are you better at:</p>
+                    <select id="q4" style="margin-bottom: 15px;">
+                        <option value="">Select answer</option>
+                        <option value="left">Math and science</option>
+                        <option value="right">Art and music</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+            <button id="calculate-btn">Discover My Brain Type</button>
+            <div id="result" class="result">
+                <h3 id="result-title"></h3>
+                <p id="result-text"></p>
+                <div class="share-buttons">
+                    <button class="share-btn" onclick="shareOnTwitter()">🐦 Twitter</button>
+                    <button class="share-btn" onclick="shareOnFacebook()">📘 Facebook</button>
+                    <button class="share-btn" onclick="copyLink()">📋 Copy Link</button>
+                </div>
+            </div>
+        </div>
+        
+        <button class="back-btn" onclick="goBack()">← Quantum Merlin Hub</button>
+    </div>
+    
+    <script>
+        function goBack() { window.location.href = 'tools_index.html'; }
+        function shareOnTwitter() {
+            const text = encodeURIComponent("I just used Brain Type Test! Check it out: ");
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard! 📋');
+        }
+        
+            document.getElementById('calculate-btn').addEventListener('click', function() {
+                const q1 = document.getElementById('q1').value;
+                const q2 = document.getElementById('q2').value;
+                const q3 = document.getElementById('q3').value;
+                const q4 = document.getElementById('q4').value;
+                
+                if (!q1 || !q2 || !q3 || !q4) {
+                    alert('Please answer all questions');
+                    return;
+                }
+                
+                let leftCount = 0;
+                let rightCount = 0;
+                
+                [q1, q2, q3, q4].forEach(answer => {
+                    if (answer === 'left') leftCount++;
+                    if (answer === 'right') rightCount++;
+                });
+                
+                let result;
+                if (leftCount > rightCount) {
+                    result = {
+                        title: '🧠 Left-Brain Dominant',
+                        text: 'You're analytical, logical, and detail-oriented. You excel at problem-solving, planning, and structured thinking. You prefer facts over feelings and systematic approaches.'
+                    };
+                } else if (rightCount > leftCount) {
+                    result = {
+                        title: '🎨 Right-Brain Dominant',
+                        text: 'You're creative, intuitive, and imaginative. You excel at art, music, and seeing the big picture. You prefer feelings over facts and flexible approaches.'
+                    };
+                } else {
+                    result = {
+                        title: '⚖️ Balanced Brain',
+                        text: 'You have a balanced brain! You can switch between logical analysis and creative thinking as needed. This gives you flexibility in various situations.'
+                    };
+                }
+                
+                document.getElementById('result-title').textContent = result.title;
+                document.getElementById('result-text').textContent = result.text;
+                document.getElementById('result').classList.add('show');
+            });
+        
+    </script>
+</body>
+</html>
