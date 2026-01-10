@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <!-- SunCalc Library for Accurate Astronomical Calculations -->
+    <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -118,10 +120,15 @@
     <div class="container">
         <div class="header">
             <h1>🌙 Moon Phase Calculator</h1>
-            <p>Discover what moon phase you were born under.</p>
+            <p>Discover the exact lunar phase you were born under using real astronomical data.</p>
         </div>
         
         <div class="tool-card">
+            <div style="text-align: right; margin-bottom: 15px;">
+                <button type="button" onclick="clearSavedData()" style="background: rgba(236, 72, 153, 0.1); border: 2px solid rgba(236, 72, 153, 0.3); color: #ec4899; padding: 8px 16px; font-size: 0.85em; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-family: 'Cinzel', serif; font-weight: 600;">
+                    🗑️ Clear My Data
+                </button>
+            </div>
             <div id="tool-content">
             <div class="input-group">
                 <label for="birthDate">Enter Your Birth Date:</label>
@@ -166,36 +173,134 @@
                     return;
                 }
                 
-                // Simple moon phase calculation (approximate)
-                const knownNewMoon = new Date('2000-01-06');
-                const lunarCycle = 29.53058867;
-                const daysSinceKnown = (birthDate - knownNewMoon) / (1000 * 60 * 60 * 24);
-                const currentCycle = daysSinceKnown % lunarCycle;
+                // Use SunCalc library for accurate moon phase calculation
+                const moonIllumination = SunCalc.getMoonIllumination(birthDate);
+                const phaseValue = moonIllumination.phase; // 0-1 where 0=new, 0.5=full
                 
+                // Phase definitions with accurate meanings
                 const phases = [
-                    { name: "New Moon", emoji: "🌑", range: [0, 1.85], meaning: "New beginnings, setting intentions" },
-                    { name: "Waxing Crescent", emoji: "🌒", range: [1.85, 5.54], meaning: "Growth, commitment, moving forward" },
-                    { name: "First Quarter", emoji: "🌓", range: [5.54, 9.23], meaning: "Action, decisions, overcoming obstacles" },
-                    { name: "Waxing Gibbous", emoji: "🌔", range: [9.23, 12.92], meaning: "Refinement, patience, preparation" },
-                    { name: "Full Moon", emoji: "🌕", range: [12.92, 16.61], meaning: "Culmination, realization, clarity" },
-                    { name: "Waning Gibbous", emoji: "🌖", range: [16.61, 20.30], meaning: "Gratitude, sharing, wisdom" },
-                    { name: "Last Quarter", emoji: "🌗", range: [20.30, 23.99], meaning: "Release, forgiveness, letting go" },
-                    { name: "Waning Crescent", emoji: "🌘", range: [23.99, 29.53], meaning: "Rest, reflection, surrender" }
+                    { name: "New Moon", emoji: "🌑", range: [0, 0.033], meaning: "A time of new beginnings and fresh intentions. The moon is dark, symbolizing the blank canvas of potential. Born under this phase, you embody the energy of initiation, intuition, and inner reflection. You're naturally drawn to starting new projects and planting seeds for the future." },
+                    { name: "Waxing Crescent", emoji: "🌒", range: [0.033, 0.216], meaning: "Growth and commitment define this phase. As the moon begins to show its light, you carry the energy of emergence and forward movement. You're a natural optimist who takes initial steps with courage, building momentum and gathering resources for your dreams." },
+                    { name: "First Quarter", emoji: "🌓", range: [0.216, 0.283], meaning: "Action and decision-making are your strengths. Half the moon is illuminated, symbolizing balance between shadow and light. You face challenges head-on, make tough choices with confidence, and aren't afraid to overcome obstacles. Crisis brings out your best qualities." },
+                    { name: "Waxing Gibbous", emoji: "🌔", range: [0.283, 0.466], meaning: "Refinement and preparation mark your path. The moon is nearly full, representing the final stages before completion. You perfect details, analyze situations deeply, and prepare thoroughly. Patience and dedication come naturally to you as you work toward manifestation." },
+                    { name: "Full Moon", emoji: "🌕", range: [0.466, 0.533], meaning: "Culmination and illumination define your essence. Born when the moon was fully revealed, you embody clarity, realization, and heightened awareness. You're naturally expressive, emotionally intense, and drawn to bringing things to fruition. Relationships and public recognition often play key roles in your life." },
+                    { name: "Waning Gibbous", emoji: "🌖", range: [0.533, 0.716], meaning: "Sharing wisdom and gratitude are your gifts. As the moon begins to wane from fullness, you carry the energy of dissemination and teaching. You're meant to share what you've learned, give back to others, and find meaning through contribution. Your experiences become lessons for many." },
+                    { name: "Last Quarter", emoji: "🌗", range: [0.716, 0.783], meaning: "Release and transformation guide you. Half the moon remains visible as it wanes, representing the balance between holding on and letting go. You naturally understand when to release what no longer serves, forgive the past, and make space for renewal. Crisis brings wisdom." },
+                    { name: "Waning Crescent", emoji: "🌘", range: [0.783, 1.0], meaning: "Rest, reflection, and surrender define your nature. Born in the moon's final phase before renewal, you carry ancient wisdom and spiritual insight. You're drawn to introspection, healing, and preparation for transformation. Endings don't frighten you—they're doorways to rebirth." }
                 ];
                 
+                // Find the matching phase
                 let phase = phases[0];
                 for (let p of phases) {
-                    if (currentCycle >= p.range[0] && currentCycle < p.range[1]) {
+                    if (phaseValue >= p.range[0] && phaseValue < p.range[1]) {
                         phase = p;
                         break;
                     }
                 }
                 
+                // Calculate illumination percentage
+                const illumination = Math.round(moonIllumination.fraction * 100);
+                
                 document.getElementById('result-title').textContent = `${phase.emoji} ${phase.name}`;
-                document.getElementById('result-text').textContent = phase.meaning;
+                document.getElementById('result-text').innerHTML = `
+                    <strong>Moon Illumination:</strong> ${illumination}%<br><br>
+                    ${phase.meaning}
+                `;
                 document.getElementById('result').classList.add('show');
             });
         
+    
+        // Load saved data from localStorage
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // Map of possible field names to data keys
+                const fieldMappings = {
+                    'preferredName': 'preferredName',
+                    'name': 'preferredName',
+                    'yourName': 'preferredName',
+                    'birthName': 'birthName',
+                    'fullName': 'birthName',
+                    'birthDate': 'birthDate',
+                    'date': 'birthDate',
+                    'dob': 'birthDate',
+                    'birthdate': 'birthDate',
+                    'birthTime': 'birthTime',
+                    'time': 'birthTime',
+                    'birthPlace': 'birthPlace',
+                    'place': 'birthPlace',
+                    'location': 'birthPlace'
+                };
+                
+                Object.keys(fieldMappings).forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    const dataKey = fieldMappings[fieldId];
+                    if (field && data[dataKey]) {
+                        field.value = data[dataKey];
+                    }
+                });
+            }
+        }
+        
+        // Save user data to localStorage
+        function saveUserData() {
+            const userData = {};
+            
+            // Try to find and save various field types
+            const fields = [
+                {ids: ['preferredName', 'name', 'yourName'], key: 'preferredName'},
+                {ids: ['birthName', 'fullName'], key: 'birthName'},
+                {ids: ['birthDate', 'date', 'dob', 'birthdate'], key: 'birthDate'},
+                {ids: ['birthTime', 'time'], key: 'birthTime'},
+                {ids: ['birthPlace', 'place', 'location'], key: 'birthPlace'}
+            ];
+            
+            fields.forEach(field => {
+                for (let id of field.ids) {
+                    const element = document.getElementById(id);
+                    if (element && element.value) {
+                        userData[field.key] = element.value;
+                        break;
+                    }
+                }
+            });
+            
+            if (Object.keys(userData).length > 0) {
+                localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
+            }
+        }
+        
+        // Clear saved data
+        function clearSavedData() {
+            if (confirm('This will clear your saved personal information. Are you sure?')) {
+                localStorage.removeItem('quantumMerlinUserData');
+                location.reload();
+            }
+        }
+        
+        // Load saved data when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            loadSavedData();
+            
+            // Auto-save on form submission
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function() {
+                    saveUserData();
+                });
+            });
+            
+            // Auto-save on button clicks (for tools without forms)
+            const calcButtons = document.querySelectorAll('button[id*="calculate"], button[id*="btn"]');
+            calcButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    setTimeout(saveUserData, 100);
+                });
+            });
+        });
+
     </script>
 </body>
 </html>

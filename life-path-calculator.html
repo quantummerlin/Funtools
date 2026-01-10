@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Path Number | Quantum Merlin</title>
-    <meta name="description" content="Reveal your life path pattern through ancient numerology and quantum clarity.">
+    <title>Life Path Number Calculator | Free Personalized Reading</title>
+    <meta name="description" content="Discover your soul's purpose and life journey through your unique Life Path number">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -18,201 +18,775 @@
                 radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
             min-height: 100vh;
             padding: 20px;
+            line-height: 1.8;
             color: #e0e0e0;
         }
-        .container { max-width: 800px; margin: 0 auto; }
-        .header { text-align: center; color: white; margin-bottom: 40px; }
-        .header h1 { 
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2.8em; 
+            font-size: 2.8em;
             margin-bottom: 15px;
             background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: 700;
         }
-        .header p { 
+        .header p {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2em; 
-            opacity: 0.85;
+            font-size: 1.2em;
             color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
         }
         .tool-card {
             background: rgba(20, 20, 30, 0.8);
             border: 2px solid rgba(6, 182, 212, 0.3);
             border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             margin-bottom: 30px;
         }
-        .input-group { margin-bottom: 25px; }
-        label { 
-            display: block; 
+        .input-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.2);
+        }
+        .input-section:last-of-type {
+            border-bottom: none;
+        }
+        .section-title {
             font-family: 'Cinzel', serif;
-            font-weight: 600; 
-            margin-bottom: 8px; 
+            font-size: 1.4em;
             color: #fbbf24;
+            margin-bottom: 20px;
+            font-weight: 600;
             letter-spacing: 0.5px;
         }
-        input[type="text"], input[type="number"], input[type="date"], select {
+        .input-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #06b6d4;
+            font-size: 1.05em;
+        }
+        .helper-text {
+            font-size: 0.9em;
+            color: #9ca3af;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        select {
             width: 100%;
             padding: 15px;
-            background: rgba(10, 10, 20, 0.6);
             border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
             border-radius: 10px;
             font-size: 16px;
+            transition: border-color 0.3s;
             font-family: 'Cormorant Garamond', serif;
-            color: #e0e0e0;
-            transition: all 0.3s;
         }
-        input:focus, select:focus { 
-            outline: none; 
-            border-color: #06b6d4;
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+        input:focus, select:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
         button {
             background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
             color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-family: 'Cinzel', serif;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 18px 50px;
+            font-size: 1.2em;
             font-weight: 600;
+            font-family: 'Cinzel', serif;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
             width: 100%;
+            margin-top: 20px;
             letter-spacing: 1px;
         }
-        button:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5);
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.4);
+            border-color: rgba(251, 191, 36, 0.6);
         }
         .result {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
-            border: 2px solid rgba(251, 191, 36, 0.4);
-            color: white;
-            padding: 30px;
+            background: rgba(20, 20, 30, 0.6);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 40px;
             border-radius: 15px;
-            margin-top: 25px;
+            margin-top: 30px;
             display: none;
-            box-shadow: 0 10px 40px rgba(251, 191, 36, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
         }
-        .result.show { display: block; animation: fadeIn 0.5s; }
-        .result h3 { 
+        .result.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .result-title {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2em; 
-            margin-bottom: 15px;
+            font-size: 2.2em;
+            background: linear-gradient(135deg, #fbbf24 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .result-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1em;
+            color: #06b6d4;
+            font-style: italic;
+        }
+        .result-content {
+            font-size: 1.15em;
+            line-height: 2;
+            color: #d1d5db;
+            text-align: justify;
+        }
+        .result-content p {
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background: linear-gradient(120deg, rgba(251, 191, 36, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
             color: #fbbf24;
         }
-        .result p { 
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.15em; 
-            line-height: 1.7;
-            color: #e0e0e0;
+        .share-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(6, 182, 212, 0.2);
+            text-align: center;
         }
-        .back-btn { 
-            background: rgba(6, 182, 212, 0.1); 
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .share-btn {
+            background: rgba(6, 182, 212, 0.1);
             border: 2px solid rgba(6, 182, 212, 0.3);
-            margin-top: 20px; 
+            color: #06b6d4;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
         }
-        .back-btn:hover { 
+        .share-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: rgba(251, 191, 36, 0.5);
+            transform: translateY(-2px);
+        }
+        .back-btn {
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            color: #8b5cf6;
+            margin-top: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+        @media (max-width: 768px) {
+            .tool-card { padding: 30px 20px; }
+            .row { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2em; }
+            .result-content { font-size: 1.05em; }
+        }
+            .profile-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .profile-select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+        }
+        .profile-select:focus {
+            outline: none;
+            border-color: #06b6d4;
+        }
+        .profile-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .profile-btn:hover {
             background: rgba(6, 182, 212, 0.2);
             border-color: #06b6d4;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .share-buttons { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
-        .share-btn { background: #f0f0f0; color: #333; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
-        .share-btn:hover { background: #e0e0e0; }
+        .clear-btn {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+        }
+        .clear-btn:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>✨ Life Path Number</h1>
-            <p>Reveal the pattern already encoded in your birth date</p>
+            <h1>🌟 Life Path Number Calculator</h1>
+            <p>Discover your soul's purpose and life journey through your unique Life Path number</p>
         </div>
         
         <div class="tool-card">
-            <div id="tool-content">
-            <div class="input-group">
-                <label for="birthDate">Your Birth Date:</label>
-                <input type="date" id="birthDate" required>
+            <div style="text-align: right; margin-bottom: 20px;">
+                <button type="button" onclick="clearSavedData()" style="background: rgba(236, 72, 153, 0.1); border: 2px solid rgba(236, 72, 153, 0.3); color: #ec4899; padding: 8px 16px; font-size: 0.9em; width: auto; margin: 0;">
+                    🗑️ Clear My Data
+                </button>
             </div>
-        </div>
-            <button id="calculate-btn">Reveal Pattern</button>
+            <form id="toolForm">
+                
+<div class="input-section">
+    <div class="section-title">Personal Information</div>
+    <div class="input-group">
+        <label for="preferredName">What name do you resonate with?</label>
+        <input type="text" id="preferredName" placeholder="The name you identify with most" required>
+        <div class="helper-text">Use the name that feels most authentic to you - this could be your birth name, chosen name, or nickname</div>
+    </div>
+    <div class="input-group">
+        <label for="birthName">Full birth name (as on birth certificate)</label>
+        <input type="text" id="birthName" placeholder="Your legal birth name">
+        <div class="helper-text">Optional but provides deeper insights into your soul's blueprint</div>
+    </div>
+</div>
+
+<div class="input-section">
+    <div class="section-title">Birth Information</div>
+    <div class="input-group">
+        <label for="birthDate">Date of Birth</label>
+        <input type="date" id="birthDate" required>
+    </div>
+    <div class="input-group">
+        <label for="birthTime">Time of Birth</label>
+        <input type="time" id="birthTime">
+        <div class="helper-text">If known - provides more accurate astrological insights</div>
+    </div>
+    <div class="input-group">
+        <label for="birthPlace">Place of Birth</label>
+        <input type="text" id="birthPlace" placeholder="City, Country">
+        <div class="helper-text">Helps calculate accurate astrological positions</div>
+    </div>
+</div>
+
+                <button type="submit">Reveal My Life Path</button>
+            </form>
+            
             <div id="result" class="result">
-                <h3 id="result-title"></h3>
-                <p id="result-text"></p>
-                <div class="share-buttons">
-                    <button class="share-btn" onclick="shareOnTwitter()">🐦 Twitter</button>
-                    <button class="share-btn" onclick="shareOnFacebook()">📘 Facebook</button>
-                    <button class="share-btn" onclick="copyLink()">📋 Copy Link</button>
+                <div class="result-header">
+                    <div class="result-title" id="resultTitle"></div>
+                    <div class="result-subtitle" id="resultSubtitle"></div>
+                </div>
+                <div class="result-content" id="resultContent"></div>
+                <div class="share-section">
+                    <p style="color: #9ca3af; margin-bottom: 10px;">Found this helpful? Share with others:</p>
+                    <div class="share-buttons">
+                        <a href="#" class="share-btn" onclick="shareOnTwitter(); return false;">🐦 Twitter</a>
+                        <a href="#" class="share-btn" onclick="shareOnFacebook(); return false;">📘 Facebook</a>
+                        <a href="#" class="share-btn" onclick="copyLink(); return false;">📋 Copy Link</a>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <button class="back-btn" onclick="goBack()">← Quantum Merlin Hub</button>
+        <button class="back-btn" onclick="goBack()">← Back to All Tools</button>
     </div>
     
     <script>
         function goBack() { window.location.href = 'tools_index.html'; }
+        
         function shareOnTwitter() {
-            const text = encodeURIComponent("I just used Life Path Number Calculator! Check it out: ");
+            const text = encodeURIComponent("I just got my personalized Life Path Number Calculator! Get yours:");
             const url = encodeURIComponent(window.location.href);
-            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
-        }
-        function shareOnFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-        }
-        function copyLink() {
-            navigator.clipboard.writeText(window.location.href);
-            alert('Link copied to clipboard! 📋');
+            window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank');
         }
         
-            document.getElementById('calculate-btn').addEventListener('click', function() {
-                const birthDate = document.getElementById('birthDate').value;
-                if (!birthDate) {
-                    alert('Please enter your birth date');
-                    return;
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank');
+        }
+        
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard! Share it with friends.');
+        }
+        
+        // Load saved data from localStorage
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                if (document.getElementById('preferredName') && data.preferredName) {
+                    document.getElementById('preferredName').value = data.preferredName;
                 }
-                
-                const date = new Date(birthDate);
-                const day = date.getDate();
-                const month = date.getMonth() + 1;
-                const year = date.getFullYear();
-                
-                // Reduce to single digit
-                function reduceToSingle(num) {
-                    while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
-                        num = String(num).split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
-                    }
-                    return num;
+                if (document.getElementById('birthName') && data.birthName) {
+                    document.getElementById('birthName').value = data.birthName;
                 }
-                
-                const sum = reduceToSingle(day + month + year);
-                
-                const meanings = {
-                    1: "The Leader - Independent, ambitious, and determined. You're here to lead and inspire others.",
-                    2: "The Peacemaker - Diplomatic, sensitive, and cooperative. You bring harmony to relationships.",
-                    3: "The Creative - Expressive, artistic, and joyful. You communicate creativity and optimism.",
-                    4: "The Builder - Practical, organized, and hardworking. You build solid foundations.",
-                    5: "The Adventurer - Versatile, curious, and freedom-loving. You embrace change and adventure.",
-                    6: "The Nurturer - Responsible, loving, and domestic. You care for others and create harmony.",
-                    7: "The Seeker - Analytical, spiritual, and intuitive. You seek truth and deeper meaning.",
-                    8: "The Powerhouse - Ambitious, successful, and material. You achieve financial abundance.",
-                    9: "The Humanitarian - Compassionate, generous, and selfless. You help others and serve humanity.",
-                    11: "The Master Intuitive - Highly intuitive, inspiring, and visionary. You have spiritual insights.",
-                    22: "The Master Builder - Practical visionary with big dreams. You turn visions into reality.",
-                    33: "The Master Teacher - Nurturing and inspirational. You uplift and guide others."
-                };
-                
-                document.getElementById('result-title').textContent = `Your Life Path Number is ${sum}`;
-                document.getElementById('result-text').textContent = meanings[sum];
-                document.getElementById('result').classList.add('show');
+                if (document.getElementById('birthDate') && data.birthDate) {
+                    document.getElementById('birthDate').value = data.birthDate;
+                }
+                if (document.getElementById('birthTime') && data.birthTime) {
+                    document.getElementById('birthTime').value = data.birthTime;
+                }
+                if (document.getElementById('birthPlace') && data.birthPlace) {
+                    document.getElementById('birthPlace').value = data.birthPlace;
+                }
+            }
+        }
+        
+        // Save user data to localStorage
+        function saveUserData() {
+            const userData = {};
+            
+            if (document.getElementById('preferredName')) {
+                userData.preferredName = document.getElementById('preferredName').value;
+            }
+            if (document.getElementById('birthName')) {
+                userData.birthName = document.getElementById('birthName').value;
+            }
+            if (document.getElementById('birthDate')) {
+                userData.birthDate = document.getElementById('birthDate').value;
+            }
+            if (document.getElementById('birthTime')) {
+                userData.birthTime = document.getElementById('birthTime').value;
+            }
+            if (document.getElementById('birthPlace')) {
+                userData.birthPlace = document.getElementById('birthPlace').value;
+            }
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
+        }
+        // Profile Management Functions
+        function getAllProfiles() {
+            const profiles = localStorage.getItem('quantumMerlinProfiles');
+            return profiles ? JSON.parse(profiles) : {};
+        }
+
+        function saveProfile(profileName) {
+            if (!profileName || profileName.trim() === '') {
+                alert('Please enter a profile name');
+                return;
+            }
+            
+            const currentData = {
+                preferredName: document.getElementById('preferredName')?.value || '',
+                birthName: document.getElementById('birthName')?.value || '',
+                birthDate: document.getElementById('birthDate')?.value || '',
+                birthTime: document.getElementById('birthTime')?.value || '',
+                birthPlace: document.getElementById('birthPlace')?.value || ''
+            };
+            
+            const profiles = getAllProfiles();
+            profiles[profileName] = currentData;
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(currentData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+            
+            updateProfileDropdown();
+            alert(`Profile "${profileName}" saved! ✨`);
+        }
+
+        function loadProfile(profileName) {
+            const profiles = getAllProfiles();
+            const profileData = profiles[profileName];
+            
+            if (!profileData) return;
+            
+            if (profileData.preferredName && document.getElementById('preferredName')) {
+                document.getElementById('preferredName').value = profileData.preferredName;
+            }
+            if (profileData.birthName && document.getElementById('birthName')) {
+                document.getElementById('birthName').value = profileData.birthName;
+            }
+            if (profileData.birthDate && document.getElementById('birthDate')) {
+                document.getElementById('birthDate').value = profileData.birthDate;
+            }
+            if (profileData.birthTime && document.getElementById('birthTime')) {
+                document.getElementById('birthTime').value = profileData.birthTime;
+            }
+            if (profileData.birthPlace && document.getElementById('birthPlace')) {
+                document.getElementById('birthPlace').value = profileData.birthPlace;
+            }
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(profileData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+        }
+
+        function deleteProfile(profileName) {
+            const profiles = getAllProfiles();
+            delete profiles[profileName];
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
+            if (activeProfile === profileName) {
+                localStorage.removeItem('quantumMerlinActiveProfile');
+            }
+            
+            updateProfileDropdown();
+        }
+
+        function updateProfileDropdown() {
+            const dropdown = document.getElementById('profileSelect');
+            if (!dropdown) return;
+            
+            const profiles = getAllProfiles();
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            dropdown.innerHTML = '<option value="">Select a profile...</option>';
+            
+            Object.keys(profiles).sort().forEach(profileName => {
+                const option = document.createElement('option');
+                option.value = profileName;
+                option.textContent = profileName;
+                if (profileName === activeProfile) {
+                    option.selected = true;
+                }
+                dropdown.appendChild(option);
             });
+        }
+
+        function onProfileChange() {
+            const dropdown = document.getElementById('profileSelect');
+            const profileName = dropdown.value;
+            
+            if (profileName) {
+                loadProfile(profileName);
+            }
+        }
+
+        function showSaveProfileDialog() {
+            const profiles = getAllProfiles();
+            const currentActive = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            let message = 'Enter a name for this profile:';
+            if (currentActive) {
+                message += `
+
+Current profile: "${currentActive}"
+Leave blank to update current profile.`;
+            }
+            
+            const profileName = prompt(message, currentActive);
+            
+            if (profileName !== null) {
+                const finalName = profileName.trim() || currentActive || 'Profile ' + (Object.keys(profiles).length + 1);
+                saveProfile(finalName);
+            }
+        }
+
+        function showDeleteProfileDialog() {
+            const profiles = getAllProfiles();
+            const profileNames = Object.keys(profiles).sort();
+            
+            if (profileNames.length === 0) {
+                alert('No saved profiles to delete');
+                return;
+            }
+            
+            const profileName = prompt(`Enter profile name to delete:
+
+Saved profiles:
+${profileNames.join('
+')}`);
+            if (profileName && profiles[profileName]) {
+                if (confirm(`Delete profile "${profileName}"?`)) {
+                    deleteProfile(profileName);
+                    alert(`Profile "${profileName}" deleted`);
+                }
+            } else if (profileName) {
+                alert('Profile not found');
+            }
+        }
+
+        // Initialize profile dropdown on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProfileDropdown();
+            
+            const dropdown = document.getElementById('profileSelect');
+            if (dropdown) {
+                dropdown.addEventListener('change', onProfileChange);
+            }
+        });
+
+        
+        // Clear saved data
+        function clearSavedData() {
+            if (confirm('This will clear your saved personal information. Are you sure?')) {
+                localStorage.removeItem('quantumMerlinUserData');
+                location.reload();
+            }
+        }
+        
+        // Load saved data when page loads
+        window.addEventListener('DOMContentLoaded', loadSavedData);
+        
+        
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function letterToNumber(letter) {
+            const values = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+                'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
+            };
+            return values[letter.toUpperCase()] || 0;
+        }
+        
+        function calculateNameNumber(name) {
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => sum + letterToNumber(char), 0)
+            );
+        }
+        
+        function calculateVowelNumber(name) {
+            const vowels = 'AEIOU';
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => 
+                    vowels.includes(char) ? sum + letterToNumber(char) : sum, 0)
+            );
+        }
+        
+        function calculateConsonantNumber(name) {
+            const vowels = 'AEIOU';
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => 
+                    !vowels.includes(char) && /[A-Z]/.test(char) ? sum + letterToNumber(char) : sum, 0)
+            );
+        }
+        
+        function calculateLifePath(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            const dayReduced = reduceToSingle(day);
+            const monthReduced = reduceToSingle(month);
+            const yearReduced = reduceToSingle(year);
+            
+            return reduceToSingle(dayReduced + monthReduced + yearReduced);
+        }
+
+        document.getElementById('toolForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Save user data to localStorage
+            saveUserData();
+            
+            const preferredName = document.getElementById('preferredName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            
+            const lifePathNumber = calculateLifePath(birthDate);
+            
+            const interpretations = {
+                1: {
+                    title: "The Pioneer & Leader",
+                    traits: "independent, innovative, ambitious, determined",
+                    description: `${preferredName}, you were born to lead and innovate. Your Life Path 1 reveals a soul designed for independence and originality. You came into this world with an innate drive to forge your own path, create something new, and inspire others through your courage and vision.`,
+                    core: `At your core, you are a natural pioneer. You feel most alive when you're breaking new ground, starting fresh ventures, or standing confidently in your own truth. Traditional paths rarely satisfy you—you need the freedom to do things your way. This independence isn't selfishness; it's your soul's requirement for authentic expression.`,
+                    challenges: `Your greatest challenge lies in balancing your fierce independence with meaningful collaboration. You may sometimes feel isolated in your vision, or struggle when others don't move at your pace. Learning to lead without dominating, and to accept support without feeling dependent, will be crucial to your growth.`,
+                    relationships: `In relationships, you need a partner who respects your autonomy while providing steady support. You're attracted to people who have their own strong sense of self. Your ideal partner challenges you intellectually and emotionally, but gives you space to pursue your individual goals. Avoid relationships where you feel controlled or where your independence is threatened.`,
+                    purpose: `Your life purpose is to pioneer new ways of thinking and being. Whether through business, art, science, or social change, you're here to show others what's possible when someone has the courage to stand alone. Your legacy will be the paths you've opened for others to follow.`,
+                    advice: `Embrace your leadership abilities while cultivating patience with those who move differently. Your innovations need others to bring them to fruition. Practice asking for help—it's not weakness, but wisdom. Channel your competitive nature into self-improvement rather than comparison. Trust that your unique vision is exactly what the world needs.`
+                },
+                2: {
+                    title: "The Peacemaker & Diplomat",
+                    traits: "sensitive, cooperative, intuitive, harmonious",
+                    description: `${preferredName}, you were born to unite and harmonize. Your Life Path 2 reveals a soul designed for cooperation, intuition, and bringing people together. You came into this world with an extraordinary ability to feel what others feel, to bridge divides, and to create peace where there was conflict.`,
+                    core: `At your core, you are a natural diplomat and mediator. You feel most alive when you're creating harmony, supporting others, or helping groups work together effectively. You possess an almost psychic sensitivity to the emotions and needs of those around you. This isn't weakness—it's your superpower.`,
+                    challenges: `Your greatest challenge is maintaining your sense of self while being so attuned to others. You may struggle with people-pleasing, difficulty saying no, or losing yourself in relationships. Learning to honor your own needs as much as you honor others' needs is essential for your wellbeing and effectiveness.`,
+                    relationships: `In relationships, you are deeply devoted and intuitive. You often know what your partner needs before they do. You thrive with someone who appreciates your sensitivity and doesn't take advantage of your giving nature. Your ideal partner is emotionally intelligent, honest, and willing to create true partnership. Avoid those who dismiss your feelings or expect you to always compromise.`,
+                    purpose: `Your life purpose is to be a bridge-builder and healer in a divided world. Whether through counseling, mediation, collaborative work, or simply being the person who helps groups function better, you're here to show humanity the power of cooperation and understanding. Your legacy will be the relationships you've healed and the peace you've created.`,
+                    advice: `Honor your sensitivity as the gift it is. Set clear boundaries—saying no to others is saying yes to yourself. Spend time alone to recharge your empathic batteries. Trust your intuition completely; it's rarely wrong. Remember that sometimes the most peaceful thing you can do is stand firmly for what you need.`
+                },
+                3: {
+                    title: "The Creative Communicator",
+                    traits: "expressive, creative, joyful, inspiring",
+                    description: `${preferredName}, you were born to create and inspire through expression. Your Life Path 3 reveals a soul designed for creativity, communication, and bringing joy to the world. You came into this world with a natural gift for self-expression, whether through words, art, performance, or simply the way you live your life.`,
+                    core: `At your core, you are a creative force and natural entertainer. You feel most alive when you're expressing yourself authentically, making people laugh, or creating something beautiful. You have an almost childlike enthusiasm for life that others find infectious. Your creativity isn't limited to the arts—it flows through everything you touch.`,
+                    challenges: `Your greatest challenge is channeling your abundant creative energy into focused achievement. You may struggle with scattered attention, starting many projects but finishing few, or becoming superficial in your pursuits. Learning to discipline your creativity without crushing your spontaneity is key to manifesting your full potential.`,
+                    relationships: `In relationships, you bring warmth, humor, and excitement. You need a partner who appreciates your expressiveness and doesn't try to dim your light. Your ideal relationship includes playfulness, creativity, and lots of communication. You thrive with someone who encourages your dreams while helping ground your energy. Avoid partners who are overly serious or critical of your enthusiastic nature.`,
+                    purpose: `Your life purpose is to uplift humanity through creative expression and authentic communication. Whether through art, entertainment, teaching, writing, or social connection, you're here to remind people of life's beauty and possibility. Your legacy will be the joy you've spread and the creativity you've inspired in others.`,
+                    advice: `Commit to developing your natural talents through consistent practice. Finish what you start—completion brings fulfillment. Don't scatter your energy across too many interests; focus on what truly lights you up. Express your deeper feelings, not just the cheerful ones. Your vulnerability is as valuable as your joy. Trust that your authentic self-expression is your greatest gift to the world.`
+                },
+                4: {
+                    title: "The Builder & Stabilizer",
+                    traits: "practical, disciplined, reliable, hardworking",
+                    description: `${preferredName}, you were born to build lasting foundations. Your Life Path 4 reveals a soul designed for creating structure, stability, and tangible results. You came into this world with an innate understanding that meaningful achievement requires dedication, discipline, and solid groundwork.`,
+                    core: `At your core, you are a master builder and natural organizer. You feel most alive when you're working toward concrete goals, creating systems that work, or building something that will last. You have an extraordinary ability to take abstract ideas and turn them into practical reality. Your word is your bond, and your reliability is legendary.`,
+                    challenges: `Your greatest challenge is avoiding rigidity and learning when to bend. You may struggle with resistance to change, becoming too focused on work at the expense of play, or getting stuck in routine. Learning to balance structure with flexibility, and duty with joy, will free you to build even more effectively.`,
+                    relationships: `In relationships, you are deeply loyal and committed. You show love through actions more than words, building security and stability for those you care about. Your ideal partner appreciates your reliability and shares your values around commitment and responsibility. You need someone who respects your need for order while helping you loosen up occasionally. Avoid relationships with people who are flaky, irresponsible, or constantly chaotic.`,
+                    purpose: `Your life purpose is to create structures and systems that serve humanity. Whether through business, architecture, organization, teaching methods, or family structures, you're here to build foundations that others can rely on. Your legacy will be the lasting institutions, systems, or structures you've created.`,
+                    advice: `Allow yourself time for rest and play—they're not rewards for work, they're requirements for sustainable success. Not everything requires a plan; sometimes spontaneity leads to unexpected opportunities. Delegate when possible; you don't have to build everything yourself. Trust that your methodical approach will get you there; you don't need to rush. Remember that the journey matters as much as the destination.`
+                },
+                5: {
+                    title: "The Freedom Seeker & Adventurer",
+                    traits: "adventurous, versatile, curious, dynamic",
+                    description: `${preferredName}, you were born for freedom and adventure. Your Life Path 5 reveals a soul designed for experience, variety, and constant growth through change. You came into this world with an insatiable curiosity and a deep need to explore all that life has to offer.`,
+                    core: `At your core, you are a perpetual explorer and natural adventurer. You feel most alive when you're experiencing something new, traveling to unfamiliar places, or learning skills that expand your horizons. Routine feels like death to you; freedom feels like oxygen. Your versatility and adaptability are your greatest strengths.`,
+                    challenges: `Your greatest challenge is learning to commit without feeling trapped. You may struggle with restlessness, difficulty finishing what you start, or avoiding responsibility in pursuit of freedom. Learning that true freedom comes from mastery and that commitment can coexist with adventure is essential for your fulfillment.`,
+                    relationships: `In relationships, you need space, variety, and intellectual stimulation. You're attracted to people who are independent, adventurous, and open-minded. Your ideal partner joins you on adventures while maintaining their own interests and identity. You thrive with someone who understands that your need for freedom isn't about them. Avoid possessive, controlling, or overly routine-oriented partners.`,
+                    purpose: `Your life purpose is to experience life fully and inspire others to embrace change and possibility. Whether through travel, teaching, writing, entrepreneurship, or simply living unconventionally, you're here to show people that life is meant to be lived, not just endured. Your legacy will be the doors you've opened and the adventures you've inspired.`,
+                    advice: `Choose a few commitments that truly matter to you and honor them fully. Freedom without purpose becomes aimlessness. Use your adaptability to navigate challenges, not avoid them. Ground your adventures with some structure—even explorers need a base camp. Learn from your experiences instead of just collecting them. Your depth of experience matters more than breadth.`
+                },
+                6: {
+                    title: "The Nurturer & Healer",
+                    traits: "caring, responsible, compassionate, harmonious",
+                    description: `${preferredName}, you were born to nurture and heal. Your Life Path 6 reveals a soul designed for love, service, and creating harmony in your environment. You came into this world with a deep need to care for others and make their lives more beautiful and peaceful.`,
+                    core: `At your core, you are a natural caregiver and domestic artist. You feel most alive when you're helping others, creating beauty, or bringing people together in harmony. Your home is your sanctuary, and you have an innate ability to make any space feel warm and welcoming. Love and service are not just things you do—they're who you are.`,
+                    challenges: `Your greatest challenge is avoiding martyrdom and maintaining healthy boundaries. You may struggle with trying to fix everyone's problems, sacrificing your needs for others, or becoming resentful when your care isn't appreciated. Learning to receive as gracefully as you give, and to let others face their own consequences, is crucial for your wellbeing.`,
+                    relationships: `In relationships, you are devoted, loving, and deeply committed. You naturally create a beautiful home and nurturing environment. Your ideal partner appreciates your caring nature without taking advantage of it, and actively reciprocates your love and effort. You need someone who values family, home, and emotional connection. Avoid those who refuse to be helped or who drain your energy without giving back.`,
+                    purpose: `Your life purpose is to create healing and harmony wherever you go. Whether through family, counseling, teaching, healthcare, hospitality, or the arts, you're here to show humanity the transformative power of unconditional love and service. Your legacy will be the lives you've touched and the love you've shared.`,
+                    advice: `Put your own oxygen mask on first—you can't pour from an empty cup. Not everyone wants or needs your help; respect their journey. Let go of perfectionism in your caring; done with love is better than perfect. Say no without guilt when your plate is full. Remember that sometimes the most loving thing is to let people learn from their own mistakes.`
+                },
+                7: {
+                    title: "The Seeker & Philosopher",
+                    traits: "analytical, spiritual, introspective, wise",
+                    description: `${preferredName}, you were born to seek truth and wisdom. Your Life Path 7 reveals a soul designed for deep thinking, spiritual exploration, and uncovering life's mysteries. You came into this world with an innate need to understand the deeper meaning behind everything.`,
+                    core: `At your core, you are a natural philosopher and spiritual seeker. You feel most alive when you're contemplating life's big questions, learning something profound, or spending time in introspection. Superficiality bothers you deeply—you crave authenticity, depth, and truth. Your analytical mind and intuitive wisdom are extraordinary gifts.`,
+                    challenges: `Your greatest challenge is avoiding isolation and learning to share your insights. You may struggle with trusting others, becoming too withdrawn, or getting lost in analysis paralysis. Learning to balance solitude with connection, and thinking with feeling, will help you share your wisdom with those who need it.`,
+                    relationships: `In relationships, you need intellectual depth, emotional authenticity, and lots of space. You're attracted to people who are intelligent, introspective, and spiritually aware. Your ideal partner respects your need for solitude and enjoys deep, meaningful conversation. You thrive with someone who values quality time over quantity. Avoid superficial, overly social, or emotionally immature partners.`,
+                    purpose: `Your life purpose is to be a wisdom keeper and truth seeker. Whether through research, teaching, writing, spiritual work, or scientific inquiry, you're here to explore life's deeper mysteries and share your findings with humanity. Your legacy will be the wisdom you've uncovered and the consciousness you've elevated.`,
+                    advice: `Share your insights—the world needs your wisdom. Balance your alone time with meaningful connection. Trust your intuition as much as your analysis; both are valuable. Don't wait until you have all the answers before engaging with life. Practice being present in your body, not just your mind. Remember that experience teaches what books cannot.`
+                },
+                8: {
+                    title: "The Powerhouse & Manifestor",
+                    traits: "ambitious, powerful, successful, authoritative",
+                    description: `${preferredName}, you were born for power and achievement. Your Life Path 8 reveals a soul designed for material mastery, leadership, and manifesting abundance. You came into this world with an extraordinary ability to create success and wield power responsibly.`,
+                    core: `At your core, you are a natural leader and master manifestor. You feel most alive when you're building something significant, leading important initiatives, or achieving ambitious goals. You have an innate understanding of how energy, effort, and resources translate into results. Power and success aren't vanity for you—they're your natural state.`,
+                    challenges: `Your greatest challenge is using power wisely and avoiding workaholism. You may struggle with valuing yourself beyond achievements, becoming too controlling, or sacrificing relationships for success. Learning that true power includes vulnerability, and that rest is productive, will multiply your effectiveness.`,
+                    relationships: `In relationships, you are loyal, protective, and generous. You need a partner who is confident, accomplished, and emotionally mature enough to handle your intensity. Your ideal relationship is a true partnership where both people are powerful in their own right. You thrive with someone who respects your ambition while keeping you grounded. Avoid dependent, passive, or jealous partners.`,
+                    purpose: `Your life purpose is to demonstrate ethical leadership and create abundance that serves the greater good. Whether through business, politics, philanthropy, or organizational leadership, you're here to show that power and integrity can coexist. Your legacy will be the organizations you've built and the ethical standards you've set.`,
+                    advice: `Use your power to empower others, not dominate them. Success is sweeter when shared. Make time for relationships and self-care—they're investments, not distractions. Money is a tool, not the goal; focus on impact. Remember that your worth isn't measured by your achievements. Lead with both strength and compassion.`
+                },
+                9: {
+                    title: "The Humanitarian & Visionary",
+                    traits: "compassionate, wise, humanitarian, idealistic",
+                    description: `${preferredName}, you were born to serve humanity. Your Life Path 9 reveals an old soul designed for compassion, wisdom, and making the world a better place. You came into this world with a deep understanding of human nature and an innate desire to heal collective wounds.`,
+                    core: `At your core, you are a natural humanitarian and universal lover. You feel most alive when you're helping others, working for a cause greater than yourself, or expressing your deep compassion. You see beyond surface differences to recognize the shared humanity in everyone. Your wisdom and empathy are profound gifts to the world.`,
+                    challenges: `Your greatest challenge is avoiding emotional overwhelm and learning to receive. You may struggle with absorbing others' pain, difficulty letting go, or feeling disappointed by humanity. Learning to maintain healthy boundaries while staying open-hearted, and to accept your own needs as valid, is essential for sustainable service.`,
+                    relationships: `In relationships, you are deeply loving, accepting, and devoted. You need a partner who shares your values and vision for a better world. Your ideal relationship includes shared purpose, spiritual connection, and mutual growth. You thrive with someone who is evolved, compassionate, and committed to their own healing. Avoid those who are selfish, closed-minded, or emotionally unavailable.`,
+                    purpose: `Your life purpose is to serve as a compassionate leader and healing presence. Whether through activism, healing arts, teaching, philanthropy, or the arts, you're here to elevate human consciousness and reduce suffering. Your legacy will be the positive change you've created and the hearts you've opened.`,
+                    advice: `You can't save everyone; focus your energy where it creates real impact. Release what no longer serves you—letting go is not abandoning. Receive help graciously; it's how others express their love. Don't sacrifice yourself on the altar of service. Remember that sometimes the greatest gift you can give is your own healing and wholeness. Lead by example.`
+                },
+                11: {
+                    title: "The Illuminator & Inspired Healer",
+                    traits: "intuitive, inspiring, visionary, sensitive",
+                    description: `${preferredName}, you were born to illuminate and inspire. Your Life Path 11 is a Master Number, revealing a soul designed for spiritual leadership and bringing divine inspiration to Earth. You came into this world with extraordinary intuitive abilities and a mission to uplift consciousness.`,
+                    core: `At your core, you are a spiritual antenna and natural inspirational leader. You feel most alive when you're channeling higher wisdom, inspiring others, or working on visionary projects. You possess an almost otherworldly sensitivity and can perceive energies and truths that others miss. Your presence alone can shift the energy of a room.`,
+                    challenges: `Your greatest challenge is managing your intense sensitivity and living up to your spiritual potential. You may struggle with nervous energy, self-doubt about your gifts, or feeling overwhelmed by the expectations of your path. Learning to ground your spiritual insights in practical action, and to trust your unique abilities, is essential.`,
+                    relationships: `In relationships, you need deep spiritual and emotional connection. You're attracted to people who are emotionally evolved, spiritually aware, and supportive of your mission. Your ideal partner understands your sensitivity and helps you stay grounded. You thrive with someone who shares your spiritual values. Avoid cynical, materialistic, or energetically draining partners.`,
+                    purpose: `Your life purpose is to be a lightworker and spiritual teacher. Whether through healing, teaching, counseling, creative arts, or innovative leadership, you're here to bring divine inspiration and higher consciousness to humanity. Your legacy will be the awakening you've sparked and the light you've shared.`,
+                    advice: `Ground your spiritual gifts in daily practice and practical application. Your sensitivity is a superpower; protect it with boundaries. Don't dim your light to make others comfortable. Seek out spiritual community and mentors. Balance your time between receiving inspiration and taking inspired action. Trust that you were chosen for this path for a reason.`
+                },
+                22: {
+                    title: "The Master Builder & Architect",
+                    traits: "visionary, practical, powerful, transformative",
+                    description: `${preferredName}, you were born to build lasting legacies. Your Life Path 22 is a Master Number, revealing a soul designed to turn grand visions into concrete reality. You came into this world with the unique ability to combine spiritual vision with practical mastery.`,
+                    core: `At your core, you are a master architect of reality. You feel most alive when you're working on large-scale projects that will benefit many people. You possess the rare combination of visionary thinking and practical skill necessary to manifest seemingly impossible dreams. You're here to build structures, systems, or organizations that transform the world.`,
+                    challenges: `Your greatest challenge is managing the pressure of your immense potential without becoming overwhelmed. You may struggle with self-doubt, taking on too much, or becoming frustrated when others don't share your vision or pace. Learning to break huge visions into manageable steps, and to celebrate small wins, keeps you moving forward.`,
+                    relationships: `In relationships, you need a partner who is stable, supportive, and shares your long-term vision. You're attracted to people who are both grounded and ambitious. Your ideal partner believes in your dreams and provides practical support while maintaining their own identity. You thrive with someone who can handle your intensity and ambition. Avoid those who are intimidated by your power or dismissive of your visions.`,
+                    purpose: `Your life purpose is to create transformative structures that serve humanity for generations. Whether through innovative businesses, educational systems, social movements, or physical architecture, you're here to manifest visions that change the world. Your legacy will be the enduring impact of what you've built.`,
+                    advice: `Think generationally but act daily. Your big vision needs small, consistent steps. Surround yourself with skilled team members; you can't build alone. Rest is not optional—burnout serves no one. Stay humble; your power is for service, not ego. Trust that your vision will unfold in divine timing. The world needs what you came to build.`
+                },
+                33: {
+                    title: "The Master Teacher & Healer",
+                    traits: "nurturing, wise, compassionate, transformative",
+                    description: `${preferredName}, you were born to heal and teach at the highest level. Your Life Path 33 is a Master Number, revealing a soul designed for selfless service and spiritual teaching. You came into this world with a profound calling to heal, guide, and elevate others through unconditional love.`,
+                    core: `At your core, you are a master healer and spiritual teacher. You feel most alive when you're helping others transform their lives, teaching profound truths, or offering healing presence. You embody the energy of the Christ consciousness—unconditional love, compassion, and service. Your very presence can be healing to those around you.`,
+                    challenges: `Your greatest challenge is avoiding martyrdom and maintaining your own wellbeing while serving others. You may struggle with taking on others' pain, difficulty receiving, or sacrificing yourself completely for your mission. Learning that self-care enables greater service, and that boundaries are acts of love, is essential.`,
+                    relationships: `In relationships, you give abundantly and need a partner who can match your emotional depth. You're attracted to people who are spiritually mature, emotionally evolved, and committed to growth. Your ideal partner supports your mission while ensuring you also receive care. You thrive with someone who values spiritual connection and service. Avoid those who take advantage of your giving nature or resist their own healing.`,
+                    purpose: `Your life purpose is to be a master teacher and healer who elevates human consciousness through love and wisdom. Whether through spiritual teaching, healing work, counseling, or inspirational leadership, you're here to show humanity what unconditional love looks like in action. Your legacy will be the transformations you've facilitated and the love you've embodied.`,
+                    advice: `You cannot pour from an empty cup—prioritize your own healing and wholeness. Set clear boundaries; saying no to some allows you to fully say yes to what matters most. Accept help and support; receiving is how others express their love. Don't try to save everyone; honor each person's journey and timing. Remember that your presence is the healing, not your depletion. Lead by being whole, not wounded.`
+                }
+            };
+            
+            const interpretation = interpretations[lifePathNumber];
+            
+            document.getElementById('resultTitle').innerHTML = `Life Path ${lifePathNumber}: ${interpretation.title}`;
+            document.getElementById('resultSubtitle').innerHTML = `${preferredName}, here is your personalized reading`;
+            
+            document.getElementById('resultContent').innerHTML = `
+                <p><span class="highlight">Core Traits:</span> ${interpretation.traits}</p>
+                <p>${interpretation.description}</p>
+                <p><strong>Your Core Nature:</strong> ${interpretation.core}</p>
+                <p><strong>Your Life Challenges:</strong> ${interpretation.challenges}</p>
+                <p><strong>Your Relationship Path:</strong> ${interpretation.relationships}</p>
+                <p><strong>Your Life Purpose:</strong> ${interpretation.purpose}</p>
+                <p><strong>Guidance for Your Journey:</strong> ${interpretation.advice}</p>
+            `;
+            
+            document.getElementById('result').classList.add('show');
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
         
     </script>
 </body>

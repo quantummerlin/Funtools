@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Number Deep Reading | Free Personalized Reading</title>
+    <meta name="description" content="Comprehensive guidance for living with master number energy (11, 22, 33)">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2em;
+            color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .clear-data-btn {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .clear-data-btn button {
+            background: rgba(236, 72, 153, 0.1);
+            border: 2px solid rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .clear-data-btn button:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
+        .input-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.2);
+        }
+        .input-section:last-of-type {
+            border-bottom: none;
+        }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .input-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #06b6d4;
+            font-size: 1.05em;
+        }
+        .helper-text {
+            font-size: 0.9em;
+            color: #9ca3af;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        input:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        button[type="submit"] {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            color: white;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 18px 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.4);
+            border-color: rgba(251, 191, 36, 0.6);
+        }
+        .result {
+            background: rgba(20, 20, 30, 0.6);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 30px;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        .result.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result h2 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .result-content {
+            font-size: 1.15em;
+            line-height: 2;
+            color: #e0e0e0;
+        }
+        .result-content p {
+            margin-bottom: 20px;
+        }
+        .back-button {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            margin-top: 30px;
+        }
+        .back-button:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+            transform: translateY(-2px);
+        }
+        .no-karmic {
+            text-align: center;
+            padding: 40px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 15px;
+        }
+        .no-karmic h3 {
+            font-family: 'Cinzel', serif;
+            color: #06b6d4;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 768px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+            .tool-card {
+                padding: 30px 20px;
+            }
+        }
+            .profile-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .profile-select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+        }
+        .profile-select:focus {
+            outline: none;
+            border-color: #06b6d4;
+        }
+        .profile-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .profile-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+        }
+        .clear-btn {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+        }
+        .clear-btn:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👑 Master Number Deep Reading</h1>
+            <p>Master your master number potential</p>
+        </div>
+
+        <div class="tool-card">
+                        <div class="profile-controls">
+                <select id="profileSelect" class="profile-select">
+                    <option value="">Select a profile...</option>
+                </select>
+                <button type="button" class="profile-btn" onclick="showSaveProfileDialog()">💾 Save Profile</button>
+                <button type="button" class="profile-btn" onclick="showDeleteProfileDialog()">🗑️ Delete Profile</button>
+                <button type="button" class="profile-btn clear-btn" onclick="clearSavedData()">✨ Clear Form</button>
+            </div>
+
+            <form id="calculator-form" onsubmit="calculateReading(event)">
+                <div class="input-section">
+                    <div class="section-title">✨ Personal Information</div>
+                    
+                    <div class="input-group">
+                        <label for="preferredName">Preferred Name</label>
+                        <input type="text" id="preferredName" required>
+                        <div class="helper-text">What you like to be called</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="birthName">Full Birth Name</label>
+                        <input type="text" id="birthName" required>
+                        <div class="helper-text">As it appears on your birth certificate</div>
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">🌟 Birth Details</div>
+                    
+                    <div class="input-group">
+                        <label for="birthDate">Birth Date</label>
+                        <input type="date" id="birthDate" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime">
+                            <div class="helper-text">Optional but helpful</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth Place</label>
+                            <input type="text" id="birthPlace" placeholder="City, Country">
+                            <div class="helper-text">Optional</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">✨ Reveal My Reading</button>
+            </form>
+
+            <div id="result" class="result">
+                <h2 id="result-title"></h2>
+                <div id="result-content" class="result-content"></div>
+                <button type="button" class="back-button" onclick="window.location.href='tools_index.html'">← Back to Quantum Merlin Hub</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Numerology functions
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+
+        function letterToNumber(letter) {
+            const values = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+                'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
+            };
+            return values[letter.toUpperCase()] || 0;
+        }
+
+        function calculateNameNumber(name) {
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => sum + letterToNumber(char), 0)
+            );
+        }
+
+        function calculateLifePath(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            const dayReduced = reduceToSingle(day);
+            const monthReduced = reduceToSingle(month);
+            const yearReduced = reduceToSingle(year);
+            
+            return reduceToSingle(dayReduced + monthReduced + yearReduced);
+        }
+
+        
+        function findMasterNumber(dateStr, fullName) {
+            // Check Life Path without reducing master numbers
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            // Calculate each component
+            let dayNum = day;
+            while (dayNum > 9 && dayNum !== 11 && dayNum !== 22 && dayNum !== 33) {
+                dayNum = dayNum.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            
+            let monthNum = month;
+            while (monthNum > 9 && monthNum !== 11 && monthNum !== 22 && monthNum !== 33) {
+                monthNum = monthNum.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            
+            let yearNum = year;
+            while (yearNum > 9 && yearNum !== 11 && yearNum !== 22 && yearNum !== 33) {
+                yearNum = yearNum.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            
+            // Add them
+            let total = dayNum + monthNum + yearNum;
+            
+            // Check if total is master number
+            if (total === 11 || total === 22 || total === 33) return total;
+            
+            // Check if sum adds to master
+            while (total > 9 && total !== 11 && total !== 22 && total !== 33) {
+                total = total.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            
+            if (total === 11 || total === 22 || total === 33) return total;
+            
+            // Check destiny/name number
+            let nameSum = 0;
+            for (let char of fullName.toUpperCase()) {
+                nameSum += letterToNumber(char);
+            }
+            
+            if (nameSum === 11 || nameSum === 22 || nameSum === 33) return nameSum;
+            
+            while (nameSum > 9 && nameSum !== 11 && nameSum !== 22 && nameSum !== 33) {
+                nameSum = nameSum.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            
+            if (nameSum === 11 || nameSum === 22 || nameSum === 33) return nameSum;
+            
+            return 0;
+        }
+        
+
+        // Interpretations
+        const interpretations = {"11": "You carry Master Number 11, {preferredName}, one of the most spiritually significant numbers in numerology. This marks you as a spiritual messenger, intuitive teacher, and conduit for higher consciousness. You're not here for an ordinary life\u2014you're here to illuminate the path for others.\n\nThe 11 is called a master number because it carries double the intensity of 1 and operates at a higher frequency than its reduced form (2). You vibrate at an elevated level of consciousness, which brings both extraordinary gifts and significant challenges. Your nervous system is literally wired differently than most people's.\n\nYour primary gift is powerful intuition that borders on psychic ability. You receive information through channels beyond the five physical senses\u2014through dreams, synchronicities, gut feelings, and sudden knowing. When you learn to trust these perceptions, they guide you with remarkable accuracy.\n\nYou're a natural channel for inspiration. Ideas, insights, and creative visions flow through you that seem to originate beyond your personal consciousness. When you're in alignment, you become a vessel through which higher wisdom reaches the world. This is your sacred purpose.\n\nHowever, the 11 brings intense challenges. Your heightened sensitivity means you feel everything more deeply\u2014others' emotions, environmental energies, spiritual currents. This can be overwhelming, leading to anxiety, nervousness, or feeling like you don't fit in ordinary reality. You're right\u2014you don't. You're wired for something more.\n\nThe pressure of living up to your potential can be crushing. You may feel that you're meant for something significant but don't know what or how. You might experience self-doubt: \"Am I delusional? Am I making this up?\" No, {preferredName}\u2014you're perceiving accurately. Trust yourself.\n\nYour path involves learning to ground your spiritual sensitivity in practical form. You must balance the visionary 11 energy with the grounded 2 energy (1+1=2). This means taking your spiritual insights and translating them into forms others can access\u2014through teaching, healing, creative work, or simply being a living example.\n\nMany with 11 struggle with the choice between living at the master number frequency or reducing to 2. Sometimes, the intensity becomes too much and you retreat into the gentler 2 energy of partnership and sensitivity. This is okay\u2014but ultimately, you're called to rise into the full 11 expression.\n\nYour life purpose is nothing less than helping elevate human consciousness. Whether through formal spiritual teaching, creative inspiration, healing work, or your energetic presence, you help others awaken to higher possibilities. You show people what enlightened awareness looks like in human form.\n\nIn relationships, you need partners who respect your spiritual nature without trying to fix or change you. You're attracted to deep, soulful connections where you can explore consciousness together. Surface-level interactions drain you.\n\nYour career is most fulfilling when it involves working with consciousness itself\u2014spiritual teaching, counseling, healing, creative inspiration, or any field where you help others grow and awaken. Traditional careers may feel confining unless they allow space for your spiritual purpose.\n\nTo thrive with 11 energy: meditate daily to ground your sensitivity, trust your intuition even when it defies logic, create regular practices that honor your spiritual nature, protect your energy from draining environments and people, and remember that your sensitivity is not weakness\u2014it's your superpower.\n\nYour challenge is accepting your role as spiritual wayshower without ego inflation. The 11 brings spiritual gifts, but you're meant to use them in service, not for personal glorification. Stay humble while standing in your power.\n\nKnow this, {preferredName}: you are exactly what this world needs right now. Your sensitivity, your spiritual perception, your ability to channel higher wisdom\u2014these gifts are not accidents. You came here specifically to help humanity evolve. Trust your path, even when it feels lonely or confusing. You're not alone\u2014you're simply ahead.", "22": "You carry Master Number 22, {preferredName}, the Master Builder\u2014the most powerful manifesting number in all of numerology. This marks you as someone capable of bringing massive visions into physical reality and creating structures that serve humanity for generations. You're not here to think small.\n\nThe 22 combines the spiritual vision of 11 with the practical building capacity of 4 (2+2=4). This rare combination means you can perceive possibilities that exist beyond current reality AND you have the executive ability to systematically manifest them. You see what could be and know how to build it.\n\nYour primary gift is your capacity to envision and execute on a grand scale. Where others see problems, you see systems waiting to be designed. Where they see limitations, you see opportunities for innovation. Where they plan projects, you envision movements that change paradigms.\n\nYou possess extraordinary executive abilities\u2014strategic thinking, organizational genius, practical wisdom, and the stamina to see massive projects through to completion. When you're operating at full capacity, you can accomplish what seems impossible to others. You make magic look systematic.\n\nHowever, the weight of 22's potential can feel crushing. You know you're capable of extraordinary achievement, which creates pressure to live up to this potential. You may struggle with self-doubt: \"Am I really meant for this? Is my vision realistic?\" Yes, {preferredName}\u2014your vision is not only realistic, it's necessary.\n\nThe challenge of 22 is learning to hold the tension between enormous vision and patient, step-by-step execution. You see the destination clearly, but the journey requires disciplined effort over time. Many with 22 struggle with wanting to skip the process and just arrive at the result.\n\nYou may also grapple with the choice between living at the master number frequency (22) or reducing to 4. When the pressure becomes too much, you might retreat into the more manageable 4 energy of steady work and building. But ultimately, you're called to the grander 22 expression.\n\nYour life purpose involves building something of lasting significance that serves the collective good. This might be an organization, a business, a social movement, a physical structure, a system of ideas, or a new paradigm. Whatever it is, it will be larger than your personal life and will continue benefiting people after you're gone.\n\nIn your career, you thrive when you have enough authority and resources to execute your vision. You can work within existing structures if they're large and impactful enough, but many with 22 ultimately create their own organizations so their vision isn't compromised. You're meant to lead, not follow.\n\nRelationships with 22 require partners who can match your intensity and ambition without competing. You need someone who has their own significant purpose and respects yours. Together, you can build empires\u2014personal and professional.\n\nTo thrive with 22 energy: think big but plan meticulously, break massive visions into achievable steps, surround yourself with capable team members who execute your vision, stay grounded in physical reality even while dreaming big, and remember that building legacy takes time\u2014be patient with the process.\n\nYour challenge is avoiding the traps of ego, control, and overwork. The 22 brings such powerful executive ability that you can become tyrannical in pursuit of your vision. Remember: you're building FOR humanity, not AT their expense. Conscious leadership serves everyone.\n\nFinancial abundance often flows naturally to 22 when you're operating at full capacity. But remember: money is a tool for building your vision, not the vision itself. You're not here just to become wealthy\u2014you're here to use resources to create lasting positive change.\n\nThe world desperately needs what you came here to build, {preferredName}. Your vision of what's possible, combined with your ability to manifest it systematically, can literally change civilization. Don't let self-doubt or fear of your own power stop you from fulfilling this calling.\n\nYou're a Master Builder. Act like it. Dream impossibly big, then build it brick by brick. Show humanity what's possible when spiritual vision meets practical mastery. Your legacy awaits.", "33": "You carry Master Number 33, {preferredName}, the Master Teacher and rarest of all master numbers. This marks you as someone who embodies and teaches unconditional love, spiritual wisdom, and divine service. You're not here for a personal life alone\u2014you're here to uplift all of humanity through your presence and teaching.\n\nThe 33 combines the illumination of 11 with the nurturing of 6 (3+3=6), creating someone who channels divine wisdom for healing and teaching. You're a living bridge between heaven and earth, spiritual consciousness and human compassion. Your very presence can shift energy and catalyze healing in others.\n\nYour primary gift is your extraordinary capacity for unconditional love and spiritual teaching. You don't just understand spiritual principles intellectually\u2014you embody them. When you speak about love, compassion, or spiritual truth, people feel you LIVING these qualities, which makes your teaching profoundly transformative.\n\nYou possess healing abilities that may manifest in many forms\u2014spiritual healing, emotional counseling, inspirational teaching, creative expression that uplifts consciousness, or simply being a presence that makes others feel safe, seen, and loved. Your gift isn't just what you do\u2014it's who you are.\n\nHowever, the burden of 33 is immense. The responsibility of being a spiritual teacher and healer for humanity can feel overwhelming. You may question whether you're worthy of this calling or capable of fulfilling it. Self-doubt is common, as is the tendency toward martyrdom\u2014giving so much that you deplete yourself.\n\nThe challenge of 33 is learning to embody Christ-like love without the Christ complex. You're meant to serve humanity, but not to sacrifice yourself on every cross. Martyrdom serves no one. You must learn to give from overflow, maintain healthy boundaries, and recognize that saving everyone is not your job\u2014inspiring them to save themselves is.\n\nYou may also struggle with the weight of seeing human suffering so clearly. Your empathy is so profound that you feel the world's pain acutely. This can lead to depression or despair if you don't balance it with spiritual practice and grounded self-care. Remember: you can't heal everyone, and that's okay.\n\nYour life purpose is to be a living example of enlightened consciousness and unconditional love. Whether through formal spiritual teaching, healing work, creative expression, or simply how you live your daily life, you demonstrate what's possible when humans fully embody their spiritual nature.\n\nIn your career, you're called to work that directly serves consciousness evolution\u2014spiritual teaching, healing, counseling, inspirational speaking or writing, or creative arts that elevate awareness. Traditional careers will feel soul-crushing unless they incorporate your spiritual purpose.\n\nRelationships require partners who understand and honor your spiritual calling. You need someone secure enough to support your service to many without feeling neglected, and evolved enough to join you in spiritual practice and growth. Your union itself becomes a teaching.\n\nTo thrive with 33 energy: develop rigorous spiritual practices that keep you connected to Source, establish firm boundaries so your service doesn't become martyrdom, create regular self-care rituals that prevent depletion, surround yourself with other evolved souls who can support you, and remember that your worthiness doesn't depend on how much you give\u2014you are already worthy.\n\nYour challenge is accepting the magnitude of your calling without being crushed by it. You didn't choose this path arbitrarily\u2014your soul specifically prepared for this lifetime of maximum service. You're stronger than you know, more loved than you imagine, and more necessary than you understand.\n\nThe 33 energy asks everything of you, {preferredName}, but it also gives everything. You get to live in constant connection with divine love, to witness profound transformations in others, to know that your life has deep meaning and purpose. This is sacred privilege, not just burden.\n\nKnow this: humanity needs you. In a world of fear, division, and pain, your embodiment of unconditional love and spiritual truth creates ripples of healing that spread far beyond your direct contact. Every person you teach, heal, or inspire goes forward to touch countless others.\n\nYou are a Master Teacher. Your curriculum is love. Your classroom is everywhere. Your students are everyone. Teach well, dear soul. Show us what we can become."};
+
+        // Calculate and display reading
+        function calculateReading(event) {
+            event.preventDefault();
+            
+            const preferredName = document.getElementById('preferredName').value;
+            const birthName = document.getElementById('birthName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            
+            if (!birthDate) {
+                alert('Please enter your birth date');
+                return;
+            }
+
+            
+            const number = findMasterNumber(birthDate, birthName);
+        
+
+            const interpretation = interpretations[number];
+            if (!interpretation) {
+                
+                document.getElementById('result-title').textContent = 'No Master Number';
+                document.getElementById('result-content').innerHTML = '<div class="no-karmic"><h3>No Master Number Detected</h3><p>Your core numerology does not contain master numbers 11, 22, or 33. This means you have a different soul curriculum focused on the single-digit numbers. Each path is valuable and meaningful.</p></div>';
+                document.getElementById('result').classList.add('show');
+                document.getElementById('calculator-form').style.display = 'none';
+        
+                return;
+            }
+
+            // Personalize the reading with their name
+            const personalizedReading = interpretation.replace(/{preferredName}/g, preferredName);
+
+            // Convert paragraphs to HTML
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            document.getElementById('result-title').textContent = `Master Number ${number}: ${preferredName}`;
+            document.getElementById('result-content').innerHTML = paragraphs;
+            document.getElementById('result').classList.add('show');
+            document.getElementById('calculator-form').style.display = 'none';
+
+            // Save data
+            saveUserData();
+        }
+
+        // LocalStorage functions
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                if (data.preferredName) document.getElementById('preferredName').value = data.preferredName;
+                if (data.birthName) document.getElementById('birthName').value = data.birthName;
+                if (data.birthDate) document.getElementById('birthDate').value = data.birthDate;
+                if (data.birthTime) document.getElementById('birthTime').value = data.birthTime;
+                if (data.birthPlace) document.getElementById('birthPlace').value = data.birthPlace;
+            }
+        }
+
+        function saveUserData() {
+            const userData = {
+                preferredName: document.getElementById('preferredName').value,
+                birthName: document.getElementById('birthName').value,
+                birthDate: document.getElementById('birthDate').value,
+                birthTime: document.getElementById('birthTime').value,
+                birthPlace: document.getElementById('birthPlace').value
+            };
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
+        }
+
+        function clearSavedData() {
+            if (confirm('This will clear your saved personal information. Are you sure?')) {
+                localStorage.removeItem('quantumMerlinUserData');
+                location.reload();
+            }
+        }
+
+        // Load saved data on page load
+        window.addEventListener('DOMContentLoaded', loadSavedData);
+    
+        // Profile Management Functions
+        function getAllProfiles() {
+            const profiles = localStorage.getItem('quantumMerlinProfiles');
+            return profiles ? JSON.parse(profiles) : {};
+        }
+
+        function saveProfile(profileName) {
+            if (!profileName || profileName.trim() === '') {
+                alert('Please enter a profile name');
+                return;
+            }
+            
+            const currentData = {
+                preferredName: document.getElementById('preferredName')?.value || '',
+                birthName: document.getElementById('birthName')?.value || '',
+                birthDate: document.getElementById('birthDate')?.value || '',
+                birthTime: document.getElementById('birthTime')?.value || '',
+                birthPlace: document.getElementById('birthPlace')?.value || ''
+            };
+            
+            const profiles = getAllProfiles();
+            profiles[profileName] = currentData;
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(currentData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+            
+            updateProfileDropdown();
+            alert(`Profile "${profileName}" saved! ✨`);
+        }
+
+        function loadProfile(profileName) {
+            const profiles = getAllProfiles();
+            const profileData = profiles[profileName];
+            
+            if (!profileData) return;
+            
+            if (profileData.preferredName && document.getElementById('preferredName')) {
+                document.getElementById('preferredName').value = profileData.preferredName;
+            }
+            if (profileData.birthName && document.getElementById('birthName')) {
+                document.getElementById('birthName').value = profileData.birthName;
+            }
+            if (profileData.birthDate && document.getElementById('birthDate')) {
+                document.getElementById('birthDate').value = profileData.birthDate;
+            }
+            if (profileData.birthTime && document.getElementById('birthTime')) {
+                document.getElementById('birthTime').value = profileData.birthTime;
+            }
+            if (profileData.birthPlace && document.getElementById('birthPlace')) {
+                document.getElementById('birthPlace').value = profileData.birthPlace;
+            }
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(profileData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+        }
+
+        function deleteProfile(profileName) {
+            const profiles = getAllProfiles();
+            delete profiles[profileName];
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
+            if (activeProfile === profileName) {
+                localStorage.removeItem('quantumMerlinActiveProfile');
+            }
+            
+            updateProfileDropdown();
+        }
+
+        function updateProfileDropdown() {
+            const dropdown = document.getElementById('profileSelect');
+            if (!dropdown) return;
+            
+            const profiles = getAllProfiles();
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            dropdown.innerHTML = '<option value="">Select a profile...</option>';
+            
+            Object.keys(profiles).sort().forEach(profileName => {
+                const option = document.createElement('option');
+                option.value = profileName;
+                option.textContent = profileName;
+                if (profileName === activeProfile) {
+                    option.selected = true;
+                }
+                dropdown.appendChild(option);
+            });
+        }
+
+        function onProfileChange() {
+            const dropdown = document.getElementById('profileSelect');
+            const profileName = dropdown.value;
+            
+            if (profileName) {
+                loadProfile(profileName);
+            }
+        }
+
+        function showSaveProfileDialog() {
+            const profiles = getAllProfiles();
+            const currentActive = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            let message = 'Enter a name for this profile:';
+            if (currentActive) {
+                message += `\n\nCurrent profile: "${currentActive}"\nLeave blank to update current profile.`;
+            }
+            
+            const profileName = prompt(message, currentActive);
+            
+            if (profileName !== null) {
+                const finalName = profileName.trim() || currentActive || 'Profile ' + (Object.keys(profiles).length + 1);
+                saveProfile(finalName);
+            }
+        }
+
+        function showDeleteProfileDialog() {
+            const profiles = getAllProfiles();
+            const profileNames = Object.keys(profiles).sort();
+            
+            if (profileNames.length === 0) {
+                alert('No saved profiles to delete');
+                return;
+            }
+            
+            const profileName = prompt(`Enter profile name to delete:\n\nSaved profiles:\n${profileNames.join('\n')}`);
+            if (profileName && profiles[profileName]) {
+                if (confirm(`Delete profile "${profileName}"?`)) {
+                    deleteProfile(profileName);
+                    alert(`Profile "${profileName}" deleted`);
+                }
+            } else if (profileName) {
+                alert('Profile not found');
+            }
+        }
+
+        // Initialize profile dropdown on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProfileDropdown();
+            
+            const dropdown = document.getElementById('profileSelect');
+            if (dropdown) {
+                dropdown.addEventListener('change', onProfileChange);
+            }
+        });
+
+    </script>
+</body>
+</html>

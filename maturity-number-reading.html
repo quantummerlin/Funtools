@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maturity Number Reading | Free Personalized Reading</title>
+    <meta name="description" content="Discover your life purpose that emerges in your mature years">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2em;
+            color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .clear-data-btn {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .clear-data-btn button {
+            background: rgba(236, 72, 153, 0.1);
+            border: 2px solid rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .clear-data-btn button:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
+        .input-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.2);
+        }
+        .input-section:last-of-type {
+            border-bottom: none;
+        }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .input-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #06b6d4;
+            font-size: 1.05em;
+        }
+        .helper-text {
+            font-size: 0.9em;
+            color: #9ca3af;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        input:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        button[type="submit"] {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            color: white;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 18px 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.4);
+            border-color: rgba(251, 191, 36, 0.6);
+        }
+        .result {
+            background: rgba(20, 20, 30, 0.6);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 30px;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        .result.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result h2 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .result-content {
+            font-size: 1.15em;
+            line-height: 2;
+            color: #e0e0e0;
+        }
+        .result-content p {
+            margin-bottom: 20px;
+        }
+        .back-button {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            margin-top: 30px;
+        }
+        .back-button:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+            .tool-card {
+                padding: 30px 20px;
+            }
+        }
+            .profile-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .profile-select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+        }
+        .profile-select:focus {
+            outline: none;
+            border-color: #06b6d4;
+        }
+        .profile-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .profile-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+        }
+        .clear-btn {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+        }
+        .clear-btn:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌅 Maturity Number Reading</h1>
+            <p>Reveal the wisdom and purpose of your later years</p>
+        </div>
+
+        <div class="tool-card">
+                        <div class="profile-controls">
+                <select id="profileSelect" class="profile-select">
+                    <option value="">Select a profile...</option>
+                </select>
+                <button type="button" class="profile-btn" onclick="showSaveProfileDialog()">💾 Save Profile</button>
+                <button type="button" class="profile-btn" onclick="showDeleteProfileDialog()">🗑️ Delete Profile</button>
+                <button type="button" class="profile-btn clear-btn" onclick="clearSavedData()">✨ Clear Form</button>
+            </div>
+
+            <form id="calculator-form" onsubmit="calculateReading(event)">
+                <div class="input-section">
+                    <div class="section-title">✨ Personal Information</div>
+                    
+                    <div class="input-group">
+                        <label for="preferredName">Preferred Name</label>
+                        <input type="text" id="preferredName" required>
+                        <div class="helper-text">What you like to be called</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="birthName">Full Birth Name</label>
+                        <input type="text" id="birthName" required>
+                        <div class="helper-text">As it appears on your birth certificate</div>
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">🌟 Birth Details</div>
+                    
+                    <div class="input-group">
+                        <label for="birthDate">Birth Date</label>
+                        <input type="date" id="birthDate" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime">
+                            <div class="helper-text">Optional but helpful</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth Place</label>
+                            <input type="text" id="birthPlace" placeholder="City, Country">
+                            <div class="helper-text">Optional</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">✨ Reveal My Reading</button>
+            </form>
+
+            <div id="result" class="result">
+                <h2 id="result-title"></h2>
+                <div id="result-content" class="result-content"></div>
+                <button type="button" class="back-button" onclick="window.location.href='tools_index.html'">← Back to Quantum Merlin Hub</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Numerology functions
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+
+        function letterToNumber(letter) {
+            const values = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+                'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
+            };
+            return values[letter.toUpperCase()] || 0;
+        }
+
+        function calculateNameNumber(name) {
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => sum + letterToNumber(char), 0)
+            );
+        }
+
+        function calculateLifePath(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            const dayReduced = reduceToSingle(day);
+            const monthReduced = reduceToSingle(month);
+            const yearReduced = reduceToSingle(year);
+            
+            return reduceToSingle(dayReduced + monthReduced + yearReduced);
+        }
+
+        
+        function calculateMaturityNumber(dateStr, fullName) {
+            const lifePath = calculateLifePath(dateStr);
+            const destiny = calculateNameNumber(fullName);
+            return reduceToSingle(lifePath + destiny);
+        }
+        
+
+        // Interpretations
+        const interpretations = {"1": "Your Maturity Number is 1, {preferredName}, revealing that your later years are destined for leadership, independence, and pioneering new paths. The combination of your Life Path and Destiny numbers points toward a future where you fully step into your power as an innovator and trailblazer.\n\nAs you mature, you'll become increasingly comfortable taking charge and trusting your own direction. Where you may have sought approval or followed others' leads in your younger years, your mature self naturally leads, initiates, and creates new possibilities.\n\nYour mature purpose involves bringing original ideas into the world. Whether through business, creative work, social innovation, or personal example, you're meant to show others what's possible when someone dares to be first. Your later years won't be about comfortable retirement\u2014they'll be about bold creation.\n\nThe confidence and courage you've been building throughout your life will fully bloom in your mature years. You'll take risks that would have terrified your younger self. This isn't recklessness\u2014it's earned wisdom combined with deep self-trust.\n\nYour independence strengthens as you age. You'll need less external validation and become more self-directed. This doesn't mean isolation\u2014it means you choose your connections based on genuine resonance rather than neediness or obligation.\n\nIn your mature years, you may find yourself naturally in leadership positions, whether formal or informal. People will look to you for direction, inspiration, and example. You'll finally be comfortable with this visibility and ready to use your influence wisely.\n\nYour legacy involves initiating changes that outlive you. The projects, businesses, movements, or ideas you launch in your mature years will have lasting impact. You're not meant to fade quietly\u2014you're meant to blaze brightly until the end, {preferredName}.", "2": "Your Maturity Number is 2, {preferredName}, revealing that your later years are destined for peacemaking, partnership, and creating harmony. The synthesis of your Life Path and Destiny numbers points toward a future of deep connection, emotional wisdom, and bringing people together.\n\nAs you mature, your sensitivity and intuition will strengthen into profound emotional intelligence. You'll understand people's unspoken needs, sense energies others miss, and know how to create spaces where everyone feels safe and heard. This is a rare and valuable gift.\n\nYour mature purpose involves bridging divides and creating unity. Whether in your family, community, or through wider influence, you're meant to show others how cooperation creates better outcomes than competition. Your later years will be about connection, not conquest.\n\nThe diplomatic skills you've been honing throughout your life will reach mastery in your mature years. You'll mediate conflicts, counsel troubled souls, and help people find common ground. This isn't weakness\u2014it's powerful service that literally changes lives.\n\nRelationships become increasingly central as you age. You'll invest deeply in meaningful connections and may find your greatest fulfillment in partnership\u2014romantic, business, or creative. You understand that true partnership multiplies joy and divides sorrow.\n\nIn your mature years, you'll finally give yourself permission to be fully sensitive without apology. Where your younger self may have felt your empathy was a vulnerability, your mature self recognizes it as your superpower. You feel deeply because you're meant to heal deeply.\n\nYour legacy involves the relationships you've nurtured and the peace you've created. The people you've brought together, the conflicts you've resolved, and the harmony you've established will ripple outward long after you're gone, {preferredName}. Your gentle strength changes the world.", "3": "Your Maturity Number is 3, {preferredName}, revealing that your later years are destined for creative expression, joy, and inspiring others. The combination of your Life Path and Destiny numbers points toward a future where your authentic self-expression becomes your greatest gift to the world.\n\nAs you mature, your creative abilities will blossom in ways you can't yet imagine. Where your younger self may have held back expression due to fear or doubt, your mature self will create, communicate, and share your gifts with confidence and joy.\n\nYour mature purpose involves bringing beauty, inspiration, and lightness to the world. Whether through art, writing, speaking, teaching, or simply being your authentic, joyful self, you remind others that life is meant to be celebrated. This is sacred work.\n\nThe communication skills you've been developing throughout your life will reach their highest expression in your mature years. You'll find the perfect words to inspire, heal, entertain, or educate. Your voice\u2014literal or metaphorical\u2014carries unusual power to uplift others.\n\nJoy and optimism will characterize your later years. Where others may become bitter or resigned with age, you'll maintain a youthful spirit and sense of wonder. This isn't naivety\u2014it's a conscious choice to focus on beauty and possibility even while acknowledging life's difficulties.\n\nIn your mature years, you may discover creative talents you didn't know you had. Many with Maturity Number 3 begin painting, writing, performing, or creating in their later decades and find extraordinary fulfillment. It's never too late to express yourself.\n\nYour legacy involves the joy you've spread and the creative works you've left behind. The laughter you've sparked, the beauty you've created, and the inspiration you've provided will continue touching lives long after you're gone, {preferredName}. You prove that creativity and joy are ageless.", "4": "Your Maturity Number is 4, {preferredName}, revealing that your later years are destined for building lasting foundations and creating tangible legacy. The synthesis of your Life Path and Destiny numbers points toward a future where you master the material world and create structures that serve humanity.\n\nAs you mature, your ability to manifest dreams into physical reality will reach its peak. Where your younger self may have struggled with follow-through or organization, your mature self executes with precision and patience. You become the master builder you were meant to be.\n\nYour mature purpose involves creating systems, structures, or organizations that outlive you and serve future generations. Whether building businesses, institutions, physical structures, or family foundations, you're meant to leave something solid and lasting behind.\n\nThe discipline and work ethic you've been developing throughout your life will become your greatest assets in your mature years. You'll understand that sustainable success comes through consistent effort, not shortcuts. This wisdom allows you to achieve what others consider impossible.\n\nStability and security will characterize your later years\u2014not by accident, but by design. You'll have created the financial foundation, health practices, and life systems that provide genuine security. This creates freedom for you and example for others.\n\nIn your mature years, you may take on roles as mentor, teacher, or guide, showing others how to build stable lives and manifest their dreams practically. Your experience becomes wisdom that helps many avoid mistakes and achieve their goals more effectively.\n\nYour legacy involves the tangible structures you've built and the practical wisdom you've shared. The buildings, businesses, systems, or institutions you've created will serve people for generations, {preferredName}. Your life proves that practical work done with integrity creates lasting value.", "5": "Your Maturity Number is 5, {preferredName}, revealing that your later years are destined for freedom, adventure, and continuous growth. The combination of your Life Path and Destiny numbers points toward a future where you never stop exploring, learning, and experiencing life's diversity.\n\nAs you mature, your spirit of adventure will strengthen rather than diminish. Where others may become set in their ways with age, you'll maintain curiosity, flexibility, and openness to new experiences. Your later years will be anything but boring.\n\nYour mature purpose involves showing others that life can be lived fully at any age. Through your travels, learning, and willingness to embrace change, you demonstrate that aging doesn't mean stagnation. You're meant to be proof that vitality is a choice, not just biology.\n\nThe adaptability you've been developing throughout your life will serve you powerfully in your mature years. You'll navigate changes and transitions that overwhelm others with grace and even excitement. Your flexibility is your fountain of youth.\n\nFreedom becomes increasingly important as you age, but it's an earned freedom based on wisdom rather than rebellion. You'll have learned what truly matters and will give yourself permission to release what doesn't. This selective focus creates genuine liberation.\n\nIn your mature years, you may travel extensively, learn new languages, explore different cultures, or simply maintain diverse interests and friendships. Your social circle will likely span ages, backgrounds, and perspectives because you're genuinely interested in all of humanity.\n\nYour legacy involves the stories you'll tell, the wisdom you'll share from your varied experiences, and the example you'll provide of living vibrantly at every age, {preferredName}. You prove that life is an adventure that only gets better with time.", "6": "Your Maturity Number is 6, {preferredName}, revealing that your later years are destined for nurturing, service, and creating beautiful harmony. The synthesis of your Life Path and Destiny numbers points toward a future where love, family, and caring for others become your greatest fulfillment.\n\nAs you mature, your capacity for unconditional love will deepen profoundly. Where your younger self may have given conditionally or with expectations, your mature self loves freely and creates spaces where others feel genuinely cherished. This is the highest human achievement.\n\nYour mature purpose involves creating and maintaining loving relationships and beautiful environments. Whether through family, community service, healing work, or simply being a source of comfort and beauty in others' lives, you're meant to nurture the world.\n\nThe caregiving instincts you've been developing throughout your life will reach their fullest expression in your mature years. But you'll have learned the crucial lesson of filling your own cup first. Your service comes from overflow, not depletion, making it sustainable and joyful.\n\nHome and family will likely be central to your later years. You may become the family matriarch/patriarch, the one everyone turns to for comfort, advice, and unconditional acceptance. Your home becomes a sanctuary where people feel they can breathe.\n\nIn your mature years, you'll understand that love expressed through action is the most powerful force in existence. The meals you cook, the spaces you beautify, the comfort you offer, and the presence you provide create ripples of healing that spread far beyond what you can see.\n\nYour legacy involves the love you've given, the people you've nurtured, and the beauty you've created, {preferredName}. Those you've cared for will carry your love forward, creating a cascade of kindness that spans generations. You prove that love is what remains when everything else fades.", "7": "Your Maturity Number is 7, {preferredName}, revealing that your later years are destined for wisdom, spiritual mastery, and profound understanding. The combination of your Life Path and Destiny numbers points toward a future where you become the sage, the mystic, the one who sees beyond surface appearances.\n\nAs you mature, your natural analytical abilities and intuition will merge into rare wisdom. Where your younger self may have overthought or doubted your perceptions, your mature self knows\u2014simply, deeply, certainly. This knowing becomes your gift to others.\n\nYour mature purpose involves seeking and sharing truth. Whether through teaching, writing, counseling, or simply being a wise presence in others' lives, you're meant to help people see beyond illusion to deeper reality. Your insights illuminate paths for many.\n\nThe spiritual and intellectual development you've pursued throughout your life will culminate in your mature years. You'll integrate logic and intuition, science and spirituality, mind and heart in ways that create genuine wisdom rather than mere knowledge.\n\nSolitude becomes increasingly precious as you age, but it's not loneliness\u2014it's chosen sanctuary. You'll need regular quiet time to connect with your inner knowing and process life's experiences at depth. This solitude refreshes you in ways social connection cannot.\n\nIn your mature years, you may be drawn to teaching, mentoring, or spiritual work. People will seek you out for guidance, sensing your unusual depth of perception. You'll finally be comfortable with this role, having integrated the wisdom you've been gathering all your life.\n\nYour legacy involves the wisdom you've shared and the consciousness you've helped awaken in others, {preferredName}. Through your teaching, writing, or simply your example of living thoughtfully, you help others see beyond the obvious. You prove that true vision comes from inner sight.", "8": "Your Maturity Number is 8, {preferredName}, revealing that your later years are destined for mastery, abundance, and conscious use of power. The synthesis of your Life Path and Destiny numbers points toward a future where you achieve significant material success while maintaining spiritual integrity.\n\nAs you mature, your natural executive abilities will reach their peak. Where your younger self may have struggled with authority or power, your mature self wields both with confidence and wisdom. You finally understand that power wielded consciously serves everyone.\n\nYour mature purpose involves proving that material success and spiritual values aren't opposites but partners. Through your example of ethical leadership and conscious prosperity, you show others what success looks like when guided by integrity rather than ego.\n\nThe ambition you've been channeling throughout your life will manifest tangibly in your mature years. You'll likely achieve significant professional recognition, financial abundance, or both. But unlike your younger self, your mature self knows that money and status are tools for service, not just personal gain.\n\nLeadership comes naturally to you in your later years. You may head organizations, guide major projects, or simply be the person others look to for direction in challenging situations. Your authority is earned through competence and character, not just position.\n\nIn your mature years, you'll understand the law of karma viscerally. What you put out returns multiplied, so you'll be strategic and ethical in all dealings. This creates a cycle of increasing abundance because you operate from integrity, not manipulation.\n\nYour legacy involves the organizations you've built, the prosperity you've created and shared, and the example you've provided of ethical leadership, {preferredName}. You prove that true success includes everyone's wellbeing, not just your own. Your conscious use of power changes paradigms.", "9": "Your Maturity Number is 9, {preferredName}, revealing that your later years are destined for humanitarian service, universal love, and completion of your soul's purpose. The combination of your Life Path and Destiny numbers points toward a future where you serve the greater good with wisdom and compassion.\n\nAs you mature, your capacity for universal love and compassion will blossom fully. Where your younger self may have loved selectively or with conditions, your mature self loves humanity as a whole. This doesn't mean you love everyone equally\u2014it means your heart encompasses all.\n\nYour mature purpose involves healing, teaching, or serving at a level that benefits masses rather than just individuals. Whether through humanitarian work, creative expression that uplifts consciousness, or simply being a beacon of compassionate wisdom, you serve the collective evolution.\n\nThe empathy you've been developing throughout your life will become your greatest gift in your mature years. You feel what others feel, which could overwhelm you if you haven't learned healthy boundaries. But when properly channeled, this empathy creates profound healing.\n\nCompletion themes will characterize your later years. You'll finish what you started, heal old wounds, release ancient patterns, and prepare yourself and perhaps others for transformation. Your mature years aren't about clinging to life\u2014they're about living fully until transition comes naturally.\n\nIn your mature years, you may be drawn to teaching, healing, arts, or humanitarian work that serves broad populations. Your accumulated wisdom and compassion make you especially effective at helping others find their path and purpose.\n\nYour legacy involves the lives you've touched, the consciousness you've helped elevate, and the compassion you've modeled, {preferredName}. You'll likely influence far more people than you realize, through both direct contact and the ripple effects of your loving presence. You prove that one life lived with open heart changes countless others.", "11": "Your Maturity Number is 11, {preferredName}, a master number revealing that your later years are destined for spiritual teaching, illumination, and inspiring humanity toward higher consciousness. This is rare, powerful energy that carries both great potential and significant responsibility.\n\nAs you mature, your natural intuition and spiritual sensitivity will strengthen into powerful channeling abilities. Where your younger self may have doubted or feared your perceptions, your mature self will trust your connection to higher consciousness and use it to guide others.\n\nYour mature purpose involves nothing less than helping elevate human consciousness. Whether through formal spiritual teaching, creative work that awakens awareness, or simply being a living example of enlightened presence, you're meant to light the way for others.\n\nThe spiritual development you've pursued throughout your life will culminate in your mature years. You'll integrate spiritual insight with practical wisdom, becoming someone who can access higher truths while remaining grounded in everyday reality. This integration is your gift to others.\n\nInspiration flows through you increasingly as you age. Ideas, insights, and creative visions that seem to come from beyond yourself will arrive with greater frequency and clarity. You're meant to share these gifts, not hoard them for personal benefit.\n\nIn your mature years, you may take on roles as spiritual teacher, healer, counselor, or creative inspiration. People will be drawn to your light, sensing that you carry wisdom beyond ordinary understanding. You'll finally be ready to step fully into this role.\n\nYour legacy involves the consciousness you've helped awaken in others and the spiritual light you've carried, {preferredName}. Those you've inspired will carry that inspiration forward, creating cascades of awakening. You prove that spiritual evolution is humanity's true destiny.", "22": "Your Maturity Number is 22, {preferredName}, the master builder number revealing that your later years are destined for creating massive structures that serve humanity. This is the most powerful manifesting energy in numerology, pointing toward a future of extraordinary achievement.\n\nAs you mature, your ability to envision grand possibilities and systematically manifest them will reach its peak. Where your younger self may have doubted whether your visions were realistic, your mature self will know\u2014and prove\u2014that they absolutely are.\n\nYour mature purpose involves building something of significant scale that serves the greater good. Whether creating organizations, movements, systems, or physical structures, you're meant to think big and execute flawlessly. Your later years aren't about small projects\u2014they're about legacy-level impact.\n\nThe practical skills and spiritual vision you've been developing throughout your life will merge in your mature years. You'll combine the master teacher's wisdom (11) with the master builder's abilities (4), creating the rare capacity to manifest spiritual ideals in material form.\n\nLeadership on a large scale is natural for you in your later years. You may head major organizations, guide significant projects, or influence policy and systems that affect many. Your vision encompasses not just what is, but what could be\u2014and you have the skill to build it.\n\nIn your mature years, people will recognize your exceptional abilities and look to you for direction on important matters. You'll finally be comfortable with this visibility and ready to use your influence for maximum positive impact.\n\nYour legacy involves the tangible structures you've built and the lives they've improved, {preferredName}. The organizations, systems, or movements you create will serve humanity for generations. You prove that spiritual values can be embodied in material form at massive scale.", "33": "Your Maturity Number is 33, {preferredName}, the master teacher number revealing that your later years are destined for profound healing, teaching, and embodying unconditional love. This is the rarest and most spiritually evolved frequency, pointing toward a future of extraordinary service.\n\nAs you mature, your capacity for unconditional love and spiritual wisdom will reach levels few humans achieve. Where your younger self may have loved selectively or protected your heart, your mature self will love freely while maintaining wise boundaries. This is the highest human attainment.\n\nYour mature purpose involves being a living example of enlightened consciousness. Whether through formal teaching, healing work, creative expression, or simply your presence in the world, you're meant to show others what's possible when we fully embody our spiritual nature.\n\nThe spiritual development and service orientation you've been cultivating throughout your life will culminate in your mature years. You'll integrate the illumination of 11 with the nurturing of 6, becoming someone who channels divine love and wisdom for healing humanity.\n\nHealing\u2014physical, emotional, or spiritual\u2014will likely be central to your later years. You may work directly as a healer, or your very presence may have healing effects on others. People feel better, lighter, and more hopeful simply by being around you.\n\nIn your mature years, you'll understand viscerally that we're all connected and that serving others is serving yourself. This isn't philosophy\u2014it's lived reality. Your actions will consistently reflect this unity consciousness.\n\nYour legacy involves the healing you've facilitated, the love you've embodied, and the consciousness you've helped awaken, {preferredName}. Your impact is immeasurable because love and healing ripple outward infinitely. You prove that one life lived in divine love transforms countless others."};
+
+        // Calculate and display reading
+        function calculateReading(event) {
+            event.preventDefault();
+            
+            const preferredName = document.getElementById('preferredName').value;
+            const birthName = document.getElementById('birthName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            
+            if (!birthDate) {
+                alert('Please enter your birth date');
+                return;
+            }
+
+            
+            const number = calculateMaturityNumber(birthDate, birthName);
+        
+
+            const interpretation = interpretations[number];
+            if (!interpretation) {
+                alert('Unable to calculate. Please check your information.');
+                return;
+            }
+
+            // Personalize the reading with their name
+            const personalizedReading = interpretation.replace(/{preferredName}/g, preferredName);
+
+            // Convert paragraphs to HTML
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            document.getElementById('result-title').textContent = `Maturity Number ${number}: ${preferredName}`;
+            document.getElementById('result-content').innerHTML = paragraphs;
+            document.getElementById('result').classList.add('show');
+            document.getElementById('calculator-form').style.display = 'none';
+
+            // Save data
+            saveUserData();
+        }
+
+        // LocalStorage functions
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                if (data.preferredName) document.getElementById('preferredName').value = data.preferredName;
+                if (data.birthName) document.getElementById('birthName').value = data.birthName;
+                if (data.birthDate) document.getElementById('birthDate').value = data.birthDate;
+                if (data.birthTime) document.getElementById('birthTime').value = data.birthTime;
+                if (data.birthPlace) document.getElementById('birthPlace').value = data.birthPlace;
+            }
+        }
+
+        function saveUserData() {
+            const userData = {
+                preferredName: document.getElementById('preferredName').value,
+                birthName: document.getElementById('birthName').value,
+                birthDate: document.getElementById('birthDate').value,
+                birthTime: document.getElementById('birthTime').value,
+                birthPlace: document.getElementById('birthPlace').value
+            };
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
+        }
+
+        function clearSavedData() {
+            if (confirm('This will clear your saved personal information. Are you sure?')) {
+                localStorage.removeItem('quantumMerlinUserData');
+                location.reload();
+            }
+        }
+
+        // Load saved data on page load
+        window.addEventListener('DOMContentLoaded', loadSavedData);
+    
+        // Profile Management Functions
+        function getAllProfiles() {
+            const profiles = localStorage.getItem('quantumMerlinProfiles');
+            return profiles ? JSON.parse(profiles) : {};
+        }
+
+        function saveProfile(profileName) {
+            if (!profileName || profileName.trim() === '') {
+                alert('Please enter a profile name');
+                return;
+            }
+            
+            const currentData = {
+                preferredName: document.getElementById('preferredName')?.value || '',
+                birthName: document.getElementById('birthName')?.value || '',
+                birthDate: document.getElementById('birthDate')?.value || '',
+                birthTime: document.getElementById('birthTime')?.value || '',
+                birthPlace: document.getElementById('birthPlace')?.value || ''
+            };
+            
+            const profiles = getAllProfiles();
+            profiles[profileName] = currentData;
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(currentData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+            
+            updateProfileDropdown();
+            alert(`Profile "${profileName}" saved! ✨`);
+        }
+
+        function loadProfile(profileName) {
+            const profiles = getAllProfiles();
+            const profileData = profiles[profileName];
+            
+            if (!profileData) return;
+            
+            if (profileData.preferredName && document.getElementById('preferredName')) {
+                document.getElementById('preferredName').value = profileData.preferredName;
+            }
+            if (profileData.birthName && document.getElementById('birthName')) {
+                document.getElementById('birthName').value = profileData.birthName;
+            }
+            if (profileData.birthDate && document.getElementById('birthDate')) {
+                document.getElementById('birthDate').value = profileData.birthDate;
+            }
+            if (profileData.birthTime && document.getElementById('birthTime')) {
+                document.getElementById('birthTime').value = profileData.birthTime;
+            }
+            if (profileData.birthPlace && document.getElementById('birthPlace')) {
+                document.getElementById('birthPlace').value = profileData.birthPlace;
+            }
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(profileData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+        }
+
+        function deleteProfile(profileName) {
+            const profiles = getAllProfiles();
+            delete profiles[profileName];
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
+            if (activeProfile === profileName) {
+                localStorage.removeItem('quantumMerlinActiveProfile');
+            }
+            
+            updateProfileDropdown();
+        }
+
+        function updateProfileDropdown() {
+            const dropdown = document.getElementById('profileSelect');
+            if (!dropdown) return;
+            
+            const profiles = getAllProfiles();
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            dropdown.innerHTML = '<option value="">Select a profile...</option>';
+            
+            Object.keys(profiles).sort().forEach(profileName => {
+                const option = document.createElement('option');
+                option.value = profileName;
+                option.textContent = profileName;
+                if (profileName === activeProfile) {
+                    option.selected = true;
+                }
+                dropdown.appendChild(option);
+            });
+        }
+
+        function onProfileChange() {
+            const dropdown = document.getElementById('profileSelect');
+            const profileName = dropdown.value;
+            
+            if (profileName) {
+                loadProfile(profileName);
+            }
+        }
+
+        function showSaveProfileDialog() {
+            const profiles = getAllProfiles();
+            const currentActive = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            let message = 'Enter a name for this profile:';
+            if (currentActive) {
+                message += `\n\nCurrent profile: "${currentActive}"\nLeave blank to update current profile.`;
+            }
+            
+            const profileName = prompt(message, currentActive);
+            
+            if (profileName !== null) {
+                const finalName = profileName.trim() || currentActive || 'Profile ' + (Object.keys(profiles).length + 1);
+                saveProfile(finalName);
+            }
+        }
+
+        function showDeleteProfileDialog() {
+            const profiles = getAllProfiles();
+            const profileNames = Object.keys(profiles).sort();
+            
+            if (profileNames.length === 0) {
+                alert('No saved profiles to delete');
+                return;
+            }
+            
+            const profileName = prompt(`Enter profile name to delete:\n\nSaved profiles:\n${profileNames.join('\n')}`);
+            if (profileName && profiles[profileName]) {
+                if (confirm(`Delete profile "${profileName}"?`)) {
+                    deleteProfile(profileName);
+                    alert(`Profile "${profileName}" deleted`);
+                }
+            } else if (profileName) {
+                alert('Profile not found');
+            }
+        }
+
+        // Initialize profile dropdown on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProfileDropdown();
+            
+            const dropdown = document.getElementById('profileSelect');
+            if (dropdown) {
+                dropdown.addEventListener('change', onProfileChange);
+            }
+        });
+
+    </script>
+</body>
+</html>

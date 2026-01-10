@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soul Urge Number Calculator | Quantum Merlin</title>
-    <meta name="description" content="Reveal the numerical pattern of your deepest desires and innermost motivations through ancient numerological wisdom.">
+    <title>Soul Urge Number Calculator | Free Personalized Reading</title>
+    <meta name="description" content="Discover your heart's deepest desires and what truly motivates you">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -16,218 +16,759 @@
             background-image: 
                 radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
-            color: #e0e0e0;
             min-height: 100vh;
             padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
         }
-        .container { max-width: 800px; margin: 0 auto; }
-        .header { 
-            text-align: center; 
-            margin-bottom: 30px; 
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
         }
-        .header h1 { 
+        .header h1 {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2.5em; 
-            margin-bottom: 10px; 
+            font-size: 2.8em;
+            margin-bottom: 15px;
             background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: 2px;
             font-weight: 700;
         }
-        .header p { 
-            font-size: 1.1em; 
-            opacity: 0.9; 
-            color: #e0e0e0;
+        .header p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2em;
+            color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
         }
         .tool-card {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
             border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             margin-bottom: 30px;
         }
-        .input-group { margin-bottom: 25px; }
-        label { 
-            display: block; 
-            font-family: 'Cinzel', serif;
-            font-weight: 600; 
-            margin-bottom: 8px; 
-            color: #fbbf24;
+        .input-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.2);
         }
-        input[type="text"], input[type="number"], input[type="date"], select {
+        .input-section:last-of-type {
+            border-bottom: none;
+        }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .input-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #06b6d4;
+            font-size: 1.05em;
+        }
+        .helper-text {
+            font-size: 0.9em;
+            color: #9ca3af;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        select {
             width: 100%;
             padding: 15px;
-            background: rgba(17, 24, 39, 0.8);
             border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
             border-radius: 10px;
             font-size: 16px;
+            transition: border-color 0.3s;
             font-family: 'Cormorant Garamond', serif;
-            color: #e0e0e0;
-            transition: all 0.3s;
         }
-        input:focus, select:focus { 
-            outline: none; 
-            border-color: #06b6d4; 
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        input:focus, select:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
         button {
             background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
             color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-family: 'Cinzel', serif;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 18px 50px;
+            font-size: 1.2em;
             font-weight: 600;
+            font-family: 'Cinzel', serif;
             border-radius: 10px;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             width: 100%;
+            margin-top: 20px;
+            letter-spacing: 1px;
         }
-        button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(6, 182, 212, 0.4); }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.4);
+            border-color: rgba(251, 191, 36, 0.6);
+        }
         .result {
-            background: rgba(17, 24, 39, 0.9);
-            border: 2px solid transparent;
-            border-image: linear-gradient(135deg, #fbbf24 0%, #ec4899 100%);
-            border-image-slice: 1;
+            background: rgba(20, 20, 30, 0.6);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 40px;
             border-radius: 15px;
-            padding: 30px;
-            margin-top: 25px;
+            margin-top: 30px;
             display: none;
-            box-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
         }
-        .result.show { display: block; animation: fadeIn 0.5s; }
-        .result h3 { 
+        .result.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .result-title {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2em; 
-            margin-bottom: 15px; 
+            font-size: 2.2em;
             background: linear-gradient(135deg, #fbbf24 0%, #ec4899 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 10px;
+            font-weight: 700;
         }
-        .result p { 
-            font-size: 1.1em; 
-            line-height: 1.6; 
+        .result-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1em;
+            color: #06b6d4;
+            font-style: italic;
+        }
+        .result-content {
+            font-size: 1.15em;
+            line-height: 2;
+            color: #d1d5db;
+            text-align: justify;
+        }
+        .result-content p {
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background: linear-gradient(120deg, rgba(251, 191, 36, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #fbbf24;
+        }
+        .share-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(6, 182, 212, 0.2);
+            text-align: center;
+        }
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .share-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+        }
+        .share-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: rgba(251, 191, 36, 0.5);
+            transform: translateY(-2px);
+        }
+        .back-btn {
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            color: #8b5cf6;
+            margin-top: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+        @media (max-width: 768px) {
+            .tool-card { padding: 30px 20px; }
+            .row { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2em; }
+            .result-content { font-size: 1.05em; }
+        }
+            .profile-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .profile-select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
             color: #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
         }
-        .back-btn { 
-            background: rgba(6, 182, 212, 0.2); 
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            margin-top: 20px; 
+        .profile-select:focus {
+            outline: none;
+            border-color: #06b6d4;
         }
-        .back-btn:hover { 
-            background: rgba(6, 182, 212, 0.3); 
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        .profile-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .share-buttons { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
-        .share-btn { 
-            background: rgba(6, 182, 212, 0.2); 
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            color: #e0e0e0; 
-            padding: 10px 20px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            transition: all 0.3s; 
+        .profile-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
         }
-        .share-btn:hover { 
-            background: rgba(6, 182, 212, 0.3); 
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        .clear-btn {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+        }
+        .clear-btn:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>💫 Soul Urge Number Calculator</h1>
-            <p>Reveal the numerical pattern of your deepest desires and innermost motivations through ancient numerological wisdom.</p>
+            <h1>💖 Soul Urge Number Calculator</h1>
+            <p>Discover your heart's deepest desires and what truly motivates you</p>
         </div>
         
         <div class="tool-card">
-            <div id="tool-content">
-            <div class="input-group">
-                <label for="fullName">Enter Your Full Name:</label>
-                <input type="text" id="fullName" placeholder="John Doe" required>
+            <div style="text-align: right; margin-bottom: 20px;">
+                <button type="button" onclick="clearSavedData()" style="background: rgba(236, 72, 153, 0.1); border: 2px solid rgba(236, 72, 153, 0.3); color: #ec4899; padding: 8px 16px; font-size: 0.9em; width: auto; margin: 0;">
+                    🗑️ Clear My Data
+                </button>
             </div>
-        </div>
-            <button id="calculate-btn">Reveal Pattern</button>
+            <form id="toolForm">
+                
+<div class="input-section">
+    <div class="section-title">Personal Information</div>
+    <div class="input-group">
+        <label for="preferredName">What name do you resonate with?</label>
+        <input type="text" id="preferredName" placeholder="The name you identify with most" required>
+        <div class="helper-text">Use the name that feels most authentic to you - this could be your birth name, chosen name, or nickname</div>
+    </div>
+    <div class="input-group">
+        <label for="birthName">Full birth name (as on birth certificate)</label>
+        <input type="text" id="birthName" placeholder="Your legal birth name">
+        <div class="helper-text">Optional but provides deeper insights into your soul's blueprint</div>
+    </div>
+</div>
+
+                <button type="submit">Reveal My Soul's Desire</button>
+            </form>
+            
             <div id="result" class="result">
-                <h3 id="result-title"></h3>
-                <p id="result-text"></p>
-                <div class="share-buttons">
-                    <button class="share-btn" onclick="shareOnTwitter()">🐦 Twitter</button>
-                    <button class="share-btn" onclick="shareOnFacebook()">📘 Facebook</button>
-                    <button class="share-btn" onclick="copyLink()">📋 Copy Link</button>
+                <div class="result-header">
+                    <div class="result-title" id="resultTitle"></div>
+                    <div class="result-subtitle" id="resultSubtitle"></div>
+                </div>
+                <div class="result-content" id="resultContent"></div>
+                <div class="share-section">
+                    <p style="color: #9ca3af; margin-bottom: 10px;">Found this helpful? Share with others:</p>
+                    <div class="share-buttons">
+                        <a href="#" class="share-btn" onclick="shareOnTwitter(); return false;">🐦 Twitter</a>
+                        <a href="#" class="share-btn" onclick="shareOnFacebook(); return false;">📘 Facebook</a>
+                        <a href="#" class="share-btn" onclick="copyLink(); return false;">📋 Copy Link</a>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <button class="back-btn" onclick="goBack()">← Quantum Merlin Hub</button>
+        <button class="back-btn" onclick="goBack()">← Back to All Tools</button>
     </div>
     
     <script>
         function goBack() { window.location.href = 'tools_index.html'; }
+        
         function shareOnTwitter() {
-            const text = encodeURIComponent("I just used Soul Urge Number Calculator! Check it out: ");
+            const text = encodeURIComponent("I just got my personalized Soul Urge Number Calculator! Get yours:");
             const url = encodeURIComponent(window.location.href);
-            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
-        }
-        function shareOnFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-        }
-        function copyLink() {
-            navigator.clipboard.writeText(window.location.href);
-            alert('Link copied to clipboard! 📋');
+            window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank');
         }
         
-            document.getElementById('calculate-btn').addEventListener('click', function() {
-                const name = document.getElementById('fullName').value.toUpperCase();
-                if (!name) {
-                    alert('Please enter your full name');
-                    return;
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank');
+        }
+        
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard! Share it with friends.');
+        }
+        
+        // Load saved data from localStorage
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                if (document.getElementById('preferredName') && data.preferredName) {
+                    document.getElementById('preferredName').value = data.preferredName;
                 }
-                
-                // Soul urge uses only vowels (A, E, I, O, U)
-                const vowels = name.replace(/[^AEIOU]/g, '');
-                
-                const letterValues = { 'A': 1, 'E': 5, 'I': 9, 'O': 6, 'U': 3 };
-                
-                let sum = 0;
-                for (let char of vowels) {
-                    sum += letterValues[char];
+                if (document.getElementById('birthName') && data.birthName) {
+                    document.getElementById('birthName').value = data.birthName;
                 }
-                
-                function reduceToSingle(num) {
-                    while (num > 9 && num !== 11 && num !== 22) {
-                        num = String(num).split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
-                    }
-                    return num;
+                if (document.getElementById('birthDate') && data.birthDate) {
+                    document.getElementById('birthDate').value = data.birthDate;
                 }
-                
-                const soulUrge = reduceToSingle(sum);
-                
-                const meanings = {
-                    1: "Your soul craves independence and leadership. You want to be first and best.",
-                    2: "Your soul desires peace and harmony. You seek balance in relationships.",
-                    3: "Your soul wants creative expression. You need to create and communicate.",
-                    4: "Your soul seeks stability and order. You build solid foundations.",
-                    5: "Your soul desires freedom and change. You need adventure and variety.",
-                    6: "Your soul wants to love and be loved. You seek family and harmony.",
-                    7: "Your soul seeks truth and understanding. You need deep meaning.",
-                    8: "Your soul desires success and recognition. You want material achievement.",
-                    9: "Your soul wants to help humanity. You seek to make a difference.",
-                    11: "Your soul craves spiritual insight. You seek higher understanding.",
-                    22: "Your soul desires to build something lasting. You want to leave a legacy."
-                };
-                
-                document.getElementById('result-title').textContent = `Your Soul Urge Number is ${soulUrge}`;
-                document.getElementById('result-text').textContent = meanings[soulUrge];
-                document.getElementById('result').classList.add('show');
+                if (document.getElementById('birthTime') && data.birthTime) {
+                    document.getElementById('birthTime').value = data.birthTime;
+                }
+                if (document.getElementById('birthPlace') && data.birthPlace) {
+                    document.getElementById('birthPlace').value = data.birthPlace;
+                }
+            }
+        }
+        
+        // Save user data to localStorage
+        function saveUserData() {
+            const userData = {};
+            
+            if (document.getElementById('preferredName')) {
+                userData.preferredName = document.getElementById('preferredName').value;
+            }
+            if (document.getElementById('birthName')) {
+                userData.birthName = document.getElementById('birthName').value;
+            }
+            if (document.getElementById('birthDate')) {
+                userData.birthDate = document.getElementById('birthDate').value;
+            }
+            if (document.getElementById('birthTime')) {
+                userData.birthTime = document.getElementById('birthTime').value;
+            }
+            if (document.getElementById('birthPlace')) {
+                userData.birthPlace = document.getElementById('birthPlace').value;
+            }
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
+        }
+        // Profile Management Functions
+        function getAllProfiles() {
+            const profiles = localStorage.getItem('quantumMerlinProfiles');
+            return profiles ? JSON.parse(profiles) : {};
+        }
+
+        function saveProfile(profileName) {
+            if (!profileName || profileName.trim() === '') {
+                alert('Please enter a profile name');
+                return;
+            }
+            
+            const currentData = {
+                preferredName: document.getElementById('preferredName')?.value || '',
+                birthName: document.getElementById('birthName')?.value || '',
+                birthDate: document.getElementById('birthDate')?.value || '',
+                birthTime: document.getElementById('birthTime')?.value || '',
+                birthPlace: document.getElementById('birthPlace')?.value || ''
+            };
+            
+            const profiles = getAllProfiles();
+            profiles[profileName] = currentData;
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(currentData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+            
+            updateProfileDropdown();
+            alert(`Profile "${profileName}" saved! ✨`);
+        }
+
+        function loadProfile(profileName) {
+            const profiles = getAllProfiles();
+            const profileData = profiles[profileName];
+            
+            if (!profileData) return;
+            
+            if (profileData.preferredName && document.getElementById('preferredName')) {
+                document.getElementById('preferredName').value = profileData.preferredName;
+            }
+            if (profileData.birthName && document.getElementById('birthName')) {
+                document.getElementById('birthName').value = profileData.birthName;
+            }
+            if (profileData.birthDate && document.getElementById('birthDate')) {
+                document.getElementById('birthDate').value = profileData.birthDate;
+            }
+            if (profileData.birthTime && document.getElementById('birthTime')) {
+                document.getElementById('birthTime').value = profileData.birthTime;
+            }
+            if (profileData.birthPlace && document.getElementById('birthPlace')) {
+                document.getElementById('birthPlace').value = profileData.birthPlace;
+            }
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(profileData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+        }
+
+        function deleteProfile(profileName) {
+            const profiles = getAllProfiles();
+            delete profiles[profileName];
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
+            if (activeProfile === profileName) {
+                localStorage.removeItem('quantumMerlinActiveProfile');
+            }
+            
+            updateProfileDropdown();
+        }
+
+        function updateProfileDropdown() {
+            const dropdown = document.getElementById('profileSelect');
+            if (!dropdown) return;
+            
+            const profiles = getAllProfiles();
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            dropdown.innerHTML = '<option value="">Select a profile...</option>';
+            
+            Object.keys(profiles).sort().forEach(profileName => {
+                const option = document.createElement('option');
+                option.value = profileName;
+                option.textContent = profileName;
+                if (profileName === activeProfile) {
+                    option.selected = true;
+                }
+                dropdown.appendChild(option);
             });
+        }
+
+        function onProfileChange() {
+            const dropdown = document.getElementById('profileSelect');
+            const profileName = dropdown.value;
+            
+            if (profileName) {
+                loadProfile(profileName);
+            }
+        }
+
+        function showSaveProfileDialog() {
+            const profiles = getAllProfiles();
+            const currentActive = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            let message = 'Enter a name for this profile:';
+            if (currentActive) {
+                message += `
+
+Current profile: "${currentActive}"
+Leave blank to update current profile.`;
+            }
+            
+            const profileName = prompt(message, currentActive);
+            
+            if (profileName !== null) {
+                const finalName = profileName.trim() || currentActive || 'Profile ' + (Object.keys(profiles).length + 1);
+                saveProfile(finalName);
+            }
+        }
+
+        function showDeleteProfileDialog() {
+            const profiles = getAllProfiles();
+            const profileNames = Object.keys(profiles).sort();
+            
+            if (profileNames.length === 0) {
+                alert('No saved profiles to delete');
+                return;
+            }
+            
+            const profileName = prompt(`Enter profile name to delete:
+
+Saved profiles:
+${profileNames.join('
+')}`);
+            if (profileName && profiles[profileName]) {
+                if (confirm(`Delete profile "${profileName}"?`)) {
+                    deleteProfile(profileName);
+                    alert(`Profile "${profileName}" deleted`);
+                }
+            } else if (profileName) {
+                alert('Profile not found');
+            }
+        }
+
+        // Initialize profile dropdown on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProfileDropdown();
+            
+            const dropdown = document.getElementById('profileSelect');
+            if (dropdown) {
+                dropdown.addEventListener('change', onProfileChange);
+            }
+        });
+
+        
+        // Clear saved data
+        function clearSavedData() {
+            if (confirm('This will clear your saved personal information. Are you sure?')) {
+                localStorage.removeItem('quantumMerlinUserData');
+                location.reload();
+            }
+        }
+        
+        // Load saved data when page loads
+        window.addEventListener('DOMContentLoaded', loadSavedData);
+        
+        
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function letterToNumber(letter) {
+            const values = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+                'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
+            };
+            return values[letter.toUpperCase()] || 0;
+        }
+        
+        function calculateNameNumber(name) {
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => sum + letterToNumber(char), 0)
+            );
+        }
+        
+        function calculateVowelNumber(name) {
+            const vowels = 'AEIOU';
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => 
+                    vowels.includes(char) ? sum + letterToNumber(char) : sum, 0)
+            );
+        }
+        
+        function calculateConsonantNumber(name) {
+            const vowels = 'AEIOU';
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => 
+                    !vowels.includes(char) && /[A-Z]/.test(char) ? sum + letterToNumber(char) : sum, 0)
+            );
+        }
+        
+        function calculateLifePath(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            const dayReduced = reduceToSingle(day);
+            const monthReduced = reduceToSingle(month);
+            const yearReduced = reduceToSingle(year);
+            
+            return reduceToSingle(dayReduced + monthReduced + yearReduced);
+        }
+
+        document.getElementById('toolForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Save user data to localStorage
+            saveUserData();
+            
+            const preferredName = document.getElementById('preferredName').value;
+            const birthName = document.getElementById('birthName').value || preferredName;
+            
+            const soulUrge = calculateVowelNumber(birthName);
+            
+            const interpretations = {
+                1: {
+                    title: "Independent Spirit",
+                    desire: "autonomy, leadership, originality",
+                    description: `${preferredName}, your Soul Urge Number 1 reveals that at the deepest level, you crave independence and the freedom to be yourself. The vowels in your name—the breath and soul of your identity—carry the vibration of autonomy. What truly drives you is the desire to stand on your own, lead your own life, and express your unique vision.`,
+                    heart: `In your heart of hearts, you long to be seen as capable, strong, and self-sufficient. You feel most fulfilled when you're pioneering something new, making your own decisions, or standing confidently in your individuality. The idea of being dependent on others or living according to someone else's rules feels suffocating to your soul.`,
+                    motivation: `You're deeply motivated by the opportunity to prove yourself, to show what you're capable of achieving through your own efforts. Challenges excite you when they offer the chance to demonstrate your strength and ingenuity. You're driven by a need to be first, to be original, to make your unique mark on the world.`,
+                    relationships: `In relationships, you need a partner who respects your independence and doesn't try to control or limit you. You're attracted to people who are strong in their own right and don't need you to complete them. Your heart opens when someone sees and celebrates your uniqueness. You struggle with partners who are needy, dependent, or who try to merge with you completely.`,
+                    fulfillment: `You'll feel truly fulfilled when you're living life on your own terms. This means having work that allows autonomy, relationships that honor your independence, and the freedom to pursue your own interests and goals. Your soul is satisfied when you can look at your life and say, "I built this myself."`,
+                    shadow: `When your need for independence becomes extreme, you may isolate yourself or refuse help even when you need it. You might equate asking for support with weakness, or become so focused on self-sufficiency that you miss the joy of true partnership. Remember that choosing interdependence from a place of strength is not the same as forced dependence.`
+                },
+                2: {
+                    title: "Harmonious Heart",
+                    desire: "peace, connection, partnership",
+                    description: `${preferredName}, your Soul Urge Number 2 reveals that at the deepest level, you crave harmony and genuine connection. The vowels in your name carry the vibration of the peacemaker. What truly drives you is the desire for loving relationships, peaceful environments, and the deep satisfaction that comes from cooperation and mutual understanding.`,
+                    heart: `In your heart of hearts, you long to be appreciated for your sensitivity and caring nature. You feel most fulfilled when you're creating harmony, supporting others, or being part of a loving partnership. Conflict and discord cause you deep distress. Your soul thrives in environments of mutual respect, kindness, and emotional honesty.`,
+                    motivation: `You're deeply motivated by the opportunity to help others and create peace. The chance to mediate conflict, support someone through difficulty, or bring people together lights you up inside. You're driven by a need to be needed, to know that your presence makes life better and more harmonious for those around you.`,
+                    relationships: `In relationships, you need a partner who values emotional intimacy and authentic connection. You're attracted to people who are sensitive, kind, and emotionally available. Your heart opens when someone truly sees you, appreciates your caring nature, and creates a safe space for vulnerability. You struggle with partners who are emotionally closed, harsh, or who don't value harmony.`,
+                    fulfillment: `You'll feel truly fulfilled when you're in loving relationships and peaceful environments. This means having work that involves cooperation, relationships that are mutually supportive, and living in harmony with those around you. Your soul is satisfied when you can facilitate understanding and create beauty in your environment.`,
+                    shadow: `When your need for harmony becomes extreme, you may sacrifice your own needs to keep the peace. You might struggle to express your true feelings if they might cause conflict, or lose yourself in relationships by over-adapting to others. Remember that true harmony includes your voice, your needs, your truth.`
+                },
+                3: {
+                    title: "Expressive Soul",
+                    desire: "self-expression, joy, creativity",
+                    description: `${preferredName}, your Soul Urge Number 3 reveals that at the deepest level, you crave authentic self-expression and joyful living. The vowels in your name carry the vibration of the artist and communicator. What truly drives you is the desire to express who you are, create beauty, and experience life's joy and richness.`,
+                    heart: `In your heart of hearts, you long to be seen and appreciated for your creativity and unique perspective. You feel most fulfilled when you're expressing yourself authentically—whether through words, art, performance, or simply the way you live. Repressing your expressiveness feels like dying. Your soul needs creative outlets and opportunities to share your inner world.`,
+                    motivation: `You're deeply motivated by the opportunity to create and inspire. The chance to express an idea, make something beautiful, or bring joy to others lights you up inside. You're driven by a need to share your gifts with the world and to experience life's beauty, variety, and pleasure.`,
+                    relationships: `In relationships, you need a partner who appreciates and encourages your expressiveness. You're attracted to people who are creative, playful, and emotionally open. Your heart opens when someone delights in your uniqueness and joins you in celebrating life. You struggle with partners who are overly serious, critical of your expressiveness, or emotionally shut down.`,
+                    fulfillment: `You'll feel truly fulfilled when you're expressing yourself creatively and experiencing joy. This means having work that allows creativity, relationships that include playfulness and emotional expressiveness, and time for artistic or creative pursuits. Your soul is satisfied when you're bringing your inner vision into the world.`,
+                    shadow: `When your need for expression becomes extreme, you may become scattered, superficial, or overly focused on attention. You might express without depth, or become so focused on external validation that you lose touch with authentic self-expression. Remember that true expression comes from depth, not just surface enthusiasm.`
+                },
+                4: {
+                    title: "Security Seeker",
+                    desire: "stability, order, lasting value",
+                    description: `${preferredName}, your Soul Urge Number 4 reveals that at the deepest level, you crave security and order. The vowels in your name carry the vibration of the builder. What truly drives you is the desire to create stability, build something lasting, and know that you're on solid ground.`,
+                    heart: `In your heart of hearts, you long to feel secure and to know that your efforts create lasting value. You feel most fulfilled when you're building something solid, organizing chaos into order, or working toward concrete goals. Instability and chaos cause you deep anxiety. Your soul needs structure, predictability, and the satisfaction of tangible achievement.`,
+                    motivation: `You're deeply motivated by the opportunity to build and create lasting value. The chance to create systems, establish foundations, or work toward long-term goals lights you up inside. You're driven by a need to know that your work matters and will endure, that you're creating something of real, lasting value.`,
+                    relationships: `In relationships, you need a partner who values commitment and stability. You're attracted to people who are reliable, responsible, and share your values around building a secure life. Your heart opens when someone demonstrates their commitment through consistent actions. You struggle with partners who are flaky, irresponsible, or constantly creating chaos.`,
+                    fulfillment: `You'll feel truly fulfilled when you're building something meaningful and living in stability. This means having steady work that produces tangible results, relationships that are committed and reliable, and financial security. Your soul is satisfied when you can see the concrete results of your efforts and know you've built something that will last.`,
+                    shadow: `When your need for security becomes extreme, you may become rigid, resistant to change, or unable to enjoy the present because you're always working toward the future. You might equate your worth with your productivity, or become so focused on material security that you neglect emotional and spiritual needs. Remember that flexibility and rest are also valuable.`
+                },
+                5: {
+                    title: "Freedom Lover",
+                    desire: "freedom, variety, adventure",
+                    description: `${preferredName}, your Soul Urge Number 5 reveals that at the deepest level, you crave freedom and new experiences. The vowels in your name carry the vibration of the adventurer. What truly drives you is the desire to live freely, explore all that life offers, and avoid anything that feels limiting or restrictive.`,
+                    heart: `In your heart of hearts, you long to be free—free to move, to choose, to explore, to change your mind. You feel most fulfilled when you're experiencing something new, learning, traveling, or exploring uncharted territory. Routine and restriction feel like imprisonment to your soul. Your heart needs variety, stimulation, and the excitement of possibility.`,
+                    motivation: `You're deeply motivated by the opportunity to experience life fully and expand your horizons. The chance to travel, learn new things, meet diverse people, or have new experiences lights you up inside. You're driven by a need to keep growing, changing, and discovering what else is possible.`,
+                    relationships: `In relationships, you need a partner who values freedom as much as you do. You're attracted to people who are independent, adventurous, and open to change. Your heart opens when someone joins you in exploring life while respecting your need for space and autonomy. You struggle with partners who are possessive, routine-oriented, or who try to limit your freedom.`,
+                    fulfillment: `You'll feel truly fulfilled when you're living freely and experiencing variety. This means having work that offers flexibility and diversity, relationships that allow independence, and the ability to travel or try new things regularly. Your soul is satisfied when your life feels expansive, not contracted.`,
+                    shadow: `When your need for freedom becomes extreme, you may avoid all commitment, become restless even in good situations, or use change to escape rather than grow. You might confuse freedom with lack of responsibility, or become so focused on what's next that you can't enjoy what's now. Remember that chosen commitment from a place of freedom is different from imposed restriction.`
+                },
+                6: {
+                    title: "Loving Caretaker",
+                    desire: "love, harmony, service",
+                    description: `${preferredName}, your Soul Urge Number 6 reveals that at the deepest level, you crave love and the opportunity to care for others. The vowels in your name carry the vibration of the nurturer. What truly drives you is the desire to love and be loved, to create beauty and harmony, and to make life better for those you care about.`,
+                    heart: `In your heart of hearts, you long to be needed and appreciated for your loving nature. You feel most fulfilled when you're caring for others, creating a beautiful environment, or bringing people together in love. Your soul is naturally oriented toward service, but not out of duty—out of genuine love and the deep satisfaction that comes from nurturing.`,
+                    motivation: `You're deeply motivated by the opportunity to help and heal others. The chance to care for someone, create beauty, or bring harmony to a situation lights you up inside. You're driven by a need to be of service, to know that your love makes a real difference in people's lives.`,
+                    relationships: `In relationships, you need a partner who appreciates your caring nature and reciprocates your love. You're attracted to people who value family, home, and emotional connection. Your heart opens when someone receives your love gratefully and cares for you in return. You struggle with partners who take your care for granted or who are emotionally unavailable.`,
+                    fulfillment: `You'll feel truly fulfilled when you're in loving relationships and able to serve others. This means having work that allows you to help people, relationships where love flows both ways, and a beautiful home environment. Your soul is satisfied when you can express love freely and see it make others' lives better.`,
+                    shadow: `When your need to love becomes extreme, you may become a martyr, sacrifice yourself for others, or become resentful when your care isn't appreciated. You might equate being needed with being valued, or have difficulty receiving care. Remember that you deserve the same love and care you so freely give to others.`
+                },
+                7: {
+                    title: "Truth Seeker",
+                    desire: "understanding, wisdom, solitude",
+                    description: `${preferredName}, your Soul Urge Number 7 reveals that at the deepest level, you crave truth and deep understanding. The vowels in your name carry the vibration of the seeker. What truly drives you is the desire to understand life's deeper mysteries, to find truth beneath appearances, and to develop genuine wisdom.`,
+                    heart: `In your heart of hearts, you long to understand—to really, deeply understand. You feel most fulfilled when you're contemplating profound questions, uncovering hidden truths, or experiencing moments of deep insight. Superficiality disturbs your soul. You need time alone to think, reflect, and integrate your experiences into understanding.`,
+                    motivation: `You're deeply motivated by the opportunity to learn, discover, and understand. The chance to study something deeply, uncover hidden knowledge, or experience spiritual insight lights you up inside. You're driven by a need to know truth, not just accept what you're told.`,
+                    relationships: `In relationships, you need a partner who values depth and intellectual/spiritual connection. You're attracted to people who are thoughtful, introspective, and genuinely seeking truth. Your heart opens when someone can meet you in deep conversation and respects your need for solitude. You struggle with partners who are superficial, overly social, or who dismiss your need for contemplation.`,
+                    fulfillment: `You'll feel truly fulfilled when you're learning and growing in understanding. This means having work that engages your mind deeply, relationships that include meaningful conversation, and plenty of time for solitude and reflection. Your soul is satisfied when you're discovering truth and deepening in wisdom.`,
+                    shadow: `When your need for understanding becomes extreme, you may become isolated, overly skeptical, or unable to trust. You might analyze so much that you can't feel, or become so focused on seeking that you miss what's already here. Remember that some truths are experienced, not thought. Allow yourself to not know sometimes.`
+                },
+                8: {
+                    title: "Achievement Driver",
+                    desire: "success, power, recognition",
+                    description: `${preferredName}, your Soul Urge Number 8 reveals that at the deepest level, you crave achievement and the power to make things happen. The vowels in your name carry the vibration of the manifestor. What truly drives you is the desire to succeed, to wield power effectively, and to be recognized for your accomplishments.`,
+                    heart: `In your heart of hearts, you long to achieve something significant and to be respected for what you've accomplished. You feel most fulfilled when you're manifesting your vision, leading effectively, or reaching ambitious goals. Your soul is naturally oriented toward success—not for vanity, but because achievement is how you express your power and make your contribution.`,
+                    motivation: `You're deeply motivated by the opportunity to achieve and lead. The chance to build something successful, take on challenging goals, or exercise power responsibly lights you up inside. You're driven by a need to prove what's possible through determination and skill, to leave a legacy of achievement.`,
+                    relationships: `In relationships, you need a partner who is confident and accomplished in their own right. You're attracted to people who are ambitious, successful, and who respect power. Your heart opens when someone sees and celebrates your achievements while maintaining their own strength. You struggle with partners who are passive, unambitious, or threatened by your success.`,
+                    fulfillment: `You'll feel truly fulfilled when you're achieving your goals and recognized for your success. This means having work that challenges you and rewards achievement, relationships with other strong people, and the power to make things happen. Your soul is satisfied when you can see tangible results of your efforts and know you've made a real impact.`,
+                    shadow: `When your need for achievement becomes extreme, you may become workaholic, measure everything by external success, or sacrifice relationships for goals. You might equate your worth with your achievements, or use power to dominate rather than empower. Remember that you are valuable beyond what you achieve, and that true power serves others.`
+                },
+                9: {
+                    title: "Compassionate Idealist",
+                    desire: "to help humanity, to love universally",
+                    description: `${preferredName}, your Soul Urge Number 9 reveals that at the deepest level, you crave meaning and the opportunity to serve humanity. The vowels in your name carry the vibration of the humanitarian. What truly drives you is the desire to make the world better, to love widely and deeply, and to help heal collective suffering.`,
+                    heart: `In your heart of hearts, you long to make a real difference in the world. You feel most fulfilled when you're helping others, working for a cause larger than yourself, or expressing universal love. Your soul is naturally compassionate and can't ignore suffering. You need to know that your life serves a higher purpose and contributes to humanity's evolution.`,
+                    motivation: `You're deeply motivated by the opportunity to serve and heal. The chance to help those in need, work for social justice, or contribute to collective wellbeing lights you up inside. You're driven by a vision of what the world could be and a deep need to help make that vision real.`,
+                    relationships: `In relationships, you need a partner who shares your values and vision for a better world. You're attracted to people who are compassionate, evolved, and committed to something beyond themselves. Your heart opens when someone works alongside you for the greater good. You struggle with partners who are selfish, materialistic, or closed-hearted.`,
+                    fulfillment: `You'll feel truly fulfilled when you're serving a cause you believe in. This means having work that contributes to the greater good, relationships based on shared values, and the ability to help others. Your soul is satisfied when you know your life has meaning beyond personal gain.`,
+                    shadow: `When your need to help becomes extreme, you may become overwhelmed by the world's suffering, sacrifice yourself for others, or become disappointed in humanity. You might take on too much responsibility for others' healing, or lose yourself in service. Remember that you can't save everyone, and that your own healing and happiness matter too.`
+                },
+                11: {
+                    title: "Inspired Visionary",
+                    desire: "spiritual connection, inspiration, enlightenment",
+                    description: `${preferredName}, your Master Soul Urge Number 11 reveals that at the deepest level, you crave spiritual connection and divine inspiration. The vowels in your name carry an exceptionally high vibration. What truly drives you is the desire to connect with higher truth, to inspire others, and to bring spiritual light into the world.`,
+                    heart: `In your heart of hearts, you long for spiritual connection and the opportunity to channel higher wisdom. You feel most fulfilled when you're experiencing inspiration, helping others awaken, or living in alignment with spiritual truth. Your soul is naturally attuned to higher frequencies and you need spiritual practice and connection to feel whole.`,
+                    motivation: `You're deeply motivated by the opportunity to inspire and uplift. The chance to share spiritual wisdom, help others awaken, or bring divine inspiration into form lights you up inside. You're driven by a need to serve as a bridge between heaven and earth, to make spiritual truth accessible and practical.`,
+                    relationships: `In relationships, you need a partner who values spiritual growth and can meet you in higher consciousness. You're attracted to people who are spiritually aware, emotionally evolved, and supportive of your spiritual path. Your heart opens when someone honors your sensitivity and joins you in seeking higher truth. You struggle with partners who are cynical, materialistic, or who dismiss spiritual reality.`,
+                    fulfillment: `You'll feel truly fulfilled when you're living spiritually aligned and inspiring others. This means having work that allows spiritual expression, relationships that support your spiritual growth, and regular spiritual practice. Your soul is satisfied when you're channeling inspiration and helping elevate consciousness.`,
+                    shadow: `When your spiritual sensitivity becomes extreme, you may become ungrounded, overwhelmed by energies, or unable to function in the practical world. You might escape into spirituality to avoid earthly responsibilities, or become judgmental of those less spiritually aware. Remember that your mission is to bring spirit into matter, not escape matter for spirit.`
+                },
+                22: {
+                    title: "Visionary Builder",
+                    desire: "to create lasting transformation",
+                    description: `${preferredName}, your Master Soul Urge Number 22 reveals that at the deepest level, you crave the opportunity to manifest grand visions that serve humanity. The vowels in your name carry the highest vibration for manifestation. What truly drives you is the desire to build something transformative, to turn visionary ideas into concrete reality that benefits many.`,
+                    heart: `In your heart of hearts, you long to create something that matters—not just to you, but to humanity. You feel most fulfilled when you're working on large-scale projects, turning visions into reality, or building systems that will serve people for generations. Your soul is oriented toward major achievement in service of the greater good.`,
+                    motivation: `You're deeply motivated by the opportunity to build transformative legacies. The chance to create systems, institutions, or innovations that change how humanity operates lights you up inside. You're driven by a need to make a major, lasting contribution—to leave the world fundamentally better than you found it.`,
+                    relationships: `In relationships, you need a partner who shares your vision and can handle your intensity. You're attracted to people who are ambitious, capable, and who understand that you have a big mission. Your heart opens when someone supports your vision while maintaining their own power and purpose. You struggle with partners who are small-thinking or threatened by your ambition.`,
+                    fulfillment: `You'll feel truly fulfilled when you're building something of major significance. This means having work that allows you to manifest large visions, relationships that support your mission, and the resources to make real impact. Your soul is satisfied when you're creating lasting value that serves humanity.`,
+                    shadow: `When your need to build becomes extreme, you may become overwhelmed by the magnitude of your vision, work yourself to exhaustion, or become frustrated when others don't share your urgency. You might measure everything by achievement, or sacrifice present joy for future impact. Remember that you don't have to do it all alone, and that the journey matters as much as the destination.`
+                },
+                33: {
+                    title: "Universal Love",
+                    desire: "to love and heal unconditionally",
+                    description: `${preferredName}, your Master Soul Urge Number 33 reveals that at the deepest level, you crave the opportunity to express unconditional love and facilitate deep healing. The vowels in your name carry the highest vibration for compassionate service. What truly drives you is the desire to love without limits, to heal through presence, and to serve humanity's evolution toward love.`,
+                    heart: `In your heart of hearts, you long to be a pure channel for divine love. You feel most fulfilled when you're loving unconditionally, facilitating transformation in others, or serving as a healing presence. Your soul embodies the energy of the Christ consciousness—you're here to demonstrate what unconditional love looks like in human form.`,
+                    motivation: `You're deeply motivated by the opportunity to love and heal. The chance to help someone transform through love, to be a healing presence, or to teach others about unconditional acceptance lights you up inside. You're driven by a need to serve love itself, to be an instrument of divine compassion.`,
+                    relationships: `In relationships, you need a partner who can match your depth of love and emotional capacity. You're attracted to people who are emotionally evolved, spiritually mature, and committed to their own healing. Your heart opens when someone can receive your love fully while also nurturing you. You struggle with partners who are emotionally closed or who take your love without reciprocating.`,
+                    fulfillment: `You'll feel truly fulfilled when you're expressing unconditional love and facilitating healing. This means having work that involves deep healing or teaching, relationships where love flows abundantly, and opportunities to serve with your gifts. Your soul is satisfied when you're being a clear channel for divine love.`,
+                    shadow: `When your need to love becomes extreme, you may become a martyr, sacrifice yourself completely, or take on others' pain as your own. You might equate love with self-sacrifice, or have difficulty receiving the care you give so freely. Remember that unconditional love includes loving yourself, that boundaries are acts of love, and that you cannot heal everyone.`
+                }
+            };
+            
+            const interpretation = interpretations[soulUrge];
+            
+            document.getElementById('resultTitle').innerHTML = `Soul Urge ${soulUrge}: ${interpretation.title}`;
+            document.getElementById('resultSubtitle').innerHTML = `${preferredName}, this is what your heart truly desires`;
+            
+            document.getElementById('resultContent').innerHTML = `
+                <p><span class="highlight">Your Heart's Desire:</span> ${interpretation.desire}</p>
+                <p>${interpretation.description}</p>
+                <p><strong>What Your Heart Longs For:</strong> ${interpretation.heart}</p>
+                <p><strong>What Truly Motivates You:</strong> ${interpretation.motivation}</p>
+                <p><strong>What You Need in Relationships:</strong> ${interpretation.relationships}</p>
+                <p><strong>How to Find Fulfillment:</strong> ${interpretation.fulfillment}</p>
+                <p><strong>Shadow to Watch For:</strong> ${interpretation.shadow}</p>
+            `;
+            
+            document.getElementById('result').classList.add('show');
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
         
     </script>
 </body>

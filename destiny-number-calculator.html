@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Destiny Number Calculator | Quantum Merlin</title>
-    <meta name="description" content="Reveal the numerical pattern underlying your life's purpose and mission through ancient numerological wisdom.">
+    <title>Destiny Number Calculator | Free Personalized Reading</title>
+    <meta name="description" content="Uncover your life's mission and karmic purpose through your Destiny Number">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -16,220 +16,777 @@
             background-image: 
                 radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
-            color: #e0e0e0;
             min-height: 100vh;
             padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
         }
-        .container { max-width: 800px; margin: 0 auto; }
-        .header { 
-            text-align: center; 
-            margin-bottom: 30px; 
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
         }
-        .header h1 { 
+        .header h1 {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2.5em; 
-            margin-bottom: 10px; 
+            font-size: 2.8em;
+            margin-bottom: 15px;
             background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: 2px;
             font-weight: 700;
         }
-        .header p { 
-            font-size: 1.1em; 
-            opacity: 0.9; 
-            color: #e0e0e0;
+        .header p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2em;
+            color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
         }
         .tool-card {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
             border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             margin-bottom: 30px;
         }
-        .input-group { margin-bottom: 25px; }
-        label { 
-            display: block; 
-            font-family: 'Cinzel', serif;
-            font-weight: 600; 
-            margin-bottom: 8px; 
-            color: #fbbf24;
+        .input-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.2);
         }
-        input[type="text"], input[type="number"], input[type="date"], select {
+        .input-section:last-of-type {
+            border-bottom: none;
+        }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .input-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #06b6d4;
+            font-size: 1.05em;
+        }
+        .helper-text {
+            font-size: 0.9em;
+            color: #9ca3af;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        select {
             width: 100%;
             padding: 15px;
-            background: rgba(17, 24, 39, 0.8);
             border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
             border-radius: 10px;
             font-size: 16px;
+            transition: border-color 0.3s;
             font-family: 'Cormorant Garamond', serif;
-            color: #e0e0e0;
-            transition: all 0.3s;
         }
-        input:focus, select:focus { 
-            outline: none; 
-            border-color: #06b6d4; 
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        input:focus, select:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
         button {
             background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
             color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-family: 'Cinzel', serif;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 18px 50px;
+            font-size: 1.2em;
             font-weight: 600;
+            font-family: 'Cinzel', serif;
             border-radius: 10px;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             width: 100%;
+            margin-top: 20px;
+            letter-spacing: 1px;
         }
-        button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(6, 182, 212, 0.4); }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.4);
+            border-color: rgba(251, 191, 36, 0.6);
+        }
         .result {
-            background: rgba(17, 24, 39, 0.9);
-            border: 2px solid transparent;
-            border-image: linear-gradient(135deg, #fbbf24 0%, #ec4899 100%);
-            border-image-slice: 1;
+            background: rgba(20, 20, 30, 0.6);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 40px;
             border-radius: 15px;
-            padding: 30px;
-            margin-top: 25px;
+            margin-top: 30px;
             display: none;
-            box-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
         }
-        .result.show { display: block; animation: fadeIn 0.5s; }
-        .result h3 { 
+        .result.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .result-title {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2em; 
-            margin-bottom: 15px; 
+            font-size: 2.2em;
             background: linear-gradient(135deg, #fbbf24 0%, #ec4899 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 10px;
+            font-weight: 700;
         }
-        .result p { 
-            font-size: 1.1em; 
-            line-height: 1.6; 
+        .result-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1em;
+            color: #06b6d4;
+            font-style: italic;
+        }
+        .result-content {
+            font-size: 1.15em;
+            line-height: 2;
+            color: #d1d5db;
+            text-align: justify;
+        }
+        .result-content p {
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background: linear-gradient(120deg, rgba(251, 191, 36, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #fbbf24;
+        }
+        .share-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(6, 182, 212, 0.2);
+            text-align: center;
+        }
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .share-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+        }
+        .share-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: rgba(251, 191, 36, 0.5);
+            transform: translateY(-2px);
+        }
+        .back-btn {
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            color: #8b5cf6;
+            margin-top: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+        @media (max-width: 768px) {
+            .tool-card { padding: 30px 20px; }
+            .row { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2em; }
+            .result-content { font-size: 1.05em; }
+        }
+            .profile-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .profile-select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
             color: #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
         }
-        .back-btn { 
-            background: rgba(6, 182, 212, 0.2); 
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            margin-top: 20px; 
+        .profile-select:focus {
+            outline: none;
+            border-color: #06b6d4;
         }
-        .back-btn:hover { 
-            background: rgba(6, 182, 212, 0.3); 
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        .profile-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .share-buttons { display: flex; gap: 10px; margin-top: 20px; justify-content: center; }
-        .share-btn { 
-            background: rgba(6, 182, 212, 0.2); 
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            color: #e0e0e0; 
-            padding: 10px 20px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            transition: all 0.3s; 
+        .profile-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
         }
-        .share-btn:hover { 
-            background: rgba(6, 182, 212, 0.3); 
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+        .clear-btn {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+        }
+        .clear-btn:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🌟 Destiny Number Calculator</h1>
-            <p>Reveal the numerical pattern underlying your life's purpose and mission through ancient numerological wisdom.</p>
+            <h1>🎯 Destiny Number Calculator</h1>
+            <p>Uncover your life's mission and karmic purpose through your Destiny Number</p>
         </div>
         
         <div class="tool-card">
-            <div id="tool-content">
-            <div class="input-group">
-                <label for="fullName">Enter Your Full Name (as on birth certificate):</label>
-                <input type="text" id="fullName" placeholder="John Doe" required>
+            <div style="text-align: right; margin-bottom: 20px;">
+                <button type="button" onclick="clearSavedData()" style="background: rgba(236, 72, 153, 0.1); border: 2px solid rgba(236, 72, 153, 0.3); color: #ec4899; padding: 8px 16px; font-size: 0.9em; width: auto; margin: 0;">
+                    🗑️ Clear My Data
+                </button>
             </div>
-        </div>
-            <button id="calculate-btn">Reveal Pattern</button>
+            <form id="toolForm">
+                
+<div class="input-section">
+    <div class="section-title">Personal Information</div>
+    <div class="input-group">
+        <label for="preferredName">What name do you resonate with?</label>
+        <input type="text" id="preferredName" placeholder="The name you identify with most" required>
+        <div class="helper-text">Use the name that feels most authentic to you - this could be your birth name, chosen name, or nickname</div>
+    </div>
+    <div class="input-group">
+        <label for="birthName">Full birth name (as on birth certificate)</label>
+        <input type="text" id="birthName" placeholder="Your legal birth name">
+        <div class="helper-text">Optional but provides deeper insights into your soul's blueprint</div>
+    </div>
+</div>
+
+<div class="input-section">
+    <div class="section-title">Birth Information</div>
+    <div class="input-group">
+        <label for="birthDate">Date of Birth</label>
+        <input type="date" id="birthDate" required>
+    </div>
+    <div class="input-group">
+        <label for="birthTime">Time of Birth</label>
+        <input type="time" id="birthTime">
+        <div class="helper-text">If known - provides more accurate astrological insights</div>
+    </div>
+    <div class="input-group">
+        <label for="birthPlace">Place of Birth</label>
+        <input type="text" id="birthPlace" placeholder="City, Country">
+        <div class="helper-text">Helps calculate accurate astrological positions</div>
+    </div>
+</div>
+
+                <button type="submit">Reveal My Destiny</button>
+            </form>
+            
             <div id="result" class="result">
-                <h3 id="result-title"></h3>
-                <p id="result-text"></p>
-                <div class="share-buttons">
-                    <button class="share-btn" onclick="shareOnTwitter()">🐦 Twitter</button>
-                    <button class="share-btn" onclick="shareOnFacebook()">📘 Facebook</button>
-                    <button class="share-btn" onclick="copyLink()">📋 Copy Link</button>
+                <div class="result-header">
+                    <div class="result-title" id="resultTitle"></div>
+                    <div class="result-subtitle" id="resultSubtitle"></div>
+                </div>
+                <div class="result-content" id="resultContent"></div>
+                <div class="share-section">
+                    <p style="color: #9ca3af; margin-bottom: 10px;">Found this helpful? Share with others:</p>
+                    <div class="share-buttons">
+                        <a href="#" class="share-btn" onclick="shareOnTwitter(); return false;">🐦 Twitter</a>
+                        <a href="#" class="share-btn" onclick="shareOnFacebook(); return false;">📘 Facebook</a>
+                        <a href="#" class="share-btn" onclick="copyLink(); return false;">📋 Copy Link</a>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <button class="back-btn" onclick="goBack()">← Quantum Merlin Hub</button>
+        <button class="back-btn" onclick="goBack()">← Back to All Tools</button>
     </div>
     
     <script>
         function goBack() { window.location.href = 'tools_index.html'; }
+        
         function shareOnTwitter() {
-            const text = encodeURIComponent("I just used Destiny Number Calculator! Check it out: ");
+            const text = encodeURIComponent("I just got my personalized Destiny Number Calculator! Get yours:");
             const url = encodeURIComponent(window.location.href);
-            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
-        }
-        function shareOnFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-        }
-        function copyLink() {
-            navigator.clipboard.writeText(window.location.href);
-            alert('Link copied to clipboard! 📋');
+            window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank');
         }
         
-            document.getElementById('calculate-btn').addEventListener('click', function() {
-                const name = document.getElementById('fullName').value.toUpperCase().replace(/[^A-Z]/g, '');
-                if (!name) {
-                    alert('Please enter your full name');
-                    return;
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank');
+        }
+        
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard! Share it with friends.');
+        }
+        
+        // Load saved data from localStorage
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                if (document.getElementById('preferredName') && data.preferredName) {
+                    document.getElementById('preferredName').value = data.preferredName;
                 }
-                
-                const letterValues = {
-                    'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
-                    'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
-                    'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
-                };
-                
-                let sum = 0;
-                for (let char of name) {
-                    sum += letterValues[char];
+                if (document.getElementById('birthName') && data.birthName) {
+                    document.getElementById('birthName').value = data.birthName;
                 }
-                
-                function reduceToSingle(num) {
-                    while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
-                        num = String(num).split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
-                    }
-                    return num;
+                if (document.getElementById('birthDate') && data.birthDate) {
+                    document.getElementById('birthDate').value = data.birthDate;
                 }
-                
-                const destinyNumber = reduceToSingle(sum);
-                
-                const meanings = {
-                    1: "The pattern reveals leadership energy. You are designed to pioneer new paths and inspire others through bold action.",
-                    2: "The pattern reveals diplomatic harmony. You bring people together and create balance through cooperation.",
-                    3: "The pattern reveals creative expression. You inspire others through art, communication, and joyful creation.",
-                    4: "The pattern reveals foundational building. You create stable systems and structures that endure.",
-                    5: "The pattern reveals freedom and adventure. You inspire others to embrace change and explore new possibilities.",
-                    6: "The pattern reveals nurturing service. You care for others and create loving, harmonious environments.",
-                    7: "The pattern reveals truth-seeking wisdom. You discover deep insights and share them with those ready to receive.",
-                    8: "The pattern reveals material mastery. You achieve worldly success and help others prosper.",
-                    9: "The pattern reveals humanitarian service. You work to uplift humanity and make the world more compassionate.",
-                    11: "The pattern reveals spiritual illumination. You guide others with intuition, vision, and higher consciousness.",
-                    22: "The pattern reveals master manifestation. You turn ambitious visions into tangible reality.",
-                    33: "The pattern reveals master teaching. You inspire and guide humanity toward greater understanding."
-                };
-                
-                document.getElementById('result-title').textContent = `Your Destiny Number is ${destinyNumber}`;
-                document.getElementById('result-text').textContent = meanings[destinyNumber];
-                document.getElementById('result').classList.add('show');
+                if (document.getElementById('birthTime') && data.birthTime) {
+                    document.getElementById('birthTime').value = data.birthTime;
+                }
+                if (document.getElementById('birthPlace') && data.birthPlace) {
+                    document.getElementById('birthPlace').value = data.birthPlace;
+                }
+            }
+        }
+        
+        // Save user data to localStorage
+        function saveUserData() {
+            const userData = {};
+            
+            if (document.getElementById('preferredName')) {
+                userData.preferredName = document.getElementById('preferredName').value;
+            }
+            if (document.getElementById('birthName')) {
+                userData.birthName = document.getElementById('birthName').value;
+            }
+            if (document.getElementById('birthDate')) {
+                userData.birthDate = document.getElementById('birthDate').value;
+            }
+            if (document.getElementById('birthTime')) {
+                userData.birthTime = document.getElementById('birthTime').value;
+            }
+            if (document.getElementById('birthPlace')) {
+                userData.birthPlace = document.getElementById('birthPlace').value;
+            }
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
+        }
+        // Profile Management Functions
+        function getAllProfiles() {
+            const profiles = localStorage.getItem('quantumMerlinProfiles');
+            return profiles ? JSON.parse(profiles) : {};
+        }
+
+        function saveProfile(profileName) {
+            if (!profileName || profileName.trim() === '') {
+                alert('Please enter a profile name');
+                return;
+            }
+            
+            const currentData = {
+                preferredName: document.getElementById('preferredName')?.value || '',
+                birthName: document.getElementById('birthName')?.value || '',
+                birthDate: document.getElementById('birthDate')?.value || '',
+                birthTime: document.getElementById('birthTime')?.value || '',
+                birthPlace: document.getElementById('birthPlace')?.value || ''
+            };
+            
+            const profiles = getAllProfiles();
+            profiles[profileName] = currentData;
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(currentData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+            
+            updateProfileDropdown();
+            alert(`Profile "${profileName}" saved! ✨`);
+        }
+
+        function loadProfile(profileName) {
+            const profiles = getAllProfiles();
+            const profileData = profiles[profileName];
+            
+            if (!profileData) return;
+            
+            if (profileData.preferredName && document.getElementById('preferredName')) {
+                document.getElementById('preferredName').value = profileData.preferredName;
+            }
+            if (profileData.birthName && document.getElementById('birthName')) {
+                document.getElementById('birthName').value = profileData.birthName;
+            }
+            if (profileData.birthDate && document.getElementById('birthDate')) {
+                document.getElementById('birthDate').value = profileData.birthDate;
+            }
+            if (profileData.birthTime && document.getElementById('birthTime')) {
+                document.getElementById('birthTime').value = profileData.birthTime;
+            }
+            if (profileData.birthPlace && document.getElementById('birthPlace')) {
+                document.getElementById('birthPlace').value = profileData.birthPlace;
+            }
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(profileData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+        }
+
+        function deleteProfile(profileName) {
+            const profiles = getAllProfiles();
+            delete profiles[profileName];
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
+            if (activeProfile === profileName) {
+                localStorage.removeItem('quantumMerlinActiveProfile');
+            }
+            
+            updateProfileDropdown();
+        }
+
+        function updateProfileDropdown() {
+            const dropdown = document.getElementById('profileSelect');
+            if (!dropdown) return;
+            
+            const profiles = getAllProfiles();
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            dropdown.innerHTML = '<option value="">Select a profile...</option>';
+            
+            Object.keys(profiles).sort().forEach(profileName => {
+                const option = document.createElement('option');
+                option.value = profileName;
+                option.textContent = profileName;
+                if (profileName === activeProfile) {
+                    option.selected = true;
+                }
+                dropdown.appendChild(option);
             });
+        }
+
+        function onProfileChange() {
+            const dropdown = document.getElementById('profileSelect');
+            const profileName = dropdown.value;
+            
+            if (profileName) {
+                loadProfile(profileName);
+            }
+        }
+
+        function showSaveProfileDialog() {
+            const profiles = getAllProfiles();
+            const currentActive = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            let message = 'Enter a name for this profile:';
+            if (currentActive) {
+                message += `
+
+Current profile: "${currentActive}"
+Leave blank to update current profile.`;
+            }
+            
+            const profileName = prompt(message, currentActive);
+            
+            if (profileName !== null) {
+                const finalName = profileName.trim() || currentActive || 'Profile ' + (Object.keys(profiles).length + 1);
+                saveProfile(finalName);
+            }
+        }
+
+        function showDeleteProfileDialog() {
+            const profiles = getAllProfiles();
+            const profileNames = Object.keys(profiles).sort();
+            
+            if (profileNames.length === 0) {
+                alert('No saved profiles to delete');
+                return;
+            }
+            
+            const profileName = prompt(`Enter profile name to delete:
+
+Saved profiles:
+${profileNames.join('
+')}`);
+            if (profileName && profiles[profileName]) {
+                if (confirm(`Delete profile "${profileName}"?`)) {
+                    deleteProfile(profileName);
+                    alert(`Profile "${profileName}" deleted`);
+                }
+            } else if (profileName) {
+                alert('Profile not found');
+            }
+        }
+
+        // Initialize profile dropdown on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProfileDropdown();
+            
+            const dropdown = document.getElementById('profileSelect');
+            if (dropdown) {
+                dropdown.addEventListener('change', onProfileChange);
+            }
+        });
+
+        
+        // Clear saved data
+        function clearSavedData() {
+            if (confirm('This will clear your saved personal information. Are you sure?')) {
+                localStorage.removeItem('quantumMerlinUserData');
+                location.reload();
+            }
+        }
+        
+        // Load saved data when page loads
+        window.addEventListener('DOMContentLoaded', loadSavedData);
+        
+        
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function letterToNumber(letter) {
+            const values = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+                'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
+            };
+            return values[letter.toUpperCase()] || 0;
+        }
+        
+        function calculateNameNumber(name) {
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => sum + letterToNumber(char), 0)
+            );
+        }
+        
+        function calculateVowelNumber(name) {
+            const vowels = 'AEIOU';
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => 
+                    vowels.includes(char) ? sum + letterToNumber(char) : sum, 0)
+            );
+        }
+        
+        function calculateConsonantNumber(name) {
+            const vowels = 'AEIOU';
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => 
+                    !vowels.includes(char) && /[A-Z]/.test(char) ? sum + letterToNumber(char) : sum, 0)
+            );
+        }
+        
+        function calculateLifePath(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            const dayReduced = reduceToSingle(day);
+            const monthReduced = reduceToSingle(month);
+            const yearReduced = reduceToSingle(year);
+            
+            return reduceToSingle(dayReduced + monthReduced + yearReduced);
+        }
+
+        document.getElementById('toolForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Save user data to localStorage
+            saveUserData();
+            
+            const preferredName = document.getElementById('preferredName').value;
+            const birthName = document.getElementById('birthName').value || preferredName;
+            
+            const destinyNumber = calculateNameNumber(birthName);
+            
+            const interpretations = {
+                1: {
+                    title: "The Innovator's Mission",
+                    mission: "leadership, innovation, independence",
+                    description: `${preferredName}, your Destiny Number 1 reveals that you came to this Earth to lead and innovate. Your full birth name carries the vibrational frequency of pioneering energy, indicating that your life's mission is to break new ground and show others what's possible through courage and original thinking.`,
+                    calling: `Your soul signed up for a life of firsts. You're meant to initiate new projects, lead movements, or create something that never existed before. Whether in business, the arts, science, or social change, your destiny is to be a trailblazer. You're not here to follow traditional paths—you're here to create new ones.`,
+                    gifts: `You were born with natural leadership abilities and an innovative mind. Your greatest gifts include your courage to stand alone, your ability to envision new possibilities, and your determination to make them real. You have an entrepreneurial spirit and the drive to turn ideas into tangible results. Your independence is magnetic and inspiring to others.`,
+                    path: `Your path requires you to step into positions of leadership and authority. This might feel uncomfortable at first, especially if you're naturally humble or have been taught to blend in. But your destiny demands that you stand out, speak up, and take charge. Start projects, lead initiatives, or simply be willing to go first when others hesitate.`,
+                    fulfillment: `You'll find deep fulfillment when you're pioneering something meaningful. Look for opportunities to innovate, whether that's starting a business, leading a team, creating original work, or championing a cause. Your soul thrives when you're breaking new ground. Avoid jobs or situations where you have to follow rigid rules or wait for permission to act.`,
+                    wisdom: `Remember that true leadership is about empowering others, not dominating them. Your mission is to show what's possible, then help others find their own courage. You're here to be a pioneer, not a dictator. Your greatest legacy will be the paths you've opened and the courage you've inspired in others. Trust your vision even when you can't see the full path ahead.`
+                },
+                2: {
+                    title: "The Diplomat's Mission",
+                    mission: "peace, cooperation, harmony",
+                    description: `${preferredName}, your Destiny Number 2 reveals that you came to this Earth to unite and harmonize. Your birth name carries the vibrational frequency of the peacemaker, indicating that your life's mission is to bring people together, create cooperation, and heal divisions.`,
+                    calling: `Your soul signed up for a life of bridge-building. You're meant to mediate conflicts, facilitate collaboration, or create environments where people can work together harmoniously. Whether in diplomacy, counseling, partnership work, or community building, your destiny is to demonstrate the power of cooperation and mutual understanding.`,
+                    gifts: `You were born with extraordinary emotional intelligence and intuitive abilities. Your greatest gifts include your sensitivity to others' feelings, your ability to see multiple perspectives, and your talent for finding common ground. You're a natural mediator and your presence alone can calm tension. Your empathy and patience are superpowers.`,
+                    path: `Your path requires you to step into roles that involve partnership, collaboration, and supporting others. This might mean being the person behind the scenes who makes things work smoothly, or being the mediator who resolves conflicts. Your destiny is fulfilled through relationships and cooperation, not solo achievement.`,
+                    fulfillment: `You'll find deep fulfillment when you're helping people understand each other and work together. Look for opportunities in counseling, human resources, diplomacy, collaborative projects, or any field where bringing people together is essential. Your soul thrives when you're creating harmony and facilitating connection. Avoid highly competitive or conflict-driven environments.`,
+                    wisdom: `Remember that peacemaking doesn't mean people-pleasing. Your mission is to create genuine harmony, not false peace achieved through self-sacrifice. You're here to demonstrate that cooperation is stronger than competition, but that requires honoring your own needs too. Your greatest legacy will be the relationships you've healed and the unity you've created.`
+                },
+                3: {
+                    title: "The Creator's Mission",
+                    mission: "expression, inspiration, joy",
+                    description: `${preferredName}, your Destiny Number 3 reveals that you came to this Earth to create and inspire. Your birth name carries the vibrational frequency of the artist and communicator, indicating that your life's mission is to express yourself authentically and bring more beauty and joy into the world.`,
+                    calling: `Your soul signed up for a life of creative expression. You're meant to communicate, create, perform, or inspire through whatever medium calls to you. Whether through art, writing, speaking, entertainment, teaching, or design, your destiny is to show humanity the power of authentic self-expression and the importance of joy.`,
+                    gifts: `You were born with natural creative talents and charisma. Your greatest gifts include your ability to communicate effectively, your creative imagination, and your capacity to uplift others. You have a way with words, images, or performance that touches people's hearts. Your enthusiasm and optimism are contagious and healing.`,
+                    path: `Your path requires you to develop and share your creative gifts. This might mean pursuing arts professionally, or simply ensuring that creativity flows through whatever work you do. Your destiny is fulfilled through self-expression, not suppression. You must create, communicate, and share your unique vision with the world.`,
+                    fulfillment: `You'll find deep fulfillment when you're expressing yourself freely and inspiring others. Look for opportunities in the arts, entertainment, writing, speaking, teaching, marketing, or any field where creativity and communication are valued. Your soul thrives when you're bringing beauty and joy into the world. Avoid rigid, unexpressive environments that stifle your creativity.`,
+                    wisdom: `Remember that your gift of expression comes with responsibility. Your mission is to inspire and uplift, not just to entertain or seek attention. You're here to show people the beauty and possibility in life, to help them laugh, feel, and dream. Your greatest legacy will be the joy you've spread and the creativity you've awakened in others.`
+                },
+                4: {
+                    title: "The Architect's Mission",
+                    mission: "structure, foundation, legacy",
+                    description: `${preferredName}, your Destiny Number 4 reveals that you came to this Earth to build lasting foundations. Your birth name carries the vibrational frequency of the master builder, indicating that your life's mission is to create structures, systems, and institutions that serve humanity for generations.`,
+                    calling: `Your soul signed up for a life of meaningful construction. You're meant to build businesses, create systems, establish institutions, or provide stability and structure in whatever field you enter. Whether in architecture, business, organization, education, or family, your destiny is to create foundations that endure.`,
+                    gifts: `You were born with extraordinary discipline and practical wisdom. Your greatest gifts include your ability to plan effectively, your talent for organization, your reliability, and your capacity for sustained effort. You understand how to turn ideas into concrete reality. Your work ethic and integrity are exceptional.`,
+                    path: `Your path requires you to commit to building something meaningful. This might mean developing a business, creating educational programs, establishing family traditions, or building physical structures. Your destiny is fulfilled through tangible achievement and lasting contribution. You're here to create things that outlive you.`,
+                    fulfillment: `You'll find deep fulfillment when you're working on projects with long-term significance. Look for opportunities where you can build, systematize, or create lasting value. Your soul thrives when you're laying foundations that will serve others for years to come. Avoid quick-fix schemes or superficial pursuits that lack substance.`,
+                    wisdom: `Remember that the greatest structures serve others. Your mission is to build systems and institutions that genuinely help humanity, not just monuments to your own achievement. You're here to demonstrate that lasting success comes from solid foundations, honest work, and commitment to excellence. Your greatest legacy will be what continues to serve after you're gone.`
+                },
+                5: {
+                    title: "The Explorer's Mission",
+                    mission: "freedom, progress, transformation",
+                    description: `${preferredName}, your Destiny Number 5 reveals that you came to this Earth to explore and liberate. Your birth name carries the vibrational frequency of the adventurer and change-maker, indicating that your life's mission is to experience life fully, embrace change, and inspire others to break free from limitation.`,
+                    calling: `Your soul signed up for a life of adventure and transformation. You're meant to explore new territories—whether physical, intellectual, or spiritual—and share what you discover. Whether through travel, entrepreneurship, innovation, teaching, or advocacy for freedom, your destiny is to show people that life is meant to be experienced, not just endured.`,
+                    gifts: `You were born with extraordinary adaptability and versatility. Your greatest gifts include your ability to thrive in change, your quick learning capacity, your courage to try new things, and your talent for helping others transition. You're naturally progressive and forward-thinking. Your energy and enthusiasm for life itself are infectious.`,
+                    path: `Your path requires you to embrace variety and change rather than resist them. This might mean having a portfolio career, traveling extensively, constantly learning new skills, or working in fields that are rapidly evolving. Your destiny is fulfilled through experience and growth, not through routine and repetition.`,
+                    fulfillment: `You'll find deep fulfillment when you're experiencing new things and helping others expand their horizons. Look for opportunities in travel, education, entrepreneurship, sales, journalism, or any field that offers variety and freedom. Your soul thrives on new experiences and the lessons they bring. Avoid monotonous, restrictive environments that limit your growth.`,
+                    wisdom: `Remember that true freedom comes from mastery, not escape. Your mission is to explore deeply, not just skim the surface of many experiences. You're here to demonstrate that change is natural and necessary for growth, but also that some commitments enhance freedom rather than limit it. Your greatest legacy will be the doors you've opened and the courage you've inspired.`
+                },
+                6: {
+                    title: "The Healer's Mission",
+                    mission: "love, service, harmony",
+                    description: `${preferredName}, your Destiny Number 6 reveals that you came to this Earth to nurture and heal. Your birth name carries the vibrational frequency of the caregiver and harmonizer, indicating that your life's mission is to create beauty, provide care, and heal through love and service.`,
+                    calling: `Your soul signed up for a life of loving service. You're meant to care for others, create harmonious environments, or bring healing through your presence. Whether in healthcare, counseling, education, hospitality, the arts, or family, your destiny is to demonstrate the transformative power of unconditional love and compassionate service.`,
+                    gifts: `You were born with an enormous capacity for love and natural healing abilities. Your greatest gifts include your compassion, your ability to create beauty and comfort, your talent for counseling and advising, and your skill in bringing harmony to situations. You have an innate understanding of what people need to feel cared for and whole.`,
+                    path: `Your path requires you to step into roles where you can nurture and serve others. This might mean working in healing professions, creating beautiful spaces, counseling those in need, or simply being the person who holds families and communities together. Your destiny is fulfilled through love expressed in action.`,
+                    fulfillment: `You'll find deep fulfillment when you're caring for others and creating harmony. Look for opportunities in healthcare, counseling, teaching, hospitality, interior design, or any field where you can serve others' wellbeing. Your soul thrives when you're making life more beautiful and peaceful for those around you. Avoid environments that are harsh, uncaring, or chaotic.`,
+                    wisdom: `Remember that self-care enables service—you cannot pour from an empty cup. Your mission is to demonstrate healthy, sustainable love, not martyrdom. You're here to show that love is both powerful and practical, that service enriches the giver as well as the receiver. Your greatest legacy will be the lives you've touched and the healing you've facilitated.`
+                },
+                7: {
+                    title: "The Mystic's Mission",
+                    mission: "wisdom, truth, understanding",
+                    description: `${preferredName}, your Destiny Number 7 reveals that you came to this Earth to seek and share truth. Your birth name carries the vibrational frequency of the philosopher and mystic, indicating that your life's mission is to explore life's deeper mysteries and share the wisdom you discover.`,
+                    calling: `Your soul signed up for a life of seeking and teaching. You're meant to explore the deeper questions of existence, uncover hidden truths, or help others understand what lies beneath the surface. Whether through research, teaching, spiritual work, analysis, or the arts, your destiny is to be a wisdom keeper and truth seeker.`,
+                    gifts: `You were born with a brilliant analytical mind and deep intuitive knowing. Your greatest gifts include your ability to perceive what others miss, your talent for deep research and analysis, your spiritual sensitivity, and your capacity for profound understanding. You naturally see beyond the obvious to the essential truth beneath.`,
+                    path: `Your path requires you to dedicate time to study, contemplation, and inner development. This might mean pursuing advanced education, engaging in spiritual practices, conducting research, or simply committing to lifelong learning. Your destiny is fulfilled through understanding, not through superficial knowledge or material success alone.`,
+                    fulfillment: `You'll find deep fulfillment when you're exploring meaningful questions and sharing your insights. Look for opportunities in research, teaching, writing, spiritual work, science, or any field that values depth and truth. Your soul thrives when you're uncovering mysteries and helping others understand. Avoid superficial environments that discourage questioning.`,
+                    wisdom: `Remember that wisdom is meant to be shared, not hoarded. Your mission is to make profound truths accessible to others, not to remain isolated in your understanding. You're here to demonstrate that the examined life is worth living, that truth matters, and that both science and spirituality have value. Your greatest legacy will be the consciousness you've elevated.`
+                },
+                8: {
+                    title: "The Leader's Mission",
+                    mission: "power, abundance, achievement",
+                    description: `${preferredName}, your Destiny Number 8 reveals that you came to this Earth to master material reality and lead with integrity. Your birth name carries the vibrational frequency of the executive and manifestor, indicating that your life's mission is to create abundance and demonstrate ethical use of power.`,
+                    calling: `Your soul signed up for a life of achievement and leadership. You're meant to build successful enterprises, lead organizations, or demonstrate how to create and manage abundance responsibly. Whether in business, politics, finance, or organizational leadership, your destiny is to show that power and integrity can coexist.`,
+                    gifts: `You were born with extraordinary executive abilities and manifesting power. Your greatest gifts include your strategic thinking, your ability to see the big picture, your talent for organization and management, and your capacity to turn vision into profitable reality. You naturally understand how systems, resources, and people work together.`,
+                    path: `Your path requires you to step into positions of power and responsibility. This might mean starting businesses, leading organizations, managing large projects, or taking executive roles. Your destiny is fulfilled through achievement and the responsible exercise of power. You're here to create material success that serves a higher purpose.`,
+                    fulfillment: `You'll find deep fulfillment when you're building successful ventures and leading effectively. Look for opportunities in business, finance, executive management, entrepreneurship, or any field where you can exercise power and create abundance. Your soul thrives when you're achieving significant goals and using your success to benefit others.`,
+                    wisdom: `Remember that true power serves others, not just the self. Your mission is to demonstrate ethical leadership and to create abundance that lifts communities, not just individuals. You're here to show that material success and spiritual integrity are not opposites. Your greatest legacy will be the institutions you've built and the ethical standards you've established.`
+                },
+                9: {
+                    title: "The Humanitarian's Mission",
+                    mission: "compassion, service, transformation",
+                    description: `${preferredName}, your Destiny Number 9 reveals that you came to this Earth to serve humanity and facilitate healing. Your birth name carries the vibrational frequency of the humanitarian and universal lover, indicating that your life's mission is to work for the greater good and help transform collective consciousness.`,
+                    calling: `Your soul signed up for a life of service to humanity. You're meant to work for causes larger than yourself, help those in need, or contribute to collective healing and evolution. Whether through activism, healing arts, philanthropy, teaching, or the arts, your destiny is to make the world a better place for all.`,
+                    gifts: `You were born with profound compassion and universal love. Your greatest gifts include your deep understanding of human nature, your ability to see the bigger picture, your compassion for all beings, and your capacity to let go and forgive. You naturally transcend petty concerns to focus on what truly matters.`,
+                    path: `Your path requires you to dedicate yourself to service and collective wellbeing. This might mean working in nonprofit organizations, healing professions, education, activism, or the arts with a message. Your destiny is fulfilled through contribution to humanity, not through personal gain alone. You're here to serve the evolution of consciousness itself.`,
+                    fulfillment: `You'll find deep fulfillment when you're working for causes that benefit many people. Look for opportunities in humanitarian work, healing professions, teaching, activism, counseling, or any field dedicated to reducing suffering and increasing wellbeing. Your soul thrives when you're part of something larger than yourself.`,
+                    wisdom: `Remember that you can't save everyone—focus your energy where it creates the most impact. Your mission is to serve wisely, not to martyr yourself. You're here to demonstrate that compassion and wisdom together can transform the world. Your greatest legacy will be the positive change you've helped create and the consciousness you've helped evolve.`
+                },
+                11: {
+                    title: "The Illuminator's Mission",
+                    mission: "inspiration, enlightenment, spiritual leadership",
+                    description: `${preferredName}, your Master Destiny Number 11 reveals that you came to this Earth to illuminate and inspire. Your birth name carries an exceptionally high vibrational frequency, indicating that your life's mission is to channel divine inspiration and help elevate human consciousness.`,
+                    calling: `Your soul signed up for a spiritually significant life. You're meant to inspire others, channel higher wisdom, or bring light to darkness in whatever form that takes. Whether through spiritual teaching, inspirational leadership, healing, or creative arts, your destiny is to be a beacon of light and hope for humanity.`,
+                    gifts: `You were born with extraordinary intuitive and spiritual abilities. Your greatest gifts include your access to higher wisdom, your ability to inspire and uplift others, your spiritual sensitivity, and your visionary capacity. You can perceive and communicate truths that elevate consciousness. Your presence alone can shift energy and inspire transformation.`,
+                    path: `Your path requires you to develop your spiritual gifts and share them with the world. This might mean becoming a spiritual teacher, inspirational speaker, healer, or creative artist with a message. Your destiny is fulfilled when you're channeling inspiration and helping others awaken. You're here to bridge heaven and earth.`,
+                    fulfillment: `You'll find deep fulfillment when you're inspiring others and working on spiritually significant projects. Look for opportunities in spiritual teaching, healing, counseling, inspirational speaking, or creative arts with a higher message. Your soul thrives when you're elevating consciousness and bringing divine inspiration into physical form.`,
+                    wisdom: `Remember that spiritual gifts require grounding in practical action. Your mission is to bring inspiration down to earth, not to escape into spiritual realms. You're here to demonstrate that spiritual truth can transform everyday life. Your greatest legacy will be the awakening you've sparked and the light you've brought to the world.`
+                },
+                22: {
+                    title: "The Master Builder's Mission",
+                    mission: "transformation, legacy, global impact",
+                    description: `${preferredName}, your Master Destiny Number 22 reveals that you came to this Earth to build transformative legacies. Your birth name carries the highest vibrational frequency for manifestation, indicating that your life's mission is to turn grand visions into lasting reality that serves humanity.`,
+                    calling: `Your soul signed up for a world-changing life. You're meant to build systems, institutions, or movements that transform how humanity operates. Whether through innovative business, social movements, educational systems, or architectural achievements, your destiny is to create structures that serve millions and last for generations.`,
+                    gifts: `You were born with the rare combination of visionary thinking and practical mastery. Your greatest gifts include your ability to envision what others can't, your talent for manifesting large-scale projects, your strategic brilliance, and your capacity for sustained effort toward huge goals. You can bridge the spiritual and material like few others can.`,
+                    path: `Your path requires you to think big and build accordingly. This might mean starting transformative businesses, creating social movements, developing new educational systems, or building physical structures that change how people live. Your destiny is fulfilled through achievements that impact humanity at scale.`,
+                    fulfillment: `You'll find deep fulfillment when you're working on projects with global or generational impact. Look for opportunities to build, create, or transform at large scale. Your soul thrives when you're manifesting visions that seemed impossible. Think in terms of decades and millions of people served.`,
+                    wisdom: `Remember that the greatest legacies serve humanity, not ego. Your mission is to use your extraordinary manifesting abilities for collective good. You're here to demonstrate what's possible when vision meets discipline. Your greatest legacy will be the lasting institutions or systems you've created that continue serving humanity long after you're gone.`
+                },
+                33: {
+                    title: "The Master Teacher's Mission",
+                    mission: "unconditional love, healing, spiritual service",
+                    description: `${preferredName}, your Master Destiny Number 33 reveals that you came to this Earth to embody and teach unconditional love. Your birth name carries the highest vibrational frequency for compassionate service, indicating that your life's mission is to heal, teach, and serve at the most profound level.`,
+                    calling: `Your soul signed up for a life of selfless service and spiritual teaching. You're meant to be a healer, teacher, or guide who helps others transform through love and wisdom. Whether through spiritual teaching, healing work, counseling, or compassionate leadership, your destiny is to demonstrate what unconditional love looks like in action.`,
+                    gifts: `You were born with an exceptional capacity for love and healing. Your greatest gifts include your ability to see people's highest potential, your healing presence, your wisdom born of compassion, and your capacity to guide others through transformation. You embody the energy of the Christ consciousness—love without conditions.`,
+                    path: `Your path requires you to develop your healing and teaching abilities to their highest level. This might mean becoming a spiritual teacher, master healer, transformational counselor, or compassionate leader. Your destiny is fulfilled when you're facilitating deep healing and transformation in others through your loving presence.`,
+                    fulfillment: `You'll find deep fulfillment when you're helping others heal and transform. Look for opportunities in spiritual teaching, healing professions, counseling, or leadership roles where you can serve with love. Your soul thrives when you're being a clear channel for unconditional love and facilitating profound transformation.`,
+                    wisdom: `Remember that you cannot heal everyone, and trying to do so will deplete you. Your mission is to embody healthy, sustainable love, not martyrdom. You're here to demonstrate that unconditional love includes self-love, that boundaries are acts of love. Your greatest legacy will be the transformations you've facilitated and the love you've embodied.`
+                }
+            };
+            
+            const interpretation = interpretations[destinyNumber];
+            
+            document.getElementById('resultTitle').innerHTML = `Destiny ${destinyNumber}: ${interpretation.title}`;
+            document.getElementById('resultSubtitle').innerHTML = `${preferredName}, this is your life's mission`;
+            
+            document.getElementById('resultContent').innerHTML = `
+                <p><span class="highlight">Your Mission:</span> ${interpretation.mission}</p>
+                <p>${interpretation.description}</p>
+                <p><strong>Your Calling:</strong> ${interpretation.calling}</p>
+                <p><strong>Your Gifts:</strong> ${interpretation.gifts}</p>
+                <p><strong>Your Path:</strong> ${interpretation.path}</p>
+                <p><strong>Finding Fulfillment:</strong> ${interpretation.fulfillment}</p>
+                <p><strong>Wisdom for Your Journey:</strong> ${interpretation.wisdom}</p>
+            `;
+            
+            document.getElementById('result').classList.add('show');
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
         
     </script>
 </body>

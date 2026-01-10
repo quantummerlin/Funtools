@@ -112,8 +112,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
-            margin-bottom: 50px;
-        }
+            margin-bottom: 50px;            justify-items: center;        }
         
         .tool-card {
             background: rgba(20, 20, 30, 0.8);
@@ -127,6 +126,9 @@
             color: inherit;
             position: relative;
             overflow: hidden;
+            text-align: center;
+            max-width: 350px;
+            width: 100%;
         }
         
         .tool-card::before {
@@ -310,13 +312,6 @@
         const tools = [
             // Numerology Tools
             {
-                icon: "🔢",
-                title: "Personal Year Calculator",
-                description: "Discover what personal year you're in and what it means for your journey.",
-                category: "numerology",
-                file: "personal-year-calculator.html"
-            },
-            {
                 icon: "✨",
                 title: "Life Path Number",
                 description: "Calculate your life path number and reveal your true purpose in life.",
@@ -344,6 +339,55 @@
                 category: "numerology",
                 file: "personality-number-calculator.html"
             },
+            {
+                icon: "📛",
+                title: "Name Number",
+                description: "Explore the numerological power and meaning of your name.",
+                category: "numerology",
+                file: "name-number-calculator.html"
+            },
+            {
+                icon: "🎂",
+                title: "Birthday Number Reading",
+                description: "Discover your special gifts and talents through your birthday number.",
+                category: "numerology",
+                file: "birthday-number-reading.html"
+            },
+            {
+                icon: "📅",
+                title: "Personal Year Reading",
+                description: "Understand the cosmic energy and opportunities of your current year.",
+                category: "numerology",
+                file: "personal-year-reading.html"
+            },
+            {
+                icon: "🗓️",
+                title: "Personal Month Reading",
+                description: "Navigate the specific energy and focus of your current month.",
+                category: "numerology",
+                file: "personal-month-reading.html"
+            },
+            {
+                icon: "🌅",
+                title: "Maturity Number Reading",
+                description: "Discover the wisdom and purpose that emerges in your later years.",
+                category: "numerology",
+                file: "maturity-number-reading.html"
+            },
+            {
+                icon: "⚖️",
+                title: "Karmic Debt Reading",
+                description: "Understand and transform your karmic patterns (13, 14, 16, 19).",
+                category: "numerology",
+                file: "karmic-debt-reading.html"
+            },
+            {
+                icon: "👑",
+                title: "Master Number Deep Reading",
+                description: "Master your 11, 22, or 33 spiritual potential.",
+                category: "numerology",
+                file: "master-number-reading.html"
+            },
             // Astrology Tools
             {
                 icon: "♈",
@@ -354,24 +398,17 @@
             },
             {
                 icon: "🌙",
+                title: "Moon Sign Reading",
+                description: "Discover your emotional nature and inner world through your Moon Sign.",
+                category: "astrology",
+                file: "moon-sign-reading.html"
+            },
+            {
+                icon: "🌙",
                 title: "Moon Phase Calculator",
                 description: "Discover what moon phase you were born under.",
                 category: "astrology",
                 file: "moon-phase-calculator.html"
-            },
-            {
-                icon: "⭐",
-                title: "Sun Sign Profile",
-                description: "Get detailed insights about your sun sign personality.",
-                category: "astrology",
-                file: "sun-sign-profile.html"
-            },
-            {
-                icon: "🌍",
-                title: "Rising Sign Calculator",
-                description: "Calculate your rising sign (ascendant) for birth chart insights.",
-                category: "astrology",
-                file: "rising-sign-calculator.html"
             },
             {
                 icon: "🎲",
@@ -410,60 +447,11 @@
                 file: "color-personality-test.html"
             },
             {
-                icon: "🐾",
-                title: "Spirit Animal Quiz",
-                description: "Discover your spirit animal and its guidance.",
-                category: "personality",
-                file: "spirit-animal-quiz.html"
-            },
-            {
                 icon: "🧠",
                 title: "Brain Type Test",
                 description: "Find out if you're left-brained or right-brained.",
                 category: "personality",
                 file: "brain-type-test.html"
-            },
-            {
-                icon: "🎭",
-                title: "Personality Type Test",
-                description: "Similar to MBTI - discover your personality type.",
-                category: "personality",
-                file: "personality-type-test.html"
-            },
-            {
-                icon: "🌊",
-                title: "Energy Level Test",
-                description: "Measure your current energy level and get tips.",
-                category: "personality",
-                file: "energy-level-test.html"
-            },
-            {
-                icon: "💪",
-                title: "Strength Finder",
-                description: "Discover your top 5 strengths and talents.",
-                category: "personality",
-                file: "strength-finder.html"
-            },
-            {
-                icon: "🎯",
-                title: "Life Purpose Quiz",
-                description: "Find clues about your life's purpose and mission.",
-                category: "personality",
-                file: "life-purpose-quiz.html"
-            },
-            {
-                icon: "❤️",
-                title: "Love Language Test",
-                description: "Discover your love language and how you express affection.",
-                category: "personality",
-                file: "love-language-test.html"
-            },
-            {
-                icon: "🤝",
-                title: "Communication Style",
-                description: "Learn about your communication style.",
-                category: "personality",
-                file: "communication-style.html"
             },
             {
                 icon: "🌈",
@@ -488,21 +476,7 @@
                 file: "crystal-ball.html"
             },
             {
-                icon: "🃏",
-                title: "Card of the Day",
-                description: "Draw a card and get your daily guidance.",
-                category: "fortune",
-                file: "card-of-day.html"
-            },
-            {
-                icon: "🌟",
-                title: "Angel Number Generator",
-                description: "Generate angel numbers and their meanings.",
-                category: "fortune",
-                file: "angel-number-generator.html"
-            },
-            {
-                icon: "🎲",
+                icon: "�",
                 title: "Dice Roller",
                 description: "Roll virtual dice for any game or decision.",
                 category: "fortune",
@@ -523,7 +497,7 @@
                 file: "decision-wheel.html"
             },
             {
-                icon: "🔮",
+                icon: "🥠",
                 title: "Fortune Cookie",
                 description: "Break a virtual fortune cookie for wisdom.",
                 category: "fortune",
@@ -535,13 +509,6 @@
                 description: "Get instant yes/no answers to your questions.",
                 category: "fortune",
                 file: "yes-no-oracle.html"
-            },
-            {
-                icon: "🌙",
-                title: "Lunar Magic",
-                description: "Check today's moon phase and its influence.",
-                category: "fortune",
-                file: "lunar-magic.html"
             },
             {
                 icon: "🍀",
@@ -579,58 +546,9 @@
                 category: "life",
                 file: "life-progress.html"
             },
-            {
-                icon: "💰",
-                title: "Salary Calculator",
-                description: "Convert between hourly, monthly, annual salary.",
-                category: "life",
-                file: "salary-calculator.html"
-            },
-            {
-                icon: "🏃",
-                title: "BMI Calculator",
-                description: "Calculate your Body Mass Index.",
-                category: "life",
-                file: "bmi-calculator.html"
-            },
-            {
-                icon: "💧",
-                title: "Water Intake",
-                description: "Calculate your daily water needs.",
-                category: "life",
-                file: "water-intake.html"
-            },
-            {
-                icon: "😴",
-                title: "Sleep Calculator",
-                description: "Find optimal sleep and wake times.",
-                category: "life",
-                file: "sleep-calculator.html"
-            },
             // Entertainment Tools
             {
-                icon: "🎵",
-                title: "Song on Your Birthday",
-                description: "Find the #1 song on your birth date.",
-                category: "entertainment",
-                file: "song-birthday.html"
-            },
-            {
-                icon: "🎬",
-                title: "Movie This Week",
-                description: "What movie was #1 this week in history?",
-                category: "entertainment",
-                file: "movie-this-week.html"
-            },
-            {
-                icon: "📰",
-                title: "Headlines This Day",
-                description: "See news headlines from any date in history.",
-                category: "entertainment",
-                file: "headlines-this-day.html"
-            },
-            {
-                icon: "🎮",
+                icon: "�",
                 title: "Random Fact Generator",
                 description: "Get random interesting facts.",
                 category: "entertainment",
@@ -651,7 +569,7 @@
                 file: "random-name-picker.html"
             },
             {
-                icon: "📝",
+                icon: "🔐",
                 title: "Password Generator",
                 description: "Generate secure random passwords.",
                 category: "entertainment",

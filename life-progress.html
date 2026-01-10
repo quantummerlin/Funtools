@@ -124,6 +124,11 @@
         </div>
         
         <div class="tool-card">
+            <div style="text-align: right; margin-bottom: 15px;">
+                <button type="button" onclick="clearSavedData()" style="background: rgba(236, 72, 153, 0.1); border: 2px solid rgba(236, 72, 153, 0.3); color: #ec4899; padding: 8px 16px; font-size: 0.85em; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-family: 'Cinzel', serif; font-weight: 600;">
+                    🗑️ Clear My Data
+                </button>
+            </div>
             <div id="tool-content">
             <div class="input-group">
                 <label for="birthDate">Enter Your Birth Date:</label>
@@ -195,6 +200,98 @@
                 document.getElementById('result').classList.add('show');
             });
         
+    
+        // Load saved data from localStorage
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // Map of possible field names to data keys
+                const fieldMappings = {
+                    'preferredName': 'preferredName',
+                    'name': 'preferredName',
+                    'yourName': 'preferredName',
+                    'birthName': 'birthName',
+                    'fullName': 'birthName',
+                    'birthDate': 'birthDate',
+                    'date': 'birthDate',
+                    'dob': 'birthDate',
+                    'birthdate': 'birthDate',
+                    'birthTime': 'birthTime',
+                    'time': 'birthTime',
+                    'birthPlace': 'birthPlace',
+                    'place': 'birthPlace',
+                    'location': 'birthPlace'
+                };
+                
+                Object.keys(fieldMappings).forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    const dataKey = fieldMappings[fieldId];
+                    if (field && data[dataKey]) {
+                        field.value = data[dataKey];
+                    }
+                });
+            }
+        }
+        
+        // Save user data to localStorage
+        function saveUserData() {
+            const userData = {};
+            
+            // Try to find and save various field types
+            const fields = [
+                {ids: ['preferredName', 'name', 'yourName'], key: 'preferredName'},
+                {ids: ['birthName', 'fullName'], key: 'birthName'},
+                {ids: ['birthDate', 'date', 'dob', 'birthdate'], key: 'birthDate'},
+                {ids: ['birthTime', 'time'], key: 'birthTime'},
+                {ids: ['birthPlace', 'place', 'location'], key: 'birthPlace'}
+            ];
+            
+            fields.forEach(field => {
+                for (let id of field.ids) {
+                    const element = document.getElementById(id);
+                    if (element && element.value) {
+                        userData[field.key] = element.value;
+                        break;
+                    }
+                }
+            });
+            
+            if (Object.keys(userData).length > 0) {
+                localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
+            }
+        }
+        
+        // Clear saved data
+        function clearSavedData() {
+            if (confirm('This will clear your saved personal information. Are you sure?')) {
+                localStorage.removeItem('quantumMerlinUserData');
+                location.reload();
+            }
+        }
+        
+        // Load saved data when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            loadSavedData();
+            
+            // Auto-save on form submission
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function() {
+                    saveUserData();
+                });
+            });
+            
+            // Auto-save on button clicks (for tools without forms)
+            const calcButtons = document.querySelectorAll('button[id*="calculate"], button[id*="btn"]');
+            calcButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    setTimeout(saveUserData, 100);
+                });
+            });
+        });
+
     </script>
 </body>
 </html>

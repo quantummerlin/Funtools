@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karmic Debt Number Reading | Free Personalized Reading</title>
+    <meta name="description" content="Discover if you carry karmic debt and how to transform these patterns">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2em;
+            color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .clear-data-btn {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .clear-data-btn button {
+            background: rgba(236, 72, 153, 0.1);
+            border: 2px solid rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .clear-data-btn button:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
+        .input-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.2);
+        }
+        .input-section:last-of-type {
+            border-bottom: none;
+        }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .input-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #06b6d4;
+            font-size: 1.05em;
+        }
+        .helper-text {
+            font-size: 0.9em;
+            color: #9ca3af;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        input:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        button[type="submit"] {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            color: white;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 18px 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.4);
+            border-color: rgba(251, 191, 36, 0.6);
+        }
+        .result {
+            background: rgba(20, 20, 30, 0.6);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 30px;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        .result.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result h2 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .result-content {
+            font-size: 1.15em;
+            line-height: 2;
+            color: #e0e0e0;
+        }
+        .result-content p {
+            margin-bottom: 20px;
+        }
+        .back-button {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            margin-top: 30px;
+        }
+        .back-button:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+            transform: translateY(-2px);
+        }
+        .no-karmic {
+            text-align: center;
+            padding: 40px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 15px;
+        }
+        .no-karmic h3 {
+            font-family: 'Cinzel', serif;
+            color: #06b6d4;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 768px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+            .tool-card {
+                padding: 30px 20px;
+            }
+        }
+            .profile-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .profile-select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+        }
+        .profile-select:focus {
+            outline: none;
+            border-color: #06b6d4;
+        }
+        .profile-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .profile-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+        }
+        .clear-btn {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+        }
+        .clear-btn:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚖️ Karmic Debt Number Reading</h1>
+            <p>Understand and transform your karmic patterns</p>
+        </div>
+
+        <div class="tool-card">
+                        <div class="profile-controls">
+                <select id="profileSelect" class="profile-select">
+                    <option value="">Select a profile...</option>
+                </select>
+                <button type="button" class="profile-btn" onclick="showSaveProfileDialog()">💾 Save Profile</button>
+                <button type="button" class="profile-btn" onclick="showDeleteProfileDialog()">🗑️ Delete Profile</button>
+                <button type="button" class="profile-btn clear-btn" onclick="clearSavedData()">✨ Clear Form</button>
+            </div>
+
+            <form id="calculator-form" onsubmit="calculateReading(event)">
+                <div class="input-section">
+                    <div class="section-title">✨ Personal Information</div>
+                    
+                    <div class="input-group">
+                        <label for="preferredName">Preferred Name</label>
+                        <input type="text" id="preferredName" required>
+                        <div class="helper-text">What you like to be called</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="birthName">Full Birth Name</label>
+                        <input type="text" id="birthName" required>
+                        <div class="helper-text">As it appears on your birth certificate</div>
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">🌟 Birth Details</div>
+                    
+                    <div class="input-group">
+                        <label for="birthDate">Birth Date</label>
+                        <input type="date" id="birthDate" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime">
+                            <div class="helper-text">Optional but helpful</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth Place</label>
+                            <input type="text" id="birthPlace" placeholder="City, Country">
+                            <div class="helper-text">Optional</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">✨ Reveal My Reading</button>
+            </form>
+
+            <div id="result" class="result">
+                <h2 id="result-title"></h2>
+                <div id="result-content" class="result-content"></div>
+                <button type="button" class="back-button" onclick="window.location.href='tools_index.html'">← Back to Quantum Merlin Hub</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Numerology functions
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+
+        function letterToNumber(letter) {
+            const values = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+                'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
+            };
+            return values[letter.toUpperCase()] || 0;
+        }
+
+        function calculateNameNumber(name) {
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => sum + letterToNumber(char), 0)
+            );
+        }
+
+        function calculateLifePath(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            const dayReduced = reduceToSingle(day);
+            const monthReduced = reduceToSingle(month);
+            const yearReduced = reduceToSingle(year);
+            
+            return reduceToSingle(dayReduced + monthReduced + yearReduced);
+        }
+
+        
+        function findKarmicDebt(dateStr, fullName) {
+            const karmicNumbers = [13, 14, 16, 19];
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            // Check birthday directly
+            if (karmicNumbers.includes(day)) return day;
+            if (karmicNumbers.includes(month)) return month;
+            
+            // Check year components before reduction
+            const yearDigits = year.toString().split('').map(Number);
+            let yearSum = yearDigits.reduce((a, b) => a + b, 0);
+            if (karmicNumbers.includes(yearSum)) return yearSum;
+            
+            // Check name total before reduction
+            let nameSum = 0;
+            for (let char of fullName.toUpperCase()) {
+                nameSum += letterToNumber(char);
+            }
+            if (karmicNumbers.includes(nameSum)) return nameSum;
+            
+            // Check Life Path components
+            let daySum = day;
+            let monthSum = month;
+            if (karmicNumbers.includes(daySum)) return daySum;
+            if (karmicNumbers.includes(monthSum)) return monthSum;
+            
+            // No karmic debt found
+            return 0;
+        }
+        
+
+        // Interpretations
+        const interpretations = {"13": "You carry Karmic Debt Number 13, {preferredName}, which reveals patterns from past experiences that your soul is here to transform. This isn't punishment\u2014it's opportunity. The 13 brings challenges around laziness, negativity, and taking shortcuts in past cycles. Now you're here to master discipline, positivity, and hard work.\n\nThe 13 karmic debt often manifests as obstacles that seem to block your progress. Projects may require more effort than expected, success may come more slowly than for others, and you may feel you're working twice as hard for half the results. This isn't bad luck\u2014it's your soul's curriculum teaching you persistence.\n\nYour primary challenge is overcoming the temptation to give up when things get difficult. In past patterns, you may have abandoned efforts when they became challenging. This lifetime, you're learning that sustainable success comes through consistent effort, not shortcuts or quick fixes.\n\nNegativity is another pattern you're here to transform. The 13 can manifest as pessimism, complaining, or blaming circumstances for your situation. Your soul's work involves shifting from victim consciousness to creator consciousness\u2014recognizing that your thoughts and actions shape your reality.\n\nHowever, here's the empowering truth: when you embrace the lessons of 13, you develop extraordinary discipline and work ethic. You become someone who can achieve anything through sustained effort. The obstacles you face are actually building your strength, like resistance training builds muscle.\n\nYour path to freedom involves accepting responsibility for your life, maintaining positive focus even when circumstances are challenging, and committing to see things through to completion. Every project you finish, every negative thought you reframe, every lazy impulse you overcome dissolves karmic patterns.\n\nThis debt is repaid through consistent action and positive mindset, {preferredName}. You're not here to suffer\u2014you're here to transform limitation into mastery. The discipline you develop through working with 13's energy becomes your superpower.", "14": "You carry Karmic Debt Number 14, {preferredName}, revealing soul lessons around freedom, responsibility, and moderation. In past patterns, you may have misused freedom, overindulged in pleasures, or escaped commitment. This lifetime, you're learning to balance freedom with responsibility and pleasure with discipline.\n\nThe 14 karmic debt often manifests as constant change and instability. Just when you feel settled, circumstances shift. Relationships may be unpredictable, living situations may change frequently, and you may struggle to create lasting security. This isn't chaos\u2014it's teaching you adaptability and proper use of freedom.\n\nYour primary challenge is learning that true freedom comes through self-discipline, not rebellion or escape. Past patterns may have involved avoiding commitment, running from responsibility, or seeking constant stimulation. Now you're discovering that structure actually enables freedom.\n\nAddiction and overindulgence are common struggles with 14. This can manifest in obvious ways like substance issues, or subtle ways like overworking, overeating, or excessive relationships. You're learning that moderation and balance create sustainable pleasure, while excess ultimately imprisons you.\n\nHowever, the gift within 14 is powerful: you're developing genuine adaptability and healthy relationship with change. Where others fear transformation, you learn to flow with it. Where others resist growth, you embrace it. This makes you exceptionally resilient.\n\nYour path to freedom involves embracing commitment without losing yourself, creating structure without rigidity, and enjoying pleasure without addiction. Every time you honor a commitment despite wanting to escape, every time you choose moderation over excess, you clear karmic patterns.\n\nThe 14 teaches that genuine freedom exists within healthy boundaries, not outside them, {preferredName}. You're learning to be responsibly free and freely responsible. This wisdom transforms limitation into liberation.", "16": "You carry Karmic Debt Number 16, {preferredName}, one of the most intense karmic patterns in numerology. This reveals soul lessons around ego, relationships, and spiritual awakening. Past patterns likely involved misuse of power, ego inflation, or damaged relationships. Now you're experiencing the dissolution of false identity to discover your true self.\n\nThe 16 karmic debt often manifests as sudden changes that shatter your sense of security or identity. Just when you think you have everything figured out, something happens that forces complete reorganization of your life and self-concept. This feels devastating, but it's actually liberation in disguise.\n\nYour primary challenge is releasing attachment to ego and external validation. The 16 repeatedly brings experiences that humble you, forcing you to distinguish between who you truly are and who you've been pretending to be. Every crisis is actually removing what's false so truth can emerge.\n\nRelationship challenges are common with 16. You may experience betrayals, separations, or relationships that mirror your own shadow back to you. These aren't punishments\u2014they're teachers showing you where you're operating from ego versus love, where you're seeking completion in others versus finding it within.\n\nHowever, here's the profound gift: 16 is the path to genuine spiritual awakening. Through the humbling experiences it brings, you develop authentic humility, real compassion, and connection to something beyond ego. You discover that your true identity is eternal and unshakeable.\n\nYour path to freedom involves surrendering ego control, accepting that you can't manage everything, and trusting a higher wisdom. Every time a crisis demolishes your plans and you discover you're still okay, every time you choose humility over pride, you clear karmic debt.\n\nThe 16 is teaching you that your true power lies not in ego control but in spiritual surrender, {preferredName}. What feels like destruction is actually reconstruction. You're being rebuilt from the inside out into something far more authentic and powerful.", "19": "You carry Karmic Debt Number 19, {preferredName}, revealing soul lessons around independence, help, and power dynamics. Past patterns likely involved misusing power over others, refusing to help those in need, or excessive self-focus. This lifetime, you're learning balanced independence\u2014being self-sufficient while also supporting others.\n\nThe 19 karmic debt often manifests as finding yourself alone when you need help most. You may discover that resources, support, or assistance you expected aren't available, forcing you to rely on yourself. This isn't abandonment\u2014it's teaching you genuine self-reliance while showing you the value of interdependence.\n\nYour primary challenge is balancing independence with connection. In past patterns, you may have been too self-focused, refusing to acknowledge your dependence on others or neglecting to help when you had power to do so. Now you're learning that true strength includes both giving and receiving support.\n\nPower and control issues are central to 19. You may struggle with needing to be in charge, difficulty asking for help, or resisting others' authority. Simultaneously, you're being shown how your past use of power affected others. Every situation where you feel powerless is teaching you compassionate leadership.\n\nHowever, the gift within 19 is extraordinary: you're developing genuine self-sufficiency combined with generous heart. You learn to stand powerfully in your own authority while also lifting others. You master the balance between independence and interdependence.\n\nYour path to freedom involves using whatever power you have to serve others, asking for help when you need it, and acknowledging that no one succeeds alone. Every time you help someone without expecting return, every time you humble yourself to accept assistance, you clear karmic patterns.\n\nThe 19 teaches that true leadership is service and real independence includes connection, {preferredName}. You're learning to be powerfully self-reliant while generously supportive. This wisdom transforms isolation into authentic community.", "0": "Good news, {preferredName}\u2014you don't carry any major Karmic Debt numbers (13, 14, 16, or 19) in your core numerology! This doesn't mean you have no lessons or challenges, but it does mean you're not working through the specific intense patterns associated with karmic debt.\n\nWithout karmic debt, your path is generally more straightforward. You'll still face challenges and growth opportunities\u2014that's part of being human\u2014but you're not dealing with the additional weight of transforming deep past-life patterns in these specific areas.\n\nThis absence of karmic debt suggests that either you've already cleared these particular lessons in previous lifetimes, or your soul simply didn't accumulate these specific patterns. Either way, you have more freedom to focus on your current life purpose without the extra curriculum that karmic debt brings.\n\nYour life lessons come primarily through your Life Path, Destiny, and other core numbers rather than through karmic repayment. This means you can focus on growth, creation, and fulfillment rather than intensive transformation of old patterns.\n\nHowever, don't interpret this as meaning your life will be easy or challenge-free. Everyone has their soul's curriculum. Yours simply doesn't include these four specific karmic debt numbers. You may still experience difficulties\u2014but they're about growth and evolution, not karmic balancing.\n\nUse your freedom from karmic debt wisely, {preferredName}. You have extra energy available that isn't tied up in clearing old patterns. Direct this energy toward fulfilling your life purpose, serving others, and creating positive impact in the world.\n\nRemember: the goal isn't to avoid all challenges but to grow through them with awareness and grace. Your path may be somewhat smoother, but how you walk it is still entirely up to you."};
+
+        // Calculate and display reading
+        function calculateReading(event) {
+            event.preventDefault();
+            
+            const preferredName = document.getElementById('preferredName').value;
+            const birthName = document.getElementById('birthName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            
+            if (!birthDate) {
+                alert('Please enter your birth date');
+                return;
+            }
+
+            
+            const number = findKarmicDebt(birthDate, birthName);
+        
+
+            const interpretation = interpretations[number];
+            if (!interpretation) {
+                
+                // This should not happen as 0 is handled
+                document.getElementById('result-title').textContent = 'No Karmic Debt';
+                document.getElementById('result-content').innerHTML = '<div class="no-karmic"><h3>No Major Karmic Debt Detected</h3><p>Your numerology chart does not show the traditional karmic debt numbers (13, 14, 16, 19). This is fortunate!</p></div>';
+                document.getElementById('result').classList.add('show');
+                document.getElementById('calculator-form').style.display = 'none';
+        
+                return;
+            }
+
+            // Personalize the reading with their name
+            const personalizedReading = interpretation.replace(/{preferredName}/g, preferredName);
+
+            // Convert paragraphs to HTML
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            document.getElementById('result-title').textContent = `Karmic Debt ${number === 0 ? 'Free!' : 'Number ' + number}: ${preferredName}`;
+            document.getElementById('result-content').innerHTML = paragraphs;
+            document.getElementById('result').classList.add('show');
+            document.getElementById('calculator-form').style.display = 'none';
+
+            // Save data
+            saveUserData();
+        }
+
+        // LocalStorage functions
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                if (data.preferredName) document.getElementById('preferredName').value = data.preferredName;
+                if (data.birthName) document.getElementById('birthName').value = data.birthName;
+                if (data.birthDate) document.getElementById('birthDate').value = data.birthDate;
+                if (data.birthTime) document.getElementById('birthTime').value = data.birthTime;
+                if (data.birthPlace) document.getElementById('birthPlace').value = data.birthPlace;
+            }
+        }
+
+        function saveUserData() {
+            const userData = {
+                preferredName: document.getElementById('preferredName').value,
+                birthName: document.getElementById('birthName').value,
+                birthDate: document.getElementById('birthDate').value,
+                birthTime: document.getElementById('birthTime').value,
+                birthPlace: document.getElementById('birthPlace').value
+            };
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
+        }
+
+        function clearSavedData() {
+            if (confirm('This will clear your saved personal information. Are you sure?')) {
+                localStorage.removeItem('quantumMerlinUserData');
+                location.reload();
+            }
+        }
+
+        // Load saved data on page load
+        window.addEventListener('DOMContentLoaded', loadSavedData);
+    
+        // Profile Management Functions
+        function getAllProfiles() {
+            const profiles = localStorage.getItem('quantumMerlinProfiles');
+            return profiles ? JSON.parse(profiles) : {};
+        }
+
+        function saveProfile(profileName) {
+            if (!profileName || profileName.trim() === '') {
+                alert('Please enter a profile name');
+                return;
+            }
+            
+            const currentData = {
+                preferredName: document.getElementById('preferredName')?.value || '',
+                birthName: document.getElementById('birthName')?.value || '',
+                birthDate: document.getElementById('birthDate')?.value || '',
+                birthTime: document.getElementById('birthTime')?.value || '',
+                birthPlace: document.getElementById('birthPlace')?.value || ''
+            };
+            
+            const profiles = getAllProfiles();
+            profiles[profileName] = currentData;
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(currentData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+            
+            updateProfileDropdown();
+            alert(`Profile "${profileName}" saved! ✨`);
+        }
+
+        function loadProfile(profileName) {
+            const profiles = getAllProfiles();
+            const profileData = profiles[profileName];
+            
+            if (!profileData) return;
+            
+            if (profileData.preferredName && document.getElementById('preferredName')) {
+                document.getElementById('preferredName').value = profileData.preferredName;
+            }
+            if (profileData.birthName && document.getElementById('birthName')) {
+                document.getElementById('birthName').value = profileData.birthName;
+            }
+            if (profileData.birthDate && document.getElementById('birthDate')) {
+                document.getElementById('birthDate').value = profileData.birthDate;
+            }
+            if (profileData.birthTime && document.getElementById('birthTime')) {
+                document.getElementById('birthTime').value = profileData.birthTime;
+            }
+            if (profileData.birthPlace && document.getElementById('birthPlace')) {
+                document.getElementById('birthPlace').value = profileData.birthPlace;
+            }
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(profileData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+        }
+
+        function deleteProfile(profileName) {
+            const profiles = getAllProfiles();
+            delete profiles[profileName];
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
+            if (activeProfile === profileName) {
+                localStorage.removeItem('quantumMerlinActiveProfile');
+            }
+            
+            updateProfileDropdown();
+        }
+
+        function updateProfileDropdown() {
+            const dropdown = document.getElementById('profileSelect');
+            if (!dropdown) return;
+            
+            const profiles = getAllProfiles();
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            dropdown.innerHTML = '<option value="">Select a profile...</option>';
+            
+            Object.keys(profiles).sort().forEach(profileName => {
+                const option = document.createElement('option');
+                option.value = profileName;
+                option.textContent = profileName;
+                if (profileName === activeProfile) {
+                    option.selected = true;
+                }
+                dropdown.appendChild(option);
+            });
+        }
+
+        function onProfileChange() {
+            const dropdown = document.getElementById('profileSelect');
+            const profileName = dropdown.value;
+            
+            if (profileName) {
+                loadProfile(profileName);
+            }
+        }
+
+        function showSaveProfileDialog() {
+            const profiles = getAllProfiles();
+            const currentActive = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            let message = 'Enter a name for this profile:';
+            if (currentActive) {
+                message += `\n\nCurrent profile: "${currentActive}"\nLeave blank to update current profile.`;
+            }
+            
+            const profileName = prompt(message, currentActive);
+            
+            if (profileName !== null) {
+                const finalName = profileName.trim() || currentActive || 'Profile ' + (Object.keys(profiles).length + 1);
+                saveProfile(finalName);
+            }
+        }
+
+        function showDeleteProfileDialog() {
+            const profiles = getAllProfiles();
+            const profileNames = Object.keys(profiles).sort();
+            
+            if (profileNames.length === 0) {
+                alert('No saved profiles to delete');
+                return;
+            }
+            
+            const profileName = prompt(`Enter profile name to delete:\n\nSaved profiles:\n${profileNames.join('\n')}`);
+            if (profileName && profiles[profileName]) {
+                if (confirm(`Delete profile "${profileName}"?`)) {
+                    deleteProfile(profileName);
+                    alert(`Profile "${profileName}" deleted`);
+                }
+            } else if (profileName) {
+                alert('Profile not found');
+            }
+        }
+
+        // Initialize profile dropdown on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProfileDropdown();
+            
+            const dropdown = document.getElementById('profileSelect');
+            if (dropdown) {
+                dropdown.addEventListener('change', onProfileChange);
+            }
+        });
+
+    </script>
+</body>
+</html>

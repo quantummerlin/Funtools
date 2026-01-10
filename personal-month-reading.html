@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Month Number Reading | Free Personalized Reading</title>
+    <meta name="description" content="Discover the specific energy and focus of your current month">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2em;
+            color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .clear-data-btn {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .clear-data-btn button {
+            background: rgba(236, 72, 153, 0.1);
+            border: 2px solid rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .clear-data-btn button:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
+        .input-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.2);
+        }
+        .input-section:last-of-type {
+            border-bottom: none;
+        }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .input-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #06b6d4;
+            font-size: 1.05em;
+        }
+        .helper-text {
+            font-size: 0.9em;
+            color: #9ca3af;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        input:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        button[type="submit"] {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            color: white;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 18px 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.4);
+            border-color: rgba(251, 191, 36, 0.6);
+        }
+        .result {
+            background: rgba(20, 20, 30, 0.6);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 30px;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        .result.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result h2 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .result-content {
+            font-size: 1.15em;
+            line-height: 2;
+            color: #e0e0e0;
+        }
+        .result-content p {
+            margin-bottom: 20px;
+        }
+        .back-button {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            margin-top: 30px;
+        }
+        .back-button:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+            .tool-card {
+                padding: 30px 20px;
+            }
+        }
+            .profile-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .profile-select {
+            flex: 1;
+            min-width: 200px;
+            padding: 10px 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+        }
+        .profile-select:focus {
+            outline: none;
+            border-color: #06b6d4;
+        }
+        .profile-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .profile-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+        }
+        .clear-btn {
+            background: rgba(236, 72, 153, 0.1);
+            border-color: rgba(236, 72, 153, 0.3);
+            color: #ec4899;
+        }
+        .clear-btn:hover {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗓️ Personal Month Number Reading</h1>
+            <p>Navigate this month's unique cosmic energy</p>
+        </div>
+
+        <div class="tool-card">
+                        <div class="profile-controls">
+                <select id="profileSelect" class="profile-select">
+                    <option value="">Select a profile...</option>
+                </select>
+                <button type="button" class="profile-btn" onclick="showSaveProfileDialog()">💾 Save Profile</button>
+                <button type="button" class="profile-btn" onclick="showDeleteProfileDialog()">🗑️ Delete Profile</button>
+                <button type="button" class="profile-btn clear-btn" onclick="clearSavedData()">✨ Clear Form</button>
+            </div>
+
+            <form id="calculator-form" onsubmit="calculateReading(event)">
+                <div class="input-section">
+                    <div class="section-title">✨ Personal Information</div>
+                    
+                    <div class="input-group">
+                        <label for="preferredName">Preferred Name</label>
+                        <input type="text" id="preferredName" required>
+                        <div class="helper-text">What you like to be called</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="birthName">Full Birth Name</label>
+                        <input type="text" id="birthName" required>
+                        <div class="helper-text">As it appears on your birth certificate</div>
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">🌟 Birth Details</div>
+                    
+                    <div class="input-group">
+                        <label for="birthDate">Birth Date</label>
+                        <input type="date" id="birthDate" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime">
+                            <div class="helper-text">Optional but helpful</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth Place</label>
+                            <input type="text" id="birthPlace" placeholder="City, Country">
+                            <div class="helper-text">Optional</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">✨ Reveal My Reading</button>
+            </form>
+
+            <div id="result" class="result">
+                <h2 id="result-title"></h2>
+                <div id="result-content" class="result-content"></div>
+                <button type="button" class="back-button" onclick="window.location.href='tools_index.html'">← Back to Quantum Merlin Hub</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Numerology functions
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+
+        function letterToNumber(letter) {
+            const values = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+                'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
+            };
+            return values[letter.toUpperCase()] || 0;
+        }
+
+        function calculateNameNumber(name) {
+            return reduceToSingle(
+                name.toUpperCase().split('').reduce((sum, char) => sum + letterToNumber(char), 0)
+            );
+        }
+
+        function calculateLifePath(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            const dayReduced = reduceToSingle(day);
+            const monthReduced = reduceToSingle(month);
+            const yearReduced = reduceToSingle(year);
+            
+            return reduceToSingle(dayReduced + monthReduced + yearReduced);
+        }
+
+        
+        function calculatePersonalYear(dateStr) {
+            const today = new Date();
+            const birthDate = new Date(dateStr);
+            const birthMonth = birthDate.getMonth() + 1;
+            const birthDay = birthDate.getDate();
+            
+            // Check if birthday has occurred this year
+            const currentMonth = today.getMonth() + 1;
+            const currentDay = today.getDate();
+            let yearToUse = today.getFullYear();
+            
+            // If we haven't reached the birthday yet this year, use last year
+            if (currentMonth < birthMonth || (currentMonth === birthMonth && currentDay < birthDay)) {
+                yearToUse = yearToUse - 1;
+            }
+            
+            const monthReduced = reduceToSingle(birthMonth);
+            const dayReduced = reduceToSingle(birthDay);
+            const yearReduced = reduceToSingle(yearToUse);
+            
+            return reduceToSingle(monthReduced + dayReduced + yearReduced);
+        }
+        
+        function calculatePersonalMonth(dateStr) {
+            const today = new Date();
+            const personalYear = calculatePersonalYear(dateStr);
+            const currentMonth = today.getMonth() + 1;
+            const monthReduced = reduceToSingle(currentMonth);
+            
+            return reduceToSingle(personalYear + monthReduced);
+        }
+        
+        function getMonthName(monthNum) {
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+            return months[monthNum - 1];
+        }
+        
+
+        // Interpretations
+        const interpretations = {"1": "This is a Personal Month 1 for you, {preferredName}, bringing powerful new beginning energy into this specific month. Within your current Personal Year cycle, this month stands out as a time to initiate, start fresh, and take bold action on ideas that have been forming.\n\nThis month, you'll feel an unusual surge of motivation and courage. Whatever your current Personal Year theme, this month adds an extra dose of pioneering spirit. You're being called to take the first step on something important, even if you don't have all the details figured out yet.\n\nYour confidence and self-reliance peak during this 1 Month. You'll trust your instincts more than usual and feel less need for external validation. This is excellent timing for launching projects, having important conversations, or making decisions you've been postponing.\n\nIn your career and projects, this month favors bold moves. Present that proposal, ask for that promotion, pitch that idea, or start that side hustle. The cosmic energy supports your initiative and rewards decisive action. Don't wait for perfect conditions\u2014they won't come. Act now.\n\nHowever, watch for impatience and being too forceful with others. While your energy is high, not everyone operates at your pace. Balance your drive with consideration for collaborators and loved ones who may need more processing time.\n\nThis is also an excellent month for personal reinvention and breaking old patterns. Want to start a new fitness routine, change your style, or shift your daily habits? This month's energy supports transformation. Small actions taken now can create lasting change, {preferredName}.", "2": "You're in a Personal Month 2, {preferredName}, a time of patience, cooperation, and gentle progress. Within your current Personal Year, this month slows things down and asks you to focus on relationships, details, and allowing rather than forcing.\n\nThis month, your sensitivity and intuition are heightened. You'll pick up on subtle energies, unspoken dynamics, and details others miss. Trust these perceptions\u2014they're guiding you toward beneficial connections and away from situations that aren't right for you.\n\nRelationships and partnerships require your attention now. Whether in business or personal life, collaboration produces better results than solo effort this month. Reach out to potential partners, strengthen existing alliances, and be willing to compromise for the greater good.\n\nIn your work and projects, this is a month for refinement rather than initiation. Review details, improve systems, and perfect what's already in motion. The cosmic energy doesn't support major launches now, but it strongly favors making existing projects better through careful attention.\n\nPatience is your greatest asset this month. Things may move more slowly than you'd like, and that's actually perfect. Forcing outcomes or rushing processes will backfire. Trust that the right timing will become clear, and what's meant for you won't require force.\n\nYour emotional life may feel more intense this month. You're more sensitive to others' moods and may need extra alone time to recharge. Don't mistake this sensitivity for weakness\u2014it's actually your superpower right now, {preferredName}. Honor your need for gentle pacing and emotional space.", "3": "Welcome to your Personal Month 3, {preferredName}! This is a time of joy, creativity, and self-expression within your current Personal Year. This month, the universe wants you to lighten up, create, and let your authentic self shine through.\n\nCreative inspiration flows freely during a 3 Month. Ideas come faster than you can capture them, and your ability to communicate those ideas improves dramatically. This is excellent timing for any creative project, artistic endeavor, or communication-based work.\n\nYour social energy peaks this month. You'll feel more outgoing, receive more invitations, and enjoy socializing more than usual. These aren't just fun connections\u2014many have the potential to develop into beneficial relationships. Say yes to gatherings even if you typically prefer staying home.\n\nCommunication of all kinds is favored now. If you need to have important conversations, make presentations, write content, or express yourself in any way, this month provides excellent cosmic support. Your words land more effectively and reach further than usual.\n\nHowever, watch for scattering your focus. With so many ideas and social opportunities, you might spread yourself too thin. Choose a few priorities and give them your best attention rather than dabbling in everything that catches your interest.\n\nThis is also a month to intentionally cultivate joy. Do things simply because they bring you pleasure. Play, laugh, create, and express yourself without worrying about productivity or outcomes. The 3 Month reminds you that life is meant to be enjoyed, {preferredName}. Let yourself feel the lightness.", "4": "You're in a Personal Month 4, {preferredName}, bringing focused, disciplined energy to your current Personal Year. This month asks you to get practical, organized, and systematic about manifesting your goals into tangible form.\n\nThis is a month for building, not dreaming. Whatever your current projects or goals, this month's energy supports taking concrete action, creating systems, and doing the detailed work that turns ideas into reality. Roll up your sleeves\u2014success comes through effort now.\n\nYour focus and concentration improve significantly during a 4 Month. Tasks that usually feel tedious become manageable, and you have unusual patience for details. Use this energy to tackle administrative work, organize your space, create systems, or handle practical matters you've been avoiding.\n\nIn career and finances, this month favors establishing strong foundations. Get your budget organized, create business systems, improve your work processes, or invest in infrastructure that will serve you long-term. What you build now provides stability for years to come.\n\nHowever, be mindful of becoming too rigid or controlling. While structure is important, leave room for flexibility and spontaneity. Not everything needs a plan, and over-organizing can sometimes block the flow of opportunity.\n\nYour physical health and body also benefit from attention this month. Establish new exercise routines, improve your nutrition, or address health issues you've been postponing. Your body responds especially well to consistent care during this cycle.\n\nThis month may feel like hard work, but embrace it, {preferredName}. The foundations you build now create the platform for future success. Every system you create, every detail you handle, contributes to your long-term stability and achievement.", "5": "Welcome to your Personal Month 5, {preferredName}! This is a dynamic month of change, freedom, and adventure within your current Personal Year. The universe is opening doors and inviting you to explore new possibilities.\n\nExpect unexpected developments this month. Plans may change suddenly, new opportunities may appear out of nowhere, and life feels more unpredictable than usual. Rather than resisting this instability, embrace it\u2014the changes happening are redirecting you toward better outcomes.\n\nYour desire for freedom and variety intensifies during a 5 Month. You'll feel restless with routine and crave new experiences. This is excellent timing for travel, learning new skills, meeting new people, or simply breaking out of your usual patterns.\n\nIn career and projects, be ready to pivot quickly. Opportunities may arise that require fast decision-making. Your adaptability is your greatest asset this month. Stay flexible, keep options open, and be willing to change direction when better paths appear.\n\nSocial and networking opportunities expand significantly. You'll meet interesting people from different backgrounds and perspectives. These connections may seem random, but many will prove valuable in unexpected ways. Stay open and say yes to invitations.\n\nHowever, watch for overindulgence and scattered focus. The 5 Month energy can lead to excess\u2014spending too much, eating too much, or taking on too many commitments. Enjoy the variety without losing all grounding. Some structure provides helpful containment.\n\nThis is also an excellent month for learning and gathering information. Take courses, read widely, explore new subjects, or develop new skills. Your mind is especially receptive and quick to grasp new concepts now, {preferredName}. Feed your curiosity.", "6": "You're in a Personal Month 6, {preferredName}, bringing heightened focus on relationships, responsibility, and service. Within your current Personal Year, this month emphasizes love, family, beauty, and caring for others.\n\nRelationships of all kinds demand your attention this month. Family matters may arise that need addressing, romantic relationships deepen or require work, and friendships may need nurturing. Rather than resenting these demands, recognize this as a month for strengthening your most important connections.\n\nYour nurturing instincts intensify during a 6 Month. You'll feel called to help, support, and care for others. This is beautiful, but watch for martyrdom\u2014giving so much that you deplete yourself. Remember that teaching others to help themselves is often more valuable than doing everything for them.\n\nHome and domestic matters take priority this month. You may feel drawn to improve your living space, spend more time with family, or create a more beautiful, harmonious environment. These aren't distractions from more important work\u2014they're exactly what needs your attention now.\n\nIn your career, this month favors service-oriented work, counseling, teaching, or any role where you help others. If you've been considering a move toward more meaningful, people-focused work, this month brings clarity about that direction.\n\nBeauty and aesthetics also matter more this month. You'll notice your surroundings more acutely and want to be surrounded by harmony and loveliness. Investing in beauty\u2014whether in your appearance, home, or environment\u2014isn't superficial. It feeds your soul.\n\nThis is also a month where commitments may deepen. Marriage proposals, business partnerships, or other serious commitments are common during 6 Months. If you're ready for that level of responsibility, the cosmic energy supports it, {preferredName}. Choose wisely and honor your commitments.", "7": "You're entering a Personal Month 7, {preferredName}, a time for introspection, spiritual growth, and inner development within your current Personal Year. This month asks you to slow down, turn inward, and connect with deeper truths.\n\nThis is not a month for major external activity. Instead, it's a time for reflection, study, and spiritual practice. The universe is creating space for you to process recent experiences, gain wisdom from them, and connect with your inner guidance.\n\nYour need for solitude increases significantly during a 7 Month. You'll want more time alone, may decline social invitations, and prefer quiet activities to busy ones. This isn't antisocial\u2014it's essential soul maintenance. Honor this need without guilt.\n\nSpiritual and intellectual pursuits are especially rewarding this month. Meditation, journaling, reading, courses, or any activity that engages your mind and spirit will bring unusual satisfaction. This is excellent timing for deepening your spiritual practice or exploring philosophical questions.\n\nIn your career and projects, this month favors research, analysis, planning, and strategy over action and implementation. Use this time to study your field, analyze your approach, or gain expertise that will serve you when more active cycles return.\n\nYour intuition is especially strong during a 7 Month. Pay close attention to dreams, synchronicities, gut feelings, and subtle insights. Your inner wisdom is speaking loudly now, guiding you toward beneficial paths and away from misaligned situations.\n\nHowever, watch for overthinking and analysis paralysis. Your mind is active this month, but it can loop into worry or excessive mental activity. Balance intellectual pursuits with grounding practices. Trust that not everything needs to be figured out right now, {preferredName}. Some answers reveal themselves through quiet waiting.", "8": "Welcome to your Personal Month 8, {preferredName}! This is a powerful month of manifestation, achievement, and material success within your current Personal Year. The universe is supporting your ambitions and rewarding your efforts.\n\nThis month, opportunities for advancement, recognition, and financial gain are especially favored. If you've been working toward professional goals, this month often brings breakthroughs, promotions, or visible results from your efforts.\n\nYour executive abilities and leadership qualities strengthen during an 8 Month. You'll think more strategically, manage details more effectively, and command more presence in professional settings. Use this enhanced capability to negotiate, lead projects, or take on greater responsibility.\n\nMoney matters benefit from your attention this month. Opportunities to increase income, make wise investments, or reorganize your finances for greater abundance often arise during 8 Months. Be strategic and bold in financial decisions\u2014calculated risks pay off now.\n\nIn your career, this month favors asserting your authority, showcasing your capabilities, and stepping into greater power. Don't play small or downplay your achievements. This is your time to be seen, recognized, and rewarded for your contributions.\n\nHowever, balance ambition with self-care. The 8 Month energy can drive you toward overwork and neglect of your health, relationships, or spiritual life. True success includes all areas of life, not just career and finances. Make time for what matters beyond achievement.\n\nYour personal power and confidence peak this month. Use this strength wisely and ethically. Power wielded with integrity creates lasting success, while power misused creates problems down the road. Lead with both strength and heart, {preferredName}. Show others what conscious success looks like.", "9": "You're in a Personal Month 9, {preferredName}, a time of completion, release, and preparation for new beginnings. Within your current Personal Year, this month asks you to let go of what no longer serves and make space for what's coming.\n\nThis is a month for finishing things rather than starting new projects. Complete what's in motion, tie up loose ends, and bring existing endeavors to their natural conclusion. Starting major new initiatives now is like planting seeds in winter\u2014the timing isn't right.\n\nRelationships, situations, or patterns that have outlived their purpose may naturally end during a 9 Month. While endings can feel painful, trust that what leaves is making space for something better aligned with who you're becoming. Don't cling to what's ready to go.\n\nYour emotional sensitivity and compassion deepen this month. You may feel more empathetic toward others' suffering and drawn to service or humanitarian work. These impulses are appropriate\u2014sharing what you've learned and helping others is meaningful work during a 9 Month.\n\nIn your career and projects, this month favors wrapping up phases, learning from experiences, and extracting wisdom from recent cycles. Rather than pushing forward, take time to review what worked, what didn't, and what you've learned. This reflection prepares you for smarter action in the future.\n\nForgiveness\u2014of yourself and others\u2014is powerful work this month. Releasing resentments and old wounds isn't about condoning harm\u2014it's about freeing yourself from emotional burdens that weigh you down. What you forgive now loses its power over your future.\n\nThis month may feel bittersweet\u2014endings and completions often do. But recognize this as a sacred time of transition, {preferredName}. You're clearing the ground for a beautiful new beginning. Trust that what's leaving is making space for something wonderful to arrive."};
+
+        // Calculate and display reading
+        function calculateReading(event) {
+            event.preventDefault();
+            
+            const preferredName = document.getElementById('preferredName').value;
+            const birthName = document.getElementById('birthName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            
+            if (!birthDate) {
+                alert('Please enter your birth date');
+                return;
+            }
+
+            
+            const number = calculatePersonalMonth(birthDate);
+            const currentMonth = new Date().getMonth() + 1;
+            const monthName = getMonthName(currentMonth);
+            const currentYear = new Date().getFullYear();
+        
+
+            const interpretation = interpretations[number];
+            if (!interpretation) {
+                alert('Unable to calculate. Please check your information.');
+                return;
+            }
+
+            // Personalize the reading with their name
+            const personalizedReading = interpretation.replace(/{preferredName}/g, preferredName);
+
+            // Convert paragraphs to HTML
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            document.getElementById('result-title').textContent = `Personal Month ${number} (${monthName} ${currentYear}): ${preferredName}`;
+            document.getElementById('result-content').innerHTML = paragraphs;
+            document.getElementById('result').classList.add('show');
+            document.getElementById('calculator-form').style.display = 'none';
+
+            // Save data
+            saveUserData();
+        }
+
+        // LocalStorage functions
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                if (data.preferredName) document.getElementById('preferredName').value = data.preferredName;
+                if (data.birthName) document.getElementById('birthName').value = data.birthName;
+                if (data.birthDate) document.getElementById('birthDate').value = data.birthDate;
+                if (data.birthTime) document.getElementById('birthTime').value = data.birthTime;
+                if (data.birthPlace) document.getElementById('birthPlace').value = data.birthPlace;
+            }
+        }
+
+        function saveUserData() {
+            const userData = {
+                preferredName: document.getElementById('preferredName').value,
+                birthName: document.getElementById('birthName').value,
+                birthDate: document.getElementById('birthDate').value,
+                birthTime: document.getElementById('birthTime').value,
+                birthPlace: document.getElementById('birthPlace').value
+            };
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
+        }
+
+        function clearSavedData() {
+            if (confirm('This will clear your saved personal information. Are you sure?')) {
+                localStorage.removeItem('quantumMerlinUserData');
+                location.reload();
+            }
+        }
+
+        // Load saved data on page load
+        window.addEventListener('DOMContentLoaded', loadSavedData);
+    
+        // Profile Management Functions
+        function getAllProfiles() {
+            const profiles = localStorage.getItem('quantumMerlinProfiles');
+            return profiles ? JSON.parse(profiles) : {};
+        }
+
+        function saveProfile(profileName) {
+            if (!profileName || profileName.trim() === '') {
+                alert('Please enter a profile name');
+                return;
+            }
+            
+            const currentData = {
+                preferredName: document.getElementById('preferredName')?.value || '',
+                birthName: document.getElementById('birthName')?.value || '',
+                birthDate: document.getElementById('birthDate')?.value || '',
+                birthTime: document.getElementById('birthTime')?.value || '',
+                birthPlace: document.getElementById('birthPlace')?.value || ''
+            };
+            
+            const profiles = getAllProfiles();
+            profiles[profileName] = currentData;
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(currentData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+            
+            updateProfileDropdown();
+            alert(`Profile "${profileName}" saved! ✨`);
+        }
+
+        function loadProfile(profileName) {
+            const profiles = getAllProfiles();
+            const profileData = profiles[profileName];
+            
+            if (!profileData) return;
+            
+            if (profileData.preferredName && document.getElementById('preferredName')) {
+                document.getElementById('preferredName').value = profileData.preferredName;
+            }
+            if (profileData.birthName && document.getElementById('birthName')) {
+                document.getElementById('birthName').value = profileData.birthName;
+            }
+            if (profileData.birthDate && document.getElementById('birthDate')) {
+                document.getElementById('birthDate').value = profileData.birthDate;
+            }
+            if (profileData.birthTime && document.getElementById('birthTime')) {
+                document.getElementById('birthTime').value = profileData.birthTime;
+            }
+            if (profileData.birthPlace && document.getElementById('birthPlace')) {
+                document.getElementById('birthPlace').value = profileData.birthPlace;
+            }
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(profileData));
+            localStorage.setItem('quantumMerlinActiveProfile', profileName);
+        }
+
+        function deleteProfile(profileName) {
+            const profiles = getAllProfiles();
+            delete profiles[profileName];
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
+            if (activeProfile === profileName) {
+                localStorage.removeItem('quantumMerlinActiveProfile');
+            }
+            
+            updateProfileDropdown();
+        }
+
+        function updateProfileDropdown() {
+            const dropdown = document.getElementById('profileSelect');
+            if (!dropdown) return;
+            
+            const profiles = getAllProfiles();
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            dropdown.innerHTML = '<option value="">Select a profile...</option>';
+            
+            Object.keys(profiles).sort().forEach(profileName => {
+                const option = document.createElement('option');
+                option.value = profileName;
+                option.textContent = profileName;
+                if (profileName === activeProfile) {
+                    option.selected = true;
+                }
+                dropdown.appendChild(option);
+            });
+        }
+
+        function onProfileChange() {
+            const dropdown = document.getElementById('profileSelect');
+            const profileName = dropdown.value;
+            
+            if (profileName) {
+                loadProfile(profileName);
+            }
+        }
+
+        function showSaveProfileDialog() {
+            const profiles = getAllProfiles();
+            const currentActive = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            
+            let message = 'Enter a name for this profile:';
+            if (currentActive) {
+                message += `\n\nCurrent profile: "${currentActive}"\nLeave blank to update current profile.`;
+            }
+            
+            const profileName = prompt(message, currentActive);
+            
+            if (profileName !== null) {
+                const finalName = profileName.trim() || currentActive || 'Profile ' + (Object.keys(profiles).length + 1);
+                saveProfile(finalName);
+            }
+        }
+
+        function showDeleteProfileDialog() {
+            const profiles = getAllProfiles();
+            const profileNames = Object.keys(profiles).sort();
+            
+            if (profileNames.length === 0) {
+                alert('No saved profiles to delete');
+                return;
+            }
+            
+            const profileName = prompt(`Enter profile name to delete:\n\nSaved profiles:\n${profileNames.join('\n')}`);
+            if (profileName && profiles[profileName]) {
+                if (confirm(`Delete profile "${profileName}"?`)) {
+                    deleteProfile(profileName);
+                    alert(`Profile "${profileName}" deleted`);
+                }
+            } else if (profileName) {
+                alert('Profile not found');
+            }
+        }
+
+        // Initialize profile dropdown on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProfileDropdown();
+            
+            const dropdown = document.getElementById('profileSelect');
+            if (dropdown) {
+                dropdown.addEventListener('change', onProfileChange);
+            }
+        });
+
+    </script>
+</body>
+</html>
