@@ -3,6 +3,7 @@
 Generate Moon Sign Reading Tool
 Deep emotional and inner self interpretations for all 12 zodiac signs
 """
+import json
 
 # Moon Sign Interpretations (500-800 words each)
 MOON_SIGN_INTERPRETATIONS = {
@@ -574,7 +575,7 @@ TEMPLATE = """<!DOCTYPE html>
     </div>
 
     <script>
-        const interpretations = """ + str(MOON_SIGN_INTERPRETATIONS).replace("'", '"') + """;
+        const interpretations = """ + json.dumps(MOON_SIGN_INTERPRETATIONS) + """;
 
         function calculateReading(event) {
             event.preventDefault();

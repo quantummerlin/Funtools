@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Moon & Rising Signs | Quantum Merlin</title>
+    <meta name="description" content="Discover how to find your Moon Sign and Rising Sign (Ascendant) for accurate astrological readings.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2em;
+            color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .info-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .info-text {
+            font-size: 1.15em;
+            line-height: 1.9;
+            margin-bottom: 25px;
+            color: #d1d5db;
+        }
+        .requirements {
+            background: rgba(6, 182, 212, 0.1);
+            border-left: 4px solid #06b6d4;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        .requirements h3 {
+            font-family: 'Cinzel', serif;
+            color: #06b6d4;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .requirements ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .requirements li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .requirements li:before {
+            content: "✨";
+            position: absolute;
+            left: 0;
+        }
+        .calculator-option {
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s;
+        }
+        .calculator-option:hover {
+            border-color: rgba(139, 92, 246, 0.6);
+            background: rgba(139, 92, 246, 0.15);
+            transform: translateY(-2px);
+        }
+        .calculator-option h3 {
+            font-family: 'Cinzel', serif;
+            color: #8b5cf6;
+            margin-bottom: 12px;
+            font-size: 1.4em;
+        }
+        .calculator-option p {
+            margin-bottom: 15px;
+            color: #d1d5db;
+        }
+        .calc-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            color: white;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 12px 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+        .calc-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+            border-color: rgba(251, 191, 36, 0.6);
+        }
+        .warning {
+            background: rgba(236, 72, 153, 0.1);
+            border-left: 4px solid #ec4899;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        .warning h3 {
+            font-family: 'Cinzel', serif;
+            color: #ec4899;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+        .next-step {
+            background: rgba(251, 191, 36, 0.1);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .next-step h3 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+        }
+        .reading-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .reading-link {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-decoration: none;
+            color: #06b6d4;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            display: block;
+        }
+        .reading-link:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+            transform: translateY(-2px);
+        }
+        .back-button {
+            display: inline-block;
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .info-card { padding: 25px 20px; }
+            .reading-links { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔮 Find Your Moon & Rising Signs</h1>
+            <p>Essential guide to discovering your complete astrological profile</p>
+        </div>
+
+        <div class="info-card">
+            <div class="section-title">📖 Understanding Your Signs</div>
+            
+            <div class="info-text">
+                <strong>Your Sun Sign</strong> (most people know this) represents your core identity and ego. It's based only on your birth date.
+            </div>
+            
+            <div class="info-text">
+                <strong>Your Moon Sign</strong> reveals your emotional nature, inner world, and deepest needs. It changes signs every 2-3 days, so you need your birth date and ideally your birth time for accuracy.
+            </div>
+            
+            <div class="info-text">
+                <strong>Your Rising Sign (Ascendant)</strong> shows how others perceive you and your approach to life. It changes every 2 hours, so exact birth time is essential for accuracy.
+            </div>
+
+            <div class="requirements">
+                <h3>What You'll Need</h3>
+                <ul>
+                    <li><strong>Birth Date:</strong> Month, day, and year</li>
+                    <li><strong>Birth Time:</strong> As exact as possible (check birth certificate)</li>
+                    <li><strong>Birth Location:</strong> City and country</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <h3>⚠️ Don't Know Your Exact Birth Time?</h3>
+                <p><strong>For Moon Sign:</strong> If you only know the date, most calculators can still give you an accurate Moon sign (unless you were born on a day the Moon changed signs).</p>
+                <p><strong>For Rising Sign:</strong> Exact time is critical. Without it, you can't accurately determine your Rising Sign. Check your birth certificate, ask family members, or contact the hospital where you were born.</p>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="section-title">🌟 Free Calculators We Recommend</div>
+            
+            <div class="calculator-option">
+                <h3>Astro.com (Most Accurate)</h3>
+                <p>The most trusted and accurate free birth chart calculator. Provides Sun, Moon, Rising, and all planetary positions.</p>
+                <a href="https://www.astro.com/cgi/genchart.cgi?&cid=rtbfilepar8fDU-u1640995200" target="_blank" class="calc-button">
+                    Calculate on Astro.com →
+                </a>
+            </div>
+
+            <div class="calculator-option">
+                <h3>Café Astrology (User-Friendly)</h3>
+                <p>Easy-to-use calculator with clear explanations. Great for beginners.</p>
+                <a href="https://cafeastrology.com/free-natal-chart-report.html" target="_blank" class="calc-button">
+                    Calculate on Café Astrology →
+                </a>
+            </div>
+
+            <div class="calculator-option">
+                <h3>Astro-Seek (Detailed Charts)</h3>
+                <p>Comprehensive free calculator with detailed planetary positions and aspects.</p>
+                <a href="https://horoscopes.astro-seek.com/birth-chart-horoscope-online" target="_blank" class="calc-button">
+                    Calculate on Astro-Seek →
+                </a>
+            </div>
+
+            <div class="info-text" style="margin-top: 30px; padding: 20px; background: rgba(6, 182, 212, 0.05); border-radius: 10px;">
+                <strong>💡 Tip:</strong> All three calculators are reputable and free. Choose whichever interface you prefer. They all use the same astronomical data, so your signs will be the same across all of them.
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="section-title">📝 How to Use the Calculators</div>
+            
+            <div class="info-text">
+                <strong>Step 1:</strong> Click one of the calculator links above
+            </div>
+            
+            <div class="info-text">
+                <strong>Step 2:</strong> Enter your birth information:
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li>Date of birth</li>
+                    <li>Exact time of birth (from birth certificate)</li>
+                    <li>City/location of birth</li>
+                </ul>
+            </div>
+            
+            <div class="info-text">
+                <strong>Step 3:</strong> Click "Calculate" or "Generate Chart"
+            </div>
+            
+            <div class="info-text">
+                <strong>Step 4:</strong> Look for:
+                <ul style="margin-top: 10px; margin-left: 20px;">
+                    <li><strong>Sun Sign:</strong> Usually listed first (e.g., "Sun in Aries")</li>
+                    <li><strong>Moon Sign:</strong> Look for "Moon in..." (e.g., "Moon in Cancer")</li>
+                    <li><strong>Rising/Ascendant:</strong> Listed as "Rising" or "ASC" (e.g., "Ascendant in Leo")</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="next-step">
+            <h3>✨ Once You Have Your Signs...</h3>
+            <p style="color: #d1d5db; margin-bottom: 20px;">Return to Quantum Merlin for your deep, personalized readings:</p>
+            
+            <div class="reading-links">
+                <a href="moon-sign-reading.html" class="reading-link">
+                    🌙 Moon Sign Reading<br>
+                    <small style="opacity: 0.7; font-size: 0.9em;">Your emotional nature</small>
+                </a>
+                <a href="rising-sign-reading.html" class="reading-link">
+                    ⬆️ Rising Sign Reading<br>
+                    <small style="opacity: 0.7; font-size: 0.9em;">Your outer personality</small>
+                </a>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="tools_index.html" class="back-button">← Back to All Tools</a>
+        </div>
+    </div>
+</body>
+</html>
