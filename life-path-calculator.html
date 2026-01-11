@@ -295,13 +295,35 @@
         </div>
         
         <div class="tool-card">
-            <div style="text-align: right; margin-bottom: 20px;">
-                <button type="button" onclick="clearSavedData()" style="background: rgba(236, 72, 153, 0.1); border: 2px solid rgba(236, 72, 153, 0.3); color: #ec4899; padding: 8px 16px; font-size: 0.9em; width: auto; margin: 0;">
-                    🗑️ Clear My Data
-                </button>
-            </div>
+            
             <form id="toolForm">
-                
+
+            <!-- Profile Management Section -->
+            <div class="profile-section" style="background: rgba(139, 92, 246, 0.1); border: 2px solid rgba(139, 92, 246, 0.3); border-radius: 15px; padding: 20px; margin-bottom: 25px;">
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px;">
+                        <label style="color: #8b5cf6; font-family: 'Cinzel', serif; white-space: nowrap;">👤 Profile:</label>
+                        <select id="profileSelect" onchange="onProfileChange()" style="flex: 1; background: rgba(0,0,0,0.3); border: 1px solid rgba(139, 92, 246, 0.5); color: #e0e0e0; padding: 8px 12px; border-radius: 8px; font-family: 'Cormorant Garamond', serif;">
+                            <option value="">Select a profile...</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" onclick="showSaveProfileDialog()" class="profile-btn" style="background: rgba(6, 182, 212, 0.1); border: 2px solid rgba(6, 182, 212, 0.3); color: #06b6d4; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: 'Cinzel', serif; font-size: 0.85em;">
+                            💾 Save Profile
+                        </button>
+                        <button type="button" onclick="showNewProfileDialog()" class="profile-btn" style="background: rgba(251, 191, 36, 0.1); border: 2px solid rgba(251, 191, 36, 0.3); color: #fbbf24; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: 'Cinzel', serif; font-size: 0.85em;">
+                            ✨ New Profile
+                        </button>
+                        <button type="button" onclick="showDeleteProfileDialog()" class="profile-btn" style="background: rgba(236, 72, 153, 0.1); border: 2px solid rgba(236, 72, 153, 0.3); color: #ec4899; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: 'Cinzel', serif; font-size: 0.85em;">
+                            🗑️ Delete
+                        </button>
+                    </div>
+                </div>
+                <p style="color: #9ca3af; font-size: 0.85em; margin-top: 12px; margin-bottom: 0;">
+                    💡 Save profiles for yourself and others! Perfect for checking compatibility later.
+                </p>
+            </div>
+
 <div class="input-section">
     <div class="section-title">Personal Information</div>
     <div class="input-group">
@@ -310,7 +332,7 @@
         
     </div>
                     <div class="input-group">
-                        <label for="birthName">Birth Name</label>
+                        <label for="birthName">Birth Name <span style="color: #9ca3af; font-weight: normal;">(Optional)</span></label>
                         <input type="text" id="birthName">
                         <div class="helper-text">The name given to you at birth - carries the energy of your naming</div>
                     </div>
@@ -363,76 +385,16 @@
         // Version: 20260111132525 - Auto-generated cache buster
         // Version: 20260111121858 - Auto-generated cache buster
         // Version: 20260111121803 - Auto-generated cache buster
-        function goBack() { window.location.href = 'tools_index.html'; }
         
-        function shareOnTwitter() {
-            const text = encodeURIComponent("I just got my personalized Life Path Number Calculator! Get yours:");
-            const url = encodeURIComponent(window.location.href);
-            window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank');
-        }
+        // ===== ENHANCED PROFILE MANAGEMENT =====
         
-        function shareOnFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank');
-        }
-        
-        function copyLink() {
-            navigator.clipboard.writeText(window.location.href);
-            alert('Link copied to clipboard! Share it with friends.');
-        }
-        
-        // Load saved data from localStorage
-        function loadSavedData() {
-            const savedData = localStorage.getItem('quantumMerlinUserData');
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                
-                if (document.getElementById('preferredName') && data.preferredName) {
-                    document.getElementById('preferredName').value = data.preferredName;
-                }
-                if (document.getElementById('birthName') && data.birthName) {
-                    document.getElementById('birthName').value = data.birthName;
-                }
-                if (document.getElementById('birthDate') && data.birthDate) {
-                    document.getElementById('birthDate').value = data.birthDate;
-                }
-                if (document.getElementById('birthTime') && data.birthTime) {
-                    document.getElementById('birthTime').value = data.birthTime;
-                }
-                if (document.getElementById('birthPlace') && data.birthPlace) {
-                    document.getElementById('birthPlace').value = data.birthPlace;
-                }
-            }
-        }
-        
-        // Save user data to localStorage
-        function saveUserData() {
-            const userData = {};
-            
-            if (document.getElementById('preferredName')) {
-                userData.preferredName = document.getElementById('preferredName').value;
-            }
-            if (document.getElementById('birthName')) {
-                userData.birthName = document.getElementById('birthName').value;
-            }
-            if (document.getElementById('birthDate')) {
-                userData.birthDate = document.getElementById('birthDate').value;
-            }
-            if (document.getElementById('birthTime')) {
-                userData.birthTime = document.getElementById('birthTime').value;
-            }
-            if (document.getElementById('birthPlace')) {
-                userData.birthPlace = document.getElementById('birthPlace').value;
-            }
-            
-            localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
-        }
-        // Profile Management Functions
+        // Get all saved profiles
         function getAllProfiles() {
             const profiles = localStorage.getItem('quantumMerlinProfiles');
             return profiles ? JSON.parse(profiles) : {};
         }
-
+        
+        // Save current form data as a profile
         function saveProfile(profileName) {
             if (!profileName || profileName.trim() === '') {
                 alert('Please enter a profile name');
@@ -451,13 +413,15 @@
             profiles[profileName] = currentData;
             localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
             
+            // Also save as current user data for cross-tool persistence
             localStorage.setItem('quantumMerlinUserData', JSON.stringify(currentData));
             localStorage.setItem('quantumMerlinActiveProfile', profileName);
             
             updateProfileDropdown();
             alert(`Profile "${profileName}" saved! ✨`);
         }
-
+        
+        // Load a profile into the form
         function loadProfile(profileName) {
             const profiles = getAllProfiles();
             const profileData = profiles[profileName];
@@ -480,15 +444,18 @@
                 document.getElementById('birthPlace').value = profileData.birthPlace;
             }
             
+            // Update current user data
             localStorage.setItem('quantumMerlinUserData', JSON.stringify(profileData));
             localStorage.setItem('quantumMerlinActiveProfile', profileName);
         }
-
+        
+        // Delete a profile
         function deleteProfile(profileName) {
             const profiles = getAllProfiles();
             delete profiles[profileName];
             localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
             
+            // If we deleted the active profile, clear it
             const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
             if (activeProfile === profileName) {
                 localStorage.removeItem('quantumMerlinActiveProfile');
@@ -496,7 +463,8 @@
             
             updateProfileDropdown();
         }
-
+        
+        // Update the profile dropdown with saved profiles
         function updateProfileDropdown() {
             const dropdown = document.getElementById('profileSelect');
             if (!dropdown) return;
@@ -516,7 +484,8 @@
                 dropdown.appendChild(option);
             });
         }
-
+        
+        // Handle profile selection change
         function onProfileChange() {
             const dropdown = document.getElementById('profileSelect');
             const profileName = dropdown.value;
@@ -525,27 +494,40 @@
                 loadProfile(profileName);
             }
         }
-
+        
+        // Show save profile dialog
         function showSaveProfileDialog() {
             const profiles = getAllProfiles();
             const currentActive = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            const preferredName = document.getElementById('preferredName')?.value || '';
             
-            let message = 'Enter a name for this profile:';
-            if (currentActive) {
-                message += `
-
-Current profile: "${currentActive}"
-Leave blank to update current profile.`;
-            }
+            let defaultName = currentActive || preferredName || '';
             
-            const profileName = prompt(message, currentActive);
+            const profileName = prompt('Save profile as:', defaultName);
             
-            if (profileName !== null) {
-                const finalName = profileName.trim() || currentActive || 'Profile ' + (Object.keys(profiles).length + 1);
-                saveProfile(finalName);
+            if (profileName !== null && profileName.trim() !== '') {
+                saveProfile(profileName.trim());
             }
         }
-
+        
+        // Show new profile dialog (clears form)
+        function showNewProfileDialog() {
+            if (confirm('Start a new profile? This will clear the current form.')) {
+                // Clear form fields
+                if (document.getElementById('preferredName')) document.getElementById('preferredName').value = '';
+                if (document.getElementById('birthName')) document.getElementById('birthName').value = '';
+                if (document.getElementById('birthDate')) document.getElementById('birthDate').value = '';
+                if (document.getElementById('birthTime')) document.getElementById('birthTime').value = '';
+                if (document.getElementById('birthPlace')) document.getElementById('birthPlace').value = '';
+                
+                // Clear active profile selection
+                localStorage.removeItem('quantumMerlinActiveProfile');
+                const dropdown = document.getElementById('profileSelect');
+                if (dropdown) dropdown.value = '';
+            }
+        }
+        
+        // Show delete profile dialog
         function showDeleteProfileDialog() {
             const profiles = getAllProfiles();
             const profileNames = Object.keys(profiles).sort();
@@ -555,7 +537,10 @@ Leave blank to update current profile.`;
                 return;
             }
             
-            const profileName = prompt(`Enter profile name to delete:\n\nSaved profiles:\n${profileNames.join('\n')}`);
+            const profileName = prompt(`Enter profile name to delete:
+
+Saved profiles:
+${profileNames.join('\n')}`);
             if (profileName && profiles[profileName]) {
                 if (confirm(`Delete profile "${profileName}"?`)) {
                     deleteProfile(profileName);
@@ -565,29 +550,97 @@ Leave blank to update current profile.`;
                 alert('Profile not found');
             }
         }
-
-        // Initialize profile dropdown on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            updateProfileDropdown();
-            
-            const dropdown = document.getElementById('profileSelect');
-            if (dropdown) {
-                dropdown.addEventListener('change', onProfileChange);
-            }
-        });
-
         
-        // Clear saved data
+        // Load saved data from localStorage (cross-tool persistence)
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                if (document.getElementById('preferredName') && data.preferredName) {
+                    document.getElementById('preferredName').value = data.preferredName;
+                }
+                if (document.getElementById('birthName') && data.birthName) {
+                    document.getElementById('birthName').value = data.birthName;
+                }
+                if (document.getElementById('birthDate') && data.birthDate) {
+                    document.getElementById('birthDate').value = data.birthDate;
+                }
+                if (document.getElementById('birthTime') && data.birthTime) {
+                    document.getElementById('birthTime').value = data.birthTime;
+                }
+                if (document.getElementById('birthPlace') && data.birthPlace) {
+                    document.getElementById('birthPlace').value = data.birthPlace;
+                }
+            }
+            
+            // Update profile dropdown
+            updateProfileDropdown();
+        }
+        
+        // Save current user data to localStorage
+        function saveUserData() {
+            const userData = {};
+            
+            if (document.getElementById('preferredName')) {
+                userData.preferredName = document.getElementById('preferredName').value;
+            }
+            if (document.getElementById('birthName')) {
+                userData.birthName = document.getElementById('birthName').value;
+            }
+            if (document.getElementById('birthDate')) {
+                userData.birthDate = document.getElementById('birthDate').value;
+            }
+            if (document.getElementById('birthTime')) {
+                userData.birthTime = document.getElementById('birthTime').value;
+            }
+            if (document.getElementById('birthPlace')) {
+                userData.birthPlace = document.getElementById('birthPlace').value;
+            }
+            
+            localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
+            
+            // If there's an active profile, update it too
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
+            if (activeProfile) {
+                const profiles = getAllProfiles();
+                profiles[activeProfile] = userData;
+                localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            }
+        }
+        
+        // Clear all saved data
         function clearSavedData() {
-            if (confirm('This will clear your saved personal information. Are you sure?')) {
+            if (confirm('This will clear ALL your saved profiles and data. Are you sure?')) {
                 localStorage.removeItem('quantumMerlinUserData');
+                localStorage.removeItem('quantumMerlinProfiles');
+                localStorage.removeItem('quantumMerlinActiveProfile');
                 location.reload();
             }
         }
         
-        // Load saved data when page loads
+        // Initialize on page load
         window.addEventListener('DOMContentLoaded', loadSavedData);
         
+        // ===== END PROFILE MANAGEMENT =====
+
+        function goBack() { window.location.href = 'tools_index.html'; }
+        
+        function shareOnTwitter() {
+            const text = encodeURIComponent("I just got my personalized Life Path Number Calculator! Get yours:");
+            const url = encodeURIComponent(window.location.href);
+            window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank');
+        }
+        
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank');
+        }
+        
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard! Share it with friends.');
+        }
         
         function reduceToSingle(num) {
             while (num > 9 && num !== 11 && num !== 22 && num !== 33) {

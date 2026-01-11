@@ -299,7 +299,7 @@
                         <div class="helper-text">What you like to be called</div>
 
                     <div class="input-group">
-                        <label for="birthName">Birth Name</label>
+                        <label for="birthName">Birth Name <span style="color: #9ca3af; font-weight: normal;">(Optional)</span></label>
                         <input type="text" id="birthName">
                         <div class="helper-text">The name given to you at birth - carries the energy of your naming</div>
                     </div>
@@ -618,43 +618,6 @@
             
             if (profileName) {
                 loadProfile(profileName);
-            }
-        }
-
-        function showSaveProfileDialog() {
-            const profiles = getAllProfiles();
-            const currentActive = localStorage.getItem('quantumMerlinActiveProfile') || '';
-            
-            let message = 'Enter a name for this profile:';
-            if (currentActive) {
-                message += `\n\nCurrent profile: "${currentActive}"\nLeave blank to update current profile.`;
-            }
-            
-            const profileName = prompt(message, currentActive);
-            
-            if (profileName !== null) {
-                const finalName = profileName.trim() || currentActive || 'Profile ' + (Object.keys(profiles).length + 1);
-                saveProfile(finalName);
-            }
-        }
-
-        function showDeleteProfileDialog() {
-            const profiles = getAllProfiles();
-            const profileNames = Object.keys(profiles).sort();
-            
-            if (profileNames.length === 0) {
-                alert('No saved profiles to delete');
-                return;
-            }
-            
-            const profileName = prompt(`Enter profile name to delete:\n\nSaved profiles:\n${profileNames.join('\n')}`);
-            if (profileName && profiles[profileName]) {
-                if (confirm(`Delete profile "${profileName}"?`)) {
-                    deleteProfile(profileName);
-                    alert(`Profile "${profileName}" deleted`);
-                }
-            } else if (profileName) {
-                alert('Profile not found');
             }
         }
 
