@@ -535,11 +535,7 @@ Leave blank to update current profile.`;
                 return;
             }
             
-            const profileName = prompt(`Enter profile name to delete:
-
-Saved profiles:
-${profileNames.join('
-')}`);
+            const profileName = prompt(`Enter profile name to delete:\n\nSaved profiles:\n${profileNames.join('\n')}`);
             if (profileName && profiles[profileName]) {
                 if (confirm(`Delete profile "${profileName}"?`)) {
                     deleteProfile(profileName);
