@@ -65,78 +65,113 @@
             });
         }
         
-        // Handle profile selection change
+                        // Load a specific profile
+        function loadProfile(profileName) {
+            const profiles = getAllProfiles();
+            const profileData = profiles[profileName];
+            
+            if (profileData) {
+                if (document.getElementById('preferredName') && profileData.preferredName) {
+                    document.getElementById('preferredName').value = profileData.preferredName;
+                }
+                if (document.getElementById('birthName') && profileData.birthName) {
+                    document.getElementById('birthName').value = profileData.birthName;
+                }
+                if (document.getElementById('birthDate') && profileData.birthDate) {
+                    document.getElementById('birthDate').value = profileData.birthDate;
+                }
+                if (document.getElementById('birthTime') && profileData.birthTime) {
+                    document.getElementById('birthTime').value = profileData.birthTime;
+                }
+                if (document.getElementById('birthPlace') && profileData.birthPlace) {
+                    document.getElementById('birthPlace').value = profileData.birthPlace;
+                }
+                
+                localStorage.setItem('quantumMerlinUserData', JSON.stringify(profileData));
+                localStorage.setItem('quantumMerlinActiveProfile', profileName);
+            }
+        }
+
+// Handle profile selection change
         function onProfileChange() {
             const dropdown = document.getElementById('profileSelect');
             const profileName = dropdown.value;
             
             if (profileName) {
-                const profiles = getAllProfiles();
-                const profileData = profiles[profileName];
-                
-                if (profileData) {
-                    if (document.getElementById('preferredName') && profileData.preferredName) {
-                        document.getElementById('preferredName').value = profileData.preferredName;
-                    }
-                    if (document.getElementById('birthName') && profileData.birthName) {
-                        document.getElementById('birthName').value = profileData.birthName;
-                    }
-                    if (document.getElementById('birthDate') && profileData.birthDate) {
-                        document.getElementById('birthDate').value = profileData.birthDate;
-                    }
-                    if (document.getElementById('birthTime') && profileData.birthTime) {
-                        document.getElementById('birthTime').value = profileData.birthTime;
-                    }
-                    if (document.getElementById('birthPlace') && profileData.birthPlace) {
-                        document.getElementById('birthPlace').value = profileData.birthPlace;
-                    }
+                loadProfile(profileName);
+            } else {
+                // If "Select or type to create..." is chosen, ask for new profile name
+                const newName = prompt('Enter a name for the new profile:');
+                if (newName && newName.trim()) {
+                    const trimmedName = newName.trim();
+                    // Create new profile with current form data
+                    const userData = {
+                        preferredName: document.getElementById('preferredName')?.value || '',
+                        birthName: document.getElementById('birthName')?.value || '',
+                        birthDate: document.getElementById('birthDate')?.value || '',
+                        birthTime: document.getElementById('birthTime')?.value || '',
+                        birthPlace: document.getElementById('birthPlace')?.value || ''
+                    };
                     
-                    localStorage.setItem('quantumMerlinUserData', JSON.stringify(profileData));
-                    localStorage.setItem('quantumMerlinActiveProfile', profileName);
+                    const profiles = getAllProfiles();
+                    profiles[trimmedName] = userData;
+                    localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+                    localStorage.setItem('quantumMerlinActiveProfile', trimmedName);
+                    localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
+                    
+                    updateProfileDropdown();
                 }
             }
         }
+
         
-        // Show dialog to create new profile
-        function showSaveProfileDialog() {
-            const profileName = prompt('Enter a name for this profile (e.g., "Me", "Partner", "Friend"):');
-            if (profileName && profileName.trim()) {
-                const currentData = {
-                    preferredName: document.getElementById('preferredName')?.value || '',
-                    birthName: document.getElementById('birthName')?.value || '',
-                    birthDate: document.getElementById('birthDate')?.value || '',
-                    birthTime: document.getElementById('birthTime')?.value || '',
-                    birthPlace: document.getElementById('birthPlace')?.value || ''
-                };
-                
-                const profiles = getAllProfiles();
-                profiles[profileName.trim()] = currentData;
-                localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
-                localStorage.setItem('quantumMerlinActiveProfile', profileName.trim());
-                localStorage.setItem('quantumMerlinUserData', JSON.stringify(currentData));
-                
-                updateProfileDropdown();
-                alert('Profile "' + profileName.trim() + '" saved! ✨');
-            }
-        }
         
-        // Show dialog to delete current profile
+        
+                // Show delete profile dialog
         function showDeleteProfileDialog() {
-            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
-            if (!activeProfile) {
-                alert('No profile is currently selected.');
+            const profiles = getAllProfiles();
+            const profileNames = Object.keys(profiles).sort();
+            
+            if (profileNames.length === 0) {
+                alert('No saved profiles to remove');
                 return;
             }
             
-            if (confirm('Delete profile "' + activeProfile + '"? This cannot be undone.')) {
-                const profiles = getAllProfiles();
-                delete profiles[activeProfile];
-                localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
-                localStorage.removeItem('quantumMerlinActiveProfile');
-                updateProfileDropdown();
-                alert('Profile deleted.');
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile') || '';
+            const defaultDelete = activeProfile || profileNames[0];
+            
+            const profileName = prompt('Enter profile name to remove:\n\nSaved profiles:\n' + profileNames.join('\n'), defaultDelete);
+            if (profileName && profiles[profileName]) {
+                if (confirm('Remove profile "' + profileName + '"? This cannot be undone.')) {
+                    deleteProfile(profileName);
+                    // Clear form if we deleted the active profile
+                    if (profileName === activeProfile) {
+                        if (document.getElementById('preferredName')) document.getElementById('preferredName').value = '';
+                        if (document.getElementById('birthName')) document.getElementById('birthName').value = '';
+                        if (document.getElementById('birthDate')) document.getElementById('birthDate').value = '';
+                        if (document.getElementById('birthTime')) document.getElementById('birthTime').value = '';
+                        if (document.getElementById('birthPlace')) document.getElementById('birthPlace').value = '';
+                    }
+                }
+            } else if (profileName) {
+                alert('Profile not found');
             }
         }
+
+                // Delete a profile
+        function deleteProfile(profileName) {
+            const profiles = getAllProfiles();
+            delete profiles[profileName];
+            localStorage.setItem('quantumMerlinProfiles', JSON.stringify(profiles));
+            
+            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
+            if (activeProfile === profileName) {
+                localStorage.removeItem('quantumMerlinActiveProfile');
+            }
+            
+            updateProfileDropdown();
+        }
+
         // Load saved data from localStorage (cross-tool persistence)
         function loadSavedData() {
             const savedData = localStorage.getItem('quantumMerlinUserData');
