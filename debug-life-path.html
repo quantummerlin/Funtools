@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <title>Debug Life Path</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a2e; color: #fff; }
+        .debug { background: #333; padding: 15px; margin: 10px 0; border-radius: 8px; word-wrap: break-word; }
+        .error { background: #660000; }
+        .success { background: #006600; }
+        input, button { padding: 15px; margin: 10px 0; width: 100%; box-sizing: border-box; font-size: 16px; }
+        button { background: #6366f1; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        h2 { color: #a5b4fc; }
+    </style>
+</head>
+<body>
+    <h1>Debug Life Path Calculator</h1>
+    
+    <div id="debugLog"></div>
+    
+    <h2>Test Form</h2>
+    <form id="testForm">
+        <input type="text" id="preferredName" placeholder="Your Name" value="Test User">
+        <input type="date" id="birthDate" value="1990-05-15">
+        <button type="submit">Test Submit</button>
+    </form>
+    
+    <h2>Manual Tests</h2>
+    <button onclick="testSessionStorage()">Test SessionStorage</button>
+    <button onclick="testLocalStorage()">Test LocalStorage</button>
+    <button onclick="testRedirect()">Test Redirect</button>
+    
+    <script>
+        function log(msg, type = '') {
+            const div = document.createElement('div');
+            div.className = 'debug ' + type;
+            div.textContent = new Date().toLocaleTimeString() + ': ' + msg;
+            document.getElementById('debugLog').prepend(div);
+        }
+        
+        // Catch all errors
+        window.onerror = function(msg, url, line, col, error) {
+            log('ERROR: ' + msg + ' at line ' + line, 'error');
+            return false;
+        };
+        
+        log('Page loaded');
+        log('User Agent: ' + navigator.userAgent);
+        
+        // Test sessionStorage
+        function testSessionStorage() {
+            try {
+                sessionStorage.setItem('test', 'works');
+                const val = sessionStorage.getItem('test');
+                sessionStorage.removeItem('test');
+                log('SessionStorage: ' + (val === 'works' ? 'WORKS' : 'FAILED'), val === 'works' ? 'success' : 'error');
+            } catch (e) {
+                log('SessionStorage BLOCKED: ' + e.message, 'error');
+            }
+        }
+        
+        // Test localStorage
+        function testLocalStorage() {
+            try {
+                localStorage.setItem('test', 'works');
+                const val = localStorage.getItem('test');
+                localStorage.removeItem('test');
+                log('LocalStorage: ' + (val === 'works' ? 'WORKS' : 'FAILED'), val === 'works' ? 'success' : 'error');
+            } catch (e) {
+                log('LocalStorage BLOCKED: ' + e.message, 'error');
+            }
+        }
+        
+        // Test redirect
+        function testRedirect() {
+            log('Redirecting in 2 seconds...');
+            setTimeout(() => {
+                window.location.href = 'debug-life-path.html?redirected=yes';
+            }, 2000);
+        }
+        
+        // Check if redirected
+        if (window.location.search.includes('redirected=yes')) {
+            log('Redirect successful!', 'success');
+        }
+        
+        // Form submission
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            log('Form submitted!', 'success');
+            
+            const name = document.getElementById('preferredName').value;
+            const date = document.getElementById('birthDate').value;
+            log('Name: ' + name + ', Date: ' + date);
+            
+            // Calculate life path
+            try {
+                const [year, month, day] = date.split('-').map(Number);
+                log('Parsed: Year=' + year + ', Month=' + month + ', Day=' + day);
+                
+                function reduceToSingle(num) {
+                    while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                        num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+                    }
+                    return num;
+                }
+                
+                const lifePathNumber = reduceToSingle(
+                    reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(year)
+                );
+                log('Life Path Number: ' + lifePathNumber, 'success');
+                
+                // Try to store and redirect
+                const readingData = {
+                    toolType: 'life-path',
+                    headerTitle: 'Your Life Path Reading',
+                    number: lifePathNumber,
+                    title: 'Life Path ' + lifePathNumber,
+                    subtitle: name + ', here is your reading',
+                    content: '<p>Your life path number is ' + lifePathNumber + '</p>',
+                    sourceUrl: 'life-path-calculator.html'
+                };
+                
+                try {
+                    sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+                    log('Data saved to sessionStorage', 'success');
+                    log('Redirecting to reading-loading.html in 2 seconds...');
+                    setTimeout(() => {
+                        window.location.href = 'reading-loading.html';
+                    }, 2000);
+                } catch (e) {
+                    log('SessionStorage failed, using URL params', 'error');
+                    const encodedData = encodeURIComponent(JSON.stringify(readingData));
+                    log('Data length: ' + encodedData.length + ' chars');
+                    setTimeout(() => {
+                        window.location.href = 'reading-loading.html?data=' + encodedData;
+                    }, 2000);
+                }
+                
+            } catch (e) {
+                log('Calculation error: ' + e.message, 'error');
+            }
+        });
+        
+        // Auto-run tests
+        testSessionStorage();
+        testLocalStorage();
+    </script>
+</body>
+</html>
