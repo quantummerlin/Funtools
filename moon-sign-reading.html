@@ -260,6 +260,12 @@
                     </div>
 
                     <div class="input-group">
+                        <label for="birthName">Birth Name</label>
+                        <input type="text" id="birthName" required>
+                        <div class="helper-text">The name given to you at birth - carries the energy of your naming</div>
+                    </div>
+
+                    <div class="input-group">
                         <label for="birthDate">Birth Date</label>
                         <input type="date" id="birthDate" required>
                     </div>
@@ -401,6 +407,7 @@
             
             const currentData = {
                 preferredName: document.getElementById('preferredName')?.value || '',
+                birthName: document.getElementById('birthName')?.value || '',
                 birthDate: document.getElementById('birthDate')?.value || '',
                 birthTime: document.getElementById('birthTime')?.value || '',
                 birthPlace: document.getElementById('birthPlace')?.value || ''
@@ -424,6 +431,9 @@
             
             if (profileData.preferredName && document.getElementById('preferredName')) {
                 document.getElementById('preferredName').value = profileData.preferredName;
+            }
+            if (profileData.birthName && document.getElementById('birthName')) {
+                document.getElementById('birthName').value = profileData.birthName;
             }
             if (profileData.birthDate && document.getElementById('birthDate')) {
                 document.getElementById('birthDate').value = profileData.birthDate;
@@ -498,6 +508,7 @@
         function saveUserData() {
             const userData = {
                 preferredName: document.getElementById('preferredName').value,
+                birthName: document.getElementById('birthName').value,
                 birthDate: document.getElementById('birthDate').value,
                 birthTime: document.getElementById('birthTime').value,
                 birthPlace: document.getElementById('birthPlace').value
@@ -510,6 +521,7 @@
             if (saved) {
                 const data = JSON.parse(saved);
                 if (data.preferredName) document.getElementById('preferredName').value = data.preferredName;
+                if (data.birthName) document.getElementById('birthName').value = data.birthName;
                 if (data.birthDate) document.getElementById('birthDate').value = data.birthDate;
                 if (data.birthTime) document.getElementById('birthTime').value = data.birthTime;
                 if (data.birthPlace) document.getElementById('birthPlace').value = data.birthPlace;
