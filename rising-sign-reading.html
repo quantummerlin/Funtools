@@ -345,49 +345,58 @@
         }
 
         function calculateRisingPosition(dateStr, timeStr, coords) {
-            // Combine date and time into Date object
-            const datetime = new Date(`${dateStr}T${timeStr}:00`);
-            
-            // Create observer location
-            const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
-            
-            // Create astronomical time
-            const time = Astronomy.MakeTime(datetime);
-            
-            // Calculate the horizon coordinates for the eastern horizon
-            // We need to find what zodiac constellation is rising on the eastern horizon
-            // This is done by calculating the sidereal time and determining the ascendant degree
-            
-            // Calculate sidereal time at the location
-            const hourAngle = Astronomy.SiderealTime(time);
-            
-            // Calculate obliquity of the ecliptic
-            const earthTilt = 23.4397; // degrees, approximate
-            
-            // Calculate RAMC (Right Ascension of Midheaven)
-            const ramc = (hourAngle + coords.lon / 15) * 15; // Convert to degrees
-            
-            // Calculate Ascendant using simple formula
-            // ASC = atan2(-cos(RAMC), sin(RAMC) * cos(obliquity) - tan(latitude) * sin(obliquity))
-            const ramcRad = ramc * Math.PI / 180;
-            const latRad = coords.lat * Math.PI / 180;
-            const oblRad = earthTilt * Math.PI / 180;
-            
-            const ascRad = Math.atan2(
-                -Math.cos(ramcRad),
-                Math.sin(ramcRad) * Math.cos(oblRad) - Math.tan(latRad) * Math.sin(oblRad)
-            );
-            
-            // Convert to degrees and normalize to 0-360
-            let ascDegrees = (ascRad * 180 / Math.PI + 360) % 360;
-            
-            // Determine zodiac sign from ascendant degree
-            const signIndex = Math.floor(ascDegrees / 30);
-            
-            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
-                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
-            
-            return signs[signIndex];
+            try {
+                // Combine date and time
+                const datetime = new Date(`${dateStr}T${timeStr}:00`);
+                
+                // Create observer location
+                const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
+                
+                // Create astronomical time
+                const time = Astronomy.MakeTime(datetime);
+                
+                // Calculate Local Sidereal Time (LST) in hours
+                const gst = Astronomy.SiderealTime(time); // Greenwich Sidereal Time in hours
+                const lst = gst + (coords.lon / 15.0); // Local Sidereal Time in hours
+                
+                // Convert LST to degrees (RAMC = Right Ascension of Medium Coeli)
+                const ramc = (lst * 15.0) % 360;
+                
+                // Get obliquity of the ecliptic
+                const obliquity = 23.4397; // degrees, approximation
+                
+                // Calculate Ascendant using classical formula
+                // ASC = atan2(-cos(RAMC), sin(RAMC)*cos(obliquity) - tan(latitude)*sin(obliquity))
+                const ramcRad = ramc * Math.PI / 180;
+                const latRad = coords.lat * Math.PI / 180;
+                const oblRad = obliquity * Math.PI / 180;
+                
+                // Avoid division by zero for polar latitudes
+                if (Math.abs(coords.lat) > 66) {
+                    throw new Error('Rising sign calculations are unreliable near polar regions');
+                }
+                
+                const ascRad = Math.atan2(
+                    -Math.cos(ramcRad),
+                    Math.sin(ramcRad) * Math.cos(oblRad) - Math.tan(latRad) * Math.sin(oblRad)
+                );
+                
+                // Convert to ecliptic longitude (0-360)
+                let ascDegrees = ascRad * 180 / Math.PI;
+                while (ascDegrees < 0) ascDegrees += 360;
+                while (ascDegrees >= 360) ascDegrees -= 360;
+                
+                // Determine zodiac sign from ascendant degree
+                const signIndex = Math.floor(ascDegrees / 30);
+                
+                const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                              'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+                
+                return signs[signIndex];
+            } catch (error) {
+                console.error('Rising position calculation error:', error);
+                throw new Error('Failed to calculate Rising Sign: ' + error.message);
+            }
         }
 
         function showResult(name, risingSign) {
