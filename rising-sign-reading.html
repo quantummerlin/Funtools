@@ -241,10 +241,17 @@
     <div class="container">
         <div class="header">
             <h1>🌙 Rising Sign Reading</h1>
-            <p>Reveal your outer personality and life approach</p>
+            <p>Deep interpretation of your outer personality • Already know your Rising Sign</p>
         </div>
 
         <div class="tool-card">
+            <div style="background: rgba(6, 182, 212, 0.1); border-left: 4px solid #06b6d4; padding: 15px; margin-bottom: 25px; border-radius: 8px;">
+                <p style="margin: 0; font-size: 1.05em; line-height: 1.6;">
+                    <strong style="color: #06b6d4;">Note:</strong> This tool provides a detailed reading ABOUT your Rising Sign (Ascendant). 
+                    If you don't know your Rising Sign yet, <a href="find-your-signs.html" target="_blank" style="color: #fbbf24; text-decoration: underline; font-weight: 600;">calculate it first here</a> 
+                    (requires exact birth time and location).
+                </p>
+            </div>
             <div class="profile-controls">
                 <select id="profileSelect" class="profile-select">
                     <option value="">Select a profile...</option>
@@ -276,24 +283,10 @@
                         <input type="date" id="birthDate" required>
                     </div>
 
-                    <div class="row">
-                        <div class="input-group">
-                            <label for="birthTime">Birth Time (Required for accuracy)</label>
-                            <input type="time" id="birthTime">
-                            <div class="helper-text">Needed for precise Moon Sign calculation</div>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="birthPlace">Birth Place</label>
-                            <input type="text" id="birthPlace" placeholder="City, Country">
-                            <div class="helper-text">For future advanced calculations</div>
-                        </div>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="moonSign">Select Your Rising Sign (Ascendant)</label>
+                    <div class="input-group" style="background: rgba(251, 191, 36, 0.1); border: 2px solid rgba(251, 191, 36, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                        <label for="risingSign" style="color: #fbbf24; font-size: 1.1em;">Your Rising Sign (Ascendant)</label>
                         <select id="risingSign" required>
-                            <option value="">Choose your Moon Sign...</option>
+                            <option value="">Choose your Rising Sign...</option>
                             <option value="Aries">♈ Aries</option>
                             <option value="Taurus">♉ Taurus</option>
                             <option value="Gemini">♊ Gemini</option>
@@ -307,7 +300,11 @@
                             <option value="Aquarius">♒ Aquarius</option>
                             <option value="Pisces">♓ Pisces</option>
                         </select>
-                        <div class="helper-text">Don't know your Rising Sign? Use an online calculator with your birth time and location</div>
+                        <div class="helper-text" style="margin-top: 15px; font-size: 1.05em;">
+                            <strong>Don't know your Rising Sign?</strong><br>
+                            <a href="find-your-signs.html" target="_blank" style="color: #fbbf24; text-decoration: underline; font-weight: 600;">→ Click here to calculate it</a> using a free online calculator<br>
+                            <span style="opacity: 0.8; font-size: 0.95em;">You'll need your exact birth time and location</span>
+                        </div>
                     </div>
                 </div>
 
