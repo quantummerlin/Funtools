@@ -585,8 +585,11 @@
                 // Create astronomical time
                 const time = Astronomy.MakeTime(datetime);
                 
-                // Get Moon's equatorial coordinates
-                const moonEqu = Astronomy.Equator('Moon', time, null, true, false);
+                // Create observer at birth location (required for accurate calculation)
+                const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
+                
+                // Get Moon's equatorial coordinates from observer's perspective
+                const moonEqu = Astronomy.Equator('Moon', time, observer, true, true);
                 
                 // Calculate ecliptic longitude from equatorial coordinates
                 const ecliptic = Astronomy.Ecliptic(moonEqu.vec);
