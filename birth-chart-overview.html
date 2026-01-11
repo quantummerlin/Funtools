@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birth Chart Overview | Quantum Merlin</title>
+    <meta name="description" content="Generate your complete birth chart with all planetary placements and a comprehensive reading of your cosmic blueprint.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .input-section { margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+        }
+        .helper-text {
+            font-size: 0.85em;
+            color: #9A8F7A;
+            margin-top: 5px;
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            color: #0a0a0f;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.4);
+        }
+        button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-block;
+            color: #fbbf24;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .premium-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #fbbf24, #ec4899);
+            color: #0a0a0f;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="tools_index.html" class="back-link">← Back to Quantum Merlin Hub</a>
+        
+        <div class="header">
+            <h1>🌟 Birth Chart Overview <span class="premium-badge">PREMIUM</span></h1>
+            <p>Your complete cosmic blueprint — all planetary placements revealed</p>
+        </div>
+
+        <div class="tool-card">
+            <form onsubmit="calculateBirthChart(event)">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="preferredName">Your Name</label>
+                        <input type="text" id="preferredName" required placeholder="What should we call you?">
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="birthDate">Birth Date</label>
+                            <input type="date" id="birthDate" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime" required>
+                            <div class="helper-text">Local time at birth location (required for Rising Sign)</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth City</label>
+                            <input type="text" id="birthPlace" required placeholder="e.g., New York, USA">
+                            <div class="helper-text">City and country</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">🌟 Generate My Complete Birth Chart</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const signSymbols = {
+            'Aries': '♈', 'Taurus': '♉', 'Gemini': '♊', 'Cancer': '♋',
+            'Leo': '♌', 'Virgo': '♍', 'Libra': '♎', 'Scorpio': '♏',
+            'Sagittarius': '♐', 'Capricorn': '♑', 'Aquarius': '♒', 'Pisces': '♓'
+        };
+
+        const elements = {
+            'Aries': 'Fire', 'Leo': 'Fire', 'Sagittarius': 'Fire',
+            'Taurus': 'Earth', 'Virgo': 'Earth', 'Capricorn': 'Earth',
+            'Gemini': 'Air', 'Libra': 'Air', 'Aquarius': 'Air',
+            'Cancer': 'Water', 'Scorpio': 'Water', 'Pisces': 'Water'
+        };
+
+        const modalities = {
+            'Aries': 'Cardinal', 'Cancer': 'Cardinal', 'Libra': 'Cardinal', 'Capricorn': 'Cardinal',
+            'Taurus': 'Fixed', 'Leo': 'Fixed', 'Scorpio': 'Fixed', 'Aquarius': 'Fixed',
+            'Gemini': 'Mutable', 'Virgo': 'Mutable', 'Sagittarius': 'Mutable', 'Pisces': 'Mutable'
+        };
+
+        const planetMeanings = {
+            'Sun': { title: 'Core Identity', desc: 'Your essence, ego, and life force. What you are becoming.' },
+            'Moon': { title: 'Emotional Nature', desc: 'Your inner world, instincts, and emotional needs.' },
+            'Rising': { title: 'Outer Personality', desc: 'Your mask, first impressions, and approach to life.' },
+            'Mercury': { title: 'Mind & Communication', desc: 'How you think, learn, and express ideas.' },
+            'Venus': { title: 'Love & Beauty', desc: 'How you love, attract, and find pleasure.' },
+            'Mars': { title: 'Drive & Action', desc: 'How you assert yourself and pursue desires.' },
+            'Jupiter': { title: 'Growth & Luck', desc: 'How you expand, find meaning, and attract abundance.' },
+            'Saturn': { title: 'Discipline & Karma', desc: 'Your lessons, challenges, and path to mastery.' },
+            'Uranus': { title: 'Innovation & Freedom', desc: 'How you rebel, innovate, and seek liberation.' },
+            'Neptune': { title: 'Dreams & Spirituality', desc: 'Your imagination, ideals, and spiritual connection.' },
+            'Pluto': { title: 'Transformation & Power', desc: 'Your shadow work, regeneration, and deep power.' }
+        };
+
+        const signInterpretations = {
+            'Sun': {
+                'Aries': 'You are a pioneer and initiator, driven to lead and blaze new trails.',
+                'Taurus': 'You are grounded and steadfast, building value through patience.',
+                'Gemini': 'You are curious and adaptable, exploring life through ideas and connections.',
+                'Cancer': 'You are nurturing and intuitive, creating security through emotional bonds.',
+                'Leo': 'You are creative and expressive, radiating warmth and seeking recognition.',
+                'Virgo': 'You are analytical and service-oriented, perfecting through practical effort.',
+                'Libra': 'You are harmonious and diplomatic, seeking balance through relationship.',
+                'Scorpio': 'You are intense and transformative, seeking truth beneath surfaces.',
+                'Sagittarius': 'You are adventurous and philosophical, expanding through exploration.',
+                'Capricorn': 'You are ambitious and disciplined, building achievement over time.',
+                'Aquarius': 'You are innovative and independent, serving humanity through originality.',
+                'Pisces': 'You are compassionate and imaginative, dissolving boundaries through empathy.'
+            },
+            'Moon': {
+                'Aries': 'Your emotions are quick and fiery. You need independence and action to feel secure.',
+                'Taurus': 'Your emotions are steady and sensual. You need physical comfort and stability.',
+                'Gemini': 'Your emotions are changeable and curious. You need mental stimulation and variety.',
+                'Cancer': 'Your emotions are deep and nurturing. You need family and belonging.',
+                'Leo': 'Your emotions are warm and dramatic. You need appreciation and creative expression.',
+                'Virgo': 'Your emotions are practical and helpful. You need order and usefulness.',
+                'Libra': 'Your emotions are harmonious and partnership-oriented. You need beauty and balance.',
+                'Scorpio': 'Your emotions are intense and transformative. You need depth and privacy.',
+                'Sagittarius': 'Your emotions are optimistic and freedom-loving. You need adventure and meaning.',
+                'Capricorn': 'Your emotions are controlled and achievement-oriented. You need accomplishment.',
+                'Aquarius': 'Your emotions are detached and humanitarian. You need freedom and friendship.',
+                'Pisces': 'Your emotions are sensitive and boundless. You need spiritual connection and fantasy.'
+            },
+            'Rising': {
+                'Aries': 'You appear bold and direct. You approach life as a warrior, ready for action.',
+                'Taurus': 'You appear calm and grounded. You approach life slowly, valuing comfort.',
+                'Gemini': 'You appear curious and talkative. You approach life through communication.',
+                'Cancer': 'You appear nurturing and protective. You approach life through feeling.',
+                'Leo': 'You appear confident and charismatic. You approach life as a performance.',
+                'Virgo': 'You appear modest and analytical. You approach life through helpfulness.',
+                'Libra': 'You appear charming and diplomatic. You approach life through relationship.',
+                'Scorpio': 'You appear intense and mysterious. You approach life through investigation.',
+                'Sagittarius': 'You appear enthusiastic and philosophical. You approach life as an adventure.',
+                'Capricorn': 'You appear serious and capable. You approach life through achievement.',
+                'Aquarius': 'You appear unique and detached. You approach life as an experiment.',
+                'Pisces': 'You appear dreamy and compassionate. You approach life through imagination.'
+            }
+        };
+
+        async function calculateBirthChart(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '🌟 Calculating all planetary positions...';
+            submitBtn.disabled = true;
+
+            try {
+                const coords = await geocodeLocation(birthPlace);
+                const chart = calculateAllPlacements(birthDate, birthTime, coords);
+                showResult(name, chart, birthPlace);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function geocodeLocation(location) {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`;
+            const response = await fetch(url, { headers: { 'User-Agent': 'QuantumMerlinTools/1.0' } });
+            if (!response.ok) throw new Error('Failed to look up location');
+            const data = await response.json();
+            if (data.length === 0) throw new Error('Location not found');
+            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+        }
+
+        function calculateAllPlacements(dateStr, timeStr, coords) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const tzOffsetHours = Math.round(coords.lon / 15);
+            const utcHours = hours - tzOffsetHours;
+            const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+            const time = Astronomy.MakeTime(datetime);
+            
+            const planets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
+            const chart = {};
+            
+            planets.forEach(planet => {
+                const equ = Astronomy.Equator(planet, time, null, true, false);
+                const ecliptic = Astronomy.Ecliptic(equ.vec);
+                let lon = ecliptic.elon;
+                while (lon < 0) lon += 360;
+                while (lon >= 360) lon -= 360;
+                const signIndex = Math.floor(lon / 30);
+                const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                              'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+                chart[planet] = signs[signIndex];
+            });
+            
+            // Calculate Rising Sign (Ascendant)
+            const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
+            const localSiderealTime = Astronomy.SiderealTime(time);
+            const lst = (localSiderealTime + coords.lon / 15) % 24;
+            const lstDegrees = lst * 15;
+            const latRad = coords.lat * Math.PI / 180;
+            const obliquity = 23.4393;
+            const oblRad = obliquity * Math.PI / 180;
+            const ascRad = Math.atan2(
+                Math.cos(lstDegrees * Math.PI / 180),
+                -(Math.sin(lstDegrees * Math.PI / 180) * Math.cos(oblRad) + Math.tan(latRad) * Math.sin(oblRad))
+            );
+            let ascDegrees = ascRad * 180 / Math.PI;
+            if (ascDegrees < 0) ascDegrees += 360;
+            const risingIndex = Math.floor(ascDegrees / 30);
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+            chart['Rising'] = signs[risingIndex];
+            
+            return chart;
+        }
+
+        function analyzeChart(chart) {
+            // Count elements
+            const elementCounts = { Fire: 0, Earth: 0, Air: 0, Water: 0 };
+            const modalityCounts = { Cardinal: 0, Fixed: 0, Mutable: 0 };
+            
+            Object.values(chart).forEach(sign => {
+                elementCounts[elements[sign]]++;
+                modalityCounts[modalities[sign]]++;
+            });
+            
+            const dominantElement = Object.entries(elementCounts).sort((a, b) => b[1] - a[1])[0];
+            const dominantModality = Object.entries(modalityCounts).sort((a, b) => b[1] - a[1])[0];
+            
+            return { elementCounts, modalityCounts, dominantElement, dominantModality };
+        }
+
+        function showResult(name, chart, location) {
+            const analysis = analyzeChart(chart);
+            
+            // Build the chart display
+            let chartHTML = `
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="font-family: 'Cinzel', serif; font-size: 1.2em; color: #fbbf24; margin-bottom: 10px;">
+                        Birth Chart for ${name}
+                    </div>
+                    <div style="color: #9A8F7A; font-size: 0.95em;">
+                        ${location}
+                    </div>
+                </div>
+            `;
+            
+            // Planetary placements table
+            chartHTML += `
+                <div style="background: rgba(10, 10, 15, 0.5); border-radius: 15px; padding: 25px; margin-bottom: 30px;">
+                    <h3 style="font-family: 'Cinzel', serif; color: #06b6d4; text-align: center; margin-bottom: 20px;">
+                        ✨ Your Planetary Placements ✨
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+            `;
+            
+            const planetOrder = ['Sun', 'Moon', 'Rising', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
+            const planetEmoji = {
+                'Sun': '☀️', 'Moon': '🌙', 'Rising': '⬆️', 'Mercury': '☿️', 'Venus': '💕',
+                'Mars': '🔥', 'Jupiter': '♃', 'Saturn': '♄', 'Uranus': '♅', 'Neptune': '♆', 'Pluto': '♇'
+            };
+            
+            planetOrder.forEach(planet => {
+                const sign = chart[planet];
+                const meaning = planetMeanings[planet];
+                chartHTML += `
+                    <div style="background: rgba(251, 191, 36, 0.05); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 10px; padding: 15px;">
+                        <div style="font-family: 'Cinzel', serif; color: #fbbf24; font-size: 1.1em; margin-bottom: 5px;">
+                            ${planetEmoji[planet]} ${planet} in ${sign} ${signSymbols[sign]}
+                        </div>
+                        <div style="color: #06b6d4; font-size: 0.9em; font-weight: 600;">
+                            ${meaning.title}
+                        </div>
+                        <div style="color: #9A8F7A; font-size: 0.85em; margin-top: 5px;">
+                            ${meaning.desc}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            chartHTML += `</div></div>`;
+            
+            // Element & Modality Analysis
+            chartHTML += `
+                <div style="background: rgba(10, 10, 15, 0.5); border-radius: 15px; padding: 25px; margin-bottom: 30px;">
+                    <h3 style="font-family: 'Cinzel', serif; color: #ec4899; text-align: center; margin-bottom: 20px;">
+                        🔮 Chart Analysis 🔮
+                    </h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4 style="color: #fbbf24; margin-bottom: 10px;">Elemental Balance</h4>
+                            <div style="color: #e0e0e0;">
+                                🔥 Fire: ${analysis.elementCounts.Fire} placements<br>
+                                🌍 Earth: ${analysis.elementCounts.Earth} placements<br>
+                                💨 Air: ${analysis.elementCounts.Air} placements<br>
+                                🌊 Water: ${analysis.elementCounts.Water} placements
+                            </div>
+                            <div style="color: #06b6d4; margin-top: 10px; font-style: italic;">
+                                Dominant: ${analysis.dominantElement[0]} (${analysis.dominantElement[1]} placements)
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="color: #fbbf24; margin-bottom: 10px;">Modal Balance</h4>
+                            <div style="color: #e0e0e0;">
+                                ⚡ Cardinal: ${analysis.modalityCounts.Cardinal} placements<br>
+                                🏔️ Fixed: ${analysis.modalityCounts.Fixed} placements<br>
+                                🌀 Mutable: ${analysis.modalityCounts.Mutable} placements
+                            </div>
+                            <div style="color: #06b6d4; margin-top: 10px; font-style: italic;">
+                                Dominant: ${analysis.dominantModality[0]} (${analysis.dominantModality[1]} placements)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // The Big Three interpretation
+            chartHTML += `
+                <div style="background: rgba(10, 10, 15, 0.5); border-radius: 15px; padding: 25px; margin-bottom: 30px;">
+                    <h3 style="font-family: 'Cinzel', serif; color: #fbbf24; text-align: center; margin-bottom: 20px;">
+                        👑 Your Big Three 👑
+                    </h3>
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #fbbf24;">☀️ Sun in ${chart.Sun}</h4>
+                        <p>${signInterpretations.Sun[chart.Sun]}</p>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #06b6d4;">🌙 Moon in ${chart.Moon}</h4>
+                        <p>${signInterpretations.Moon[chart.Moon]}</p>
+                    </div>
+                    <div>
+                        <h4 style="color: #ec4899;">⬆️ Rising in ${chart.Rising}</h4>
+                        <p>${signInterpretations.Rising[chart.Rising]}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Synthesis
+            const elementDescriptions = {
+                'Fire': 'You lead with passion, enthusiasm, and courageous action. Your chart burns with initiative and creative fire.',
+                'Earth': 'You lead with practicality, stability, and material awareness. Your chart is grounded in tangible reality.',
+                'Air': 'You lead with intellect, communication, and social connection. Your chart moves through ideas and relationships.',
+                'Water': 'You lead with emotion, intuition, and depth. Your chart flows through feeling and imagination.'
+            };
+            
+            const modalityDescriptions = {
+                'Cardinal': 'You are an initiator who starts things, leads the way, and creates new directions.',
+                'Fixed': 'You are a stabilizer who maintains, persists, and holds the center with determination.',
+                'Mutable': 'You are an adapter who changes, adjusts, and flows between possibilities.'
+            };
+            
+            chartHTML += `
+                <div style="background: rgba(10, 10, 15, 0.5); border-radius: 15px; padding: 25px;">
+                    <h3 style="font-family: 'Cinzel', serif; color: #06b6d4; text-align: center; margin-bottom: 20px;">
+                        🌌 Putting It All Together 🌌
+                    </h3>
+                    <p>${name}, your chart reveals a ${analysis.dominantElement[0]}-dominant, ${analysis.dominantModality[0]} nature.</p>
+                    <p>${elementDescriptions[analysis.dominantElement[0]]}</p>
+                    <p>${modalityDescriptions[analysis.dominantModality[0]]}</p>
+                    <p>Your Sun in ${chart.Sun} gives you your core identity and life direction. Your Moon in ${chart.Moon} reveals your emotional needs and inner world. Your Rising in ${chart.Rising} shapes how the world sees you and how you approach new situations.</p>
+                    <p style="margin-top: 20px; color: #fbbf24; font-style: italic; text-align: center;">
+                        This is your cosmic blueprint—the unique pattern of energies you were born to embody and express. Use this self-knowledge to live more authentically and navigate life with greater awareness.
+                    </p>
+                </div>
+            `;
+
+            const readingData = {
+                toolType: 'birthchart',
+                headerTitle: '🌟 Your Complete Birth Chart',
+                headerSubtitle: 'Your cosmic blueprint revealed',
+                number: '',
+                title: `${name}'s Birth Chart`,
+                subtitle: `All 11 placements calculated and analyzed`,
+                content: chartHTML,
+                sourceUrl: 'birth-chart-overview.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            window.location.href = 'reading-loading.html';
+        }
+    </script>
+</body>
+</html>
