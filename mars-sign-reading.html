@@ -379,24 +379,21 @@ Your drive is: to CONNECT, to create, to heal, to dissolve boundaries between se
             try {
                 const [year, month, day] = dateStr.split('-').map(Number);
                 const [hours, minutes] = timeStr.split(':').map(Number);
-                const tzOffsetHours = Math.round(coords.lon / 15);
-                const utcHours = hours - tzOffsetHours;
-                const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+                
+                // Use solar time offset based on longitude
+                const solarTimeOffset = coords.lon / 15;
+                let utcHours = hours - solarTimeOffset;
+                let utcDay = day;
+                
+                // Handle hour overflow/underflow
+                while (utcHours < 0) { utcHours += 24; utcDay--; }
+                while (utcHours >= 24) { utcHours -= 24; utcDay++; }
+                
+                const datetime = new Date(Date.UTC(year, month - 1, utcDay, Math.floor(utcHours), minutes, 0));
                 const time = Astronomy.MakeTime(datetime);
                 
-                // Create observer at birth location
-                const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
-                
-                console.log('Calculating', planet, 'for', datetime.toISOString());
-                const equ = Astronomy.Equator(planet, time, observer, true, true);
-                if (!equ || !equ.vec) throw new Error('Failed to get equatorial coordinates');
-                
-                const ecliptic = Astronomy.Ecliptic(equ.vec);
-                if (!ecliptic) throw new Error('Failed to convert to ecliptic coordinates');
-                
-                let lon = ecliptic.elon;
-                while (lon < 0) lon += 360;
-                while (lon >= 360) lon -= 360;
+                // Use EclipticLongitude for accurate planetary position
+                const lon = Astronomy.EclipticLongitude(planet, time);
                 
                 const signIndex = Math.floor(lon / 30);
                 const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 

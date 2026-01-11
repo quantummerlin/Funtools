@@ -294,26 +294,34 @@
         function calculateAllPlacements(dateStr, timeStr, coords) {
             const [year, month, day] = dateStr.split('-').map(Number);
             const [hours, minutes] = timeStr.split(':').map(Number);
-            const tzOffsetHours = Math.round(coords.lon / 15);
-            const utcHours = hours - tzOffsetHours;
-            const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+            
+            // Use solar time offset based on longitude
+            const solarTimeOffset = coords.lon / 15;
+            let utcHours = hours - solarTimeOffset;
+            let utcDay = day;
+            
+            // Handle hour overflow/underflow
+            while (utcHours < 0) { utcHours += 24; utcDay--; }
+            while (utcHours >= 24) { utcHours -= 24; utcDay++; }
+            
+            const datetime = new Date(Date.UTC(year, month - 1, utcDay, Math.floor(utcHours), minutes, 0));
             const time = Astronomy.MakeTime(datetime);
             
-            // Create observer at birth location
-            const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
-            
             const planets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
             const chart = {};
             
             planets.forEach(planet => {
-                const equ = Astronomy.Equator(planet, time, observer, true, true);
-                const ecliptic = Astronomy.Ecliptic(equ.vec);
-                let lon = ecliptic.elon;
-                while (lon < 0) lon += 360;
-                while (lon >= 360) lon -= 360;
+                // Use EclipticLongitude for planets, EclipticGeoMoon for Moon
+                let lon;
+                if (planet === 'Moon') {
+                    const moonPos = Astronomy.EclipticGeoMoon(time);
+                    lon = moonPos.lon;
+                } else {
+                    lon = Astronomy.EclipticLongitude(planet, time);
+                }
                 const signIndex = Math.floor(lon / 30);
-                const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
-                              'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
                 chart[planet] = signs[signIndex];
             });
             
@@ -332,8 +340,6 @@
             let ascDegrees = ascRad * 180 / Math.PI;
             if (ascDegrees < 0) ascDegrees += 360;
             const risingIndex = Math.floor(ascDegrees / 30);
-            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
-                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
             chart['Rising'] = signs[risingIndex];
             
             return chart;

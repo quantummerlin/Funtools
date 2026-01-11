@@ -386,11 +386,9 @@
                 
                 // For historical dates, use solar time based on longitude
                 // Each 15 degrees of longitude = 1 hour offset from UTC
-                // This is more accurate than assuming modern timezone boundaries
                 const solarTimeOffset = coords.lon / 15;
                 
-                // Convert local solar time to UTC
-                // If born at 14:00 local solar time at lon 60°E (offset +4), that's 10:00 UTC
+                // Convert local time to UTC
                 let utcHours = hours - solarTimeOffset;
                 let utcMinutes = minutes;
                 let utcDay = day;
@@ -407,7 +405,7 @@
                     utcDay++;
                 }
                 
-                // Handle day overflow/underflow (simplified - doesn't handle month boundaries perfectly)
+                // Handle day overflow/underflow
                 const daysInMonth = new Date(utcYear, utcMonth, 0).getDate();
                 if (utcDay < 1) {
                     utcMonth--;
@@ -431,18 +429,14 @@
                 // Create astronomical time
                 const time = Astronomy.MakeTime(datetime);
                 
-                // Create observer at birth location
-                const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
+                // Use EclipticGeoMoon for accurate Moon position in ecliptic coordinates
+                // This gives the Moon's geocentric position in ecliptic longitude/latitude
+                const moonPos = Astronomy.EclipticGeoMoon(time);
                 
-                // Get Moon's equatorial coordinates from observer's perspective
-                const moonEqu = Astronomy.Equator('Moon', time, observer, true, true);
+                // moonPos.lon is the ecliptic longitude in degrees (0-360)
+                let lon = moonPos.lon;
                 
-                // Calculate ecliptic longitude from equatorial coordinates
-                const ecliptic = Astronomy.Ecliptic(moonEqu.vec);
-                
-                // Determine zodiac sign from ecliptic longitude (0-360 degrees)
-                // Normalize longitude to 0-360 range
-                let lon = ecliptic.elon;
+                // Normalize to 0-360 range (should already be, but just in case)
                 while (lon < 0) lon += 360;
                 while (lon >= 360) lon -= 360;
                 
@@ -451,12 +445,13 @@
                 const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
                               'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
                 
+                console.log(`=== Moon Sign Calculation ===`);
                 console.log(`Birth: ${dateStr} ${timeStr} at ${coords.name}`);
                 console.log(`Location: lat=${coords.lat.toFixed(4)}, lon=${coords.lon.toFixed(4)}`);
                 console.log(`Solar time offset: ${solarTimeOffset.toFixed(2)} hours`);
                 console.log(`UTC datetime: ${datetime.toISOString()}`);
                 console.log(`Moon ecliptic longitude: ${lon.toFixed(2)}°`);
-                console.log(`Moon sign: ${signs[signIndex]} (index ${signIndex})`);
+                console.log(`Moon sign: ${signs[signIndex]} (${signIndex * 30}°-${(signIndex + 1) * 30}°)`);
                 
                 return signs[signIndex];
             } catch (error) {
