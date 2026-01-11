@@ -603,6 +603,10 @@ button.submit-btn:active {
 
 /* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 768px) {
+    .tool-card {
+        padding: 20px !important;
+    }
+    
     .tool-card::before,
     .tool-card::after {
         width: 40px;
@@ -631,12 +635,25 @@ button.submit-btn:active {
     
     .tool-card {
         border-radius: 15px;
+        padding: 15px !important;
     }
     
     .tool-card::before,
     .tool-card::after {
         width: 30px;
         height: 30px;
+    }
+    
+    .input-group input,
+    .input-group select,
+    .input-group textarea {
+        padding: 12px !important;
+        font-size: 16px !important; /* Prevents iOS zoom on focus */
+    }
+    
+    .submit-btn {
+        padding: 14px !important;
+        font-size: 1.1em !important;
     }
     
     .share-buttons {
