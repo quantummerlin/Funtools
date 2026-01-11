@@ -587,11 +587,36 @@
                 alert('Profile deleted.');
             }
         }
-        
         // Load saved data from localStorage (cross-tool persistence)
-        // Update profile dropdown
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                if (document.getElementById('preferredName') && data.preferredName) {
+                    document.getElementById('preferredName').value = data.preferredName;
+                }
+                if (document.getElementById('birthName') && data.birthName) {
+                    document.getElementById('birthName').value = data.birthName;
+                }
+                if (document.getElementById('birthDate') && data.birthDate) {
+                    document.getElementById('birthDate').value = data.birthDate;
+                }
+                if (document.getElementById('birthTime') && data.birthTime) {
+                    document.getElementById('birthTime').value = data.birthTime;
+                }
+                if (document.getElementById('birthPlace') && data.birthPlace) {
+                    document.getElementById('birthPlace').value = data.birthPlace;
+                }
+            }
+            
+            // Update profile dropdown
             updateProfileDropdown();
         }
+
+
+        
+        
         
         // Attach auto-save to all input fields
         function setupAutoSave() {
