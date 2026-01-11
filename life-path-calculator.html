@@ -288,7 +288,7 @@
             border-color: #ec4899;
         }
     </style>
-    <script src="auto-fill.js"></script>
+    <script src="auto-fill.js?v=20260112"></script>
 </head>
 <body>
     <div class="container">
@@ -449,7 +449,8 @@
             return reduceToSingle(dayReduced + monthReduced + yearReduced);
         }
 
-        document.getElementById('toolForm').addEventListener('submit', function(e) {
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('toolForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const preferredName = document.getElementById('preferredName').value;
@@ -613,6 +614,7 @@
                 window.location.href = 'reading-loading.html?data=' + encodedData;
             }
         });
+        }); // End DOMContentLoaded
         
     </script>
 </body>
