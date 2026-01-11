@@ -54,15 +54,50 @@
             font-style: italic;
         }
         
-        /* Ad space at top */
-        .ad-space-top {
-            background: rgba(20, 20, 30, 0.5);
-            border: 1px solid rgba(191, 90, 242, 0.3);
+        /* Ad space styles */
+        .ad-space-top,
+        .ad-space-middle,
+        .ad-space-bottom {
+            background: rgba(20, 20, 30, 0.6);
+            border: 1px dashed rgba(191, 90, 242, 0.4);
             border-radius: 12px;
-            padding: 20px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .ad-space-top {
             margin-bottom: 30px;
             min-height: 90px;
-            text-align: center;
+        }
+        
+        .ad-title {
+            font-family: 'Cinzel', serif;
+            color: #bf5af2;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        .ad-text {
+            color: #9A8F7A;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+        
+        .ad-cta {
+            display: inline-block;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, rgba(191, 90, 242, 0.3), rgba(6, 182, 212, 0.3));
+            border: 1px solid rgba(191, 90, 242, 0.5);
+            border-radius: 20px;
+            color: #E8E4D9;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .ad-cta:hover {
+            background: linear-gradient(135deg, rgba(191, 90, 242, 0.5), rgba(6, 182, 212, 0.5));
+            transform: translateY(-2px);
         }
         
         .result-card {
@@ -132,13 +167,8 @@
         
         /* Ad space in middle of content */
         .ad-space-middle {
-            background: rgba(20, 20, 30, 0.5);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 12px;
-            padding: 20px;
             margin: 30px 0;
-            min-height: 250px;
-            text-align: center;
+            min-height: 200px;
         }
         
         /* Share section */
@@ -228,13 +258,8 @@
         
         /* Ad space at bottom */
         .ad-space-bottom {
-            background: rgba(20, 20, 30, 0.5);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 12px;
-            padding: 20px;
             margin-top: 30px;
-            min-height: 250px;
-            text-align: center;
+            min-height: 200px;
         }
         
         /* Action buttons */
@@ -304,7 +329,9 @@
         
         <!-- Top Ad Space -->
         <div class="ad-space-top">
-            <!-- Insert ad code here -->
+            <div class="ad-title">📣 Your Ad Could Be Here</div>
+            <p class="ad-text">Reach our engaged, spiritually-minded audience</p>
+            <a href="advertise.html" class="ad-cta">Advertise With Us →</a>
         </div>
         
         <div class="result-card">
@@ -320,7 +347,9 @@
             
             <!-- Middle Ad Space -->
             <div class="ad-space-middle">
-                <!-- Insert ad code here -->
+                <div class="ad-title">✨ Premium Ad Placement</div>
+                <p class="ad-text">Users are deeply engaged here — perfect for your message</p>
+                <a href="advertise.html" class="ad-cta">Learn About Advertising →</a>
             </div>
             
             <!-- Share Section -->
@@ -350,7 +379,9 @@
         
         <!-- Bottom Ad Space -->
         <div class="ad-space-bottom">
-            <!-- Insert ad code here -->
+            <div class="ad-title">🌟 Interested in This Ad Space?</div>
+            <p class="ad-text">Connect with users as they discover related content</p>
+            <a href="advertise.html" class="ad-cta">Submit Your Interest →</a>
         </div>
     </div>
     
@@ -384,25 +415,25 @@
                 { url: 'name-number-calculator.html', title: '📝 Name Number', desc: 'Complete name analysis' },
                 { url: 'life-path-calculator.html', title: '🔮 Life Path', desc: 'Your soul\'s journey' }
             ],
-            'name-number': [
-                { url: 'destiny-number-calculator.html', title: '🌟 Destiny Number', desc: 'Your life mission' },
-                { url: 'soul-urge-calculator.html', title: '💫 Soul Urge', desc: 'Your heart\'s desire' },
-                { url: 'personality-number-calculator.html', title: '✨ Personality', desc: 'How others see you' }
-            ],
             'birthday': [
                 { url: 'life-path-calculator.html', title: '🔮 Life Path Number', desc: 'Your soul\'s purpose' },
                 { url: 'personal-year-reading.html', title: '📅 Personal Year', desc: 'This year\'s theme' },
                 { url: 'master-number-reading.html', title: '👑 Master Numbers', desc: 'Your spiritual gifts' }
             ],
-            'moon-sign': [
+            'moon': [
                 { url: 'rising-sign-reading.html', title: '🌅 Rising Sign', desc: 'Your outer personality' },
                 { url: 'zodiac-calculator.html', title: '⭐ Sun Sign', desc: 'Your core identity' },
                 { url: 'element-calculator.html', title: '🔥 Element Sign', desc: 'Your elemental nature' }
             ],
-            'rising-sign': [
+            'rising': [
                 { url: 'moon-sign-reading.html', title: '🌙 Moon Sign', desc: 'Your emotional nature' },
                 { url: 'zodiac-calculator.html', title: '⭐ Sun Sign', desc: 'Your core identity' },
                 { url: 'chinese-zodiac-calculator.html', title: '🐉 Chinese Zodiac', desc: 'Eastern wisdom' }
+            ],
+            'name': [
+                { url: 'destiny-number-calculator.html', title: '🌟 Destiny Number', desc: 'Your life mission' },
+                { url: 'soul-urge-calculator.html', title: '💫 Soul Urge', desc: 'Your heart\'s desire' },
+                { url: 'personality-number-calculator.html', title: '✨ Personality', desc: 'How others see you' }
             ],
             'default': [
                 { url: 'life-path-calculator.html', title: '🔮 Life Path Number', desc: 'Your soul\'s purpose' },

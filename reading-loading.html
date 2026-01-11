@@ -198,16 +198,42 @@
         /* Ad placeholder */
         .ad-space {
             margin-top: 50px;
-            padding: 20px;
-            background: rgba(20, 20, 30, 0.5);
-            border: 1px solid rgba(191, 90, 242, 0.3);
+            padding: 25px;
+            background: rgba(20, 20, 30, 0.6);
+            border: 1px dashed rgba(191, 90, 242, 0.4);
             border-radius: 12px;
             min-height: 100px;
+            text-align: center;
+        }
+        
+        .ad-space .ad-title {
+            font-family: 'Cinzel', serif;
+            color: #bf5af2;
+            font-size: 1rem;
+            margin-bottom: 8px;
         }
         
         .ad-space p {
             color: #9A8F7A;
             font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        
+        .ad-space .ad-cta {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, rgba(191, 90, 242, 0.3), rgba(6, 182, 212, 0.3));
+            border: 1px solid rgba(191, 90, 242, 0.5);
+            border-radius: 20px;
+            color: #E8E4D9;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        
+        .ad-space .ad-cta:hover {
+            background: linear-gradient(135deg, rgba(191, 90, 242, 0.5), rgba(6, 182, 212, 0.5));
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -236,7 +262,9 @@
         
         <!-- Ad Space -->
         <div class="ad-space">
-            <p><!-- Ad placeholder - insert ad code here --></p>
+            <div class="ad-title">📣 Advertising Space Available</div>
+            <p>Reach our engaged, spiritually-minded audience</p>
+            <a href="advertise.html" class="ad-cta">Learn More →</a>
         </div>
     </div>
     

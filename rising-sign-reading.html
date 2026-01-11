@@ -634,10 +634,21 @@
             const personalizedReading = interpretation.replace(/{preferredName}/g, name);
             const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
 
-            document.getElementById('result-title').textContent = `Rising Sign: ${risingSign} - ${name}`;
-            document.getElementById('result-content').innerHTML = paragraphs;
-            document.getElementById('result').classList.add('show');
-            document.getElementById('calculator-form').style.display = 'none';
+            // Store reading for the multi-page results flow
+            const readingData = {
+                toolType: 'rising',
+                headerTitle: '⭐ Your Rising Sign Reading',
+                headerSubtitle: 'Your outer personality revealed',
+                number: risingSign,
+                title: `Rising Sign: ${risingSign}`,
+                subtitle: `${name}, this is how the world sees you`,
+                content: paragraphs,
+                sourceUrl: 'rising-sign-reading.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            
+            // Redirect to mystical loading page
+            window.location.href = 'reading-loading.html';
         }
 
         // Profile Management

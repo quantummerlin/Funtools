@@ -613,10 +613,21 @@
             const personalizedReading = interpretation.replace(/{preferredName}/g, name);
             const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
 
-            document.getElementById('result-title').textContent = `Moon in ${moonSign}: ${name}`;
-            document.getElementById('result-content').innerHTML = paragraphs;
-            document.getElementById('result').classList.add('show');
-            document.getElementById('calculator-form').style.display = 'none';
+            // Store reading for the multi-page results flow
+            const readingData = {
+                toolType: 'moon',
+                headerTitle: '🌙 Your Moon Sign Reading',
+                headerSubtitle: 'Your emotional nature revealed',
+                number: moonSign,
+                title: `Moon in ${moonSign}`,
+                subtitle: `${name}, discover your emotional depths`,
+                content: paragraphs,
+                sourceUrl: 'moon-sign-reading.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            
+            // Redirect to mystical loading page
+            window.location.href = 'reading-loading.html';
         }
 
         // Profile Management
