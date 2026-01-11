@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midheaven Sign Reading | Your Life Purpose & Career Path</title>
+    <meta name="description" content="Discover your Midheaven sign and understand your true calling, career path, and public legacy">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2em;
+            color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .input-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(6, 182, 212, 0.2);
+        }
+        .input-section:last-of-type {
+            border-bottom: none;
+        }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .input-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #06b6d4;
+            font-size: 1.05em;
+        }
+        .helper-text {
+            font-size: 0.9em;
+            color: #9ca3af;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"] {
+            width: 100%;
+            padding: 15px;
+            background: rgba(10, 10, 20, 0.6);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 10px;
+            color: #e0e0e0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+        input:focus {
+            outline: none;
+            border-color: #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 10px;
+            color: #06b6d4;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+        }
+        .info-box {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .info-box h3 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Midheaven Sign Reading</h1>
+            <p>Discover your life purpose, career path, and public legacy</p>
+        </div>
+
+        <div class="tool-card">
+            <div class="info-box">
+                <h3>What is the Midheaven (MC)?</h3>
+                <p>Your Midheaven, or MC (Medium Coeli), is the highest point in your birth chart—literally the point in the sky directly overhead at your birth. It represents your life's calling, career path, public reputation, and the legacy you're meant to build. While your Rising Sign shows how you appear to others personally, your MC shows how you're meant to appear to the world professionally and what you're here to achieve.</p>
+            </div>
+
+            <form id="midheavenForm">
+                <div class="input-section">
+                    <div class="section-title">Personal Information</div>
+                    <div class="input-group">
+                        <label for="preferredName">Your Name</label>
+                        <input type="text" id="preferredName" placeholder="The name you resonate with" required>
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <div class="section-title">Birth Information</div>
+                    <div class="input-group">
+                        <label for="birthDate">Date of Birth</label>
+                        <input type="date" id="birthDate" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="birthTime">Time of Birth</label>
+                        <input type="time" id="birthTime" required>
+                        <div class="helper-text">Exact time is essential - MC changes every 4 minutes!</div>
+                    </div>
+                    <div class="input-group">
+                        <label for="birthPlace">Place of Birth</label>
+                        <input type="text" id="birthPlace" placeholder="City, Country" required>
+                        <div class="helper-text">Needed to calculate the MC position</div>
+                    </div>
+                </div>
+
+                <button type="submit">Reveal My Midheaven Sign & Life Purpose</button>
+            </form>
+        </div>
+        
+        <button class="back-btn" onclick="window.location.href='tools_index.html'">← Back to All Tools</button>
+    </div>
+    
+    <script>
+        const ZODIAC_SIGNS = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                             'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+
+        function getZodiacSign(eclipticLongitude) {
+            const signIndex = Math.floor(eclipticLongitude / 30);
+            const degrees = Math.floor(eclipticLongitude % 30);
+            const minutes = Math.floor((eclipticLongitude % 1) * 60);
+            return {
+                sign: ZODIAC_SIGNS[signIndex],
+                degrees: degrees,
+                minutes: minutes
+            };
+        }
+
+        async function geocodeLocation(locationString) {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationString)}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            if (data && data.length > 0) {
+                return {
+                    lat: parseFloat(data[0].lat),
+                    lon: parseFloat(data[0].lon)
+                };
+            }
+            throw new Error('Location not found');
+        }
+
+        document.getElementById('midheavenForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const preferredName = document.getElementById('preferredName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+            
+            try {
+                // Geocode location
+                const coords = await geocodeLocation(birthPlace);
+                
+                // Parse date and time
+                const [year, month, day] = birthDate.split('-').map(Number);
+                const [hours, minutes] = birthTime.split(':').map(Number);
+                
+                // Convert to UTC
+                const solarTimeOffset = coords.lon / 15;
+                let utcHours = hours - solarTimeOffset;
+                let utcDay = day;
+                
+                if (utcHours < 0) {
+                    utcHours += 24;
+                    utcDay -= 1;
+                } else if (utcHours >= 24) {
+                    utcHours -= 24;
+                    utcDay += 1;
+                }
+                
+                const time = Astronomy.MakeTime(year, month, utcDay, utcHours, minutes, 0);
+                
+                // Calculate houses (simplified - MC is approximately 90 degrees from Ascendant)
+                const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
+                const hourAngle = Astronomy.HourAngle('Sun', time, observer);
+                
+                // Calculate MC (Midheaven) - the cusp of the 10th house
+                // MC is the ecliptic longitude at the upper meridian
+                const lst = hourAngle.ra + Astronomy.SiderealTime(time);
+                const obliquity = 23.439292; // Mean obliquity of ecliptic
+                
+                // Convert LST to ecliptic longitude for MC
+                const lstRad = lst * 15 * Math.PI / 180;
+                const obliqRad = obliquity * Math.PI / 180;
+                const mcRad = Math.atan2(Math.sin(lstRad), Math.cos(lstRad) * Math.cos(obliqRad));
+                let mcLon = mcRad * 180 / Math.PI;
+                
+                if (mcLon < 0) mcLon += 360;
+                
+                const mcSign = getZodiacSign(mcLon);
+                
+                // Store reading data
+                const readingData = {
+                    toolType: 'midheaven',
+                    headerTitle: 'Your Midheaven Sign Reading',
+                    headerSubtitle: 'Your life purpose and public calling revealed',
+                    sign: mcSign.sign,
+                    degrees: mcSign.degrees,
+                    minutes: mcSign.minutes,
+                    name: preferredName,
+                    sourceUrl: 'midheaven-reading.html'
+                };
+                
+                sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+                window.location.href = 'reading-loading.html';
+                
+            } catch (error) {
+                alert('Error calculating Midheaven: ' + error.message + '\\n\\nPlease check your birth information and try again. Birth time must be accurate!');
+            }
+        });
+    </script>
+</body>
+</html>
