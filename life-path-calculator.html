@@ -598,26 +598,16 @@
                 <p><strong>Guidance for Your Journey:</strong> ${interpretation.advice}</p>
             `;
             
-            // Store reading for the multi-page results flow
-            const readingData = {
-                toolType: 'life-path',
-                headerTitle: 'Your Life Path Reading',
-                headerSubtitle: 'Your soul\\'s journey has been illuminated',
-                number: lifePathNumber,
-                title: `Life Path ${lifePathNumber}: ${interpretation.title}`,
-                subtitle: `${preferredName}, here is your personalized reading`,
-                content: resultContent,
-                sourceUrl: 'life-path-calculator.html'
-            };
-            // Try sessionStorage first, fallback to URL params for private browsing
-            try {
-                sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
-                window.location.href = 'reading-loading.html';
-            } catch (e) {
-                // Private browsing mode - pass data via URL
-                const encodedData = encodeURIComponent(JSON.stringify(readingData));
-                window.location.href = 'reading-loading.html?data=' + encodedData;
-            }
+            // Display results inline on the same page
+            document.getElementById('resultTitle').textContent = `Life Path ${lifePathNumber}: ${interpretation.title}`;
+            document.getElementById('resultSubtitle').textContent = `${preferredName}, here is your personalized reading`;
+            document.getElementById('resultContent').innerHTML = resultContent;
+            
+            // Show the result section and scroll to it
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
             return false;
         }
         
