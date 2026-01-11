@@ -677,10 +677,7 @@
             // Simplified version - add full interpretations for all numbers
             const interpretation = interpretations[nameNumber] || interpretations[1];
             
-            document.getElementById('resultTitle').innerHTML = `The Power of "${preferredName}"`;
-            document.getElementById('resultSubtitle').innerHTML = `Understanding your name's numerological vibration`;
-            
-            document.getElementById('resultContent').innerHTML = `
+            const resultContent = `
                 <p><span class="highlight">Name Number:</span> ${nameNumber} - ${interpretation.energy}</p>
                 <p>${interpretation.description}</p>
                 <p><strong>The Power This Name Gives You:</strong> ${interpretation.power}</p>
@@ -690,8 +687,21 @@
                 <p><strong>Guidance:</strong> ${interpretation.guidance}</p>
             `;
             
-            document.getElementById('result').classList.add('show');
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // Store reading for the multi-page results flow
+            const readingData = {
+                toolType: 'name',
+                headerTitle: '📜 Your Name Reading',
+                headerSubtitle: 'The power hidden in your name',
+                number: nameNumber,
+                title: `The Power of "${preferredName}"`,
+                subtitle: `Understanding your name's numerological vibration`,
+                content: resultContent,
+                sourceUrl: 'name-number-calculator.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            
+            // Redirect to mystical loading page
+            window.location.href = 'reading-loading.html';
         });
         
     </script>

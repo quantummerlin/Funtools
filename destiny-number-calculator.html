@@ -792,7 +792,7 @@
             document.getElementById('resultTitle').innerHTML = `Destiny ${destinyNumber}: ${interpretation.title}`;
             document.getElementById('resultSubtitle').innerHTML = `${preferredName}, this is your life's mission`;
             
-            document.getElementById('resultContent').innerHTML = `
+            const resultContent = `
                 <p><span class="highlight">Your Mission:</span> ${interpretation.mission}</p>
                 <p>${interpretation.description}</p>
                 <p><strong>Your Calling:</strong> ${interpretation.calling}</p>
@@ -802,8 +802,21 @@
                 <p><strong>Wisdom for Your Journey:</strong> ${interpretation.wisdom}</p>
             `;
             
-            document.getElementById('result').classList.add('show');
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // Store reading for the multi-page results flow
+            const readingData = {
+                toolType: 'destiny',
+                headerTitle: '🌟 Your Destiny Number Reading',
+                headerSubtitle: 'The cosmos has revealed your life mission',
+                number: destinyNumber,
+                title: `Destiny ${destinyNumber}: ${interpretation.title}`,
+                subtitle: `${preferredName}, this is your life\\'s mission`,
+                content: resultContent,
+                sourceUrl: 'destiny-number-calculator.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            
+            // Redirect to mystical loading page
+            window.location.href = 'reading-loading.html';
         });
         
     </script>

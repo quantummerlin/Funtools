@@ -776,10 +776,7 @@ Saved profiles:
             
             const interpretation = interpretations[soulUrge];
             
-            document.getElementById('resultTitle').innerHTML = `Soul Urge ${soulUrge}: ${interpretation.title}`;
-            document.getElementById('resultSubtitle').innerHTML = `${preferredName}, this is what your heart truly desires`;
-            
-            document.getElementById('resultContent').innerHTML = `
+            const resultContent = `
                 <p><span class="highlight">Your Heart's Desire:</span> ${interpretation.desire}</p>
                 <p>${interpretation.description}</p>
                 <p><strong>What Your Heart Longs For:</strong> ${interpretation.heart}</p>
@@ -789,8 +786,21 @@ Saved profiles:
                 <p><strong>Shadow to Watch For:</strong> ${interpretation.shadow}</p>
             `;
             
-            document.getElementById('result').classList.add('show');
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // Store reading for the multi-page results flow
+            const readingData = {
+                toolType: 'soul-urge',
+                headerTitle: '💫 Your Soul Urge Reading',
+                headerSubtitle: 'Your heart\\'s deepest desires revealed',
+                number: soulUrge,
+                title: `Soul Urge ${soulUrge}: ${interpretation.title}`,
+                subtitle: `${preferredName}, this is what your heart truly desires`,
+                content: resultContent,
+                sourceUrl: 'soul-urge-calculator.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            
+            // Redirect to mystical loading page
+            window.location.href = 'reading-loading.html';
         });
         
     </script>

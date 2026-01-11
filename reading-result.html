@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Your Reading | Quantum Merlin</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #E8E4D9;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1.5rem, 5vw, 2.8rem);
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        /* Ad space at top */
+        .ad-space-top {
+            background: rgba(20, 20, 30, 0.5);
+            border: 1px solid rgba(191, 90, 242, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            min-height: 90px;
+            text-align: center;
+        }
+        
+        .result-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            padding: clamp(25px, 5vw, 50px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid rgba(251, 191, 36, 0.3);
+        }
+        
+        .result-number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(3rem, 10vw, 5rem);
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            display: block;
+            margin-bottom: 10px;
+            text-shadow: 0 0 40px rgba(251, 191, 36, 0.3);
+        }
+        
+        .result-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            color: #fbbf24;
+            margin-bottom: 10px;
+        }
+        
+        .result-subtitle {
+            font-size: 1.1rem;
+            color: #06b6d4;
+            font-style: italic;
+        }
+        
+        .result-content {
+            font-size: 1.15rem;
+            line-height: 2;
+            color: #E8E4D9;
+        }
+        
+        .result-content p {
+            margin-bottom: 20px;
+        }
+        
+        .result-section {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(6, 182, 212, 0.2);
+        }
+        
+        .result-section h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: #bf5af2;
+            margin-bottom: 15px;
+        }
+        
+        /* Ad space in middle of content */
+        .ad-space-middle {
+            background: rgba(20, 20, 30, 0.5);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            min-height: 250px;
+            text-align: center;
+        }
+        
+        /* Share section */
+        .share-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(251, 191, 36, 0.2);
+            text-align: center;
+        }
+        
+        .share-section p {
+            color: #9A8F7A;
+            margin-bottom: 15px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .share-btn:hover {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: #06b6d4;
+            transform: translateY(-2px);
+        }
+        
+        /* Related readings */
+        .related-section {
+            margin-top: 40px;
+        }
+        
+        .related-section h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #fbbf24;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .related-card {
+            background: rgba(20, 20, 30, 0.6);
+            border: 1px solid rgba(191, 90, 242, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .related-card:hover {
+            transform: translateY(-5px);
+            border-color: #bf5af2;
+            box-shadow: 0 10px 30px rgba(191, 90, 242, 0.2);
+        }
+        
+        .related-card h4 {
+            font-family: 'Cinzel', serif;
+            color: #bf5af2;
+            margin-bottom: 10px;
+        }
+        
+        .related-card p {
+            color: #9A8F7A;
+            font-size: 0.95rem;
+        }
+        
+        /* Ad space at bottom */
+        .ad-space-bottom {
+            background: rgba(20, 20, 30, 0.5);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            min-height: 250px;
+            text-align: center;
+        }
+        
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .action-btn {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+        }
+        
+        .action-btn.secondary {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            color: #06b6d4;
+        }
+        
+        /* No result message */
+        .no-result {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .no-result h2 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            margin-bottom: 20px;
+        }
+        
+        .no-result p {
+            color: #9A8F7A;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .result-card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="headerTitle">✨ Your Reading</h1>
+            <p id="headerSubtitle">The cosmos has revealed your path</p>
+        </div>
+        
+        <!-- Top Ad Space -->
+        <div class="ad-space-top">
+            <!-- Insert ad code here -->
+        </div>
+        
+        <div class="result-card">
+            <div class="result-header">
+                <span class="result-number" id="resultNumber"></span>
+                <div class="result-title" id="resultTitle"></div>
+                <div class="result-subtitle" id="resultSubtitle"></div>
+            </div>
+            
+            <div class="result-content" id="resultContent">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            
+            <!-- Middle Ad Space -->
+            <div class="ad-space-middle">
+                <!-- Insert ad code here -->
+            </div>
+            
+            <!-- Share Section -->
+            <div class="share-section">
+                <p>Found this enlightening? Share your cosmic discovery:</p>
+                <div class="share-buttons">
+                    <a href="#" class="share-btn" onclick="shareOnTwitter(); return false;">🐦 Twitter</a>
+                    <a href="#" class="share-btn" onclick="shareOnFacebook(); return false;">📘 Facebook</a>
+                    <a href="#" class="share-btn" onclick="copyLink(); return false;">📋 Copy Link</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Related Readings -->
+        <div class="related-section">
+            <h3>🔮 Deepen Your Understanding</h3>
+            <div class="related-grid" id="relatedGrid">
+                <!-- Dynamic related tools -->
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="#" class="action-btn" id="tryAnotherBtn">✨ Try Another Reading</a>
+            <a href="tools_index.html" class="action-btn secondary">← Back to All Tools</a>
+        </div>
+        
+        <!-- Bottom Ad Space -->
+        <div class="ad-space-bottom">
+            <!-- Insert ad code here -->
+        </div>
+    </div>
+    
+    <!-- No Result Fallback (hidden by default) -->
+    <div class="container no-result" id="noResultSection" style="display: none;">
+        <h2>No Reading Found</h2>
+        <p>It seems the cosmic connection was interrupted. Let's try again.</p>
+        <a href="tools_index.html" class="action-btn">🔮 Browse All Tools</a>
+    </div>
+    
+    <script>
+        // Related tools data
+        const relatedTools = {
+            'life-path': [
+                { url: 'destiny-number-calculator.html', title: '🌟 Destiny Number', desc: 'Discover your life mission' },
+                { url: 'soul-urge-calculator.html', title: '💫 Soul Urge Number', desc: 'Uncover your heart\'s desire' },
+                { url: 'personality-number-calculator.html', title: '✨ Personality Number', desc: 'How others perceive you' }
+            ],
+            'destiny': [
+                { url: 'life-path-calculator.html', title: '🔮 Life Path Number', desc: 'Your soul\'s journey' },
+                { url: 'name-number-calculator.html', title: '📝 Name Number', desc: 'The power of your name' },
+                { url: 'karmic-debt-reading.html', title: '⚖️ Karmic Debt', desc: 'Past life lessons' }
+            ],
+            'soul-urge': [
+                { url: 'personality-number-calculator.html', title: '✨ Personality Number', desc: 'Your outer expression' },
+                { url: 'destiny-number-calculator.html', title: '🌟 Destiny Number', desc: 'Your life purpose' },
+                { url: 'maturity-number-reading.html', title: '🌅 Maturity Number', desc: 'Your future self' }
+            ],
+            'personality': [
+                { url: 'soul-urge-calculator.html', title: '💫 Soul Urge', desc: 'Your inner desires' },
+                { url: 'name-number-calculator.html', title: '📝 Name Number', desc: 'Complete name analysis' },
+                { url: 'life-path-calculator.html', title: '🔮 Life Path', desc: 'Your soul\'s journey' }
+            ],
+            'name-number': [
+                { url: 'destiny-number-calculator.html', title: '🌟 Destiny Number', desc: 'Your life mission' },
+                { url: 'soul-urge-calculator.html', title: '💫 Soul Urge', desc: 'Your heart\'s desire' },
+                { url: 'personality-number-calculator.html', title: '✨ Personality', desc: 'How others see you' }
+            ],
+            'birthday': [
+                { url: 'life-path-calculator.html', title: '🔮 Life Path Number', desc: 'Your soul\'s purpose' },
+                { url: 'personal-year-reading.html', title: '📅 Personal Year', desc: 'This year\'s theme' },
+                { url: 'master-number-reading.html', title: '👑 Master Numbers', desc: 'Your spiritual gifts' }
+            ],
+            'moon-sign': [
+                { url: 'rising-sign-reading.html', title: '🌅 Rising Sign', desc: 'Your outer personality' },
+                { url: 'zodiac-calculator.html', title: '⭐ Sun Sign', desc: 'Your core identity' },
+                { url: 'element-calculator.html', title: '🔥 Element Sign', desc: 'Your elemental nature' }
+            ],
+            'rising-sign': [
+                { url: 'moon-sign-reading.html', title: '🌙 Moon Sign', desc: 'Your emotional nature' },
+                { url: 'zodiac-calculator.html', title: '⭐ Sun Sign', desc: 'Your core identity' },
+                { url: 'chinese-zodiac-calculator.html', title: '🐉 Chinese Zodiac', desc: 'Eastern wisdom' }
+            ],
+            'default': [
+                { url: 'life-path-calculator.html', title: '🔮 Life Path Number', desc: 'Your soul\'s purpose' },
+                { url: 'moon-sign-reading.html', title: '🌙 Moon Sign', desc: 'Your emotional nature' },
+                { url: 'destiny-number-calculator.html', title: '🌟 Destiny Number', desc: 'Your life mission' }
+            ]
+        };
+        
+        // Load reading from sessionStorage
+        function loadReading() {
+            const readingData = sessionStorage.getItem('quantumMerlinReading');
+            
+            if (!readingData) {
+                // No reading found
+                document.querySelector('.container').style.display = 'none';
+                document.getElementById('noResultSection').style.display = 'block';
+                return;
+            }
+            
+            const reading = JSON.parse(readingData);
+            
+            // Update page title
+            document.title = `${reading.title} | Quantum Merlin`;
+            document.getElementById('pageTitle').textContent = `${reading.title} | Quantum Merlin`;
+            
+            // Update header
+            document.getElementById('headerTitle').textContent = reading.headerTitle || '✨ Your Reading';
+            document.getElementById('headerSubtitle').textContent = reading.headerSubtitle || 'The cosmos has revealed your path';
+            
+            // Update result
+            document.getElementById('resultNumber').textContent = reading.number || '';
+            document.getElementById('resultTitle').textContent = reading.title || '';
+            document.getElementById('resultSubtitle').textContent = reading.subtitle || '';
+            document.getElementById('resultContent').innerHTML = reading.content || '';
+            
+            // Hide number display if not applicable
+            if (!reading.number) {
+                document.getElementById('resultNumber').style.display = 'none';
+            }
+            
+            // Update "Try Another" button
+            document.getElementById('tryAnotherBtn').href = reading.sourceUrl || 'tools_index.html';
+            
+            // Load related tools
+            const toolType = reading.toolType || 'default';
+            const related = relatedTools[toolType] || relatedTools['default'];
+            const relatedGrid = document.getElementById('relatedGrid');
+            
+            relatedGrid.innerHTML = related.map(tool => `
+                <a href="${tool.url}" class="related-card">
+                    <h4>${tool.title}</h4>
+                    <p>${tool.desc}</p>
+                </a>
+            `).join('');
+        }
+        
+        // Share functions
+        function shareOnTwitter() {
+            const reading = JSON.parse(sessionStorage.getItem('quantumMerlinReading') || '{}');
+            const text = encodeURIComponent(`I just discovered my ${reading.title || 'cosmic reading'}! Get yours at Quantum Merlin:`);
+            const url = encodeURIComponent(reading.sourceUrl || window.location.origin);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+        
+        function shareOnFacebook() {
+            const reading = JSON.parse(sessionStorage.getItem('quantumMerlinReading') || '{}');
+            const url = encodeURIComponent(reading.sourceUrl || window.location.origin);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+        
+        function copyLink() {
+            const reading = JSON.parse(sessionStorage.getItem('quantumMerlinReading') || '{}');
+            const url = reading.sourceUrl || window.location.origin;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Link copied! Share the magic ✨');
+            });
+        }
+        
+        // Load on page ready
+        document.addEventListener('DOMContentLoaded', loadReading);
+    </script>
+</body>
+</html>

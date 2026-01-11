@@ -771,10 +771,7 @@
             
             const interpretation = interpretations[personalityNumber];
             
-            document.getElementById('resultTitle').innerHTML = `Personality ${personalityNumber}: ${interpretation.title}`;
-            document.getElementById('resultSubtitle').innerHTML = `${preferredName}, this is how the world sees you`;
-            
-            document.getElementById('resultContent').innerHTML = `
+            const resultContent = `
                 <p><span class="highlight">First Impression:</span> ${interpretation.impression}</p>
                 <p>${interpretation.description}</p>
                 <p><strong>How People See You:</strong> ${interpretation.firstImpression}</p>
@@ -784,8 +781,21 @@
                 <p><strong>Advice for Your Presentation:</strong> ${interpretation.advice}</p>
             `;
             
-            document.getElementById('result').classList.add('show');
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // Store reading for the multi-page results flow
+            const readingData = {
+                toolType: 'personality',
+                headerTitle: '✨ Your Personality Reading',
+                headerSubtitle: 'How the world perceives you',
+                number: personalityNumber,
+                title: `Personality ${personalityNumber}: ${interpretation.title}`,
+                subtitle: `${preferredName}, this is how the world sees you`,
+                content: resultContent,
+                sourceUrl: 'personality-number-calculator.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            
+            // Redirect to mystical loading page
+            window.location.href = 'reading-loading.html';
         });
         
     </script>

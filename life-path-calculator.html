@@ -789,10 +789,7 @@
             
             const interpretation = interpretations[lifePathNumber];
             
-            document.getElementById('resultTitle').innerHTML = `Life Path ${lifePathNumber}: ${interpretation.title}`;
-            document.getElementById('resultSubtitle').innerHTML = `${preferredName}, here is your personalized reading`;
-            
-            document.getElementById('resultContent').innerHTML = `
+            const resultContent = `
                 <p><span class="highlight">Core Traits:</span> ${interpretation.traits}</p>
                 <p>${interpretation.description}</p>
                 <p><strong>Your Core Nature:</strong> ${interpretation.core}</p>
@@ -802,8 +799,21 @@
                 <p><strong>Guidance for Your Journey:</strong> ${interpretation.advice}</p>
             `;
             
-            document.getElementById('result').classList.add('show');
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // Store reading for the multi-page results flow
+            const readingData = {
+                toolType: 'life-path',
+                headerTitle: '🔮 Your Life Path Reading',
+                headerSubtitle: 'Your soul\\'s journey has been illuminated',
+                number: lifePathNumber,
+                title: `Life Path ${lifePathNumber}: ${interpretation.title}`,
+                subtitle: `${preferredName}, here is your personalized reading`,
+                content: resultContent,
+                sourceUrl: 'life-path-calculator.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            
+            // Redirect to mystical loading page
+            window.location.href = 'reading-loading.html';
         });
         
     </script>
