@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercury Sign Calculator & Reading | Quantum Merlin</title>
+    <meta name="description" content="Calculate your Mercury Sign and discover how you think, communicate, and process information.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(34, 197, 94, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #22c55e 50%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #fbbf24;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .input-section { margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+        }
+        .helper-text {
+            font-size: 0.85em;
+            color: #9A8F7A;
+            margin-top: 5px;
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #fbbf24 0%, #22c55e 100%);
+            color: #0a0a0f;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.4);
+        }
+        button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-block;
+            color: #fbbf24;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="tools_index.html" class="back-link">← Back to Quantum Merlin Hub</a>
+        
+        <div class="header">
+            <h1>☿️ Mercury Sign Reading</h1>
+            <p>Discover how you think, communicate, and process the world</p>
+        </div>
+
+        <div class="tool-card">
+            <form onsubmit="calculateMercurySign(event)">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="preferredName">Your Name</label>
+                        <input type="text" id="preferredName" required placeholder="What should we call you?">
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="birthDate">Birth Date</label>
+                            <input type="date" id="birthDate" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime" required>
+                            <div class="helper-text">Local time at birth location</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth City</label>
+                            <input type="text" id="birthPlace" required placeholder="e.g., London, UK">
+                            <div class="helper-text">City and country</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">☿️ Calculate My Mercury Sign & Reading</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const interpretations = {
+            "Aries": `{preferredName}, your Mercury is in Aries, giving you a quick, direct, and pioneering mind. You think fast, speak boldly, and have little patience for lengthy explanations or beating around the bush.
+
+Your communication style is refreshingly direct. You say what you mean without diplomatic softening, which others appreciate for its honesty—even when it occasionally startles them. You'd rather offend with truth than comfort with evasion.
+
+You're a mental pioneer who loves new ideas. The first phase of any concept excites you most—brainstorming, initiating, breaking new ground. You get bored once the novelty wears off and details need handling.
+
+Your mind works competitively. Debates energize you; you love the mental sparring of argument. You're not afraid to defend unpopular positions and can think quickly under pressure.
+
+Learning happens best through action. You grasp concepts by doing, not by reading endless theory. Hands-on experience teaches you faster than any lecture.
+
+Decisions come quickly—sometimes too quickly. Your mental impulsiveness means you may speak before thinking or commit before considering consequences. You'd rather correct mistakes than deliberate endlessly.
+
+The shadow of Mercury in Aries is mental impatience and combativeness. You may interrupt others, dominate conversations, or dismiss ideas too quickly.
+
+Your mental gift is: INITIATING ideas, cutting through complexity, and speaking with courageous honesty.`,
+
+            "Taurus": `{preferredName}, your Mercury is in Taurus, giving you a deliberate, practical, and grounded mind. You think slowly but thoroughly, and once you've formed an opinion, you hold it with remarkable tenacity.
+
+Your communication style is measured and concrete. You speak in practical terms, preferring real-world examples to abstract theories. Your words have weight because you don't waste them on empty chatter.
+
+You're a sensory thinker who understands through experience. Concepts become real for you when you can see, touch, or apply them. Pure abstraction leaves you cold; practical application illuminates.
+
+Your mind values stability and resists rapid change. New ideas get tested against common sense before acceptance. You're not closed-minded, just methodical—you need time to integrate new information.
+
+Learning happens through repetition and application. You remember what you've practiced, built, or experienced physically. Your memory for sensory details is remarkable.
+
+Decisions take time, and you resist being rushed. You need to feel your way to conclusions, not just think them. Once decided, however, you're immovable.
+
+The shadow of Mercury in Taurus is mental stubbornness and resistance to new ideas. You may cling to outdated thinking simply because it's familiar.
+
+Your mental gift is: PRACTICAL wisdom, turning ideas into tangible reality, and reliable, grounded thinking.`,
+
+            "Gemini": `{preferredName}, your Mercury is in Gemini—its home sign—giving you a quick, versatile, and endlessly curious mind. You're a natural communicator who learns, thinks, and expresses with remarkable agility.
+
+Your communication style is lively and varied. You can talk to anyone about anything, adapting your language to your audience. You're witty, articulate, and never at a loss for words.
+
+You're a mental omnivore who devours information. Everything interests you—at least briefly. You read widely, learn quickly, and make surprising connections between disparate fields.
+
+Your mind loves variety and movement. Focusing on one thing for extended periods is challenging; you think better when juggling multiple projects and ideas simultaneously.
+
+Learning happens through conversation and exploration. You understand by discussing, questioning, and examining multiple perspectives. Teaching others solidifies your own knowledge.
+
+Decisions involve gathering information—sometimes too much. You may struggle with analysis paralysis or change your mind frequently as new data arrives.
+
+The shadow of Mercury in Gemini is superficiality and mental restlessness. You may know a little about everything but master nothing. You might gossip or use words carelessly.
+
+Your mental gift is: CONNECTING ideas, translating between different domains, and bringing intellectual lightness and curiosity to everything.`,
+
+            "Cancer": `{preferredName}, your Mercury is in Cancer, giving you an intuitive, emotional, and retentive mind. You think with your feelings, and your memory for emotional experiences is extraordinary.
+
+Your communication style is personal and nurturing. You connect information to feelings and relationships. When you speak, you create emotional resonance, making others feel understood.
+
+You're a subjective thinker who filters everything through personal experience. Impersonal, abstract logic doesn't convince you—you need to feel the truth of something before accepting it.
+
+Your mind is protective of what it holds. You guard your thoughts and opinions, sharing them only when you feel safe. With trusted others, you open up beautifully.
+
+Learning happens through emotional engagement. You remember what moved you, what connected to your personal story. Dry facts without emotional context fade quickly.
+
+Decisions are influenced by feelings and intuition more than pure logic. You know things without knowing how you know them. Trust your gut—it's remarkably accurate.
+
+The shadow of Mercury in Cancer is moodiness affecting thought and communication. Your thinking may become clouded by emotions, or you may struggle to separate feelings from facts.
+
+Your mental gift is: REMEMBERING deeply, communicating with emotional intelligence, and thinking that honors the personal and subjective.`,
+
+            "Leo": `{preferredName}, your Mercury is in Leo, giving you a confident, creative, and dramatic mind. You think in terms of self-expression, and your communication has natural flair and authority.
+
+Your communication style is warm and commanding. When you speak, you expect to be heard. You're a natural storyteller who makes information entertaining and memorable.
+
+You're a creative thinker who approaches problems with originality. Standard solutions bore you—you want to put your unique stamp on ideas. Your mind is drawn to creative expression.
+
+Your thoughts have pride attached. Your opinions matter to you, and criticism of your ideas can feel personal. You defend your mental positions with dignity.
+
+Learning happens through play and creative engagement. Dry instruction dulls your mind; make it a game or creative challenge and you excel.
+
+Decisions connect to your sense of identity and pride. You choose what feels authentic and expressive of who you are, not just what's logical.
+
+The shadow of Mercury in Leo is intellectual arrogance and inflexibility. You may become attached to being right, unable to admit error without feeling diminished.
+
+Your mental gift is: CREATING with ideas, communicating with confidence and warmth, and thinking that celebrates individuality.`,
+
+            "Virgo": `{preferredName}, your Mercury is in Virgo—its home sign and exaltation—giving you an analytical, precise, and practical mind. You notice details others miss and excel at organizing information.
+
+Your communication style is clear and exact. You choose words carefully, say precisely what you mean, and appreciate precision in others. Sloppy thinking or communication irritates you.
+
+You're an analytical thinker who naturally breaks things into components. You see how parts fit together, what's working and what's not, where improvement is needed.
+
+Your mind is service-oriented. You think about how to be useful, how to improve things, how to solve practical problems. Abstract philosophy interests you less than applicable knowledge.
+
+Learning happens through systematic study and practice. You're thorough, methodical, and willing to put in the work that mastery requires.
+
+Decisions involve careful analysis. You weigh pros and cons, consider practical implications, and prefer informed choices to impulsive ones.
+
+The shadow of Mercury in Virgo is over-criticism and mental anxiety. You may become paralyzed by perfectionism or constantly critique yourself and others.
+
+Your mental gift is: ANALYZING with precision, organizing complexity, and thinking that serves practical improvement.`,
+
+            "Libra": `{preferredName}, your Mercury is in Libra, giving you a balanced, diplomatic, and relationship-oriented mind. You think in terms of fairness, harmony, and how ideas affect others.
+
+Your communication style is gracious and balanced. You naturally present multiple perspectives, speak diplomatically, and create harmony in conversation.
+
+You're a relational thinker who considers how ideas connect to people. You're interested in others' viewpoints and seek mental harmony and agreement.
+
+Your mind values fairness and balance. You can see all sides of an issue, making you an excellent mediator but sometimes an indecisive decision-maker.
+
+Learning happens through discussion and partnership. You think better when you have someone to talk through ideas with. Collaborative learning suits you.
+
+Decisions are challenging because you see merit in multiple options. You may delay choosing to avoid conflict or regret. Deadlines help you commit.
+
+The shadow of Mercury in Libra is indecisiveness and people-pleasing in communication. You may say what others want to hear rather than what you truly think.
+
+Your mental gift is: HARMONIZING perspectives, communicating with grace and fairness, and thinking that honors relationships.`,
+
+            "Scorpio": `{preferredName}, your Mercury is in Scorpio, giving you a penetrating, investigative, and psychologically astute mind. You see beneath surfaces and are drawn to hidden truths.
+
+Your communication style is intense and probing. You ask the questions others avoid, speak with emotional depth, and have little tolerance for superficial chat.
+
+You're a detective thinker who investigates relentlessly. You won't rest until you've gotten to the bottom of things. Mysteries, psychology, and hidden motivations fascinate you.
+
+Your mind is private and strategic. You share your thoughts selectively, revealing only what serves your purposes. You think several moves ahead.
+
+Learning happens through deep immersion. You prefer to master one thing thoroughly than dabble in many. Depth over breadth is your path.
+
+Decisions involve intuition and strategic calculation. You trust your psychological insights and make choices that position you for power or protection.
+
+The shadow of Mercury in Scorpio is mental obsession and manipulation. You may become fixated on dark subjects or use your psychological insight to control others.
+
+Your mental gift is: PENETRATING to hidden truths, communicating with transformative depth, and thinking that unveils what's concealed.`,
+
+            "Sagittarius": `{preferredName}, your Mercury is in Sagittarius, giving you an expansive, philosophical, and truth-seeking mind. You think big, speak freely, and are always reaching for greater understanding.
+
+Your communication style is enthusiastic and direct. You share your opinions boldly, tell the truth as you see it, and inspire others with your vision and optimism.
+
+You're a philosophical thinker who seeks meaning. You're not satisfied with facts alone—you want to understand the big picture, the ultimate truth, the grand pattern.
+
+Your mind loves to roam. You think across cultures, belief systems, and disciplines. Travel—physical or mental—expands your perspective.
+
+Learning happens through exploration and meaning-making. You need to see the point of what you're learning, how it connects to larger truths.
+
+Decisions are made on principle. You choose based on what you believe is right, true, or meaningful, even when practical considerations suggest otherwise.
+
+The shadow of Mercury in Sagittarius is bluntness and dogmatism. You may speak without tact, or become so attached to your beliefs that you can't hear other perspectives.
+
+Your mental gift is: INSPIRING with ideas, seeking universal truth, and thinking that connects specifics to larger meaning.`,
+
+            "Capricorn": `{preferredName}, your Mercury is in Capricorn, giving you a disciplined, practical, and ambitious mind. You think strategically, communicate with authority, and value mental achievement.
+
+Your communication style is serious and measured. You speak with purpose, authority, and economy. Small talk bores you—you prefer substantial conversation.
+
+You're a structural thinker who builds mental frameworks. You understand hierarchies, systems, and how to work within them effectively.
+
+Your mind is goal-oriented. You think in terms of achievement, results, and practical application. Ideas interest you when they can be applied.
+
+Learning happens through discipline and application. You're willing to do the hard work that mastery requires and respect traditional educational structures.
+
+Decisions are practical and strategic. You consider long-term consequences, reputation, and real-world outcomes before committing.
+
+The shadow of Mercury in Capricorn is mental rigidity and pessimism. You may become too serious, dismissing imaginative or playful thinking as frivolous.
+
+Your mental gift is: STRUCTURING ideas into achievable plans, communicating with authority, and thinking that produces tangible results.`,
+
+            "Aquarius": `{preferredName}, your Mercury is in Aquarius, giving you an innovative, independent, and future-oriented mind. You think outside conventional boxes and are drawn to progressive ideas.
+
+Your communication style is unique and sometimes provocative. You express original viewpoints, challenge conventional thinking, and enjoy intellectual rebellion.
+
+You're a systems thinker who sees patterns and possibilities. You understand how things interconnect and can envision how they could work differently.
+
+Your mind values independence. You resist mental conformity and take pride in thinking for yourself, even when your views are unconventional or unpopular.
+
+Learning happens through experimentation and innovation. You grasp new technology quickly and enjoy subjects that push the boundaries of current understanding.
+
+Decisions are made objectively. You step back from personal involvement to consider what's logical, fair, or beneficial for the collective.
+
+The shadow of Mercury in Aquarius is mental detachment and contrarianism. You may become so focused on being different that you reject good ideas simply because they're mainstream.
+
+Your mental gift is: INNOVATING with ideas, thinking independently, and envisioning future possibilities that others can't see.`,
+
+            "Pisces": `{preferredName}, your Mercury is in Pisces, giving you an imaginative, intuitive, and poetic mind. You think in images, feelings, and impressions rather than linear logic.
+
+Your communication style is evocative and artistic. You speak in metaphor, suggestion, and story. You communicate best through creative expression.
+
+You're an intuitive thinker who absorbs information from the environment. You know things without knowing how you know them. Your hunches are often accurate.
+
+Your mind is porous and impressionable. You pick up on atmospheres, emotions, and subtle cues that others miss. This sensitivity is both gift and challenge.
+
+Learning happens through imagination and emotional connection. You need to feel or visualize concepts to grasp them. Pure logic without imagery leaves you cold.
+
+Decisions are guided by intuition and ideals. You may struggle with practical details but have remarkable insight into the right path forward.
+
+The shadow of Mercury in Pisces is mental confusion and escapism. You may have difficulty with linear thinking, facts, or distinguishing imagination from reality.
+
+Your mental gift is: IMAGINING possibilities, communicating with poetic depth, and thinking that transcends rational limitations.`
+        };
+
+        async function calculateMercurySign(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '☿️ Calculating Mercury position...';
+            submitBtn.disabled = true;
+
+            try {
+                const coords = await geocodeLocation(birthPlace);
+                const mercurySign = calculatePlanetPosition('Mercury', birthDate, birthTime, coords);
+                showResult(name, mercurySign);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function geocodeLocation(location) {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`;
+            const response = await fetch(url, { headers: { 'User-Agent': 'QuantumMerlinTools/1.0' } });
+            if (!response.ok) throw new Error('Failed to look up location');
+            const data = await response.json();
+            if (data.length === 0) throw new Error('Location not found');
+            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+        }
+
+        function calculatePlanetPosition(planet, dateStr, timeStr, coords) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const tzOffsetHours = Math.round(coords.lon / 15);
+            const utcHours = hours - tzOffsetHours;
+            const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+            const time = Astronomy.MakeTime(datetime);
+            
+            const equ = Astronomy.Equator(planet, time, null, true, false);
+            const ecliptic = Astronomy.Ecliptic(equ.vec);
+            
+            let lon = ecliptic.elon;
+            while (lon < 0) lon += 360;
+            while (lon >= 360) lon -= 360;
+            
+            const signIndex = Math.floor(lon / 30);
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+            
+            return signs[signIndex];
+        }
+
+        function showResult(name, mercurySign) {
+            const interpretation = interpretations[mercurySign];
+            const personalizedReading = interpretation.replace(/{preferredName}/g, name);
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            const readingData = {
+                toolType: 'mercury',
+                headerTitle: '☿️ Your Mercury Sign Reading',
+                headerSubtitle: 'Your mind, voice, and way of understanding',
+                number: mercurySign,
+                title: `Mercury in ${mercurySign}`,
+                subtitle: `${name}, this is how you think and communicate`,
+                content: paragraphs,
+                sourceUrl: 'mercury-sign-reading.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            window.location.href = 'reading-loading.html';
+        }
+    </script>
+</body>
+</html>

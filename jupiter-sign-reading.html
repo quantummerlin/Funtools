@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jupiter Sign Calculator & Reading | Quantum Merlin</title>
+    <meta name="description" content="Calculate your Jupiter Sign and discover how you attract luck, expand your life, and find meaning.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #fbbf24 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #8b5cf6;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .input-section { margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            color: #8b5cf6;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+        .helper-text {
+            font-size: 0.85em;
+            color: #9A8F7A;
+            margin-top: 5px;
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #fbbf24 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+        button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-block;
+            color: #8b5cf6;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="tools_index.html" class="back-link">← Back to Quantum Merlin Hub</a>
+        
+        <div class="header">
+            <h1>♃ Jupiter Sign Reading</h1>
+            <p>Discover how you attract luck, expand your horizons, and find abundance</p>
+        </div>
+
+        <div class="tool-card">
+            <form onsubmit="calculateJupiterSign(event)">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="preferredName">Your Name</label>
+                        <input type="text" id="preferredName" required placeholder="What should we call you?">
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="birthDate">Birth Date</label>
+                            <input type="date" id="birthDate" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime" required>
+                            <div class="helper-text">Local time at birth location</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth City</label>
+                            <input type="text" id="birthPlace" required placeholder="e.g., Paris, France">
+                            <div class="helper-text">City and country</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">♃ Calculate My Jupiter Sign & Reading</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const interpretations = {
+            "Aries": `{preferredName}, your Jupiter is in Aries, blessing you with luck through bold initiative, courage, and pioneering spirit. Fortune favors you when you take the first step, lead the charge, and trust your independent instincts.
+
+You attract abundance through action. While others plan and hesitate, you move—and the universe rewards your courage with opportunities that wouldn't appear to more cautious souls.
+
+Your philosophical outlook is optimistic and competitive. You believe that life rewards the brave, that fortune favors the bold, and that individuals can shape their own destiny through willpower and action.
+
+You expand through new beginnings. Each fresh start, each new venture, each leap into the unknown grows your soul. You're not meant for maintaining—you're meant for initiating.
+
+Your luck comes quickly and dramatically. When opportunities arrive, they arrive fast, requiring immediate action. You're blessed with the instinct to seize the moment.
+
+Teaching and inspiring others comes naturally through your example of courageous action. You don't preach—you demonstrate what's possible when someone is willing to take risks.
+
+The shadow of Jupiter in Aries is reckless overconfidence. You may take foolish risks, overestimate your abilities, or burn through opportunities without appreciating them.
+
+Your path to abundance: Lead boldly, start new things, be first, take action when others hesitate.`,
+
+            "Taurus": `{preferredName}, your Jupiter is in Taurus, blessing you with luck through patience, persistence, and building tangible value. Fortune favors you when you take your time, invest wisely, and trust the process of steady growth.
+
+You attract abundance through quality over speed. You build wealth slowly but surely, accumulating resources through patient effort rather than get-rich-quick schemes.
+
+Your philosophical outlook is grounded and pleasure-positive. You believe that life is meant to be enjoyed, that the physical world is good, and that abundance is a natural state when you're aligned with earth's rhythms.
+
+You expand through sensory experience and material security. Fine food, beautiful environments, financial stability—these aren't superficial pursuits but genuine spiritual paths for you.
+
+Your luck compounds over time. Unlike quick-hit fortune, your blessings grow steadily, building into significant abundance when you stay the course.
+
+Teaching and inspiring others happens through demonstrating the rewards of patience and quality. You show that sustainable abundance comes from doing things right, not fast.
+
+The shadow of Jupiter in Taurus is material excess and spiritual complacency. You may over-indulge, become greedy, or confuse physical comfort with spiritual growth.
+
+Your path to abundance: Build slowly, invest wisely, appreciate quality, trust in gradual but lasting growth.`,
+
+            "Gemini": `{preferredName}, your Jupiter is in Gemini, blessing you with luck through learning, communication, and intellectual versatility. Fortune favors you when you stay curious, share information, and make connections.
+
+You attract abundance through your mind and voice. Writing, speaking, teaching, networking—these are your wealth-generating activities. Your ideas have monetary value.
+
+Your philosophical outlook is eclectic and questioning. You believe truth comes from many sources, that learning never ends, and that the universe is endlessly fascinating.
+
+You expand through variety and information. Every new subject you explore, every conversation you have, every connection you make expands your world and opportunities.
+
+Your luck is scattered but frequent. Rather than one big jackpot, you experience many small fortunate events—chance meetings, timely information, serendipitous discoveries.
+
+Teaching and inspiring others is natural for you. You're gifted at translating complex ideas, connecting people with information they need, and making learning engaging.
+
+The shadow of Jupiter in Gemini is scattered energy and superficiality. You may spread yourself too thin, know a little about everything but master nothing, or talk more than you act.
+
+Your path to abundance: Stay curious, communicate freely, make connections, and monetize your ideas.`,
+
+            "Cancer": `{preferredName}, your Jupiter is in Cancer—its exalted sign—blessing you with extraordinary luck through nurturing, emotional intelligence, and creating belonging. Fortune favors you when you care for others.
+
+You attract abundance through emotional connection. Business that feels like family, work that nurtures, investments in home and security—these generate your greatest returns.
+
+Your philosophical outlook is protective and heart-centered. You believe that care creates growth, that security enables expansion, and that emotional bonds are the truest wealth.
+
+You expand through creating home and family—biological or chosen. Each person you bring into your circle, each space you make welcoming, expands your world.
+
+Your luck flows through family and homeland connections. Inheritance, family business, real estate, domestic industries—these favor you unusually.
+
+Teaching and inspiring others happens through nurturing their potential. You grow people like gardens, creating conditions where they can flourish.
+
+The shadow of Jupiter in Cancer is clannishness and smothering. You may over-protect, expand your family's interests at others' expense, or use care as control.
+
+Your path to abundance: Nurture others, invest in home and family, trust your emotional instincts, create belonging.`,
+
+            "Leo": `{preferredName}, your Jupiter is in Leo, blessing you with luck through creativity, self-expression, and generous spirit. Fortune favors you when you shine brightly, take center stage, and give abundantly.
+
+You attract abundance through being yourself magnificently. Your personality, creativity, and charisma are wealth-generating forces. When you express fully, opportunities find you.
+
+Your philosophical outlook is confident and heart-based. You believe in the power of individual expression, the importance of joy, and that life is meant to be celebrated.
+
+You expand through creative expression and recognition. Fame, applause, artistic achievement—these aren't ego trips but genuine paths of growth for you.
+
+Your luck comes through being noticed. The more visible you are, the more opportunities find you. Hiding your light diminishes your fortune.
+
+Teaching and inspiring others happens through modeling joy and creative courage. You give others permission to shine by shining yourself.
+
+The shadow of Jupiter in Leo is ego inflation and drama addiction. You may become arrogant, demand constant attention, or believe your own hype excessively.
+
+Your path to abundance: Express yourself boldly, create joyfully, be generous, let yourself be seen and celebrated.`,
+
+            "Virgo": `{preferredName}, your Jupiter is in Virgo, blessing you with luck through service, skill refinement, and practical improvement. Fortune favors you when you're useful, detailed, and dedicated to excellence.
+
+You attract abundance through competence. Your skills, your attention to detail, your ability to solve practical problems—these generate wealth and opportunity.
+
+Your philosophical outlook is practical and improvement-oriented. You believe that small improvements compound into great changes, that service is meaningful, and that craft matters.
+
+You expand through refining your abilities and being of service. Each skill you master, each person you help, each system you improve expands your world.
+
+Your luck comes through work. Unlike signs blessed with effortless fortune, your abundance flows from dedication and effort—but the returns on that effort are unusually high.
+
+Teaching and inspiring others happens through practical instruction and patient improvement. You help people become more competent and capable.
+
+The shadow of Jupiter in Virgo is excessive criticism and missing the forest for trees. You may become so focused on perfecting details that you miss larger opportunities.
+
+Your path to abundance: Develop expertise, be genuinely useful, pay attention to details, serve with excellence.`,
+
+            "Libra": `{preferredName}, your Jupiter is in Libra, blessing you with luck through partnerships, fairness, and creating harmony. Fortune favors you when you collaborate, balance, and beautify.
+
+You attract abundance through relationships. Your partnerships—business and personal—are wealth-generating. You prosper more through collaboration than solo effort.
+
+Your philosophical outlook is justice-oriented and aesthetic. You believe in fairness, the power of beauty, and that harmony creates conditions for growth.
+
+You expand through partnership and creating balance. Each significant relationship, each beautiful environment you create, each injustice you help correct expands your world.
+
+Your luck doubles through others. The right partner dramatically amplifies your fortune. Marriage and business partnership are particularly blessed for you.
+
+Teaching and inspiring others happens through modeling fairness and creating beautiful experiences. You help people appreciate balance and beauty.
+
+The shadow of Jupiter in Libra is codependency and indecision. You may rely too heavily on partners, avoid necessary conflict, or never commit because you're waiting for the perfect option.
+
+Your path to abundance: Partner wisely, create beauty, pursue fairness, collaborate rather than compete.`,
+
+            "Scorpio": `{preferredName}, your Jupiter is in Scorpio, blessing you with luck through depth, transformation, and accessing hidden resources. Fortune favors you when you dive deep, transform fully, and work with power.
+
+You attract abundance through transformation and shared resources. Inheritance, investment, other people's money, research, psychology—these generate your greatest returns.
+
+Your philosophical outlook is depth-oriented and transformative. You believe that real growth requires death and rebirth, that power must be confronted, and that truth lies beneath surfaces.
+
+You expand through crisis and transformation. What destroys others strengthens you. Each significant ending opens doors to greater beginnings.
+
+Your luck is hidden but substantial. Like underground rivers, your fortune flows invisibly until it surfaces dramatically. Trust processes you can't see.
+
+Teaching and inspiring others happens through facilitating transformation. You help people face their shadows and emerge more powerful.
+
+The shadow of Jupiter in Scorpio is power obsession and manipulation. You may become fixated on control, use psychological insight for personal gain, or attract fortune through questionable means.
+
+Your path to abundance: Transform fully, work with other people's resources, go deep, embrace endings as beginnings.`,
+
+            "Sagittarius": `{preferredName}, your Jupiter is in Sagittarius—its home sign—blessing you with extraordinary luck through adventure, truth-seeking, and expansive vision. Fortune favors you when you aim high and explore far.
+
+You attract abundance through big vision and optimism. Your enthusiasm, faith, and willingness to take meaningful risks generate opportunities others can't even see.
+
+Your philosophical outlook is expansive and meaning-oriented. You believe that life has purpose, that truth exists and can be found, and that growth is the meaning of existence.
+
+You expand through travel, education, and seeking truth. Every journey, every philosophy you explore, every horizon you push toward expands your world dramatically.
+
+Your luck is exceptional and flows through optimism. Your belief in positive outcomes actually creates them. Faith and fortune reinforce each other.
+
+Teaching and inspiring others is your natural calling. You help people see bigger possibilities, find meaning, and believe in themselves.
+
+The shadow of Jupiter in Sagittarius is over-promising and over-extending. You may promise more than you can deliver, spread yourself impossibly thin, or confuse beliefs with truth.
+
+Your path to abundance: Think big, explore far, share wisdom, maintain faith, aim for meaningful goals.`,
+
+            "Capricorn": `{preferredName}, your Jupiter is in Capricorn, blessing you with luck through discipline, achievement, and building lasting structures. Fortune favors you when you work hard, plan carefully, and earn your success.
+
+You attract abundance through achievement and reputation. Your accomplishments, your authority, your proven track record—these generate wealth and opportunity.
+
+Your philosophical outlook is realistic and achievement-oriented. You believe that success is earned, that structures matter, and that lasting value requires discipline and time.
+
+You expand through building lasting achievements. Each goal reached, each rung climbed, each structure built expands your influence and resources.
+
+Your luck requires effort but delivers lasting results. Unlike easy-come-easy-go fortune, what you build stays built. Your later life is typically more abundant than your youth.
+
+Teaching and inspiring others happens through demonstrating what disciplined effort achieves. You show that success is possible through work and planning.
+
+The shadow of Jupiter in Capricorn is cold ambition and status obsession. You may sacrifice too much for achievement, measure worth by worldly success, or become pessimistic.
+
+Your path to abundance: Work hard, build structures, earn achievement, play the long game, develop authority.`,
+
+            "Aquarius": `{preferredName}, your Jupiter is in Aquarius, blessing you with luck through innovation, community, and humanitarian vision. Fortune favors you when you think differently, connect with groups, and serve humanity.
+
+You attract abundance through originality and networks. Your unique ideas, your community connections, your ability to see the future—these generate opportunities.
+
+Your philosophical outlook is progressive and collective. You believe in human potential, the power of groups, and that the future can be deliberately created better than the past.
+
+You expand through innovation and community. Each original idea you develop, each group you connect with, each contribution to collective progress expands your world.
+
+Your luck comes through friends and networks. Your community connections create opportunities that wouldn't exist through individual effort alone.
+
+Teaching and inspiring others happens through sharing vision of what's possible. You help people imagine and create better futures.
+
+The shadow of Jupiter in Aquarius is detached idealism and rebellion for its own sake. You may care more about humanity in abstract than individuals in particular, or reject good ideas just because they're traditional.
+
+Your path to abundance: Innovate freely, build networks, serve collective good, think about the future.`,
+
+            "Pisces": `{preferredName}, your Jupiter is in Pisces—its traditional home sign—blessing you with extraordinary luck through faith, compassion, and spiritual connection. Fortune favors you when you trust, help others, and follow inspiration.
+
+You attract abundance through giving and spiritual alignment. Paradoxically, the more you give, the more you receive. Your faith and compassion generate invisible support.
+
+Your philosophical outlook is spiritual and compassionate. You believe in something greater, in the interconnection of all beings, and in grace beyond what can be earned.
+
+You expand through spiritual growth and creative imagination. Each mystical experience, each act of compassion, each creative vision expands your world beyond normal limits.
+
+Your luck is often miraculous. You experience grace—unearned good fortune that appears when you need it most. Trust this. It's real.
+
+Teaching and inspiring others happens through embodying compassion and demonstrating faith. You help people believe in grace and connect with the spiritual.
+
+The shadow of Jupiter in Pisces is escapism and boundarylessness. You may give until depleted, trust when skepticism is warranted, or avoid reality through substances or fantasy.
+
+Your path to abundance: Trust deeply, give generously, follow spiritual guidance, let inspiration lead, believe in grace.`
+        };
+
+        async function calculateJupiterSign(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '♃ Calculating Jupiter position...';
+            submitBtn.disabled = true;
+
+            try {
+                const coords = await geocodeLocation(birthPlace);
+                const jupiterSign = calculatePlanetPosition('Jupiter', birthDate, birthTime, coords);
+                showResult(name, jupiterSign);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function geocodeLocation(location) {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`;
+            const response = await fetch(url, { headers: { 'User-Agent': 'QuantumMerlinTools/1.0' } });
+            if (!response.ok) throw new Error('Failed to look up location');
+            const data = await response.json();
+            if (data.length === 0) throw new Error('Location not found');
+            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+        }
+
+        function calculatePlanetPosition(planet, dateStr, timeStr, coords) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const tzOffsetHours = Math.round(coords.lon / 15);
+            const utcHours = hours - tzOffsetHours;
+            const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+            const time = Astronomy.MakeTime(datetime);
+            
+            const equ = Astronomy.Equator(planet, time, null, true, false);
+            const ecliptic = Astronomy.Ecliptic(equ.vec);
+            
+            let lon = ecliptic.elon;
+            while (lon < 0) lon += 360;
+            while (lon >= 360) lon -= 360;
+            
+            const signIndex = Math.floor(lon / 30);
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+            
+            return signs[signIndex];
+        }
+
+        function showResult(name, jupiterSign) {
+            const interpretation = interpretations[jupiterSign];
+            const personalizedReading = interpretation.replace(/{preferredName}/g, name);
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            const readingData = {
+                toolType: 'jupiter',
+                headerTitle: '♃ Your Jupiter Sign Reading',
+                headerSubtitle: 'Your path to luck, growth, and abundance',
+                number: jupiterSign,
+                title: `Jupiter in ${jupiterSign}`,
+                subtitle: `${name}, this is how you attract fortune`,
+                content: paragraphs,
+                sourceUrl: 'jupiter-sign-reading.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            window.location.href = 'reading-loading.html';
+        }
+    </script>
+</body>
+</html>

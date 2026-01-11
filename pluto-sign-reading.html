@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pluto Sign Calculator & Reading | Quantum Merlin</title>
+    <meta name="description" content="Calculate your Pluto Sign and discover your generational power, transformation destiny, and path to rebirth.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(88, 28, 135, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(126, 34, 206, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #581c87 0%, #7e22ce 50%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #a855f7;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(126, 34, 206, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .input-section { margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            color: #a855f7;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(126, 34, 206, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #a855f7;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+        }
+        .helper-text {
+            font-size: 0.85em;
+            color: #9A8F7A;
+            margin-top: 5px;
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #581c87 0%, #7e22ce 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(126, 34, 206, 0.4);
+        }
+        button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-block;
+            color: #a855f7;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="tools_index.html" class="back-link">← Back to Quantum Merlin Hub</a>
+        
+        <div class="header">
+            <h1>♇ Pluto Sign Reading</h1>
+            <p>Discover your generational power, shadow work, and path to transformation</p>
+        </div>
+
+        <div class="tool-card">
+            <form onsubmit="calculatePlutoSign(event)">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="preferredName">Your Name</label>
+                        <input type="text" id="preferredName" required placeholder="What should we call you?">
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="birthDate">Birth Date</label>
+                            <input type="date" id="birthDate" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime" required>
+                            <div class="helper-text">Local time at birth location</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth City</label>
+                            <input type="text" id="birthPlace" required placeholder="e.g., Mexico City, Mexico">
+                            <div class="helper-text">City and country</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">♇ Calculate My Pluto Sign & Reading</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const interpretations = {
+            "Aries": `{preferredName}, your Pluto is in Aries (approximately 1822-1853 or 2067-2098), marking you as part of a rare generation that transforms through radical individuality and revolutionary courage.
+
+Your generation's transformation theme: The death and rebirth of individual will. Your cohort transforms through courageous action, revolutionary spirit, and the assertion of individual power against collective control.
+
+Your core power: The power to begin, to initiate transformation, to courageously face what others fear. Your strength lies in action, not contemplation.
+
+Where you experience intensity: In matters of independence, leadership, and self-assertion. Power struggles around who leads and who follows mark your life.
+
+Your shadow work: Confronting rage, impulsiveness, and the destruction that comes from action without wisdom. You must integrate aggression into conscious will.
+
+Your transformation triggers: Crises requiring courage, moments demanding you lead, situations where you must assert yourself or be dominated.
+
+Your generation's gift: The courage to transform through action, to fight for change, to lead revolutions.
+
+The death/rebirth pattern: Patterns of having to sacrifice old identities to become new people, repeatedly reinventing yourself through courageous action.
+
+Your power paradox: Your greatest power—courageous action—is also your greatest danger when applied without wisdom.
+
+Your Pluto work: Learning that true power comes from conscious will, not reactive aggression.`,
+
+            "Taurus": `{preferredName}, your Pluto is in Taurus (approximately 1853-1884), marking you as part of a generation that transforms through revolutionary changes in resources, values, and relationship with matter.
+
+Your generation's transformation theme: The death and rebirth of material values. Your cohort transforms through changing how humanity relates to resources, nature, and what we consider valuable.
+
+Your core power: The power to transform material reality, to destroy and rebuild economic structures, to find wealth in unexpected places.
+
+Where you experience intensity: In matters of money, possessions, and security. Power struggles around resources and values mark your life.
+
+Your shadow work: Confronting greed, possessiveness, and the fear that drives hoarding. You must transform your relationship with material security.
+
+Your transformation triggers: Crises involving money, possessions, or security. Losses that force you to discover non-material sources of worth.
+
+Your generation's gift: The ability to transform material structures, to revolutionize how we value things, to find security through inner worth.
+
+The death/rebirth pattern: Repeated cycles of material loss and recovery that eventually teach you that true security is internal.
+
+Your power paradox: Your greatest power—material manifestation—must serve values beyond materialism to not consume you.
+
+Your Pluto work: Learning that true worth comes from being, not having.`,
+
+            "Gemini": `{preferredName}, your Pluto is in Gemini (approximately 1884-1914), marking you as part of a generation that transforms through revolutionary changes in communication, information, and thought.
+
+Your generation's transformation theme: The death and rebirth of how we think and communicate. Your cohort transforms through new media, radical ideas, and changing how information flows.
+
+Your core power: The power to transform through ideas, to use words as weapons or healing tools, to change minds and reshape discourse.
+
+Where you experience intensity: In matters of communication, information, and mental connection. Power struggles around narrative and truth mark your life.
+
+Your shadow work: Confronting manipulation through words, intellectual dishonesty, and the shadow uses of communication power.
+
+Your transformation triggers: Crises involving information, secrets revealed, or communication that changes everything.
+
+Your generation's gift: The ability to transform through ideas, to revolutionize how we think, to use communication for profound change.
+
+The death/rebirth pattern: Repeated cycles of worldview death—having your ideas destroyed only to rebuild them stronger.
+
+Your power paradox: Your greatest power—communication—can either manipulate or liberate. The choice is constant.
+
+Your Pluto work: Learning to use the power of words and ideas for transformation rather than control.`,
+
+            "Cancer": `{preferredName}, your Pluto is in Cancer (approximately 1914-1939), marking you as part of a generation that transforms through revolutionary changes in family, homeland, and emotional security.
+
+Your generation's transformation theme: The death and rebirth of family and nation. Your cohort transforms through upheaval in home life, changing family structures, and redefining belonging.
+
+Your core power: The power to transform family patterns, to break generational curses, to create new forms of belonging.
+
+Where you experience intensity: In family dynamics, home life, and emotional security. Power struggles within family systems mark your life.
+
+Your shadow work: Confronting family trauma, emotional manipulation, and the dark side of belonging—tribalism, exclusion, and the wounds passed between generations.
+
+Your transformation triggers: Crises in family, losses of home or homeland, disruptions in belonging that force soul evolution.
+
+Your generation's gift: The ability to heal family wounds, to transform how we belong to each other, to create genuine emotional security.
+
+The death/rebirth pattern: Repeated cycles of family dissolution and recreation, learning to build chosen family alongside or instead of blood family.
+
+Your power paradox: Your greatest power—emotional bonding—can create either healing or codependency. Boundaries are essential.
+
+Your Pluto work: Learning to transform family patterns rather than repeat them.`,
+
+            "Leo": `{preferredName}, your Pluto is in Leo (approximately 1939-1957), marking you as part of a generation that transforms through revolutionary changes in creativity, self-expression, and individual identity.
+
+Your generation's transformation theme: The death and rebirth of the individual self. Your cohort transforms through new forms of self-expression, revolutionary creativity, and redefining what it means to be an individual.
+
+Your core power: The power to transform through creative expression, to use self-expression as a vehicle for profound change, to influence through personal magnetism.
+
+Where you experience intensity: In creative pursuits, matters of recognition, and self-expression. Power struggles around identity and attention mark your life.
+
+Your shadow work: Confronting ego, the need for recognition, and the shadow of self-expression—narcissism, domination, and using creativity for control.
+
+Your transformation triggers: Crises involving identity, recognition, or creative expression. Experiences that force the death and rebirth of who you think you are.
+
+Your generation's gift: The ability to transform through creativity, to use self-expression for collective evolution, to inspire through personal example.
+
+The death/rebirth pattern: Repeated cycles of identity death—having to surrender who you were to become who you're becoming.
+
+Your power paradox: Your greatest power—creative self-expression—serves transformation only when ego is integrated, not inflated.
+
+Your Pluto work: Learning that true creativity expresses something larger than personal ego.`,
+
+            "Virgo": `{preferredName}, your Pluto is in Virgo (approximately 1957-1972), marking you as part of a generation that transforms through revolutionary changes in health, work, and how we serve.
+
+Your generation's transformation theme: The death and rebirth of service and health. Your cohort transforms through new approaches to wellness, revolutionized work structures, and redefining what it means to be useful.
+
+Your core power: The power to transform through analysis, to identify what's not working and fix it, to serve transformation through practical action.
+
+Where you experience intensity: In work, health, and service. Power struggles around competence and being useful mark your life.
+
+Your shadow work: Confronting the shadow of service—control through helpfulness, using criticism as a weapon, and perfectionism that paralyzes.
+
+Your transformation triggers: Crises involving health, work, or being of service. Experiences that force you to transform how you help and heal.
+
+Your generation's gift: The ability to transform health and work systems, to heal through practical means, to serve genuine transformation.
+
+The death/rebirth pattern: Repeated cycles of work or health crises that force deeper understanding of what truly serves.
+
+Your power paradox: Your greatest power—analytical service—can either heal or control. Intention matters.
+
+Your Pluto work: Learning that true service transforms both giver and receiver.`,
+
+            "Libra": `{preferredName}, your Pluto is in Libra (approximately 1972-1984), marking you as part of a generation that transforms through revolutionary changes in relationships, justice, and how we partner.
+
+Your generation's transformation theme: The death and rebirth of relationship. Your cohort transforms through new forms of partnership, revolutionary approaches to justice, and redefining what it means to be in relationship.
+
+Your core power: The power to transform through relationship, to use partnership as a vehicle for profound change, to seek justice that transforms rather than punishes.
+
+Where you experience intensity: In partnerships, matters of fairness, and relational dynamics. Power struggles within relationships mark your life.
+
+Your shadow work: Confronting the shadow of relationship—codependency, using partnership to avoid self-confrontation, and the ways we control through relating.
+
+Your transformation triggers: Crises in partnership, experiences of profound injustice, and relationships that force complete transformation.
+
+Your generation's gift: The ability to transform through relationship, to create partnerships that serve evolution, to pursue justice that heals.
+
+The death/rebirth pattern: Repeated cycles of relationship death—partnerships ending so that new, more evolved ones can begin.
+
+Your power paradox: Your greatest power—relational transformation—requires balance between self and other that doesn't sacrifice either.
+
+Your Pluto work: Learning that true partnership transforms both partners without consuming either.`,
+
+            "Scorpio": `{preferredName}, your Pluto is in Scorpio—its home sign—(approximately 1984-1995), marking you as part of a generation with intensified transformative power, depth, and capacity for profound rebirth.
+
+Your generation's transformation theme: The death and rebirth of death itself. Your cohort transforms by going deeper than any generation before, confronting the absolute darkness, and emerging with genuine phoenix power.
+
+Your core power: Extraordinary transformative ability, capacity to face any shadow, power to die and be reborn repeatedly throughout life.
+
+Where you experience intensity: Everywhere. You experience life more intensely than other generations, with heightened awareness of death, sexuality, power, and the hidden.
+
+Your shadow work: Confronting the darkest shadows—obsession, manipulation, the desire to control through psychological insight, and the seductive power of darkness itself.
+
+Your transformation triggers: Crises are your natural habitat. You transform through intensity, through facing what others can't, through going where light doesn't easily reach.
+
+Your generation's gift: The ability to transform absolutely, to face any shadow, to guide others through their darkest nights.
+
+The death/rebirth pattern: Intense and frequent. You die and are reborn more times in one lifetime than others do in several.
+
+Your power paradox: Your greatest power—absolute transformation—can either heal the world or destroy yourself. Boundaries with darkness are essential.
+
+Your Pluto work: Learning to carry transformative power without being consumed by it.`,
+
+            "Sagittarius": `{preferredName}, your Pluto is in Sagittarius (approximately 1995-2008), marking you as part of a generation that transforms through revolutionary changes in belief, meaning, and global connection.
+
+Your generation's transformation theme: The death and rebirth of meaning and belief. Your cohort transforms by destroying false beliefs and rebuilding genuine faith.
+
+Your core power: The power to transform through truth-seeking, to destroy ideologies that no longer serve, to find meaning in a world where old meanings have died.
+
+Where you experience intensity: In matters of belief, truth, and meaning. Power struggles around ideology, religion, and what's true mark your life.
+
+Your shadow work: Confronting fanaticism, the shadow of belief—using truth as a weapon, self-righteous destruction, and the dark side of crusading.
+
+Your transformation triggers: Crises of meaning, encounters with beliefs that shatter worldview, experiences that demand genuine faith be found or forged.
+
+Your generation's gift: The ability to transform belief systems, to find authentic meaning after the death of false beliefs, to teach truth that liberates.
+
+The death/rebirth pattern: Repeated cycles of worldview death—beliefs you were certain of destroyed, making space for truer understanding.
+
+Your power paradox: Your greatest power—transforming belief—can either liberate through truth or destroy through fanaticism.
+
+Your Pluto work: Learning that truth transforms only when delivered with wisdom and compassion.`,
+
+            "Capricorn": `{preferredName}, your Pluto is in Capricorn (approximately 2008-2024), marking you as part of a generation that transforms through revolutionary changes in authority, institutions, and power structures.
+
+Your generation's transformation theme: The death and rebirth of authority and institutions. Your cohort transforms by destroying corrupt structures and building new ones.
+
+Your core power: The power to transform systems, to destroy dysfunctional institutions, to rebuild authority on authentic foundations.
+
+Where you experience intensity: In matters of authority, achievement, and structure. Power struggles around legitimate authority mark your life.
+
+Your shadow work: Confronting the shadow of power—authoritarianism, using structure for control, becoming the very oppressive force you sought to destroy.
+
+Your transformation triggers: Crises involving authority figures, institutional collapse, and the failure of structures you depended on.
+
+Your generation's gift: The ability to transform power structures, to build institutions that serve rather than oppress, to earn authority through integrity.
+
+The death/rebirth pattern: Repeated cycles of authority death—watching respected figures or institutions fall, having to rebuild trust in structure.
+
+Your power paradox: Your greatest power—structural transformation—can either build better systems or become tyrannical in the effort.
+
+Your Pluto work: Learning that true authority serves rather than dominates.`,
+
+            "Aquarius": `{preferredName}, your Pluto is in Aquarius (approximately 2024-2044), marking you as part of a generation that transforms through revolutionary changes in technology, community, and human evolution.
+
+Your generation's transformation theme: The death and rebirth of humanity itself. Your cohort transforms through technological revolution, new forms of human connection, and redefining what it means to be human.
+
+Your core power: The power to transform through innovation, to use technology for profound change, to evolve human possibility.
+
+Where you experience intensity: In technology, community, and human evolution. Power struggles around technological power and collective direction mark your life.
+
+Your shadow work: Confronting the shadow of technology—dehumanization, using innovation for control, and collective power that destroys individuality.
+
+Your transformation triggers: Crises involving technology, collective movements, and moments where human evolution hangs in the balance.
+
+Your generation's gift: The ability to transform human possibility, to use technology for liberation, to create genuine community.
+
+The death/rebirth pattern: Repeated cycles of collective death—old forms of society dying, new ones being born through your generation's efforts.
+
+Your power paradox: Your greatest power—technological transformation—can either evolve humanity or enslave it.
+
+Your Pluto work: Learning to wield transformative technology in service of human liberation.`,
+
+            "Pisces": `{preferredName}, your Pluto is in Pisces (approximately 2044-2068), marking you as part of a generation that transforms through spiritual revolution and the dissolution of boundaries.
+
+Your generation's transformation theme: The death and rebirth of spiritual understanding. Your cohort transforms through mystical revolution, dissolving false barriers, and collective spiritual awakening.
+
+Your core power: The power to transform through surrender, to dissolve what separates, to access collective unconscious for healing.
+
+Where you experience intensity: In spiritual matters, collective suffering, and the dissolution of boundaries. Power struggles around spiritual truth mark your life.
+
+Your shadow work: Confronting the shadow of spirituality—escapism, martyrdom, using transcendence to avoid reality, and the seduction of dissolution.
+
+Your transformation triggers: Crises involving spiritual awakening, collective suffering that demands response, and moments requiring surrender.
+
+Your generation's gift: The ability to transform through spiritual awakening, to heal collective trauma, to dissolve barriers that separate humanity.
+
+The death/rebirth pattern: Repeated cycles of ego death—dissolution of self boundaries, experiences of oceanic unity, and the challenge of rebuilding self afterward.
+
+Your power paradox: Your greatest power—spiritual transformation—can either awaken or enable escape from necessary growth.
+
+Your Pluto work: Learning that true transcendence includes rather than escapes reality.`
+        };
+
+        async function calculatePlutoSign(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '♇ Calculating Pluto position...';
+            submitBtn.disabled = true;
+
+            try {
+                const coords = await geocodeLocation(birthPlace);
+                const plutoSign = calculatePlanetPosition('Pluto', birthDate, birthTime, coords);
+                showResult(name, plutoSign);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function geocodeLocation(location) {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`;
+            const response = await fetch(url, { headers: { 'User-Agent': 'QuantumMerlinTools/1.0' } });
+            if (!response.ok) throw new Error('Failed to look up location');
+            const data = await response.json();
+            if (data.length === 0) throw new Error('Location not found');
+            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+        }
+
+        function calculatePlanetPosition(planet, dateStr, timeStr, coords) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const tzOffsetHours = Math.round(coords.lon / 15);
+            const utcHours = hours - tzOffsetHours;
+            const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+            const time = Astronomy.MakeTime(datetime);
+            
+            const equ = Astronomy.Equator(planet, time, null, true, false);
+            const ecliptic = Astronomy.Ecliptic(equ.vec);
+            
+            let lon = ecliptic.elon;
+            while (lon < 0) lon += 360;
+            while (lon >= 360) lon -= 360;
+            
+            const signIndex = Math.floor(lon / 30);
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+            
+            return signs[signIndex];
+        }
+
+        function showResult(name, plutoSign) {
+            const interpretation = interpretations[plutoSign];
+            const personalizedReading = interpretation.replace(/{preferredName}/g, name);
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            const readingData = {
+                toolType: 'pluto',
+                headerTitle: '♇ Your Pluto Sign Reading',
+                headerSubtitle: 'Your generational power and path to transformation',
+                number: plutoSign,
+                title: `Pluto in ${plutoSign}`,
+                subtitle: `${name}, this is your deep transformation work`,
+                content: paragraphs,
+                sourceUrl: 'pluto-sign-reading.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            window.location.href = 'reading-loading.html';
+        }
+    </script>
+</body>
+</html>

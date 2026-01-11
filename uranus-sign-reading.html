@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uranus Sign Calculator & Reading | Quantum Merlin</title>
+    <meta name="description" content="Calculate your Uranus Sign and discover how you innovate, rebel, and bring change to the world.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(34, 211, 238, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 50%, #67e8f9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #06b6d4;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .input-section { margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            color: #06b6d4;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+        .helper-text {
+            font-size: 0.85em;
+            color: #9A8F7A;
+            margin-top: 5px;
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
+            color: #0a0a0f;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4);
+        }
+        button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-block;
+            color: #06b6d4;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="tools_index.html" class="back-link">← Back to Quantum Merlin Hub</a>
+        
+        <div class="header">
+            <h1>♅ Uranus Sign Reading</h1>
+            <p>Discover how you innovate, rebel, and awaken to freedom</p>
+        </div>
+
+        <div class="tool-card">
+            <form onsubmit="calculateUranusSign(event)">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="preferredName">Your Name</label>
+                        <input type="text" id="preferredName" required placeholder="What should we call you?">
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="birthDate">Birth Date</label>
+                            <input type="date" id="birthDate" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime" required>
+                            <div class="helper-text">Local time at birth location</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth City</label>
+                            <input type="text" id="birthPlace" required placeholder="e.g., San Francisco, USA">
+                            <div class="helper-text">City and country</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">♅ Calculate My Uranus Sign & Reading</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const interpretations = {
+            "Aries": `{preferredName}, your Uranus is in Aries (approximately 2010-2018 or 1927-1935), marking you as part of a generation that revolutionizes through bold individual action, new beginnings, and pioneering innovation.
+
+Your generation's revolutionary theme: Radical individualism and brave new starts. Your cohort disrupts by being first, by starting new things, by asserting individual freedom against collective conformity.
+
+How you personally experience Uranus: You're drawn to revolutionary action, to being a pioneer, to breaking new ground. Your awakening comes through courage, through taking bold first steps into unknown territory.
+
+Your innovation style: Direct, immediate, and action-oriented. You don't theorize about change—you initiate it. Your genius lies in starting things, in the courage to be first, in cutting through hesitation.
+
+Where you seek freedom: In self-expression, independent action, and freedom from having to wait or ask permission. You chafe against anything that slows your immediate impulses.
+
+Your generational gift: The courage to start revolutions, to be first when everyone else hesitates, to initiate change through bold action.
+
+Your awakening trigger: Moments requiring courage, new beginnings, or independent action shake you awake and catalyze transformation.
+
+The shadow: Impulsive rebellion without purpose, aggression mistaken for innovation, destruction without building.
+
+Your unique contribution: Pioneering action that opens doors for others to follow.`,
+
+            "Taurus": `{preferredName}, your Uranus is in Taurus (approximately 2018-2026 or 1934-1942), marking you as part of a generation that revolutionizes through changing our relationship with resources, nature, and what we value.
+
+Your generation's revolutionary theme: Radical transformation of values, resources, and relationship with Earth. Your cohort disrupts by reimagining money, sustainability, and material security.
+
+How you personally experience Uranus: You're drawn to revolutionizing how we value things, how we relate to nature, how we create security. Your awakening comes through sudden changes in what you thought was stable.
+
+Your innovation style: Practical but revolutionary. You innovate with tangible things—technology, resources, the material world. You make abstract change physical.
+
+Where you seek freedom: In financial independence, freedom from material constraints, and liberation from conventional ideas about security and worth.
+
+Your generational gift: Transforming humanity's relationship with money, resources, and the natural world during a critical period.
+
+Your awakening trigger: Sudden shifts in security, resources, or values jolt you awake and demand innovation.
+
+The shadow: Stubborn resistance to necessary change, or reckless destruction of stability without creating alternatives.
+
+Your unique contribution: Making revolutionary change practical, grounded, and materially sustainable.`,
+
+            "Gemini": `{preferredName}, your Uranus is in Gemini (approximately 1942-1949 or 2025-2033), marking you as part of a generation that revolutionizes through communication, information, and new ways of thinking.
+
+Your generation's revolutionary theme: Radical transformation of how we communicate, learn, and share information. Your cohort disrupts through media, technology, and reimagining education.
+
+How you personally experience Uranus: You're drawn to revolutionary ideas, new ways of communicating, breaking through mental limitations. Your awakening comes through information and insight.
+
+Your innovation style: Quick, versatile, and communication-oriented. You innovate through words, ideas, connections—bringing together disparate concepts in new ways.
+
+Where you seek freedom: In thought, speech, and learning. You chafe against intellectual restrictions, censorship, and rigid thinking.
+
+Your generational gift: Transforming how humanity thinks and communicates, breaking through information barriers.
+
+Your awakening trigger: New ideas, startling information, or communication breakthroughs catalyze your transformation.
+
+The shadow: Scattered thinking mistaken for innovation, talking about change without acting, mental chaos.
+
+Your unique contribution: Revolutionary ideas that change how we think and connect.`,
+
+            "Cancer": `{preferredName}, your Uranus is in Cancer (approximately 1949-1956), marking you as part of a generation that revolutionizes through transforming family, home, and emotional security.
+
+Your generation's revolutionary theme: Radical transformation of family structures, domestic life, and emotional patterns. Your cohort disrupts traditional ideas about home, parenthood, and belonging.
+
+How you personally experience Uranus: You're drawn to unconventional approaches to family and home. Your awakening comes through breaking free from family patterns while honoring emotional needs.
+
+Your innovation style: Emotionally intelligent and nurturing but unconventional. You innovate in how people care for each other, in family structures, in creating belonging.
+
+Where you seek freedom: In emotional life and family structures. You need freedom to feel, to nurture, and to create family in your own way.
+
+Your generational gift: Liberating humanity from restrictive family patterns while preserving genuine care and belonging.
+
+Your awakening trigger: Family disruptions, emotional breakthroughs, or changes in home life catalyze transformation.
+
+The shadow: Emotional chaos mistaken for freedom, unstable home life, or rejecting care needs entirely.
+
+Your unique contribution: Revolutionary approaches to family, home, and emotional security.`,
+
+            "Leo": `{preferredName}, your Uranus is in Leo (approximately 1956-1962), marking you as part of a generation that revolutionizes through creative self-expression, individuality, and transforming how we celebrate life.
+
+Your generation's revolutionary theme: Radical creativity, self-expression, and transformation of entertainment and individual identity. Your cohort disrupts through art, culture, and celebrating uniqueness.
+
+How you personally experience Uranus: You're drawn to revolutionary self-expression, unconventional creativity, and breaking free from anything that dims your light.
+
+Your innovation style: Creative, dramatic, and heart-centered. You innovate through art, entertainment, and bold self-expression that inspires others.
+
+Where you seek freedom: In expressing yourself authentically, creating what you want, and being recognized for your uniqueness.
+
+Your generational gift: Liberating creative expression, transforming entertainment and culture, celebrating individuality.
+
+Your awakening trigger: Creative breakthroughs, recognition or its absence, and moments of authentic self-expression catalyze transformation.
+
+The shadow: Ego inflation mistaken for liberation, drama addiction, or using uniqueness to avoid genuine connection.
+
+Your unique contribution: Revolutionary creative expression that inspires others to shine.`,
+
+            "Virgo": `{preferredName}, your Uranus is in Virgo (approximately 1962-1969), marking you as part of a generation that revolutionizes through work, health, and practical service.
+
+Your generation's revolutionary theme: Radical transformation of work, health care, and practical service. Your cohort disrupts through new approaches to wellness, technology in daily life, and reimagining useful service.
+
+How you personally experience Uranus: You're drawn to revolutionary approaches to health, work efficiency, and practical improvement. Your awakening comes through changing how things work.
+
+Your innovation style: Practical, analytical, and improvement-focused. You innovate by making things work better, by analyzing problems and finding elegant solutions.
+
+Where you seek freedom: In how you work, care for your body, and be useful. You chafe against inefficient systems and unhealthy practices.
+
+Your generational gift: Transforming work, health care, and daily life through practical innovation.
+
+Your awakening trigger: Health revelations, work disruptions, or discovering better ways catalyze transformation.
+
+The shadow: Anxious perfectionism mistaken for improvement, or criticizing everything while building nothing.
+
+Your unique contribution: Revolutionary practical solutions that make daily life work better.`,
+
+            "Libra": `{preferredName}, your Uranus is in Libra (approximately 1969-1975), marking you as part of a generation that revolutionizes through relationships, justice, and new forms of partnership.
+
+Your generation's revolutionary theme: Radical transformation of relationships, marriage, and justice systems. Your cohort disrupts through redefining partnership, fairness, and social harmony.
+
+How you personally experience Uranus: You're drawn to unconventional relationships, revolutionary approaches to fairness, and breaking free from unequal partnerships.
+
+Your innovation style: Relational and justice-oriented. You innovate through how people partner, create fairness, and achieve balance.
+
+Where you seek freedom: In relationships and social structures. You need freedom to relate in your own way, to pursue justice, and to create beauty.
+
+Your generational gift: Liberating relationships from restrictive patterns, advancing social justice, reimagining partnership.
+
+Your awakening trigger: Relationship disruptions, encounters with injustice, or experiences of true equality catalyze transformation.
+
+The shadow: Fear of commitment mistaken for freedom, endless relating without depth, or aesthetic rebellion without substance.
+
+Your unique contribution: Revolutionary approaches to relationship, partnership, and justice.`,
+
+            "Scorpio": `{preferredName}, your Uranus is in Scorpio (approximately 1975-1981), marking you as part of a generation that revolutionizes through depth, transformation, and confronting hidden powers.
+
+Your generation's revolutionary theme: Radical transformation through psychology, sexuality, shared resources, and power structures. Your cohort disrupts by exposing what's hidden and transforming taboos.
+
+How you personally experience Uranus: You're drawn to deep transformation, revolutionary approaches to intimacy, and breaking free from power dynamics that control through secrecy.
+
+Your innovation style: Deep, intense, and transformative. You innovate by going where others fear, by transforming through crisis, by revealing hidden truths.
+
+Where you seek freedom: In psychological and sexual expression, in freedom from control and manipulation, in authentic power.
+
+Your generational gift: Liberating humanity from hidden manipulations, transforming relationship with death, sexuality, and power.
+
+Your awakening trigger: Crises, power struggles, or psychological revelations catalyze transformation.
+
+The shadow: Obsessive destruction, using psychological insight for manipulation, or confusing intensity with depth.
+
+Your unique contribution: Revolutionary transformation that liberates through confronting shadows.`,
+
+            "Sagittarius": `{preferredName}, your Uranus is in Sagittarius (approximately 1981-1988), marking you as part of a generation that revolutionizes through beliefs, global connection, and expanding horizons.
+
+Your generation's revolutionary theme: Radical transformation of beliefs, religion, higher education, and global connection. Your cohort disrupts through new philosophies, international breakthrough, and expanding what's possible.
+
+How you personally experience Uranus: You're drawn to revolutionary beliefs, unconventional wisdom paths, and breaking free from limiting worldviews.
+
+Your innovation style: Expansive, philosophical, and visionary. You innovate through big ideas, cross-cultural synthesis, and inspiring new possibilities.
+
+Where you seek freedom: In belief, travel, and philosophical exploration. You chafe against narrow thinking and limited horizons.
+
+Your generational gift: Liberating human belief, creating global connection, expanding possibilities for what life can mean.
+
+Your awakening trigger: Travel, philosophical breakthroughs, or encounters with vastly different worldviews catalyze transformation.
+
+The shadow: Restless escapism, believing everything equally, or preaching revolution without grounding.
+
+Your unique contribution: Revolutionary vision that expands human possibility and global understanding.`,
+
+            "Capricorn": `{preferredName}, your Uranus is in Capricorn (approximately 1988-1996), marking you as part of a generation that revolutionizes through transforming authority, institutions, and structures.
+
+Your generation's revolutionary theme: Radical transformation of government, business, and institutional structures. Your cohort disrupts authority from within, rebuilding systems that don't work.
+
+How you personally experience Uranus: You're drawn to restructuring power, building revolutionary institutions, and breaking free from oppressive systems while creating functional alternatives.
+
+Your innovation style: Structural and pragmatic. You innovate within systems, changing how power and organization work rather than just protesting.
+
+Where you seek freedom: In career and from dysfunctional authorities. You need freedom to build, to achieve, and to restructure what's broken.
+
+Your generational gift: Transforming institutions from within, revolutionizing how power and authority function.
+
+Your awakening trigger: Encounters with structural dysfunction, career shifts, or recognition of system failures catalyze transformation.
+
+The shadow: Becoming the very authority you rebel against, or cynical destruction without building alternatives.
+
+Your unique contribution: Revolutionary institution-building that creates functional new structures.`,
+
+            "Aquarius": `{preferredName}, your Uranus is in Aquarius—its home sign—(approximately 1996-2003), marking you as part of a generation with intensified revolutionary potential around technology, community, and human evolution.
+
+Your generation's revolutionary theme: Radical technological transformation, reimagining community, and advancing human evolution. Your cohort disrupts through digital innovation, new forms of connection, and humanitarian vision.
+
+How you personally experience Uranus: You're a natural revolutionary, drawn to innovation, technology, and building the future. Freedom and authenticity are non-negotiable.
+
+Your innovation style: Technological, networked, and future-oriented. You innovate through digital means, collective organization, and envisioning what's next for humanity.
+
+Where you seek freedom: Everywhere. You resist conformity instinctively and seek freedom to be utterly yourself while connecting with like minds.
+
+Your generational gift: Building the technological and social future, creating new forms of human connection and possibility.
+
+Your awakening trigger: Technology, community experiences, and visions of possible futures catalyze ongoing transformation.
+
+The shadow: Detached rebellion, technology addiction, or alienation from humanity while claiming to serve it.
+
+Your unique contribution: Revolutionary innovation that builds genuinely new human possibilities.`,
+
+            "Pisces": `{preferredName}, your Uranus is in Pisces (approximately 2003-2011), marking you as part of a generation that revolutionizes through spirituality, compassion, and dissolving old boundaries.
+
+Your generation's revolutionary theme: Radical spiritual transformation, compassionate revolution, and dissolving barriers between peoples. Your cohort disrupts through mysticism, empathy, and transcending division.
+
+How you personally experience Uranus: You're drawn to spiritual breakthrough, revolutionary compassion, and breaking free from materialist limitations.
+
+Your innovation style: Intuitive, spiritual, and boundary-dissolving. You innovate through imagination, vision, and connecting what was separated.
+
+Where you seek freedom: In spiritual expression and from harsh material reality. You need freedom to dream, imagine, and transcend.
+
+Your generational gift: Liberating humanity's spiritual life, dissolving barriers through compassion, and healing through imagination.
+
+Your awakening trigger: Mystical experiences, encounters with suffering, or creative visions catalyze transformation.
+
+The shadow: Escapism mistaken for transcendence, compassion fatigue, or losing yourself in boundaryless experience.
+
+Your unique contribution: Revolutionary spirituality and compassion that heals and transcends.`
+        };
+
+        async function calculateUranusSign(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '♅ Calculating Uranus position...';
+            submitBtn.disabled = true;
+
+            try {
+                const coords = await geocodeLocation(birthPlace);
+                const uranusSign = calculatePlanetPosition('Uranus', birthDate, birthTime, coords);
+                showResult(name, uranusSign);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function geocodeLocation(location) {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`;
+            const response = await fetch(url, { headers: { 'User-Agent': 'QuantumMerlinTools/1.0' } });
+            if (!response.ok) throw new Error('Failed to look up location');
+            const data = await response.json();
+            if (data.length === 0) throw new Error('Location not found');
+            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+        }
+
+        function calculatePlanetPosition(planet, dateStr, timeStr, coords) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const tzOffsetHours = Math.round(coords.lon / 15);
+            const utcHours = hours - tzOffsetHours;
+            const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+            const time = Astronomy.MakeTime(datetime);
+            
+            const equ = Astronomy.Equator(planet, time, null, true, false);
+            const ecliptic = Astronomy.Ecliptic(equ.vec);
+            
+            let lon = ecliptic.elon;
+            while (lon < 0) lon += 360;
+            while (lon >= 360) lon -= 360;
+            
+            const signIndex = Math.floor(lon / 30);
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+            
+            return signs[signIndex];
+        }
+
+        function showResult(name, uranusSign) {
+            const interpretation = interpretations[uranusSign];
+            const personalizedReading = interpretation.replace(/{preferredName}/g, name);
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            const readingData = {
+                toolType: 'uranus',
+                headerTitle: '♅ Your Uranus Sign Reading',
+                headerSubtitle: 'Your revolutionary spirit and path to freedom',
+                number: uranusSign,
+                title: `Uranus in ${uranusSign}`,
+                subtitle: `${name}, this is how you innovate and awaken`,
+                content: paragraphs,
+                sourceUrl: 'uranus-sign-reading.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            window.location.href = 'reading-loading.html';
+        }
+    </script>
+</body>
+</html>

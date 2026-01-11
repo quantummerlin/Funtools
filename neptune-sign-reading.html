@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neptune Sign Calculator & Reading | Quantum Merlin</title>
+    <meta name="description" content="Calculate your Neptune Sign and discover your dreams, spiritual gifts, and connection to the divine.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(192, 132, 252, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #9333ea 0%, #c084fc 50%, #e9d5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #c084fc;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(147, 51, 234, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .input-section { margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            color: #c084fc;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(147, 51, 234, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #c084fc;
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.2);
+        }
+        .helper-text {
+            font-size: 0.85em;
+            color: #9A8F7A;
+            margin-top: 5px;
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #9333ea 0%, #c084fc 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.4);
+        }
+        button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-block;
+            color: #c084fc;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="tools_index.html" class="back-link">← Back to Quantum Merlin Hub</a>
+        
+        <div class="header">
+            <h1>♆ Neptune Sign Reading</h1>
+            <p>Discover your dreams, spiritual gifts, and connection to the infinite</p>
+        </div>
+
+        <div class="tool-card">
+            <form onsubmit="calculateNeptuneSign(event)">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="preferredName">Your Name</label>
+                        <input type="text" id="preferredName" required placeholder="What should we call you?">
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="birthDate">Birth Date</label>
+                            <input type="date" id="birthDate" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime" required>
+                            <div class="helper-text">Local time at birth location</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth City</label>
+                            <input type="text" id="birthPlace" required placeholder="e.g., Sydney, Australia">
+                            <div class="helper-text">City and country</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">♆ Calculate My Neptune Sign & Reading</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const interpretations = {
+            "Aries": `{preferredName}, your Neptune is in Aries (approximately 1861-1875 or 2025-2039), marking you as part of a generation that dreams through action and finds the divine through courage and new beginnings.
+
+Your generation's spiritual theme: Spiritualizing courage and action. Your cohort dreams of brave new worlds and finds transcendence through pioneering spirit and individual heroism.
+
+How you personally experience Neptune: You're drawn to spiritual warriors, action-oriented mysticism, and finding the divine through courage. Your illusions and deceptions relate to independence and self-assertion.
+
+Your dream style: Active and initiating. You dream of conquering, pioneering, starting fresh. Your visions are of beginnings, of being first, of brave new worlds.
+
+Your creative gifts: Action-oriented creativity, inspiring courage, spiritual leadership. You create through initiating rather than refining.
+
+Your spiritual path: Through action, courage, and self-initiated spiritual seeking. You don't wait for enlightenment—you chase it.
+
+Where you seek transcendence: In adrenaline, competition, being first, new starts. You find the infinite in beginnings.
+
+Your generational illusion: The myth of the individual hero who doesn't need anyone. The fantasy that pure will conquers all.
+
+The shadow: Spiritual aggression, using transcendence to avoid vulnerability, escapism through action addiction.
+
+Your mystical gift: The courage to seek truth actively, to find God through bold pursuit.`,
+
+            "Taurus": `{preferredName}, your Neptune is in Taurus (approximately 1875-1889 or 2039-2053), marking you as part of a generation that dreams through beauty, nature, and material spirituality.
+
+Your generation's spiritual theme: Spiritualizing matter and finding the divine in nature. Your cohort dreams of earthly paradise and finds transcendence through beauty and sensory experience.
+
+How you personally experience Neptune: You're drawn to nature mysticism, art, and finding the sacred in material things. Your illusions relate to security and value.
+
+Your dream style: Sensory and beautiful. You dream of gardens, abundance, perfect beauty. Your visions are tactile, lush, and grounded.
+
+Your creative gifts: Artistic beauty, materializing the spiritual, creating sacred spaces. You make the invisible visible.
+
+Your spiritual path: Through nature, beauty, and embodied practice. You find the divine in flowers, food, art, and the body.
+
+Where you seek transcendence: In nature, in beautiful things, in sensory pleasure elevated to worship.
+
+Your generational illusion: The fantasy of perfect security and unchanging beauty. The belief that material things can satisfy spiritual longing.
+
+The shadow: Materialism as spirituality, addiction to comfort, using pleasure to escape.
+
+Your mystical gift: Making spiritual beauty tangible, finding the divine in material creation.`,
+
+            "Gemini": `{preferredName}, your Neptune is in Gemini (approximately 1889-1902), marking you as part of a generation that dreams through ideas, communication, and mental connection.
+
+Your generation's spiritual theme: Spiritualizing communication and finding the divine in ideas. Your cohort dreams of perfect understanding and finds transcendence through mental connection.
+
+How you personally experience Neptune: You're drawn to inspired communication, telepathic connection, and finding the sacred in ideas. Your illusions relate to information and communication.
+
+Your dream style: Mental and verbal. You dream in words, symbols, and concepts. Your visions are of perfect communication, universal language, shared understanding.
+
+Your creative gifts: Inspired writing and speaking, channeling ideas, making connections others miss. You receive inspiration through the mind.
+
+Your spiritual path: Through learning, sharing, and mental exploration. You find the divine in the perfect word, the connecting idea, the inspired thought.
+
+Where you seek transcendence: In ideas, conversation, learning, and mental expansion.
+
+Your generational illusion: The fantasy that words can capture truth, that information equals understanding, that thought is superior to feeling.
+
+The shadow: Getting lost in concepts, escapism through endless learning, using intellect to avoid depth.
+
+Your mystical gift: Receiving and communicating inspired ideas, translating the infinite into words.`,
+
+            "Cancer": `{preferredName}, your Neptune is in Cancer (approximately 1902-1915), marking you as part of a generation that dreams through family, home, and emotional belonging.
+
+Your generation's spiritual theme: Spiritualizing home and family, finding the divine in belonging. Your cohort dreams of perfect nurturing and finds transcendence through emotional connection.
+
+How you personally experience Neptune: You're drawn to family as spiritual path, home as temple, and finding the sacred in care. Your illusions relate to family and emotional security.
+
+Your dream style: Emotional and nurturing. You dream of perfect belonging, unconditional love, home as sanctuary. Your visions are of being held, protected, understood.
+
+Your creative gifts: Creating sacred home, nurturing as art, emotional sensitivity that receives inspiration.
+
+Your spiritual path: Through family, emotional connection, and creating belonging. You find the divine in mothering, in home, in emotional communion.
+
+Where you seek transcendence: In family love, in feeling at home, in being deeply understood and cared for.
+
+Your generational illusion: The fantasy of perfect family, unconditional acceptance without growth, using home to hide from the world.
+
+The shadow: Escapism through family drama, emotional manipulation as spirituality, refusing to grow up.
+
+Your mystical gift: Creating genuine belonging, finding the divine in care and emotional connection.`,
+
+            "Leo": `{preferredName}, your Neptune is in Leo (approximately 1915-1929), marking you as part of a generation that dreams through creativity, self-expression, and divine performance.
+
+Your generation's spiritual theme: Spiritualizing creativity and finding the divine in self-expression. Your cohort dreams of glorious creation and finds transcendence through art and play.
+
+How you personally experience Neptune: You're drawn to creative inspiration, performance as spiritual act, and finding the sacred in expression. Your illusions relate to fame and recognition.
+
+Your dream style: Creative and dramatic. You dream of perfect performance, inspired creation, being a channel for divine creativity. Your visions are theatrical, colorful, triumphant.
+
+Your creative gifts: Extraordinary artistic inspiration, channeling creativity, performance that transcends ego.
+
+Your spiritual path: Through creativity, self-expression, and art as worship. You find the divine in the creative act itself.
+
+Where you seek transcendence: In creative flow, in performance, in moments of inspired expression.
+
+Your generational illusion: The fantasy of fame as salvation, of applause as love, of being special rather than connected.
+
+The shadow: Ego inflation mistaken for inspiration, escapism through drama, confusing performance with authenticity.
+
+Your mystical gift: Channeling divine creativity, inspiring others through artistic expression.`,
+
+            "Virgo": `{preferredName}, your Neptune is in Virgo (approximately 1929-1943), marking you as part of a generation that dreams through service, healing, and perfecting daily life.
+
+Your generation's spiritual theme: Spiritualizing service and finding the divine in helpfulness. Your cohort dreams of perfect health and finds transcendence through useful work.
+
+How you personally experience Neptune: You're drawn to healing, sacred service, and finding the spiritual in daily practice. Your illusions relate to health and perfection.
+
+Your dream style: Practical and healing. You dream of perfect health, pure bodies, service that truly helps. Your visions are of things working correctly, of illness healed, of chaos ordered.
+
+Your creative gifts: Inspired healing, finding beauty in simplicity, service that transcends ordinary helpfulness.
+
+Your spiritual path: Through service, health practice, and sacred attention to details. You find the divine in doing things well.
+
+Where you seek transcendence: In perfect function, in health, in being genuinely useful.
+
+Your generational illusion: The fantasy of perfect health, of problems that stay solved, of service without burnout.
+
+The shadow: Health anxiety as spiritual practice, perfectionism as prayer, losing yourself in others' problems.
+
+Your mystical gift: Healing service, finding the sacred in helpful work.`,
+
+            "Libra": `{preferredName}, your Neptune is in Libra (approximately 1943-1957), marking you as part of a generation that dreams through relationship, beauty, and divine harmony.
+
+Your generation's spiritual theme: Spiritualizing relationship and finding the divine in partnership. Your cohort dreams of perfect love and finds transcendence through beauty and connection.
+
+How you personally experience Neptune: You're drawn to soul mates, sacred partnership, and finding the spiritual in beauty. Your illusions relate to relationships and idealized love.
+
+Your dream style: Romantic and beautiful. You dream of perfect partners, harmonious relationships, beauty that heals. Your visions are of union, balance, aesthetic perfection.
+
+Your creative gifts: Creating beauty, inspired artistry, relationship as spiritual art.
+
+Your spiritual path: Through partnership, beauty, and seeking harmony. You find the divine in relationship and aesthetic experience.
+
+Where you seek transcendence: In love, in beauty, in perfect relationship.
+
+Your generational illusion: The fantasy of perfect partner who completes you, of romance without reality, of love without conflict.
+
+The shadow: Codependency as spiritual practice, escapism through romance, sacrificing self for relationship illusion.
+
+Your mystical gift: Finding the divine through relationship, creating beauty that opens hearts.`,
+
+            "Scorpio": `{preferredName}, your Neptune is in Scorpio (approximately 1957-1970), marking you as part of a generation that dreams through depth, transformation, and spiritual intensity.
+
+Your generation's spiritual theme: Spiritualizing depth and finding the divine in transformation. Your cohort dreams of total merging and finds transcendence through intensity and death/rebirth experiences.
+
+How you personally experience Neptune: You're drawn to taboo spirituality, transformation, and finding the sacred in the shadow. Your illusions relate to power and intimacy.
+
+Your dream style: Intense and transformative. You dream of complete merging, of dying and being reborn, of secrets revealed. Your visions are dark, powerful, and regenerative.
+
+Your creative gifts: Art that transforms, creativity from the depths, making the hidden visible.
+
+Your spiritual path: Through transformation, depth psychology, and confronting what others fear. You find the divine in the shadow.
+
+Where you seek transcendence: In intensity, in sexual union, in near-death states, in total transformation.
+
+Your generational illusion: The fantasy that intensity equals truth, that darkness is more real than light, that transformation is always necessary.
+
+The shadow: Addiction to intensity, confusing drama with depth, escapism through taboo.
+
+Your mystical gift: Transformative spirituality, finding the divine in the depths.`,
+
+            "Sagittarius": `{preferredName}, your Neptune is in Sagittarius (approximately 1970-1984), marking you as part of a generation that dreams through belief, expansion, and spiritual seeking.
+
+Your generation's spiritual theme: Spiritualizing the quest itself and finding the divine in meaning. Your cohort dreams of ultimate truth and finds transcendence through belief and expansion.
+
+How you personally experience Neptune: You're drawn to spiritual seeking, inspired teaching, and finding the sacred in belief. Your illusions relate to truth and meaning.
+
+Your dream style: Expansive and meaningful. You dream of enlightenment, of perfect teachings, of truth that sets free. Your visions are cosmic, optimistic, and meaning-rich.
+
+Your creative gifts: Inspired teaching, visionary writing, art that expands consciousness.
+
+Your spiritual path: Through seeking, teaching, and expanding horizons. You find the divine in the quest itself.
+
+Where you seek transcendence: In travel, philosophy, teaching, and moments of expanded understanding.
+
+Your generational illusion: The fantasy of finding final truth, of perfect teachers, of belief as achievement.
+
+The shadow: Escapism through endless seeking, spiritual materialism, guru addiction.
+
+Your mystical gift: Inspired seeking and teaching, finding the divine in meaning itself.`,
+
+            "Capricorn": `{preferredName}, your Neptune is in Capricorn (approximately 1984-1998), marking you as part of a generation that dreams through achievement, structure, and sacred work.
+
+Your generation's spiritual theme: Spiritualizing achievement and finding the divine in structure. Your cohort dreams of meaningful work and finds transcendence through building lasting things.
+
+How you personally experience Neptune: You're drawn to sacred work, spiritual authority, and finding the divine in structure. Your illusions relate to success and status.
+
+Your dream style: Ambitious and structured. You dream of achieving something that matters, of building that lasts, of meaningful success. Your visions are of monuments, legacies, and earned respect.
+
+Your creative gifts: Art that endures, inspired building, creativity that serves long-term purpose.
+
+Your spiritual path: Through work, achievement, and creating lasting value. You find the divine in what you build.
+
+Where you seek transcendence: In achievement, in respected status, in work that matters.
+
+Your generational illusion: The fantasy that achievement brings fulfillment, that status equals worth, that structure can hold the infinite.
+
+The shadow: Workaholism as spirituality, escapism through ambition, confusing success with meaning.
+
+Your mystical gift: Finding the divine in work, creating structures that serve spirit.`,
+
+            "Aquarius": `{preferredName}, your Neptune is in Aquarius (approximately 1998-2012), marking you as part of a generation that dreams through connection, innovation, and collective awakening.
+
+Your generation's spiritual theme: Spiritualizing technology and community, finding the divine in connection. Your cohort dreams of global awakening and finds transcendence through collective consciousness.
+
+How you personally experience Neptune: You're drawn to digital spirituality, collective movements, and finding the sacred in networks. Your illusions relate to technology and the collective.
+
+Your dream style: Connected and futuristic. You dream of global awakening, of technology that transcends, of humanity united. Your visions are of networks, collective mind, and universal connection.
+
+Your creative gifts: Inspired innovation, art that connects, creativity that serves humanity.
+
+Your spiritual path: Through technology, community, and collective evolution. You find the divine in connection itself.
+
+Where you seek transcendence: In going viral, in collective experiences, in technology that expands consciousness.
+
+Your generational illusion: The fantasy that technology will save us, that connection equals intimacy, that the collective can replace the personal.
+
+The shadow: Escapism through screens, confusing virtual with real, losing self in collective.
+
+Your mystical gift: Finding the divine in connection, technology that serves awakening.`,
+
+            "Pisces": `{preferredName}, your Neptune is in Pisces—its home sign—(approximately 2012-2026), marking you as part of a generation with intensified spiritual gifts around compassion, imagination, and transcendence.
+
+Your generation's spiritual theme: Pure spirituality and finding the divine everywhere. Your cohort dreams without boundaries and finds transcendence in simply being.
+
+How you personally experience Neptune: You're naturally mystical, drawn to compassion, and finding the sacred in everything. Your illusions relate to escapism and boundaries.
+
+Your dream style: Boundless and mystical. You dream of oceanic unity, of no separation, of pure love and imagination. Your visions are fluid, symbolic, and transcendent.
+
+Your creative gifts: Extraordinary imagination, inspired artistry, creativity that heals and transcends.
+
+Your spiritual path: Through surrender, compassion, and dissolving boundaries. You find the divine in letting go.
+
+Where you seek transcendence: Everywhere. You naturally perceive the infinite in all things.
+
+Your generational illusion: The fantasy of escape without consequence, of transcendence without grounding, of compassion without boundaries.
+
+The shadow: Severe escapism, addiction, boundary loss, confusing fantasy with reality.
+
+Your mystical gift: Natural spirituality, profound compassion, imagination that touches the infinite.`
+        };
+
+        async function calculateNeptuneSign(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '♆ Calculating Neptune position...';
+            submitBtn.disabled = true;
+
+            try {
+                const coords = await geocodeLocation(birthPlace);
+                const neptuneSign = calculatePlanetPosition('Neptune', birthDate, birthTime, coords);
+                showResult(name, neptuneSign);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function geocodeLocation(location) {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`;
+            const response = await fetch(url, { headers: { 'User-Agent': 'QuantumMerlinTools/1.0' } });
+            if (!response.ok) throw new Error('Failed to look up location');
+            const data = await response.json();
+            if (data.length === 0) throw new Error('Location not found');
+            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+        }
+
+        function calculatePlanetPosition(planet, dateStr, timeStr, coords) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const tzOffsetHours = Math.round(coords.lon / 15);
+            const utcHours = hours - tzOffsetHours;
+            const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+            const time = Astronomy.MakeTime(datetime);
+            
+            const equ = Astronomy.Equator(planet, time, null, true, false);
+            const ecliptic = Astronomy.Ecliptic(equ.vec);
+            
+            let lon = ecliptic.elon;
+            while (lon < 0) lon += 360;
+            while (lon >= 360) lon -= 360;
+            
+            const signIndex = Math.floor(lon / 30);
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+            
+            return signs[signIndex];
+        }
+
+        function showResult(name, neptuneSign) {
+            const interpretation = interpretations[neptuneSign];
+            const personalizedReading = interpretation.replace(/{preferredName}/g, name);
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            const readingData = {
+                toolType: 'neptune',
+                headerTitle: '♆ Your Neptune Sign Reading',
+                headerSubtitle: 'Your dreams, spirituality, and connection to the infinite',
+                number: neptuneSign,
+                title: `Neptune in ${neptuneSign}`,
+                subtitle: `${name}, this is how you dream and transcend`,
+                content: paragraphs,
+                sourceUrl: 'neptune-sign-reading.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            window.location.href = 'reading-loading.html';
+        }
+    </script>
+</body>
+</html>

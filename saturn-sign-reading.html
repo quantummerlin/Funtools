@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saturn Sign Calculator & Reading | Quantum Merlin</title>
+    <meta name="description" content="Calculate your Saturn Sign and discover your karmic lessons, life challenges, and path to mastery.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(107, 114, 128, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(75, 85, 99, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #9ca3af 0%, #d1d5db 50%, #6b7280 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #9ca3af;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(156, 163, 175, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .input-section { margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            color: #9ca3af;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(156, 163, 175, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #9ca3af;
+            box-shadow: 0 0 20px rgba(156, 163, 175, 0.2);
+        }
+        .helper-text {
+            font-size: 0.85em;
+            color: #9A8F7A;
+            margin-top: 5px;
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(156, 163, 175, 0.4);
+        }
+        button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-block;
+            color: #9ca3af;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="tools_index.html" class="back-link">← Back to Quantum Merlin Hub</a>
+        
+        <div class="header">
+            <h1>♄ Saturn Sign Reading</h1>
+            <p>Discover your karmic lessons, life challenges, and path to mastery</p>
+        </div>
+
+        <div class="tool-card">
+            <form onsubmit="calculateSaturnSign(event)">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="preferredName">Your Name</label>
+                        <input type="text" id="preferredName" required placeholder="What should we call you?">
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="birthDate">Birth Date</label>
+                            <input type="date" id="birthDate" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime" required>
+                            <div class="helper-text">Local time at birth location</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth City</label>
+                            <input type="text" id="birthPlace" required placeholder="e.g., Berlin, Germany">
+                            <div class="helper-text">City and country</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">♄ Calculate My Saturn Sign & Reading</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const interpretations = {
+            "Aries": `{preferredName}, your Saturn is in Aries, placing your karmic lessons around courage, independence, and self-assertion. You're learning to stand up for yourself, act decisively, and trust your own leadership.
+
+Your core challenge: Fear of asserting yourself. Early experiences may have taught you that being bold, angry, or self-focused was dangerous or wrong. You may struggle with feeling entitled to pursue your own desires.
+
+What Saturn demands: You must learn to act despite fear, to lead when called, and to trust your instincts. Saturn won't let you hide behind others or wait for permission to live your life.
+
+Your fear signature: Fear of conflict, aggression, or being seen as selfish. You may avoid confrontation excessively or swing to overcompensation—becoming aggressive to mask insecurity.
+
+The mastery path: True courage isn't recklessness—it's facing fear consciously. You're learning that healthy self-assertion serves everyone, that your anger has wisdom, and that you have a right to exist boldly.
+
+Your Saturn Return (around ages 29 and 58): Demands that you take independent action, claim your autonomy, and stop waiting for others to give you permission to live your life.
+
+The gift of mastery: Once you integrate this lesson, you become a model of true courage—not reactive aggression but conscious, mature assertion that inspires others to claim their own power.
+
+Your karmic homework: Practice saying no. Take the lead. Express anger appropriately. Stop waiting. Start.`,
+
+            "Taurus": `{preferredName}, your Saturn is in Taurus, placing your karmic lessons around security, self-worth, and material stability. You're learning that true security comes from within, not from possessions.
+
+Your core challenge: Fear of scarcity and worthlessness. You may have experienced early material instability or messages that your value depended on what you had, not who you were.
+
+What Saturn demands: You must build genuine security through patient effort, develop self-worth independent of possessions, and learn that you are enough without external validation.
+
+Your fear signature: Fear of poverty, loss, or being worthless. You may hoard resources anxiously or swing to rejecting material needs entirely as "unspiritual."
+
+The mastery path: True security is internal. You're learning that patient, honest effort creates lasting stability, that your worth is inherent, and that resources are tools, not identity.
+
+Your Saturn Return (around ages 29 and 58): Demands that you confront your relationship with money, security, and self-worth. You must build real stability, not anxious accumulation.
+
+The gift of mastery: Once you integrate this lesson, you become a rock of genuine stability—someone whose security comes from within, who builds patiently, and who helps others develop healthy relationships with resources.
+
+Your karmic homework: Develop practical skills. Save and invest wisely. Separate self-worth from net worth. Build slowly but surely.`,
+
+            "Gemini": `{preferredName}, your Saturn is in Gemini, placing your karmic lessons around communication, learning, and mental discipline. You're learning to think clearly, speak responsibly, and commit to intellectual development.
+
+Your core challenge: Fear of being stupid, misunderstood, or mentally inadequate. Early experiences may have taught you that your words were wrong, your thoughts didn't matter, or learning was difficult.
+
+What Saturn demands: You must develop mental discipline, communicate with precision and responsibility, and commit to learning despite insecurity about your intelligence.
+
+Your fear signature: Fear of speaking up, being wrong, or intellectual inadequacy. You may stay silent to avoid criticism or talk excessively without substance.
+
+The mastery path: True intelligence is developed, not inherited. You're learning that clear thinking requires discipline, that words have weight and consequences, and that knowledge builds through persistent effort.
+
+Your Saturn Return (around ages 29 and 58): Demands that you develop your mind seriously, speak with authority, and take responsibility for your communications and commitments.
+
+The gift of mastery: Once you integrate this lesson, you become a master communicator—someone who speaks with earned authority, thinks with discipline, and helps others develop their minds.
+
+Your karmic homework: Study seriously. Write and speak deliberately. Keep your word. Develop expertise in something.`,
+
+            "Cancer": `{preferredName}, your Saturn is in Cancer, placing your karmic lessons around emotional security, family, and nurturing. You're learning to create internal safety and healthy emotional bonds.
+
+Your core challenge: Fear of emotional vulnerability and abandonment. Early family experiences may have taught you that emotions were dangerous, care was conditional, or home was not safe.
+
+What Saturn demands: You must learn to nurture yourself, create emotional security within, and develop healthy family relationships—biological or chosen—despite early wounds.
+
+Your fear signature: Fear of dependency, vulnerability, or abandonment. You may build walls around your heart or become clingy and needy, seeking the security you didn't receive.
+
+The mastery path: True emotional security is internal. You're learning to mother yourself, to create safety within, and to build family structures that provide genuine nurturing.
+
+Your Saturn Return (around ages 29 and 58): Demands that you confront family patterns, heal childhood wounds, and take responsibility for your own emotional wellbeing.
+
+The gift of mastery: Once you integrate this lesson, you become a true elder—someone who provides genuine emotional safety for others because you've created it within yourself.
+
+Your karmic homework: Heal family wounds. Learn to self-nurture. Create healthy boundaries around your emotional life. Build chosen family if needed.`,
+
+            "Leo": `{preferredName}, your Saturn is in Leo, placing your karmic lessons around self-expression, creativity, and authentic identity. You're learning to shine genuinely, not for approval but from truth.
+
+Your core challenge: Fear of being seen, creative expression, or claiming your identity. Early experiences may have shamed your self-expression, punished your joy, or taught you that visibility was dangerous.
+
+What Saturn demands: You must learn to express yourself authentically, develop your creative gifts seriously, and claim your identity without depending on applause.
+
+Your fear signature: Fear of attention, judgment, or being "too much." You may hide your light or become attention-seeking to compensate for feeling unseen.
+
+The mastery path: True self-expression comes from authenticity, not approval-seeking. You're learning that your creative gifts require serious development and that your light serves others when shined genuinely.
+
+Your Saturn Return (around ages 29 and 58): Demands that you step into visibility, develop your creative talents, and claim your authentic identity regardless of reception.
+
+The gift of mastery: Once you integrate this lesson, you become a genuine source of light—someone whose creative expression comes from depth, whose presence inspires without demanding applause.
+
+Your karmic homework: Develop your creative talents seriously. Risk being seen. Express yourself even when afraid. Shine from authenticity, not need.`,
+
+            "Virgo": `{preferredName}, your Saturn is in Virgo, placing your karmic lessons around service, health, and perfectionism. You're learning that useful imperfection beats paralytic perfection.
+
+Your core challenge: Fear of inadequacy and imperfection. Early experiences may have taught you that you were never good enough, that criticism was constant, or that mistakes were catastrophic.
+
+What Saturn demands: You must develop genuine competence through practice, serve without perfectionist paralysis, and learn that imperfect action is superior to perfect inaction.
+
+Your fear signature: Fear of criticism, imperfection, or being useless. You may criticize yourself relentlessly, avoid trying to avoid failing, or become hypercritical of others.
+
+The mastery path: True competence accepts imperfection. You're learning that skill comes through practice (which requires imperfection), that service matters more than perfection, and that self-criticism beyond utility is self-harm.
+
+Your Saturn Return (around ages 29 and 58): Demands that you develop real skills, find meaningful work, and release paralyzing perfectionism to actually serve.
+
+The gift of mastery: Once you integrate this lesson, you become genuinely masterful—skilled through dedicated practice, helpful without perfectionist anxiety, able to improve without self-destruction.
+
+Your karmic homework: Practice consistently. Release perfectionism. Serve actively. Develop genuine skills. Accept imperfection as the price of growth.`,
+
+            "Libra": `{preferredName}, your Saturn is in Libra—its exalted sign—placing your karmic lessons around relationships, fairness, and partnership. You're learning to relate as an equal, neither dependent nor isolated.
+
+Your core challenge: Fear of relationship and commitment. Early experiences may have shown you unfair or imbalanced relationships, teaching you to fear partnership or lose yourself in it.
+
+What Saturn demands: You must learn to commit to relationships while maintaining identity, to create genuine fairness, and to partner as an equal—neither dominant nor submissive.
+
+Your fear signature: Fear of commitment, unfairness, or losing yourself. You may avoid relationships entirely or become codependent, unable to exist outside partnership.
+
+The mastery path: True partnership requires two whole people. You're learning that healthy relationships balance give and take, that commitment can be safe, and that fairness requires ongoing attention.
+
+Your Saturn Return (around ages 29 and 58): Demands that you commit to important relationships, address imbalances, and develop the capacity for genuine equal partnership.
+
+The gift of mastery: Once you integrate this lesson, you become a master of relationship—able to commit without losing yourself, to create genuine fairness, and to model healthy partnership.
+
+Your karmic homework: Commit to important relationships. Address imbalances directly. Maintain identity within partnership. Create fairness actively.`,
+
+            "Scorpio": `{preferredName}, your Saturn is in Scorpio, placing your karmic lessons around power, intimacy, and transformation. You're learning to use power wisely, share deeply, and transform consciously.
+
+Your core challenge: Fear of powerlessness, betrayal, and depth. Early experiences may have involved power abuse, violation of trust, or trauma that made vulnerability feel dangerous.
+
+What Saturn demands: You must learn to wield power ethically, to trust despite past betrayal, and to undergo transformation consciously rather than avoiding or being destroyed by crisis.
+
+Your fear signature: Fear of vulnerability, betrayal, or powerlessness. You may control obsessively, avoid intimacy entirely, or use power manipulatively to avoid being hurt.
+
+The mastery path: True power comes from self-mastery, not control of others. You're learning that selective vulnerability with trustworthy people is essential, that transformation is survivable, and that your psychological depth is a gift.
+
+Your Saturn Return (around ages 29 and 58): Demands that you confront power dynamics, heal from betrayal, and consciously transform rather than cling to what's dying.
+
+The gift of mastery: Once you integrate this lesson, you become a master of transformation—able to guide others through crisis, wield power ethically, and create deep intimacy through conscious vulnerability.
+
+Your karmic homework: Examine your relationship with power. Heal from betrayal. Choose conscious transformation. Risk appropriate vulnerability.`,
+
+            "Sagittarius": `{preferredName}, your Saturn is in Sagittarius, placing your karmic lessons around truth, meaning, and belief. You're learning to find genuine truth through discipline, not just adopt comfortable beliefs.
+
+Your core challenge: Fear of meaninglessness or being wrong. Early experiences may have involved religious rigidity, loss of faith, or exposure to hypocrisy that made belief complicated.
+
+What Saturn demands: You must develop your own philosophy through serious inquiry, seek truth with intellectual rigor, and take responsibility for what you teach and believe.
+
+Your fear signature: Fear of being wrong, losing faith, or meaninglessness. You may cling to rigid beliefs or reject meaning entirely, swinging between dogmatism and nihilism.
+
+The mastery path: True wisdom is earned through disciplined inquiry. You're learning that beliefs must be tested, that meaning requires active creation, and that teaching carries responsibility.
+
+Your Saturn Return (around ages 29 and 58): Demands that you examine your beliefs seriously, develop genuine wisdom, and take responsibility for your philosophy and what you share.
+
+The gift of mastery: Once you integrate this lesson, you become a true sage—someone whose wisdom comes from tested inquiry, whose teaching comes from lived truth, who inspires genuine faith.
+
+Your karmic homework: Examine your beliefs critically. Seek truth rigorously. Take teaching seriously. Develop genuine wisdom through experience and study.`,
+
+            "Capricorn": `{preferredName}, your Saturn is in Capricorn—its home sign—placing your karmic lessons around achievement, authority, and responsibility. You're learning to achieve with integrity and lead with wisdom.
+
+Your core challenge: Fear of failure, inadequacy, or authority. You may have experienced harsh authority figures, heavy responsibility too young, or messages that you must earn your worth through achievement.
+
+What Saturn demands: You must achieve through honest effort, develop genuine authority, and take responsibility without being crushed by it or avoiding it entirely.
+
+Your fear signature: Fear of failure, authority, or heavy responsibility. You may drive yourself relentlessly toward achievement or avoid responsibility entirely.
+
+The mastery path: True authority is earned through competence and integrity. You're learning that achievement matters but doesn't define you, that leadership is service, and that responsibility can be carried without being crushed.
+
+Your Saturn Return (around ages 29 and 58): Demands that you claim your authority, achieve meaningfully, and take on appropriate responsibility for your stage of life.
+
+The gift of mastery: Once you integrate this lesson, you become a true elder—someone with earned authority, meaningful achievement, and the capacity to carry heavy responsibility with grace.
+
+Your karmic homework: Achieve something meaningful. Develop genuine authority. Take responsibility without resentment. Lead with integrity.`,
+
+            "Aquarius": `{preferredName}, your Saturn is in Aquarius—its traditional home sign—placing your karmic lessons around individuality, community, and progress. You're learning to be authentically different while belonging.
+
+Your core challenge: Fear of rejection for being different, or of losing yourself in the group. Early experiences may have punished your uniqueness or made belonging feel like conformity.
+
+What Saturn demands: You must develop your unique contribution without alienating isolation, participate in community without losing individuality, and work for progress with practical commitment.
+
+Your fear signature: Fear of rejection, conformity, or isolation. You may reject groups entirely to protect uniqueness or suppress individuality to belong.
+
+The mastery path: True individuality serves the collective. You're learning that being different can contribute rather than alienate, that community can embrace uniqueness, and that progress requires commitment.
+
+Your Saturn Return (around ages 29 and 58): Demands that you claim your unique contribution, find your tribe, and commit to causes beyond yourself without losing your identity.
+
+The gift of mastery: Once you integrate this lesson, you become a true innovator—someone whose uniqueness serves the collective, who belongs without conforming, who advances progress practically.
+
+Your karmic homework: Develop your unique contribution. Find community that embraces difference. Work for causes beyond yourself. Be authentically different.`,
+
+            "Pisces": `{preferredName}, your Saturn is in Pisces, placing your karmic lessons around faith, compassion, and boundaries. You're learning to serve without martyrdom and believe without escapism.
+
+Your core challenge: Fear of dissolution, chaos, or spiritual failure. Early experiences may have involved suffering that shook faith, boundaries that were violated, or compassion that led to depletion.
+
+What Saturn demands: You must develop practical spirituality, serve without self-destruction, and maintain boundaries while remaining compassionate. Faith must be grounded.
+
+Your fear signature: Fear of chaos, boundary loss, or spiritual inadequacy. You may build rigid defenses against the spiritual or lose yourself in escapism and boundaryless giving.
+
+The mastery path: True spirituality is embodied and boundaried. You're learning that compassion requires sustainability, that faith is compatible with practical reality, and that helping must not harm the helper.
+
+Your Saturn Return (around ages 29 and 58): Demands that you ground your spirituality, serve with boundaries, and develop faith that survives contact with reality.
+
+The gift of mastery: Once you integrate this lesson, you become a true mystic—someone whose spirituality is practical, whose compassion is sustainable, whose faith has survived testing.
+
+Your karmic homework: Ground your spiritual practice. Serve with boundaries. Develop sustainable compassion. Test faith against reality.`
+        };
+
+        async function calculateSaturnSign(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '♄ Calculating Saturn position...';
+            submitBtn.disabled = true;
+
+            try {
+                const coords = await geocodeLocation(birthPlace);
+                const saturnSign = calculatePlanetPosition('Saturn', birthDate, birthTime, coords);
+                showResult(name, saturnSign);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function geocodeLocation(location) {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`;
+            const response = await fetch(url, { headers: { 'User-Agent': 'QuantumMerlinTools/1.0' } });
+            if (!response.ok) throw new Error('Failed to look up location');
+            const data = await response.json();
+            if (data.length === 0) throw new Error('Location not found');
+            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+        }
+
+        function calculatePlanetPosition(planet, dateStr, timeStr, coords) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const tzOffsetHours = Math.round(coords.lon / 15);
+            const utcHours = hours - tzOffsetHours;
+            const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+            const time = Astronomy.MakeTime(datetime);
+            
+            const equ = Astronomy.Equator(planet, time, null, true, false);
+            const ecliptic = Astronomy.Ecliptic(equ.vec);
+            
+            let lon = ecliptic.elon;
+            while (lon < 0) lon += 360;
+            while (lon >= 360) lon -= 360;
+            
+            const signIndex = Math.floor(lon / 30);
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+            
+            return signs[signIndex];
+        }
+
+        function showResult(name, saturnSign) {
+            const interpretation = interpretations[saturnSign];
+            const personalizedReading = interpretation.replace(/{preferredName}/g, name);
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            const readingData = {
+                toolType: 'saturn',
+                headerTitle: '♄ Your Saturn Sign Reading',
+                headerSubtitle: 'Your karmic lessons and path to mastery',
+                number: saturnSign,
+                title: `Saturn in ${saturnSign}`,
+                subtitle: `${name}, these are your life lessons`,
+                content: paragraphs,
+                sourceUrl: 'saturn-sign-reading.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            window.location.href = 'reading-loading.html';
+        }
+    </script>
+</body>
+</html>
