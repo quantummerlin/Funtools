@@ -6,13 +6,13 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="20260111132525">
+    <meta name="version" content="20260111140000">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔮 Quantum Merlin | Ancient Patterns. Modern Interfaces.</title>
     <meta name="description" content="Quantum Merlin maps time, numbers, and celestial cycles into clear moments for aligned action — blending ancient pattern wisdom with modern interface clarity.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap&v=20260111121803&v=20260111121858&v=20260111132525" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <style>
         * {
@@ -29,26 +29,26 @@
                 radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             color: #e0e0e0;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
         .header {
             text-align: center;
             color: white;
-            margin-bottom: 60px;
-            padding: 40px 20px;
+            margin-bottom: 30px;
+            padding: 25px 15px;
         }
         
         .header h1 {
             font-family: 'Cinzel Decorative', serif;
-            font-size: clamp(1.8rem, 8vw, 3.5rem);
-            margin-bottom: 15px;
+            font-size: clamp(1.5rem, 7vw, 3rem);
+            margin-bottom: 12px;
             background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -56,8 +56,6 @@
             text-shadow: 0 0 40px rgba(251, 191, 36, 0.3);
             letter-spacing: clamp(0px, 0.5vw, 2px);
             animation: glow 3s ease-in-out infinite;
-            word-break: keep-all;
-            padding: 0 10px;
         }
         
         @keyframes glow {
@@ -67,9 +65,9 @@
         
         .header .tagline {
             font-family: 'Cinzel', serif;
-            font-size: 1.3em;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             color: #06b6d4;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             letter-spacing: 1px;
             text-transform: uppercase;
             font-weight: 600;
@@ -77,141 +75,28 @@
         
         .header .subtitle {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3em;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             opacity: 0.85;
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.5;
             font-weight: 500;
         }
         
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-        
-        .category-btn {
-            background: rgba(6, 182, 212, 0.1);
-            border: 2px solid rgba(6, 182, 212, 0.3);
-            color: #06b6d4;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 15px;
-            font-family: 'Cinzel', serif;
-            font-weight: 600;
-            transition: all 0.3s;
-            letter-spacing: 0.5px;
-        }
-        
-        .category-btn:hover,
-        .category-btn.active {
-            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
-            color: white;
-            border-color: #06b6d4;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
-        }
-        
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;            justify-items: center;        }
-        
-        .tool-card {
-            background: rgba(20, 20, 30, 0.8);
-            border: 2px solid rgba(6, 182, 212, 0.2);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-            max-width: 350px;
-            width: 100%;
-        }
-        
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        
-        .tool-card:hover::before {
-            opacity: 1;
-        }
-        
-        .tool-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(251, 191, 36, 0.5);
-            box-shadow: 
-                0 20px 60px rgba(6, 182, 212, 0.3),
-                0 0 40px rgba(251, 191, 36, 0.2);
-        }
-        
-        .tool-icon {
-            font-size: 3.5em;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.5));
-        }
-        
-        .tool-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.4em;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #fbbf24;
-            letter-spacing: 0.5px;
-        }
-        
-        .tool-description {
-            color: #d1d5db;
-            font-size: 1.05em;
-            line-height: 1.6;
-            font-family: 'Cormorant Garamond', serif;
-        }
-        
-        .tool-category {
-            display: inline-block;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(6, 182, 212, 0.3) 100%);
-            border: 1px solid rgba(6, 182, 212, 0.4);
-            color: #06b6d4;
-            padding: 6px 14px;
-            border-radius: 15px;
-            font-size: 0.85em;
-            font-family: 'Cinzel', serif;
-            margin-top: 18px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        
+        /* Search Bar */
         .search-bar {
             background: rgba(20, 20, 30, 0.8);
             border: 2px solid rgba(6, 182, 212, 0.3);
-            border-radius: 30px;
-            padding: 18px 30px;
-            margin-bottom: 40px;
+            border-radius: 25px;
+            padding: 14px 20px;
+            margin-bottom: 25px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
         
         .search-bar input {
             width: 100%;
             border: none;
-            font-size: 1.15em;
+            font-size: 1.1em;
             outline: none;
             background: transparent;
             color: #e0e0e0;
@@ -222,48 +107,368 @@
             color: #6b7280;
         }
         
-        .stats {
+        /* Collapsible Categories */
+        .category-section {
+            margin-bottom: 15px;
+            border-radius: 15px;
+            overflow: hidden;
             background: rgba(20, 20, 30, 0.6);
-            border: 2px solid rgba(251, 191, 36, 0.2);
-            border-radius: 20px;
-            padding: 30px;
-            color: white;
-            text-align: center;
-            margin-bottom: 40px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(6, 182, 212, 0.2);
         }
         
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 30px;
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 20px;
+            cursor: pointer;
+            background: rgba(20, 20, 30, 0.8);
+            transition: all 0.3s;
+            -webkit-tap-highlight-color: transparent;
         }
         
-        .stat-item h3 {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 2.5em;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #fbbf24 0%, #ec4899 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .category-header:hover {
+            background: rgba(6, 182, 212, 0.1);
         }
         
-        .stat-item p {
+        .category-header.active {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+            border-bottom: 1px solid rgba(6, 182, 212, 0.3);
+        }
+        
+        .category-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+        
+        .category-header .count {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1em;
+            font-size: 0.9rem;
+            color: #06b6d4;
             opacity: 0.8;
-            font-weight: 500;
         }
         
+        .category-header .toggle-icon {
+            font-size: 1.5rem;
+            color: #06b6d4;
+            transition: transform 0.3s;
+        }
+        
+        .category-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .category-content {
+            display: none;
+            padding: 15px;
+        }
+        
+        .category-content.show {
+            display: block;
+        }
+        
+        /* Tools Grid - Mobile First */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        @media (min-width: 500px) {
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 900px) {
+            .tools-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Tool Cards - Mobile Optimized */
+        .tool-card {
+            background: rgba(30, 30, 45, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .tool-card:hover, .tool-card:active {
+            transform: translateY(-3px);
+            border-color: rgba(251, 191, 36, 0.4);
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.2);
+        }
+        
+        .tool-icon {
+            font-size: 2.2rem;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.4));
+        }
+        
+        .tool-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .tool-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #fbbf24;
+        }
+        
+        .tool-description {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* Ad Space */
+        .ad-space {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border: 2px dashed rgba(251, 191, 36, 0.3);
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .ad-space:hover {
+            border-color: rgba(251, 191, 36, 0.6);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
+        }
+        
+        .ad-space-title {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        
+        .ad-space-text {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+        
+        .ad-space-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #0a0a0f;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        /* Ad Inquiry Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 30px 25px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .modal-title {
+            font-family: 'Cinzel Decorative', serif;
+            color: #fbbf24;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .modal-subtitle {
+            color: #06b6d4;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #e0e0e0;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(30, 30, 45, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 10px;
+            color: #e0e0e0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #fbbf24;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-group select option {
+            background: #1a1a2e;
+        }
+        
+        .pricing-info {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .pricing-info h4 {
+            color: #06b6d4;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-option {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.95rem;
+        }
+        
+        .pricing-option:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-option .type {
+            color: #d1d5db;
+        }
+        
+        .pricing-option .price {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border: none;
+            border-radius: 25px;
+            color: #0a0a0f;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.4);
+        }
+        
+        /* Footer */
         .footer {
             text-align: center;
             color: #9ca3af;
-            padding: 40px;
+            padding: 30px 15px;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.05em;
+            font-size: 1rem;
             border-top: 1px solid rgba(6, 182, 212, 0.2);
-            margin-top: 40px;
+            margin-top: 30px;
+        }
+        
+        /* Search Results Mode */
+        .search-results-section {
+            display: none;
+            margin-bottom: 25px;
+        }
+        
+        .search-results-section.show {
+            display: block;
+        }
+        
+        .search-results-header {
+            color: #06b6d4;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        /* Hide categories when searching */
+        .categories-container.hidden {
+            display: none;
         }
     </style>
 <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
@@ -276,39 +481,104 @@
             <p class="subtitle">Mapping time, numbers, and celestial cycles into clear moments for aligned action</p>
         </div>
         
-        <div class="stats">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>30+</h3>
-                    <p>Pattern Tools</p>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="🔍 Search all tools...">
+        </div>
+        
+        <!-- Search Results (hidden by default) -->
+        <div class="search-results-section" id="searchResults">
+            <h3 class="search-results-header">Search Results</h3>
+            <div class="tools-grid" id="searchResultsGrid"></div>
+        </div>
+        
+        <!-- Categories (collapsible) -->
+        <div class="categories-container" id="categoriesContainer">
+            <!-- Numerology Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('numerology')">
+                    <h2>🔢 Numerology <span class="count">(11 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
                 </div>
-                <div class="stat-item">
-                    <h3>∞</h3>
-                    <p>Timeless Wisdom</p>
-                </div>
-                <div class="stat-item">
-                    <h3>⚛️</h3>
-                    <p>Quantum Clarity</p>
+                <div class="category-content" id="numerology-content">
+                    <div class="tools-grid" id="numerology-grid"></div>
                 </div>
             </div>
-        </div>
-        
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="🔍 Search tools...">
-        </div>
-        
-        <div class="categories">
-            <button class="category-btn active" data-category="all">All Tools</button>
-            <button class="category-btn" data-category="numerology">Numerology</button>
-            <button class="category-btn" data-category="astrology">Astrology</button>
-            <button class="category-btn" data-category="personality">Personality</button>
-            <button class="category-btn" data-category="fortune">Fortune</button>
-            <button class="category-btn" data-category="life">Life</button>
-            <button class="category-btn" data-category="entertainment">Entertainment</button>
-        </div>
-        
-        <div class="tools-grid" id="toolsGrid">
-            <!-- Tools will be dynamically loaded here -->
+            
+            <!-- Ad Space after Numerology -->
+            <div class="ad-space" onclick="openAdInquiry('numerology', 'After Numerology Section')">
+                <div class="ad-space-title">📢 Advertise Here</div>
+                <div class="ad-space-text">Reach users exploring numerology & life paths</div>
+                <span class="ad-space-cta">Inquire About This Space →</span>
+            </div>
+            
+            <!-- Astrology Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('astrology')">
+                    <h2>⭐ Astrology <span class="count">(16 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="astrology-content">
+                    <div class="tools-grid" id="astrology-grid"></div>
+                </div>
+            </div>
+            
+            <!-- Ad Space after Astrology -->
+            <div class="ad-space" onclick="openAdInquiry('astrology', 'After Astrology Section')">
+                <div class="ad-space-title">📢 Advertise Here</div>
+                <div class="ad-space-text">Connect with astrology & horoscope enthusiasts</div>
+                <span class="ad-space-cta">Inquire About This Space →</span>
+            </div>
+            
+            <!-- Personality Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('personality')">
+                    <h2>🎭 Personality <span class="count">(3 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="personality-content">
+                    <div class="tools-grid" id="personality-grid"></div>
+                </div>
+            </div>
+            
+            <!-- Fortune Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('fortune')">
+                    <h2>🔮 Fortune & Divination <span class="count">(8 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="fortune-content">
+                    <div class="tools-grid" id="fortune-grid"></div>
+                </div>
+            </div>
+            
+            <!-- Ad Space after Fortune -->
+            <div class="ad-space" onclick="openAdInquiry('fortune', 'After Fortune Section')">
+                <div class="ad-space-title">📢 Advertise Here</div>
+                <div class="ad-space-text">Engage users seeking guidance & daily fortunes</div>
+                <span class="ad-space-cta">Inquire About This Space →</span>
+            </div>
+            
+            <!-- Life Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('life')">
+                    <h2>📊 Life Tools <span class="count">(4 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="life-content">
+                    <div class="tools-grid" id="life-grid"></div>
+                </div>
+            </div>
+            
+            <!-- Entertainment Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('entertainment')">
+                    <h2>🎲 Entertainment <span class="count">(4 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="entertainment-content">
+                    <div class="tools-grid" id="entertainment-grid"></div>
+                </div>
+            </div>
         </div>
         
         <div class="footer">
@@ -316,441 +586,279 @@
         </div>
     </div>
     
+    <!-- Ad Inquiry Modal -->
+    <div class="modal-overlay" id="adModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAdModal()">✕</button>
+            <h2 class="modal-title">📢 Advertising Inquiry</h2>
+            <p class="modal-subtitle" id="adLocationText">Premium placement opportunity</p>
+            
+            <form id="adInquiryForm" onsubmit="submitAdInquiry(event)">
+                <div class="form-group">
+                    <label>Your Name *</label>
+                    <input type="text" id="adName" required placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" id="adEmail" required placeholder="your@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>Company / Brand</label>
+                    <input type="text" id="adCompany" placeholder="Your company or brand name">
+                </div>
+                
+                <div class="form-group">
+                    <label>Ad Placement Location</label>
+                    <input type="text" id="adLocation" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Sponsorship Type *</label>
+                    <select id="adType" required>
+                        <option value="">Select sponsorship type...</option>
+                        <option value="single-slot">Single Ad Slot (this position only)</option>
+                        <option value="category">Full Category Sponsorship (all tools in category)</option>
+                        <option value="reading-type">Reading Type Package (specific reading results)</option>
+                        <option value="zodiac-specific">Zodiac-Specific (certain signs only)</option>
+                        <option value="site-wide">Site-Wide Premium Placement</option>
+                        <option value="custom">Custom Package (describe below)</option>
+                    </select>
+                </div>
+                
+                <div class="pricing-info">
+                    <h4>💰 Sponsorship Options</h4>
+                    <div class="pricing-option">
+                        <span class="type">Single Ad Slot</span>
+                        <span class="price">From $50/mo</span>
+                    </div>
+                    <div class="pricing-option">
+                        <span class="type">Category Sponsorship</span>
+                        <span class="price">From $150/mo</span>
+                    </div>
+                    <div class="pricing-option">
+                        <span class="type">Reading Type Package</span>
+                        <span class="price">From $100/mo</span>
+                    </div>
+                    <div class="pricing-option">
+                        <span class="type">Zodiac-Specific</span>
+                        <span class="price">From $75/mo</span>
+                    </div>
+                    <div class="pricing-option">
+                        <span class="type">Site-Wide Premium</span>
+                        <span class="price">Contact for pricing</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Your Bid / Budget (optional)</label>
+                    <input type="text" id="adBudget" placeholder="e.g., $200/month">
+                </div>
+                
+                <div class="form-group">
+                    <label>Additional Details</label>
+                    <textarea id="adMessage" placeholder="Tell us about your brand, target audience, or any specific requirements..."></textarea>
+                </div>
+                
+                <input type="hidden" id="adCategory" value="">
+                
+                <button type="submit" class="submit-btn">Submit Inquiry ✨</button>
+            </form>
+        </div>
+    </div>
+    
     <script>
-        // Version: 20260111132525 - Auto-generated cache buster
-        // Version: 20260111121858 - Auto-generated cache buster
-        // Version: 20260111121803 - Auto-generated cache buster
         const tools = [
             // Numerology Tools
-            {
-                icon: "✨",
-                title: "Life Path Number",
-                description: "Calculate your life path number and reveal your true purpose in life.",
-                category: "numerology",
-                file: "life-path-calculator.html"
-            },
-            {
-                icon: "🌟",
-                title: "Destiny Number",
-                description: "Uncover your destiny number and understand your life's mission.",
-                category: "numerology",
-                file: "destiny-number-calculator.html"
-            },
-            {
-                icon: "💫",
-                title: "Soul Urge Number",
-                description: "Reveal your soul urge number and discover your inner desires.",
-                category: "numerology",
-                file: "soul-urge-calculator.html"
-            },
-            {
-                icon: "🎯",
-                title: "Personality Number",
-                description: "Calculate your personality number and how others see you.",
-                category: "numerology",
-                file: "personality-number-calculator.html"
-            },
-            {
-                icon: "📛",
-                title: "Name Number",
-                description: "Explore the numerological power and meaning of your name.",
-                category: "numerology",
-                file: "name-number-calculator.html"
-            },
-            {
-                icon: "🎂",
-                title: "Birthday Number Reading",
-                description: "Discover your special gifts and talents through your birthday number.",
-                category: "numerology",
-                file: "birthday-number-reading.html"
-            },
-            {
-                icon: "📅",
-                title: "Personal Year Reading",
-                description: "Understand the cosmic energy and opportunities of your current year.",
-                category: "numerology",
-                file: "personal-year-reading.html"
-            },
-            {
-                icon: "🗓️",
-                title: "Personal Month Reading",
-                description: "Navigate the specific energy and focus of your current month.",
-                category: "numerology",
-                file: "personal-month-reading.html"
-            },
-            {
-                icon: "🌅",
-                title: "Maturity Number Reading",
-                description: "Discover the wisdom and purpose that emerges in your later years.",
-                category: "numerology",
-                file: "maturity-number-reading.html"
-            },
-            {
-                icon: "⚖️",
-                title: "Karmic Debt Reading",
-                description: "Understand and transform your karmic patterns (13, 14, 16, 19).",
-                category: "numerology",
-                file: "karmic-debt-reading.html"
-            },
-            {
-                icon: "👑",
-                title: "Master Number Deep Reading",
-                description: "Master your 11, 22, or 33 spiritual potential.",
-                category: "numerology",
-                file: "master-number-reading.html"
-            },
+            { icon: "✨", title: "Life Path Number", description: "Calculate your life path number and reveal your true purpose in life.", category: "numerology", file: "life-path-calculator.html" },
+            { icon: "🌟", title: "Destiny Number", description: "Uncover your destiny number and understand your life's mission.", category: "numerology", file: "destiny-number-calculator.html" },
+            { icon: "💫", title: "Soul Urge Number", description: "Reveal your soul urge number and discover your inner desires.", category: "numerology", file: "soul-urge-calculator.html" },
+            { icon: "🎯", title: "Personality Number", description: "Calculate your personality number and how others see you.", category: "numerology", file: "personality-number-calculator.html" },
+            { icon: "📛", title: "Name Number", description: "Explore the numerological power and meaning of your name.", category: "numerology", file: "name-number-calculator.html" },
+            { icon: "🎂", title: "Birthday Number Reading", description: "Discover your special gifts and talents through your birthday number.", category: "numerology", file: "birthday-number-reading.html" },
+            { icon: "📅", title: "Personal Year Reading", description: "Understand the cosmic energy and opportunities of your current year.", category: "numerology", file: "personal-year-reading.html" },
+            { icon: "🗓️", title: "Personal Month Reading", description: "Navigate the specific energy and focus of your current month.", category: "numerology", file: "personal-month-reading.html" },
+            { icon: "🌅", title: "Maturity Number Reading", description: "Discover the wisdom and purpose that emerges in your later years.", category: "numerology", file: "maturity-number-reading.html" },
+            { icon: "⚖️", title: "Karmic Debt Reading", description: "Understand and transform your karmic patterns (13, 14, 16, 19).", category: "numerology", file: "karmic-debt-reading.html" },
+            { icon: "👑", title: "Master Number Deep Reading", description: "Master your 11, 22, or 33 spiritual potential.", category: "numerology", file: "master-number-reading.html" },
+            
             // Astrology Tools
-            {
-                icon: "🌟",
-                title: "Birth Chart Overview",
-                description: "Your complete cosmic blueprint — all 11 planetary placements calculated and analyzed.",
-                category: "astrology",
-                file: "birth-chart-overview.html"
-            },
-            {
-                icon: "♈",
-                title: "Zodiac Sign Calculator",
-                description: "Find your zodiac sign based on your birth date.",
-                category: "astrology",
-                file: "zodiac-calculator.html"
-            },
-            {
-                icon: "🌙",
-                title: "Moon Sign Reading",
-                description: "Discover your emotional nature and inner world through your Moon Sign.",
-                category: "astrology",
-                file: "moon-sign-reading.html"
-            },
-            {
-                icon: "⬆️",
-                title: "Rising Sign Reading",
-                description: "Reveal your outer personality and approach to life through your Ascendant.",
-                category: "astrology",
-                file: "rising-sign-reading.html"
-            },
-            {
-                icon: "💕",
-                title: "Venus Sign Reading",
-                description: "Discover how you love, attract, and express beauty through your Venus placement.",
-                category: "astrology",
-                file: "venus-sign-reading.html"
-            },
-            {
-                icon: "🔥",
-                title: "Mars Sign Reading",
-                description: "Reveal your drive, passion, and how you pursue what you desire.",
-                category: "astrology",
-                file: "mars-sign-reading.html"
-            },
-            {
-                icon: "☿️",
-                title: "Mercury Sign Reading",
-                description: "Discover how you think, communicate, and process the world around you.",
-                category: "astrology",
-                file: "mercury-sign-reading.html"
-            },
-            {
-                icon: "♃",
-                title: "Jupiter Sign Reading",
-                description: "Reveal how you attract luck, expand your life, and find abundance.",
-                category: "astrology",
-                file: "jupiter-sign-reading.html"
-            },
-            {
-                icon: "♄",
-                title: "Saturn Sign Reading",
-                description: "Discover your karmic lessons, life challenges, and path to mastery.",
-                category: "astrology",
-                file: "saturn-sign-reading.html"
-            },
-            {
-                icon: "♅",
-                title: "Uranus Sign Reading",
-                description: "Reveal how you innovate, rebel, and awaken to freedom.",
-                category: "astrology",
-                file: "uranus-sign-reading.html"
-            },
-            {
-                icon: "♆",
-                title: "Neptune Sign Reading",
-                description: "Discover your dreams, spiritual gifts, and connection to the infinite.",
-                category: "astrology",
-                file: "neptune-sign-reading.html"
-            },
-            {
-                icon: "♇",
-                title: "Pluto Sign Reading",
-                description: "Reveal your generational power, shadow work, and path to transformation.",
-                category: "astrology",
-                file: "pluto-sign-reading.html"
-            },
-            {
-                icon: "🌙",
-                title: "Moon Phase Calculator",
-                description: "Discover what moon phase you were born under.",
-                category: "astrology",
-                file: "moon-phase-calculator.html"
-            },
-            {
-                icon: "🎲",
-                title: "Chinese Zodiac Calculator",
-                description: "Find your Chinese zodiac animal and its meaning.",
-                category: "astrology",
-                file: "chinese-zodiac-calculator.html"
-            },
-            {
-                icon: "🔥",
-                title: "Element Calculator",
-                description: "Discover which element (fire, earth, air, water) you are.",
-                category: "astrology",
-                file: "element-calculator.html"
-            },
-            {
-                icon: "💎",
-                title: "Birthstone Finder",
-                description: "Find your birthstone based on your birth month.",
-                category: "astrology",
-                file: "birthstone-finder.html"
-            },
-            {
-                icon: "🌸",
-                title: "Birth Flower Finder",
-                description: "Discover your birth flower and its symbolism.",
-                category: "astrology",
-                file: "birth-flower-finder.html"
-            },
+            { icon: "🌟", title: "Birth Chart Overview", description: "Your complete cosmic blueprint — all 11 planetary placements.", category: "astrology", file: "birth-chart-overview.html" },
+            { icon: "♈", title: "Zodiac Sign Calculator", description: "Find your zodiac sign based on your birth date.", category: "astrology", file: "zodiac-calculator.html" },
+            { icon: "🌙", title: "Moon Sign Reading", description: "Discover your emotional nature and inner world.", category: "astrology", file: "moon-sign-reading.html" },
+            { icon: "⬆️", title: "Rising Sign Reading", description: "Reveal your outer personality through your Ascendant.", category: "astrology", file: "rising-sign-reading.html" },
+            { icon: "💕", title: "Venus Sign Reading", description: "Discover how you love, attract, and express beauty.", category: "astrology", file: "venus-sign-reading.html" },
+            { icon: "🔥", title: "Mars Sign Reading", description: "Reveal your drive, passion, and how you pursue desires.", category: "astrology", file: "mars-sign-reading.html" },
+            { icon: "☿️", title: "Mercury Sign Reading", description: "Discover how you think and communicate.", category: "astrology", file: "mercury-sign-reading.html" },
+            { icon: "♃", title: "Jupiter Sign Reading", description: "Reveal how you attract luck and abundance.", category: "astrology", file: "jupiter-sign-reading.html" },
+            { icon: "♄", title: "Saturn Sign Reading", description: "Discover your karmic lessons and path to mastery.", category: "astrology", file: "saturn-sign-reading.html" },
+            { icon: "♅", title: "Uranus Sign Reading", description: "Reveal how you innovate and awaken to freedom.", category: "astrology", file: "uranus-sign-reading.html" },
+            { icon: "♆", title: "Neptune Sign Reading", description: "Discover your dreams and spiritual gifts.", category: "astrology", file: "neptune-sign-reading.html" },
+            { icon: "♇", title: "Pluto Sign Reading", description: "Reveal your path to transformation and power.", category: "astrology", file: "pluto-sign-reading.html" },
+            { icon: "🌙", title: "Moon Phase Calculator", description: "Discover what moon phase you were born under.", category: "astrology", file: "moon-phase-calculator.html" },
+            { icon: "🐉", title: "Chinese Zodiac Calculator", description: "Find your Chinese zodiac animal and its meaning.", category: "astrology", file: "chinese-zodiac-calculator.html" },
+            { icon: "🔥", title: "Element Calculator", description: "Discover which element (fire, earth, air, water) you are.", category: "astrology", file: "element-calculator.html" },
+            { icon: "💎", title: "Birthstone Finder", description: "Find your birthstone based on your birth month.", category: "astrology", file: "birthstone-finder.html" },
+            { icon: "🌸", title: "Birth Flower Finder", description: "Discover your birth flower and its symbolism.", category: "astrology", file: "birth-flower-finder.html" },
+            
             // Personality Tools
-            {
-                icon: "🎨",
-                title: "Color Personality Test",
-                description: "What does your favorite color say about you?",
-                category: "personality",
-                file: "color-personality-test.html"
-            },
-            {
-                icon: "🧠",
-                title: "Brain Type Test",
-                description: "Find out if you're left-brained or right-brained.",
-                category: "personality",
-                file: "brain-type-test.html"
-            },
-            {
-                icon: "🌈",
-                title: "Aura Color Test",
-                description: "What color is your aura? Take this fun quiz!",
-                category: "personality",
-                file: "aura-color-test.html"
-            },
+            { icon: "🎨", title: "Color Personality Test", description: "What does your favorite color say about you?", category: "personality", file: "color-personality-test.html" },
+            { icon: "🧠", title: "Brain Type Test", description: "Find out if you're left-brained or right-brained.", category: "personality", file: "brain-type-test.html" },
+            { icon: "🌈", title: "Aura Color Test", description: "What color is your aura? Take this fun quiz!", category: "personality", file: "aura-color-test.html" },
+            
             // Fortune Tools
-            {
-                icon: "🎰",
-                title: "Daily Fortune",
-                description: "Get your daily fortune and lucky numbers.",
-                category: "fortune",
-                file: "daily-fortune.html"
-            },
-            {
-                icon: "🔮",
-                title: "Crystal Ball",
-                description: "Ask the crystal ball a yes/no question.",
-                category: "fortune",
-                file: "crystal-ball.html"
-            },
-            {
-                icon: "�",
-                title: "Dice Roller",
-                description: "Roll virtual dice for any game or decision.",
-                category: "fortune",
-                file: "dice-roller.html"
-            },
-            {
-                icon: "🪙",
-                title: "Coin Flip",
-                description: "Flip a coin for quick decisions.",
-                category: "fortune",
-                file: "coin-flip.html"
-            },
-            {
-                icon: "🎯",
-                title: "Decision Wheel",
-                description: "Spin the wheel to make decisions fun.",
-                category: "fortune",
-                file: "decision-wheel.html"
-            },
-            {
-                icon: "🥠",
-                title: "Fortune Cookie",
-                description: "Break a virtual fortune cookie for wisdom.",
-                category: "fortune",
-                file: "fortune-cookie.html"
-            },
-            {
-                icon: "⚖️",
-                title: "Yes No Oracle",
-                description: "Get instant yes/no answers to your questions.",
-                category: "fortune",
-                file: "yes-no-oracle.html"
-            },
-            {
-                icon: "🍀",
-                title: "Lucky Number Generator",
-                description: "Generate your personal lucky numbers.",
-                category: "fortune",
-                file: "lucky-numbers.html"
-            },
+            { icon: "🎰", title: "Daily Fortune", description: "Get your daily fortune and lucky numbers.", category: "fortune", file: "daily-fortune.html" },
+            { icon: "🔮", title: "Crystal Ball", description: "Ask the crystal ball a yes/no question.", category: "fortune", file: "crystal-ball.html" },
+            { icon: "🎲", title: "Dice Roller", description: "Roll virtual dice for any game or decision.", category: "fortune", file: "dice-roller.html" },
+            { icon: "🪙", title: "Coin Flip", description: "Flip a coin for quick decisions.", category: "fortune", file: "coin-flip.html" },
+            { icon: "🎯", title: "Decision Wheel", description: "Spin the wheel to make decisions fun.", category: "fortune", file: "decision-wheel.html" },
+            { icon: "🥠", title: "Fortune Cookie", description: "Break a virtual fortune cookie for wisdom.", category: "fortune", file: "fortune-cookie.html" },
+            { icon: "⚖️", title: "Yes No Oracle", description: "Get instant yes/no answers to your questions.", category: "fortune", file: "yes-no-oracle.html" },
+            { icon: "🍀", title: "Lucky Number Generator", description: "Generate your personal lucky numbers.", category: "fortune", file: "lucky-numbers.html" },
+            
             // Life Tools
-            {
-                icon: "📅",
-                title: "Age Calculator",
-                description: "Calculate your exact age in years, months, days.",
-                category: "life",
-                file: "age-calculator.html"
-            },
-            {
-                icon: "⏰",
-                title: "Time Until",
-                description: "Count down to any important date.",
-                category: "life",
-                file: "time-until.html"
-            },
-            {
-                icon: "🎂",
-                title: "Birthday Countdown",
-                description: "Count down days until your next birthday.",
-                category: "life",
-                file: "birthday-countdown.html"
-            },
-            {
-                icon: "📊",
-                title: "Life Progress",
-                description: "See how much of your life you've lived.",
-                category: "life",
-                file: "life-progress.html"
-            },
+            { icon: "📅", title: "Age Calculator", description: "Calculate your exact age in years, months, days.", category: "life", file: "age-calculator.html" },
+            { icon: "⏰", title: "Time Until", description: "Count down to any important date.", category: "life", file: "time-until.html" },
+            { icon: "🎂", title: "Birthday Countdown", description: "Count down days until your next birthday.", category: "life", file: "birthday-countdown.html" },
+            { icon: "📊", title: "Life Progress", description: "See how much of your life you've lived.", category: "life", file: "life-progress.html" },
+            
             // Entertainment Tools
-            {
-                icon: "�",
-                title: "Random Fact Generator",
-                description: "Get random interesting facts.",
-                category: "entertainment",
-                file: "random-fact.html"
-            },
-            {
-                icon: "🎨",
-                title: "Color Generator",
-                description: "Generate random colors and palettes.",
-                category: "entertainment",
-                file: "color-generator.html"
-            },
-            {
-                icon: "🎲",
-                title: "Random Name Picker",
-                description: "Pick random names from a list.",
-                category: "entertainment",
-                file: "random-name-picker.html"
-            },
-            {
-                icon: "🔐",
-                title: "Password Generator",
-                description: "Generate secure random passwords.",
-                category: "entertainment",
-                file: "password-generator.html"
-            }
+            { icon: "📚", title: "Random Fact Generator", description: "Get random interesting facts.", category: "entertainment", file: "random-fact.html" },
+            { icon: "🎨", title: "Color Generator", description: "Generate random colors and palettes.", category: "entertainment", file: "color-generator.html" },
+            { icon: "🎲", title: "Random Name Picker", description: "Pick random names from a list.", category: "entertainment", file: "random-name-picker.html" },
+            { icon: "🔐", title: "Password Generator", description: "Generate secure random passwords.", category: "entertainment", file: "password-generator.html" }
         ];
         
-        function renderTools(filteredTools) {
-            const grid = document.getElementById('toolsGrid');
-            grid.innerHTML = '';
+        // Render tools for a specific category
+        function renderCategoryTools(category) {
+            const grid = document.getElementById(`${category}-grid`);
+            const categoryTools = tools.filter(t => t.category === category);
             
-            filteredTools.forEach(tool => {
-                const card = document.createElement('div');
-                card.className = 'tool-card';
-                card.innerHTML = `
+            grid.innerHTML = categoryTools.map(tool => `
+                <div class="tool-card" onclick="window.location.href='${tool.file}'">
                     <div class="tool-icon">${tool.icon}</div>
-                    <div class="tool-title">${tool.title}</div>
-                    <div class="tool-description">${tool.description}</div>
-                    <span class="tool-category">${tool.category}</span>
-                `;
-                card.onclick = () => {
-                    if (tool.file) {
-                        window.location.href = tool.file;
-                    } else {
-                        alert('This tool is coming soon! 🚧');
-                    }
-                };
-                grid.appendChild(card);
-            });
+                    <div class="tool-info">
+                        <div class="tool-title">${tool.title}</div>
+                        <div class="tool-description">${tool.description}</div>
+                    </div>
+                </div>
+            `).join('');
         }
         
-        function filterByCategory(category) {
-            if (category === 'all') {
-                return tools;
-            }
-            return tools.filter(tool => tool.category === category);
+        // Toggle category visibility
+        function toggleCategory(category) {
+            const content = document.getElementById(`${category}-content`);
+            const header = content.previousElementSibling;
+            
+            content.classList.toggle('show');
+            header.classList.toggle('active');
         }
-        
-        function searchTools(query) {
-            const lowerQuery = query.toLowerCase();
-            return tools.filter(tool => 
-                tool.title.toLowerCase().includes(lowerQuery) ||
-                tool.description.toLowerCase().includes(lowerQuery) ||
-                tool.category.toLowerCase().includes(lowerQuery)
-            );
-        }
-        
-        // Initialize
-        renderTools(tools);
-        
-        // Category buttons
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                const category = this.dataset.category;
-                renderTools(filterByCategory(category));
-            });
-        });
         
         // Search functionality
         document.getElementById('searchInput').addEventListener('input', function() {
-            const query = this.value;
-            renderTools(searchTools(query));
+            const query = this.value.toLowerCase().trim();
+            const searchResults = document.getElementById('searchResults');
+            const categoriesContainer = document.getElementById('categoriesContainer');
+            const searchResultsGrid = document.getElementById('searchResultsGrid');
+            
+            if (query.length === 0) {
+                searchResults.classList.remove('show');
+                categoriesContainer.classList.remove('hidden');
+                return;
+            }
+            
+            const filtered = tools.filter(tool => 
+                tool.title.toLowerCase().includes(query) ||
+                tool.description.toLowerCase().includes(query) ||
+                tool.category.toLowerCase().includes(query)
+            );
+            
+            searchResults.classList.add('show');
+            categoriesContainer.classList.add('hidden');
+            
+            if (filtered.length === 0) {
+                searchResultsGrid.innerHTML = '<p style="color: #9ca3af; padding: 20px; text-align: center;">No tools found matching your search.</p>';
+            } else {
+                searchResultsGrid.innerHTML = filtered.map(tool => `
+                    <div class="tool-card" onclick="window.location.href='${tool.file}'">
+                        <div class="tool-icon">${tool.icon}</div>
+                        <div class="tool-info">
+                            <div class="tool-title">${tool.title}</div>
+                            <div class="tool-description">${tool.description}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
         });
         
-        // Register Service Worker for cache management
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                        console.log('✅ Service Worker registered:', registration);
-                        
-                        // Check for updates every 5 minutes
-                        setInterval(() => {
-                            registration.update();
-                        }, 5 * 60 * 1000);
-                        
-                        // Handle updates
-                        registration.addEventListener('updatefound', () => {
-                            const newWorker = registration.installing;
-                            newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    // New version available
-                                    if (confirm('🔄 New version available! Reload to get the latest updates?')) {
-                                        newWorker.postMessage({ type: 'SKIP_WAITING' });
-                                        window.location.reload();
-                                    }
-                                }
-                            });
-                        });
-                    })
-                    .catch((error) => {
-                        console.log('Service Worker registration failed:', error);
-                    });
-                    
-                // Reload on service worker control change
-                navigator.serviceWorker.addEventListener('controllerchange', () => {
-                    window.location.reload();
-                });
+        // Ad Inquiry Modal
+        function openAdInquiry(category, location) {
+            document.getElementById('adModal').classList.add('show');
+            document.getElementById('adLocationText').textContent = `Space: ${location}`;
+            document.getElementById('adLocation').value = location;
+            document.getElementById('adCategory').value = category;
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeAdModal() {
+            document.getElementById('adModal').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+        
+        function submitAdInquiry(event) {
+            event.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('adName').value,
+                email: document.getElementById('adEmail').value,
+                company: document.getElementById('adCompany').value,
+                location: document.getElementById('adLocation').value,
+                category: document.getElementById('adCategory').value,
+                type: document.getElementById('adType').value,
+                budget: document.getElementById('adBudget').value,
+                message: document.getElementById('adMessage').value
+            };
+            
+            // For now, create a mailto link (can be replaced with API call)
+            const subject = encodeURIComponent(`Advertising Inquiry: ${formData.location}`);
+            const body = encodeURIComponent(`
+Name: ${formData.name}
+Email: ${formData.email}
+Company: ${formData.company}
+
+Ad Location: ${formData.location}
+Category: ${formData.category}
+Sponsorship Type: ${formData.type}
+Budget: ${formData.budget}
+
+Message:
+${formData.message}
+            `);
+            
+            window.location.href = `mailto:ads@quantummerlin.com?subject=${subject}&body=${body}`;
+            
+            closeAdModal();
+            alert('Thank you for your inquiry! We\'ll be in touch soon. ✨');
+        }
+        
+        // Close modal on overlay click
+        document.getElementById('adModal').addEventListener('click', function(e) {
+            if (e.target === this) closeAdModal();
+        });
+        
+        // Initialize all category grids
+        ['numerology', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
+            renderCategoryTools(cat);
+        });
+        
+        // Open first category by default on mobile for better UX
+        if (window.innerWidth < 768) {
+            toggleCategory('numerology');
+        } else {
+            // On desktop, open all categories
+            ['numerology', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
+                toggleCategory(cat);
             });
         }
     </script>
