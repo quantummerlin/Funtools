@@ -8,7 +8,7 @@
     <meta http-equiv="Expires" content="0">
     <meta name="version" content="20260111140000">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔮 Quantum Merlin | Ancient Patterns. Modern Interfaces.</title>
+    <title>Quantum Merlin | Ancient Patterns. Modern Interfaces.</title>
     <meta name="description" content="Quantum Merlin maps time, numbers, and celestial cycles into clear moments for aligned action — blending ancient pattern wisdom with modern interface clarity.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -476,7 +476,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🔮 QUANTUM MERLIN</h1>
+            <h1>QUANTUM MERLIN</h1>
             <p class="tagline">Ancient Patterns. Modern Interfaces.</p>
             <p class="subtitle">Mapping time, numbers, and celestial cycles into clear moments for aligned action</p>
         </div>
@@ -543,7 +543,7 @@
             <!-- Fortune Section -->
             <div class="category-section">
                 <div class="category-header" onclick="toggleCategory('fortune')">
-                    <h2>🔮 Fortune & Divination <span class="count">(8 tools)</span></h2>
+                    <h2>Fortune & Divination <span class="count">(8 tools)</span></h2>
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="category-content" id="fortune-content">
@@ -663,7 +663,7 @@
                 
                 <input type="hidden" id="adCategory" value="">
                 
-                <button type="submit" class="submit-btn">Submit Inquiry ✨</button>
+                <button type="submit" class="submit-btn">Submit Inquiry</button>
             </form>
         </div>
     </div>
@@ -671,62 +671,62 @@
     <script>
         const tools = [
             // Numerology Tools
-            { icon: "✨", title: "Life Path Number", description: "Calculate your life path number and reveal your true purpose in life.", category: "numerology", file: "life-path-calculator.html" },
-            { icon: "🌟", title: "Destiny Number", description: "Uncover your destiny number and understand your life's mission.", category: "numerology", file: "destiny-number-calculator.html" },
-            { icon: "💫", title: "Soul Urge Number", description: "Reveal your soul urge number and discover your inner desires.", category: "numerology", file: "soul-urge-calculator.html" },
-            { icon: "🎯", title: "Personality Number", description: "Calculate your personality number and how others see you.", category: "numerology", file: "personality-number-calculator.html" },
-            { icon: "📛", title: "Name Number", description: "Explore the numerological power and meaning of your name.", category: "numerology", file: "name-number-calculator.html" },
-            { icon: "🎂", title: "Birthday Number Reading", description: "Discover your special gifts and talents through your birthday number.", category: "numerology", file: "birthday-number-reading.html" },
-            { icon: "📅", title: "Personal Year Reading", description: "Understand the cosmic energy and opportunities of your current year.", category: "numerology", file: "personal-year-reading.html" },
-            { icon: "🗓️", title: "Personal Month Reading", description: "Navigate the specific energy and focus of your current month.", category: "numerology", file: "personal-month-reading.html" },
-            { icon: "🌅", title: "Maturity Number Reading", description: "Discover the wisdom and purpose that emerges in your later years.", category: "numerology", file: "maturity-number-reading.html" },
-            { icon: "⚖️", title: "Karmic Debt Reading", description: "Understand and transform your karmic patterns (13, 14, 16, 19).", category: "numerology", file: "karmic-debt-reading.html" },
-            { icon: "👑", title: "Master Number Deep Reading", description: "Master your 11, 22, or 33 spiritual potential.", category: "numerology", file: "master-number-reading.html" },
+            { title: "Life Path Number", description: "Calculate your life path number and reveal your true purpose in life.", category: "numerology", file: "life-path-calculator.html" },
+            { title: "Destiny Number", description: "Uncover your destiny number and understand your life's mission.", category: "numerology", file: "destiny-number-calculator.html" },
+            { title: "Soul Urge Number", description: "Reveal your soul urge number and discover your inner desires.", category: "numerology", file: "soul-urge-calculator.html" },
+            { title: "Personality Number", description: "Calculate your personality number and how others see you.", category: "numerology", file: "personality-number-calculator.html" },
+            { title: "Name Number", description: "Explore the numerological power and meaning of your name.", category: "numerology", file: "name-number-calculator.html" },
+            { title: "Birthday Number Reading", description: "Discover your special gifts and talents through your birthday number.", category: "numerology", file: "birthday-number-reading.html" },
+            { title: "Personal Year Reading", description: "Understand the cosmic energy and opportunities of your current year.", category: "numerology", file: "personal-year-reading.html" },
+            { title: "Personal Month Reading", description: "Navigate the specific energy and focus of your current month.", category: "numerology", file: "personal-month-reading.html" },
+            { title: "Maturity Number Reading", description: "Discover the wisdom and purpose that emerges in your later years.", category: "numerology", file: "maturity-number-reading.html" },
+            { title: "Karmic Debt Reading", description: "Understand and transform your karmic patterns (13, 14, 16, 19).", category: "numerology", file: "karmic-debt-reading.html" },
+            { title: "Master Number Deep Reading", description: "Master your 11, 22, or 33 spiritual potential.", category: "numerology", file: "master-number-reading.html" },
             
             // Astrology Tools
-            { icon: "♈", title: "Zodiac Sign Calculator", description: "Find your zodiac sign based on your birth date.", category: "astrology", file: "zodiac-calculator.html" },
-            { icon: "🌙", title: "Moon Sign Reading", description: "Discover your emotional nature and inner world.", category: "astrology", file: "moon-sign-reading.html" },
-            { icon: "⬆️", title: "Rising Sign Reading", description: "Reveal your outer personality through your Ascendant.", category: "astrology", file: "rising-sign-reading.html" },
-            { icon: "💕", title: "Venus Sign Reading", description: "Discover how you love, attract, and express beauty.", category: "astrology", file: "venus-sign-reading.html" },
-            { icon: "🔥", title: "Mars Sign Reading", description: "Reveal your drive, passion, and how you pursue desires.", category: "astrology", file: "mars-sign-reading.html" },
-            { icon: "☿️", title: "Mercury Sign Reading", description: "Discover how you think and communicate.", category: "astrology", file: "mercury-sign-reading.html" },
-            { icon: "♃", title: "Jupiter Sign Reading", description: "Reveal how you attract luck and abundance.", category: "astrology", file: "jupiter-sign-reading.html" },
-            { icon: "♄", title: "Saturn Sign Reading", description: "Discover your karmic lessons and path to mastery.", category: "astrology", file: "saturn-sign-reading.html" },
-            { icon: "♅", title: "Uranus Sign Reading", description: "Reveal how you innovate and awaken to freedom.", category: "astrology", file: "uranus-sign-reading.html" },
-            { icon: "♆", title: "Neptune Sign Reading", description: "Discover your dreams and spiritual gifts.", category: "astrology", file: "neptune-sign-reading.html" },
-            { icon: "♇", title: "Pluto Sign Reading", description: "Reveal your path to transformation and power.", category: "astrology", file: "pluto-sign-reading.html" },
-            { icon: "🌙", title: "Moon Phase Calculator", description: "Discover what moon phase you were born under.", category: "astrology", file: "moon-phase-calculator.html" },
-            { icon: "🐉", title: "Chinese Zodiac Reading", description: "Discover your animal sign, element, and ancient wisdom.", category: "astrology", file: "chinese-zodiac-reading.html" },
-            { icon: "🔥", title: "Element Calculator", description: "Discover which element (fire, earth, air, water) you are.", category: "astrology", file: "element-calculator.html" },
-            { icon: "💎", title: "Birthstone Finder", description: "Find your birthstone based on your birth month.", category: "astrology", file: "birthstone-finder.html" },
-            { icon: "🌸", title: "Birth Flower Finder", description: "Discover your birth flower and its symbolism.", category: "astrology", file: "birth-flower-finder.html" },
+            { title: "Zodiac Sign Calculator", description: "Find your zodiac sign based on your birth date.", category: "astrology", file: "zodiac-calculator.html" },
+            { title: "Moon Sign Reading", description: "Discover your emotional nature and inner world.", category: "astrology", file: "moon-sign-reading.html" },
+            { title: "Rising Sign Reading", description: "Reveal your outer personality through your Ascendant.", category: "astrology", file: "rising-sign-reading.html" },
+            { title: "Venus Sign Reading", description: "Discover how you love, attract, and express beauty.", category: "astrology", file: "venus-sign-reading.html" },
+            { title: "Mars Sign Reading", description: "Reveal your drive, passion, and how you pursue desires.", category: "astrology", file: "mars-sign-reading.html" },
+            { title: "Mercury Sign Reading", description: "Discover how you think and communicate.", category: "astrology", file: "mercury-sign-reading.html" },
+            { title: "Jupiter Sign Reading", description: "Reveal how you attract luck and abundance.", category: "astrology", file: "jupiter-sign-reading.html" },
+            { title: "Saturn Sign Reading", description: "Discover your karmic lessons and path to mastery.", category: "astrology", file: "saturn-sign-reading.html" },
+            { title: "Uranus Sign Reading", description: "Reveal how you innovate and awaken to freedom.", category: "astrology", file: "uranus-sign-reading.html" },
+            { title: "Neptune Sign Reading", description: "Discover your dreams and spiritual gifts.", category: "astrology", file: "neptune-sign-reading.html" },
+            { title: "Pluto Sign Reading", description: "Reveal your path to transformation and power.", category: "astrology", file: "pluto-sign-reading.html" },
+            { title: "Moon Phase Calculator", description: "Discover what moon phase you were born under.", category: "astrology", file: "moon-phase-calculator.html" },
+            { title: "Chinese Zodiac Reading", description: "Discover your animal sign, element, and ancient wisdom.", category: "astrology", file: "chinese-zodiac-reading.html" },
+            { title: "Element Calculator", description: "Discover which element (fire, earth, air, water) you are.", category: "astrology", file: "element-calculator.html" },
+            { title: "Birthstone Finder", description: "Find your birthstone based on your birth month.", category: "astrology", file: "birthstone-finder.html" },
+            { title: "Birth Flower Finder", description: "Discover your birth flower and its symbolism.", category: "astrology", file: "birth-flower-finder.html" },
             
             // Personality Tools
-            { icon: "🎨", title: "Color Personality Test", description: "What does your favorite color say about you?", category: "personality", file: "color-personality-test.html" },
-            { icon: "🧠", title: "Brain Type Test", description: "Find out if you're left-brained or right-brained.", category: "personality", file: "brain-type-test.html" },
-            { icon: "🌈", title: "Aura Color Test", description: "What color is your aura? Take this fun quiz!", category: "personality", file: "aura-color-test.html" },
+            { title: "Color Personality Test", description: "What does your favorite color say about you?", category: "personality", file: "color-personality-test.html" },
+            { title: "Brain Type Test", description: "Find out if you're left-brained or right-brained.", category: "personality", file: "brain-type-test.html" },
+            { title: "Aura Color Test", description: "What color is your aura? Take this fun quiz!", category: "personality", file: "aura-color-test.html" },
             
             // Fortune Tools
-            { icon: "🎰", title: "Daily Fortune", description: "Get your daily fortune and lucky numbers.", category: "fortune", file: "daily-fortune.html" },
-            { icon: "🔮", title: "Crystal Ball", description: "Ask the crystal ball a yes/no question.", category: "fortune", file: "crystal-ball.html" },
-            { icon: "🎲", title: "Dice Roller", description: "Roll virtual dice for any game or decision.", category: "fortune", file: "dice-roller.html" },
-            { icon: "🪙", title: "Coin Flip", description: "Flip a coin for quick decisions.", category: "fortune", file: "coin-flip.html" },
-            { icon: "🎯", title: "Decision Wheel", description: "Spin the wheel to make decisions fun.", category: "fortune", file: "decision-wheel.html" },
-            { icon: "🥠", title: "Fortune Cookie", description: "Break a virtual fortune cookie for wisdom.", category: "fortune", file: "fortune-cookie.html" },
-            { icon: "⚖️", title: "Yes No Oracle", description: "Get instant yes/no answers to your questions.", category: "fortune", file: "yes-no-oracle.html" },
-            { icon: "🍀", title: "Lucky Number Generator", description: "Generate your personal lucky numbers.", category: "fortune", file: "lucky-numbers.html" },
+            { title: "Daily Fortune", description: "Get your daily fortune and lucky numbers.", category: "fortune", file: "daily-fortune.html" },
+            { title: "Crystal Ball", description: "Ask the crystal ball a yes/no question.", category: "fortune", file: "crystal-ball.html" },
+            { title: "Dice Roller", description: "Roll virtual dice for any game or decision.", category: "fortune", file: "dice-roller.html" },
+            { title: "Coin Flip", description: "Flip a coin for quick decisions.", category: "fortune", file: "coin-flip.html" },
+            { title: "Decision Wheel", description: "Spin the wheel to make decisions fun.", category: "fortune", file: "decision-wheel.html" },
+            { title: "Fortune Cookie", description: "Break a virtual fortune cookie for wisdom.", category: "fortune", file: "fortune-cookie.html" },
+            { title: "Yes No Oracle", description: "Get instant yes/no answers to your questions.", category: "fortune", file: "yes-no-oracle.html" },
+            { title: "Lucky Number Generator", description: "Generate your personal lucky numbers.", category: "fortune", file: "lucky-numbers.html" },
             
             // Life Tools
-            { icon: "📅", title: "Age Calculator", description: "Calculate your exact age in years, months, days.", category: "life", file: "age-calculator.html" },
-            { icon: "⏰", title: "Time Until", description: "Count down to any important date.", category: "life", file: "time-until.html" },
-            { icon: "🎂", title: "Birthday Countdown", description: "Count down days until your next birthday.", category: "life", file: "birthday-countdown.html" },
-            { icon: "📊", title: "Life Progress", description: "See how much of your life you've lived.", category: "life", file: "life-progress.html" },
+            { title: "Age Calculator", description: "Calculate your exact age in years, months, days.", category: "life", file: "age-calculator.html" },
+            { title: "Time Until", description: "Count down to any important date.", category: "life", file: "time-until.html" },
+            { title: "Birthday Countdown", description: "Count down days until your next birthday.", category: "life", file: "birthday-countdown.html" },
+            { title: "Life Progress", description: "See how much of your life you've lived.", category: "life", file: "life-progress.html" },
             
             // Entertainment Tools
-            { icon: "📚", title: "Random Fact Generator", description: "Get random interesting facts.", category: "entertainment", file: "random-fact.html" },
-            { icon: "🎨", title: "Color Generator", description: "Generate random colors and palettes.", category: "entertainment", file: "color-generator.html" },
-            { icon: "🎲", title: "Random Name Picker", description: "Pick random names from a list.", category: "entertainment", file: "random-name-picker.html" },
-            { icon: "🔐", title: "Password Generator", description: "Generate secure random passwords.", category: "entertainment", file: "password-generator.html" }
+            { title: "Random Fact Generator", description: "Get random interesting facts.", category: "entertainment", file: "random-fact.html" },
+            { title: "Color Generator", description: "Generate random colors and palettes.", category: "entertainment", file: "color-generator.html" },
+            { title: "Random Name Picker", description: "Pick random names from a list.", category: "entertainment", file: "random-name-picker.html" },
+            { title: "Password Generator", description: "Generate secure random passwords.", category: "entertainment", file: "password-generator.html" }
         ];
         
         // Render tools for a specific category
@@ -736,7 +736,6 @@
             
             grid.innerHTML = categoryTools.map(tool => `
                 <div class="tool-card" onclick="window.location.href='${tool.file}'">
-                    <div class="tool-icon">${tool.icon}</div>
                     <div class="tool-info">
                         <div class="tool-title">${tool.title}</div>
                         <div class="tool-description">${tool.description}</div>

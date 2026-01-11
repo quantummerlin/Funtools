@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Moon Calculation Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+</head>
+<body>
+    <h1>Moon Calculation Test - May 3, 1981, 1:30 PM Abu Dhabi</h1>
+    <pre id="output"></pre>
+    <script>
+        function log(msg) {
+            document.getElementById('output').textContent += msg + '\n';
+        }
+
+        // May 3, 1981, 1:30 PM Abu Dhabi
+        const lat = 24.4538;
+        const lon = 54.3774;
+
+        // Birth: 13:30 local
+        const solarOffset = lon / 15;
+        const utcHours = 13.5 - solarOffset;  // 13:30 = 13.5 hours
+
+        log('=== May 3, 1981, 1:30 PM Abu Dhabi ===');
+        log('Coordinates: lat=' + lat + ', lon=' + lon);
+        log('Solar offset: ' + solarOffset.toFixed(2) + ' hours');
+        log('UTC hours: ' + utcHours.toFixed(2));
+
+        // Create UTC date
+        const datetime = new Date(Date.UTC(1981, 4, 3, Math.floor(utcHours), Math.round((utcHours % 1) * 60), 0));
+        log('UTC datetime: ' + datetime.toISOString());
+
+        const time = Astronomy.MakeTime(datetime);
+        const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+
+        log('\n=== Method 1: Astronomy.EclipticGeoMoon (CORRECT method) ===');
+        const moonPos = Astronomy.EclipticGeoMoon(time);
+        log('Moon ecliptic longitude: ' + moonPos.lon.toFixed(2) + '°');
+        const correctSignIndex = Math.floor(moonPos.lon / 30);
+        log('Moon Sign: ' + signs[correctSignIndex] + ' ✓');
+        
+        log('\n=== Method 2: Astronomy.Equator + Ecliptic (OLD buggy method) ===');
+        const observer = new Astronomy.Observer(lat, lon, 0);
+        const moonEqu = Astronomy.Equator('Moon', time, observer, true, true);
+        log('Moon RA: ' + moonEqu.ra.toFixed(4) + ' Dec: ' + moonEqu.dec.toFixed(4));
+        const ecliptic = Astronomy.Ecliptic(moonEqu.vec);
+        log('Ecliptic elon: ' + ecliptic.elon.toFixed(2) + '°');
+        const oldSignIndex = Math.floor(ecliptic.elon / 30);
+        log('Moon Sign: ' + signs[oldSignIndex] + ' ✗ (this was the bug!)');
+        
+        log('\n=== CONCLUSION ===');
+        log('Correct Moon Sign for May 3, 1981, 1:30 PM Abu Dhabi: ' + signs[correctSignIndex]);
+    </script>
+</body>
+</html>
