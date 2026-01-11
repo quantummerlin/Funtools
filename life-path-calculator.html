@@ -376,6 +376,11 @@
     <script>
         function goBack() { window.location.href = 'tools_index.html'; }
         
+        function showDeleteProfileDialog() {
+            // This function is handled by auto-fill.js, but added here as fallback
+            alert('Use the profile dropdown to manage profiles');
+        }
+        
         function shareOnTwitter() {
             const text = encodeURIComponent("I just got my personalized Life Path reading! Get yours:");
             const url = encodeURIComponent(window.location.href);
