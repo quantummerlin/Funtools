@@ -6,8 +6,23 @@
     const ACTIVE_KEY = 'quantumMerlinActiveProfile';
     const FIELDS = ['preferredName', 'birthName', 'birthDate', 'birthTime', 'birthPlace'];
 
+    // Check if localStorage is available (blocked in some private browsing modes)
+    function isStorageAvailable() {
+        try {
+            const test = '__storage_test__';
+            localStorage.setItem(test, test);
+            localStorage.removeItem(test);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    const storageAvailable = isStorageAvailable();
+
     // Get all profiles
     function getProfiles() {
+        if (!storageAvailable) return {};
         try {
             const saved = localStorage.getItem(PROFILES_KEY);
             return saved ? JSON.parse(saved) : {};
@@ -18,17 +33,32 @@
 
     // Save profiles
     function saveProfiles(profiles) {
-        localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles));
+        if (!storageAvailable) return;
+        try {
+            localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles));
+        } catch (e) {
+            // Storage not available or full
+        }
     }
 
     // Get active profile name
     function getActiveProfile() {
-        return localStorage.getItem(ACTIVE_KEY) || '';
+        if (!storageAvailable) return '';
+        try {
+            return localStorage.getItem(ACTIVE_KEY) || '';
+        } catch (e) {
+            return '';
+        }
     }
 
     // Set active profile
     function setActiveProfile(name) {
-        localStorage.setItem(ACTIVE_KEY, name);
+        if (!storageAvailable) return;
+        try {
+            localStorage.setItem(ACTIVE_KEY, name);
+        } catch (e) {
+            // Storage not available
+        }
     }
 
     // Load data into form fields
@@ -64,6 +94,9 @@
 
     // Create the profile selector UI
     function createProfileSelector() {
+        // Skip if storage is not available (private browsing mode)
+        if (!storageAvailable) return;
+        
         // Find the form or first input container
         const form = document.querySelector('form') || document.querySelector('.form-section');
         if (!form) return;
