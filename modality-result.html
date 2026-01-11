@@ -255,8 +255,20 @@
             }
         };
 
+        // Get reading data from sessionStorage or URL params (for private browsing)
+        function getReadingData() {
+            try {
+                const data = sessionStorage.getItem('quantumMerlinReading');
+                if (data) return data;
+            } catch (e) {}
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlData = urlParams.get('data');
+            if (urlData) return decodeURIComponent(urlData);
+            return null;
+        }
+
         function generateReading() {
-            const data = JSON.parse(sessionStorage.getItem('quantumMerlinReading'));
+            const data = JSON.parse(getReadingData());
             
             if (!data || data.toolType !== 'modality') {
                 window.location.href = 'modality-reading.html';

@@ -492,9 +492,28 @@
             ]
         };
         
-        // Load reading from sessionStorage
+        // Load reading from sessionStorage or URL params (for private browsing)
+        function getReadingData() {
+            // Try sessionStorage first
+            try {
+                const data = sessionStorage.getItem('quantumMerlinReading');
+                if (data) return data;
+            } catch (e) {
+                // sessionStorage blocked
+            }
+            
+            // Fallback to URL params for private browsing
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlData = urlParams.get('data');
+            if (urlData) {
+                return decodeURIComponent(urlData);
+            }
+            
+            return null;
+        }
+        
         function loadReading() {
-            const readingData = sessionStorage.getItem('quantumMerlinReading');
+            const readingData = getReadingData();
             
             if (!readingData) {
                 // No reading found
@@ -542,20 +561,20 @@
         
         // Share functions
         function shareOnTwitter() {
-            const reading = JSON.parse(sessionStorage.getItem('quantumMerlinReading') || '{}');
+            const reading = JSON.parse(getReadingData() || '{}');
             const text = encodeURIComponent(`I just discovered my ${reading.title || 'cosmic reading'}! Get yours at Quantum Merlin:`);
             const url = encodeURIComponent(reading.sourceUrl || window.location.origin);
             window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
         }
         
         function shareOnFacebook() {
-            const reading = JSON.parse(sessionStorage.getItem('quantumMerlinReading') || '{}');
+            const reading = JSON.parse(getReadingData() || '{}');
             const url = encodeURIComponent(reading.sourceUrl || window.location.origin);
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
         }
         
         function copyLink() {
-            const reading = JSON.parse(sessionStorage.getItem('quantumMerlinReading') || '{}');
+            const reading = JSON.parse(getReadingData() || '{}');
             const url = reading.sourceUrl || window.location.origin;
             navigator.clipboard.writeText(url).then(() => {
                 alert('Link copied! Share the magic ✨');

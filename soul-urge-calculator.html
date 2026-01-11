@@ -579,10 +579,15 @@
                 content: resultContent,
                 sourceUrl: 'soul-urge-calculator.html'
             };
-            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
-            
-            // Redirect to mystical loading page
-            window.location.href = 'reading-loading.html';
+            // Try sessionStorage first, fallback to URL params for private browsing
+            try {
+                sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+                window.location.href = 'reading-loading.html';
+            } catch (e) {
+                // Private browsing mode - pass data via URL
+                const encodedData = encodeURIComponent(JSON.stringify(readingData));
+                window.location.href = 'reading-loading.html?data=' + encodedData;
+            }
         });
         
     </script>

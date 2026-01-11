@@ -291,10 +291,11 @@
             }, 200);
         }, 800);
         
-        // Redirect after 3.5 seconds
+        // Redirect after 3.5 seconds, preserving URL params for private browsing
         setTimeout(() => {
             clearInterval(messageInterval);
-            window.location.href = 'reading-result.html';
+            const urlParams = window.location.search;
+            window.location.href = 'reading-result.html' + urlParams;
         }, 3500);
     </script>
 </body>

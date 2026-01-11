@@ -367,8 +367,15 @@
                     sourceUrl: 'modality-reading.html'
                 };
                 
-                sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
-                window.location.href = 'modality-result.html';
+                // Try sessionStorage first, fallback to URL params for private browsing
+                try {
+                    sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+                    window.location.href = 'modality-result.html';
+                } catch (e) {
+                    // Private browsing mode - pass data via URL
+                    const encodedData = encodeURIComponent(JSON.stringify(readingData));
+                    window.location.href = 'modality-result.html?data=' + encodedData;
+                }
                 
             } catch (error) {
                 alert('Error calculating modality balance: ' + error.message + '\\n\\nPlease check your birth information and try again.');
