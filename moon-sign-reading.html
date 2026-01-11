@@ -326,12 +326,22 @@
 
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
-            submitBtn.textContent = '🔮 Calculating astronomical positions...';
+            submitBtn.textContent = '🔮 Looking up birth location...';
             submitBtn.disabled = true;
 
+            let coords;
             try {
-                // Get coordinates
-                const coords = await geocodeLocation(birthPlace);
+                // Get coordinates - MUST succeed before we continue
+                coords = await geocodeLocation(birthPlace);
+            } catch (error) {
+                alert('Could not find location: "' + birthPlace + '"\n\nPlease enter a valid city and country (e.g., "London, UK" or "New York, USA").');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                return; // STOP - do not continue without valid location
+            }
+
+            try {
+                submitBtn.textContent = '🔮 Calculating Moon position...';
                 
                 // Calculate Moon position
                 const moonSign = calculateMoonPosition(birthDate, birthTime, coords);
@@ -341,7 +351,8 @@
                 autoSaveData();
                 
             } catch (error) {
-                alert('Error: ' + error.message + '\n\nPlease check your birth location format (e.g., "Los Angeles, USA") and try again.');
+                console.error('Calculation error:', error);
+                alert('Error calculating Moon position: ' + error.message + '\n\nPlease check your birth date and time and try again.');
             } finally {
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
@@ -373,16 +384,49 @@
                 const [year, month, day] = dateStr.split('-').map(Number);
                 const [hours, minutes] = timeStr.split(':').map(Number);
                 
-                // Estimate timezone offset from longitude (15 degrees = 1 hour)
-                // This gives us the "natural" timezone for the birth location
-                const tzOffsetHours = Math.round(coords.lon / 15);
+                // For historical dates, use solar time based on longitude
+                // Each 15 degrees of longitude = 1 hour offset from UTC
+                // This is more accurate than assuming modern timezone boundaries
+                const solarTimeOffset = coords.lon / 15;
                 
-                // Create a UTC date by adjusting for the birth location's timezone
-                // If born at 13:30 in UTC+4, that's 09:30 UTC
-                const utcHours = hours - tzOffsetHours;
+                // Convert local solar time to UTC
+                // If born at 14:00 local solar time at lon 60°E (offset +4), that's 10:00 UTC
+                let utcHours = hours - solarTimeOffset;
+                let utcMinutes = minutes;
+                let utcDay = day;
+                let utcMonth = month;
+                let utcYear = year;
+                
+                // Handle hour overflow/underflow
+                while (utcHours < 0) {
+                    utcHours += 24;
+                    utcDay--;
+                }
+                while (utcHours >= 24) {
+                    utcHours -= 24;
+                    utcDay++;
+                }
+                
+                // Handle day overflow/underflow (simplified - doesn't handle month boundaries perfectly)
+                const daysInMonth = new Date(utcYear, utcMonth, 0).getDate();
+                if (utcDay < 1) {
+                    utcMonth--;
+                    if (utcMonth < 1) {
+                        utcMonth = 12;
+                        utcYear--;
+                    }
+                    utcDay = new Date(utcYear, utcMonth, 0).getDate();
+                } else if (utcDay > daysInMonth) {
+                    utcDay = 1;
+                    utcMonth++;
+                    if (utcMonth > 12) {
+                        utcMonth = 1;
+                        utcYear++;
+                    }
+                }
                 
                 // Create Date in UTC
-                const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+                const datetime = new Date(Date.UTC(utcYear, utcMonth - 1, utcDay, Math.floor(utcHours), utcMinutes, 0));
                 
                 // Create astronomical time
                 const time = Astronomy.MakeTime(datetime);
@@ -408,10 +452,11 @@
                               'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
                 
                 console.log(`Birth: ${dateStr} ${timeStr} at ${coords.name}`);
-                console.log(`Estimated TZ offset: UTC+${tzOffsetHours}`);
-                console.log(`UTC time: ${datetime.toISOString()}`);
+                console.log(`Location: lat=${coords.lat.toFixed(4)}, lon=${coords.lon.toFixed(4)}`);
+                console.log(`Solar time offset: ${solarTimeOffset.toFixed(2)} hours`);
+                console.log(`UTC datetime: ${datetime.toISOString()}`);
                 console.log(`Moon ecliptic longitude: ${lon.toFixed(2)}°`);
-                console.log(`Moon sign: ${signs[signIndex]}`);
+                console.log(`Moon sign: ${signs[signIndex]} (index ${signIndex})`);
                 
                 return signs[signIndex];
             } catch (error) {
