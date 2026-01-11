@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mars Sign Calculator & Reading | Quantum Merlin</title>
+    <meta name="description" content="Calculate your Mars Sign and discover how you assert yourself, what drives you, and how you pursue your desires.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(249, 115, 22, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 50%, #dc2626 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #ef4444;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .input-section { margin-bottom: 30px; }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            color: #ef4444;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #ef4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+        }
+        .helper-text {
+            font-size: 0.85em;
+            color: #9A8F7A;
+            margin-top: 5px;
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+        }
+        button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-block;
+            color: #ef4444;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="tools_index.html" class="back-link">← Back to Quantum Merlin Hub</a>
+        
+        <div class="header">
+            <h1>🔥 Mars Sign Reading</h1>
+            <p>Discover your drive, passion, and how you pursue what you want</p>
+        </div>
+
+        <div class="tool-card">
+            <form onsubmit="calculateMarsSign(event)">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="preferredName">Your Name</label>
+                        <input type="text" id="preferredName" required placeholder="What should we call you?">
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="birthDate">Birth Date</label>
+                            <input type="date" id="birthDate" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime" required>
+                            <div class="helper-text">Local time at birth location</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth City</label>
+                            <input type="text" id="birthPlace" required placeholder="e.g., Tokyo, Japan">
+                            <div class="helper-text">City and country</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">🔥 Calculate My Mars Sign & Reading</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const interpretations = {
+            "Aries": `{preferredName}, your Mars is in Aries—its home sign—giving you explosive energy, immediate action, and fierce competitiveness. You're a warrior at heart, driven to conquer challenges, lead charges, and prove yourself through action.
+
+You don't hesitate. When you want something, you go after it NOW. Analysis paralysis is foreign to you—you'd rather act and adjust than plan endlessly. This makes you a natural initiator, the one who starts things while others are still thinking.
+
+Your anger is hot but brief. When frustrated, you explode—but five minutes later, you've moved on completely. You don't hold grudges because you've already directed your energy toward the next thing.
+
+Physical activity is essential for your wellbeing. You have enormous energy that MUST be expressed, ideally through sports, exercise, or physical work. Without this outlet, your aggression turns inward or outward destructively.
+
+Sexually, you're passionate, direct, and initiating. You pursue what you want boldly and find the chase exciting. You need partners who can match your energy and aren't intimidated by your intensity.
+
+The shadow of Mars in Aries is impulsiveness and aggression. You may act before thinking, creating problems. You might be unnecessarily combative, picking fights just to feel alive. Learning patience and strategic thinking amplifies your natural power.
+
+Your drive is: to WIN, to be first, to conquer challenges, to prove your courage and capability.`,
+
+            "Taurus": `{preferredName}, your Mars is in Taurus, giving you steady determination, patient persistence, and remarkable endurance. You're not fast, but you're unstoppable. What you lack in speed you make up for in staying power.
+
+You work at your own pace and cannot be rushed. Pressure just makes you dig in harder. You're the tortoise that beats the hare—slow, steady progress toward goals that never waver. You finish what you start, even if it takes years.
+
+Your anger builds slowly but explodes devastatingly. You're patient with frustrations, absorbing them until you can't anymore—then you become the raging bull. This makes your rare anger terrifying in its intensity.
+
+You're motivated by material security and physical comfort. You work hard because you want the tangible rewards—money, possessions, comfort, quality. Abstract rewards don't motivate you like concrete ones.
+
+Sexually, you're sensual, patient, and physically oriented. You take your time, enjoying every sensation. Quickies don't satisfy you—you want long, luxurious, fully embodied experiences.
+
+The shadow of Mars in Taurus is stubbornness and materialism. You may pursue security to the point of greed. You might refuse to change course when flexibility is needed.
+
+Your drive is: to BUILD security, to acquire quality, to persist until you achieve tangible results.`,
+
+            "Gemini": `{preferredName}, your Mars is in Gemini, giving you quick mental energy, verbal agility, and the ability to pursue multiple goals simultaneously. Your power lies in your mind and your words.
+
+You fight with wit, not fists. Your weapon is language—you can argue circles around opponents, undercut them with devastating quips, or talk your way out of (or into) anything. You win through intelligence and communication.
+
+You need variety in your pursuits. Single-minded focus on one goal bores you quickly. You're at your best when juggling multiple projects, moving between them as your interest shifts. This isn't weakness—it's your natural rhythm.
+
+Your energy comes in bursts. You have incredible mental speed but not sustained physical stamina. You're brilliant in short sprints and need to work in intervals rather than marathons.
+
+Sexually, you're playful, curious, and mentally engaged. Talking, fantasy, and intellectual connection are as important as physical sensation. Variety and novelty keep your interest alive.
+
+The shadow of Mars in Gemini is scattered energy and using words as weapons. You may start many things and finish few. You might hurt people with cruel words you regret later.
+
+Your drive is: to LEARN, to communicate, to stay mentally stimulated, to explore multiple paths simultaneously.`,
+
+            "Cancer": `{preferredName}, your Mars is in Cancer, giving you emotionally-driven energy, fierce protectiveness, and tenacious persistence when defending what you love. Your power is activated by emotional connection.
+
+You fight for family, home, and those you love. Abstract goals don't motivate you, but threaten your loved ones and you become fearless. Your protective instincts give you courage you didn't know you had.
+
+Your energy fluctuates with your emotions. When emotionally engaged, you can move mountains. When emotionally drained, you have nothing left. You need to feel things matter before you can act on them.
+
+You may appear gentle, but you're remarkably tenacious. Like the crab, you grip what's yours and don't let go. You pursue goals sideways rather than directly, advancing through patience and persistence.
+
+Sexually, you're tender, emotionally connected, and nurturing. You need to feel safe and bonded before fully opening up. Sex without emotional connection leaves you feeling empty.
+
+The shadow of Mars in Cancer is passive-aggressiveness and emotional manipulation. You may avoid direct confrontation while seething internally. You might use guilt or emotional withdrawal as weapons.
+
+Your drive is: to PROTECT, to nurture, to create emotional security, to defend your people.`,
+
+            "Leo": `{preferredName}, your Mars is in Leo, giving you dramatic energy, creative drive, and the need to shine through your actions. You don't just do things—you perform them. Your actions are always expressions of your identity.
+
+You need to be seen and appreciated for what you do. Working anonymously or behind the scenes drains your energy. You need recognition, applause, and the knowledge that your efforts are noticed and valued.
+
+Your pride powers your ambition. You won't allow yourself to fail because failure is humiliating. This makes you work harder than others to ensure you succeed—and succeed visibly.
+
+You're a natural leader who takes charge through confidence and warmth. You don't dominate through aggression but through charisma. People follow you because you make them feel part of something special.
+
+Sexually, you're passionate, generous, and theatrical. You want to be desired, admired, and pursued. Romance and drama heighten your desire—you want to feel like the star of a love story.
+
+The shadow of Mars in Leo is ego-driven action and difficulty sharing the spotlight. You may make everything about you. You might become domineering when your authority is challenged.
+
+Your drive is: to CREATE, to be recognized, to lead, to express your unique identity through action.`,
+
+            "Virgo": `{preferredName}, your Mars is in Virgo, giving you precise, methodical energy and the drive to perfect everything you touch. You're motivated by improvement—making things better, more efficient, more effective.
+
+You work with meticulous attention to detail. Others might see tedious tasks; you see opportunities for perfection. You're the one who notices what's wrong and knows exactly how to fix it.
+
+Your energy is best applied to practical problems. Abstract goals frustrate you—you need concrete challenges with measurable outcomes. You want to see tangible results from your efforts.
+
+You're most powerful when serving a cause larger than yourself. Self-promotion feels uncomfortable, but working to improve systems, help others, or perfect craft motivates you deeply.
+
+Sexually, you're attentive, skilled, and service-oriented. You want to please your partner perfectly, studying what works and refining your technique. You may be modest about your desires but deeply sensual underneath.
+
+The shadow of Mars in Virgo is criticism and perfectionism paralysis. You may criticize others' efforts while failing to act yourself. You might delay action until conditions are perfect—which is never.
+
+Your drive is: to IMPROVE, to perfect, to analyze and solve problems, to serve with competence.`,
+
+            "Libra": `{preferredName}, your Mars is in Libra, giving you diplomatic energy, motivated by justice, fairness, and the pursuit of harmony. You're a peaceful warrior who fights for balance and equality.
+
+You're motivated by partnership. Solo action feels incomplete—you want to collaborate, strategize with others, and work toward shared goals. Your energy increases when you have someone to work with.
+
+You fight for fairness and against injustice. You may avoid personal conflicts, but when you see imbalance or unfairness, you step up. You're the advocate for those who can't speak for themselves.
+
+Decision-making can be challenging because you see all sides. This isn't indecisiveness—it's sophisticated perception. But it can delay action as you weigh every option.
+
+Sexually, you're romantic, focused on mutual pleasure, and aesthetically oriented. You want beautiful settings, extended foreplay, and balanced give-and-take. Crudeness turns you off.
+
+The shadow of Mars in Libra is passive-aggression and codependent action. You may avoid necessary confrontation to maintain peace. You might need others' approval before taking action.
+
+Your drive is: to BALANCE, to create fairness, to partner, to make environments harmonious and beautiful.`,
+
+            "Scorpio": `{preferredName}, your Mars is in Scorpio—one of its home signs—giving you tremendous power, intensity, and the ability to pursue goals with obsessive focus. When you want something, nothing can stop you.
+
+You operate with strategic patience. Unlike fiery Mars signs that act impulsively, you plan, wait, and strike when conditions are perfect. Your power isn't obvious until it's too late for others to counter.
+
+You're comfortable with darkness, crisis, and intensity. Situations that would overwhelm others energize you. You're at your best when the stakes are high and failure is not an option.
+
+Your willpower is legendary. Once you commit to something, you pursue it with total dedication, willing to sacrifice anything for victory. You can outlast any opponent through sheer force of will.
+
+Sexually, you're intensely passionate, deeply bonded, and powerfully magnetic. Sex is transformative for you—a merging of souls, not just bodies. You need depth and intensity, not casual encounters.
+
+The shadow of Mars in Scorpio is vengefulness and obsession. You may pursue revenge long after others would have moved on. You might become consumed by power struggles.
+
+Your drive is: to CONTROL, to transform, to probe depths, to possess completely what you pursue.`,
+
+            "Sagittarius": `{preferredName}, your Mars is in Sagittarius, giving you enthusiastic, expansive energy and the drive to explore, learn, and experience everything life offers. You're the adventurer and the philosopher.
+
+You're motivated by meaning and growth. You can't work on meaningless tasks—you need to believe what you're doing matters, expands horizons, or contributes to something larger than yourself.
+
+Your energy is abundant and optimistic. You tackle challenges with confidence that you'll succeed, and this optimism often becomes self-fulfilling. You inspire others with your enthusiasm.
+
+Physical freedom and movement are essential. You need space to roam, explore, and have adventures. Confinement—whether physical or mental—is intolerable.
+
+Sexually, you're adventurous, playful, and freedom-loving. You need variety, spontaneity, and the sense that sex is an adventure. Routine or possessive partners dim your fire.
+
+The shadow of Mars in Sagittarius is recklessness and over-commitment. You may promise more than you can deliver in your enthusiasm. You might take unnecessary risks or speak too bluntly.
+
+Your drive is: to EXPLORE, to grow, to find meaning, to experience everything.`,
+
+            "Capricorn": `{preferredName}, your Mars is in Capricorn—its exalted sign—giving you disciplined, strategic, and remarkably effective energy. You're the master of long-game achievement, building empires through patient effort.
+
+You're motivated by achievement and status. You want to succeed in visible, measurable ways—career advancement, material accomplishment, respected position. Abstract success means nothing; concrete achievement is everything.
+
+Your energy is controlled and directed. Unlike scattered signs, you focus all your power on clear goals. You climb mountains one step at a time, never wasting effort on diversions.
+
+You excel under pressure and responsibility. While others crumble under expectations, you rise. The weight of responsibility energizes rather than crushes you.
+
+Sexually, you're serious, stamina-focused, and surprisingly passionate beneath your controlled exterior. You may seem reserved, but you're deeply physical. You want partners who respect you.
+
+The shadow of Mars in Capricorn is workaholism and coldness. You may sacrifice relationships for achievement. You might suppress emotions until they calcify.
+
+Your drive is: to ACHIEVE, to build, to master, to gain lasting respect through accomplishment.`,
+
+            "Aquarius": `{preferredName}, your Mars is in Aquarius, giving you unconventional energy, motivated by innovation, causes, and the desire to improve humanity. You're the revolutionary, the inventor, the change-maker.
+
+You're motivated by ideals and progress. You can't work for purely personal gain—you need to believe your efforts serve a larger purpose, challenge the status quo, or push humanity forward.
+
+You approach challenges unconventionally. Standard methods bore you; you find new ways. Your solutions surprise others because you think from completely different angles.
+
+Group action energizes you. You're powerful as part of movements, teams, or communities working toward shared ideals. Solo achievement matters less than collective progress.
+
+Sexually, you're experimental, mentally engaged, and need independence. You resist possessiveness and conventional roles. Intellectual connection and freedom are as important as physical chemistry.
+
+The shadow of Mars in Aquarius is emotional detachment and contrarianism. You may be rebellious without purpose. You might ignore individual people while fighting for humanity abstractly.
+
+Your drive is: to INNOVATE, to rebel against the outdated, to improve systems, to serve humanity.`,
+
+            "Pisces": `{preferredName}, your Mars is in Pisces, giving you subtle, fluid energy that works through intuition, imagination, and gentle persistence. Your power is quiet but pervasive, like water that eventually erodes stone.
+
+You're motivated by compassion and inspiration. You can't work on things that don't touch your heart or imagination. You need to feel connected to something meaningful, creative, or healing.
+
+Your energy works best through surrender rather than force. When you stop trying so hard and let inspiration guide you, you accomplish more than when you push aggressively.
+
+Boundaries between effort and ease blur for you. Your best work happens in flow states where action feels effortless. You're most effective when you're not thinking about being effective.
+
+Sexually, you're sensitive, imaginative, and merging. You need emotional and spiritual connection. Fantasy and romance enhance physical experience. You give yourself completely.
+
+The shadow of Mars in Pisces is passive escapism and victim mentality. You may avoid necessary action through escapism. You might be too easily swayed by others' agendas.
+
+Your drive is: to CONNECT, to create, to heal, to dissolve boundaries between self and other.`
+        };
+
+        async function calculateMarsSign(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '🔥 Calculating Mars position...';
+            submitBtn.disabled = true;
+
+            try {
+                const coords = await geocodeLocation(birthPlace);
+                const marsSign = calculatePlanetPosition('Mars', birthDate, birthTime, coords);
+                showResult(name, marsSign);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function geocodeLocation(location) {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`;
+            const response = await fetch(url, { headers: { 'User-Agent': 'QuantumMerlinTools/1.0' } });
+            if (!response.ok) throw new Error('Failed to look up location');
+            const data = await response.json();
+            if (data.length === 0) throw new Error('Location not found');
+            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+        }
+
+        function calculatePlanetPosition(planet, dateStr, timeStr, coords) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const tzOffsetHours = Math.round(coords.lon / 15);
+            const utcHours = hours - tzOffsetHours;
+            const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+            const time = Astronomy.MakeTime(datetime);
+            
+            const equ = Astronomy.Equator(planet, time, null, true, false);
+            const ecliptic = Astronomy.Ecliptic(equ.vec);
+            
+            let lon = ecliptic.elon;
+            while (lon < 0) lon += 360;
+            while (lon >= 360) lon -= 360;
+            
+            const signIndex = Math.floor(lon / 30);
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+            
+            console.log(`${planet}: ${lon.toFixed(2)}° = ${signs[signIndex]}`);
+            return signs[signIndex];
+        }
+
+        function showResult(name, marsSign) {
+            const interpretation = interpretations[marsSign];
+            const personalizedReading = interpretation.replace(/{preferredName}/g, name);
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            const readingData = {
+                toolType: 'mars',
+                headerTitle: '🔥 Your Mars Sign Reading',
+                headerSubtitle: 'Your drive, passion, and warrior spirit',
+                number: marsSign,
+                title: `Mars in ${marsSign}`,
+                subtitle: `${name}, this is your inner warrior`,
+                content: paragraphs,
+                sourceUrl: 'mars-sign-reading.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            window.location.href = 'reading-loading.html';
+        }
+    </script>
+</body>
+</html>

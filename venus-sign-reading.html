@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venus Sign Calculator & Reading | Quantum Merlin</title>
+    <meta name="description" content="Calculate your Venus Sign and discover how you love, what you find beautiful, and what brings you pleasure.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ec4899 0%, #fbbf24 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #ec4899;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(236, 72, 153, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .input-section { margin-bottom: 30px; }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            color: #ec4899;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(236, 72, 153, 0.3);
+            background: rgba(10, 10, 15, 0.6);
+            color: #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #ec4899;
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.2);
+        }
+        .helper-text {
+            font-size: 0.85em;
+            color: #9A8F7A;
+            margin-top: 5px;
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ec4899 0%, #fbbf24 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+        }
+        button[type="submit"]:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-block;
+            color: #ec4899;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="tools_index.html" class="back-link">← Back to Quantum Merlin Hub</a>
+        
+        <div class="header">
+            <h1>💕 Venus Sign Reading</h1>
+            <p>Discover how you love, what you find beautiful, and what brings you pleasure</p>
+        </div>
+
+        <div class="tool-card">
+            <form onsubmit="calculateVenusSign(event)">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="preferredName">Your Name</label>
+                        <input type="text" id="preferredName" required placeholder="What should we call you?">
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="birthDate">Birth Date</label>
+                            <input type="date" id="birthDate" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthTime">Birth Time</label>
+                            <input type="time" id="birthTime" required>
+                            <div class="helper-text">Local time at birth location</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="birthPlace">Birth City</label>
+                            <input type="text" id="birthPlace" required placeholder="e.g., Paris, France">
+                            <div class="helper-text">City and country</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit">💕 Calculate My Venus Sign & Reading</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const interpretations = {
+            "Aries": `{preferredName}, your Venus is in Aries, giving you a bold, passionate, and direct approach to love. You don't wait for romance to find you—you pursue what you want with fiery determination. Love, for you, is an adventure, a conquest, a thrilling chase.
+
+You fall fast and hard. When someone captures your attention, you want them NOW. Patience in courtship feels like torture. You prefer direct declarations of interest over subtle hints. You'd rather know immediately if someone is interested than play guessing games for months.
+
+In relationships, you need excitement and independence. You're attracted to confident, strong-willed partners who can match your energy. Pushovers bore you quickly—you need someone who challenges you, who isn't afraid to disagree, who has their own fire.
+
+Your love language is action. You show affection through doing things for your partner, initiating adventures together, and passionate physical expression. You're not the type for lengthy love letters—you'd rather demonstrate your feelings through bold gestures.
+
+The shadow of Venus in Aries is impatience and selfishness in love. You may pursue your own desires without considering your partner's needs. You might grow bored once the chase is over. Learning to sustain passion beyond the initial conquest is your growth edge.
+
+You're attracted to confident, athletic types who can keep up with your active lifestyle. You appreciate directness and despise games. Your ideal partner matches your passion while maintaining their independence.`,
+
+            "Taurus": `{preferredName}, your Venus is in Taurus—one of Venus's home signs—giving you a deeply sensual, loyal, and grounded approach to love. You experience romance through all five senses: touch, taste, smell, sight, and sound all play roles in your romantic life.
+
+You take your time falling in love. Unlike fire signs who rush in, you carefully assess potential partners, ensuring they meet your standards for stability, reliability, and sensory compatibility. But once you commit, you're incredibly loyal and devoted.
+
+Physical affection is essential to you. You need touch, cuddles, and intimate physical connection to feel loved. You also express love through providing material comfort—cooking delicious meals, creating beautiful spaces, giving thoughtful gifts.
+
+Your ideal date involves sensory pleasure: a gourmet dinner, fine wine, beautiful surroundings, soft music, and plenty of physical affection. You appreciate luxury and quality, though this doesn't necessarily mean expensive—you value craftsmanship and genuine beauty over flashy displays.
+
+The shadow of Venus in Taurus is possessiveness and resistance to change. You may treat partners as belongings, becoming jealous and controlling. You might stay in unfulfilling relationships too long because change feels threatening.
+
+You're attracted to stable, reliable partners with good taste and appreciation for life's pleasures. You need someone who values quality over quantity, loyalty over excitement, and depth over variety.`,
+
+            "Gemini": `{preferredName}, your Venus is in Gemini, giving you a playful, curious, and communicative approach to love. For you, the most important aspect of romance is mental connection—you need someone who stimulates your mind and keeps conversation flowing.
+
+You're attracted to wit, intelligence, and versatility. Someone who can discuss multiple topics, who keeps you guessing, who surprises you with new ideas—this is your romantic ideal. Boring, predictable partners lose your interest quickly.
+
+Flirtation is an art form for you. You're naturally charming, quick with words, and skilled at playful banter. You may have many admirers simply because your communication style is so engaging and fun.
+
+Variety keeps your love life interesting. You need change, novelty, and new experiences within relationships. This doesn't necessarily mean multiple partners—it means you need your one partner to be multifaceted, to continue surprising you, to be willing to try new things.
+
+The shadow of Venus in Gemini is superficiality and inconsistency. You may struggle with emotional depth, preferring to keep things light when your partner needs serious engagement. You might be flirtatious even in committed relationships, causing insecurity.
+
+Your love language is words—verbal affirmation, constant communication, sharing ideas and jokes. You need to talk about your relationship, process it verbally, and maintain ongoing dialogue with your partner.`,
+
+            "Cancer": `{preferredName}, your Venus is in Cancer, giving you a nurturing, protective, and deeply emotional approach to love. You experience romance through the lens of home and family—you want to create a safe haven with your partner.
+
+You're attracted to partners who feel like home. Security, emotional depth, and the potential for family (whether traditional or chosen) matter deeply to you. You want someone who will be there through thick and thin, who values emotional connection over excitement.
+
+You express love through caregiving. You cook for your partner, remember their preferences, anticipate their needs, create cozy spaces, and provide emotional support. Being needed makes you feel loved in return.
+
+Your moods fluctuate like the Moon, and your romantic feelings can be equally changeable. You may be clingy when insecure and withdrawn when hurt. You take romantic rejection very personally and can hold onto past hurts for a long time.
+
+The shadow of Venus in Cancer is possessiveness and emotional manipulation. You might use your caregiving as leverage ("After all I do for you..."). You may have difficulty letting go of relationships that have ended.
+
+You're attracted to sensitive, emotionally available partners who value home and security. You need someone who can handle your emotional depth, who doesn't dismiss your feelings, and who wants to build a life together.`,
+
+            "Leo": `{preferredName}, your Venus is in Leo, giving you a dramatic, generous, and warm-hearted approach to love. Romance for you is a grand production—you love lavishly, express affection boldly, and expect to be adored in return.
+
+You're attracted to partners who make you feel special. You need admiration, appreciation, and obvious demonstrations of love. Subtle partners who assume you know how they feel leave you feeling unloved and insecure.
+
+You express love through grand gestures, generous gifts, public displays of affection, and unwavering loyalty. When you love someone, the whole world knows it. You're proud of your partner and want to show them off.
+
+Romance should be fun and dramatic. You love celebrations, surprises, and creating magical moments. Date nights are events, not afterthoughts. You put effort into keeping the spark alive and expect the same energy from your partner.
+
+The shadow of Venus in Leo is ego-driven love and need for constant attention. You may make relationships about your own need to be admired rather than genuine connection. You might become competitive or jealous if your partner receives more attention than you.
+
+You're attracted to confident, accomplished partners who have their own shine. You need someone who appreciates your generous nature and returns your warmth with their own. Your ideal partner is loyal, expressive, and willing to participate in the grand romance you create.`,
+
+            "Virgo": `{preferredName}, your Venus is in Virgo, giving you a practical, devoted, and service-oriented approach to love. You show love through helpful actions—fixing things, organizing, problem-solving, and making your partner's life easier in tangible ways.
+
+You're discerning in love. You notice details others miss, which means you see both the best and the flaws in potential partners clearly. You may be criticized for being too picky, but really you're just thorough in your assessment.
+
+You express love through service and practical support. You remember exactly how your partner likes their coffee, you handle tedious tasks so they don't have to, you notice when something needs attention and fix it without being asked.
+
+Reliability and consistency matter deeply to you. Grand romantic gestures mean less than showing up every day, keeping promises, and being someone your partner can count on. You offer this reliability and expect it in return.
+
+The shadow of Venus in Virgo is criticism and emotional withholding. You may focus so much on your partner's flaws that you fail to appreciate their gifts. You might express love through criticism disguised as "helping them improve."
+
+You're attracted to intelligent, health-conscious, and reliable partners. You need someone who appreciates your helpfulness rather than taking it for granted, who values practical love expressions, and who has their life reasonably together.`,
+
+            "Libra": `{preferredName}, your Venus is in Libra—one of Venus's home signs—giving you a refined, harmonious, and partnership-oriented approach to love. Relationships are central to your life; you feel most yourself when partnered.
+
+You're attracted to beauty, elegance, and refinement. Aesthetics matter to you in choosing partners—not just physical beauty, but how they present themselves, their taste, their social graces. Harmony and pleasant interactions are essential.
+
+You're a natural romantic. Candlelit dinners, beautiful flowers, thoughtful love notes, meaningful anniversaries—you appreciate and create romantic moments. You believe love should be beautiful, and you work to make it so.
+
+Fairness and equality matter deeply in your relationships. You want balanced give-and-take, equal investment, and mutual respect. Imbalanced relationships where one person does all the giving deeply disturb you.
+
+The shadow of Venus in Libra is people-pleasing and loss of self. You may agree with partners to keep peace, accumulating resentment. You might not even know what you want because you're so focused on creating harmony.
+
+You're attracted to charming, socially adept, and aesthetically pleasing partners. You need someone who values partnership as highly as you do, who puts effort into the relationship, and who appreciates beauty and harmony.`,
+
+            "Scorpio": `{preferredName}, your Venus is in Scorpio, giving you an intense, passionate, and all-or-nothing approach to love. You don't do casual—when you love, you love completely, deeply, and transformatively.
+
+You're attracted to depth, mystery, and intensity. Surface-level connections bore you instantly. You want to know someone's soul, their secrets, their shadows. You're drawn to complex people who reveal themselves slowly.
+
+You love with your entire being. Your passion is legendary—physically, emotionally, spiritually. When you're with someone, you're completely present, completely focused, completely theirs. Lukewarm love is no love at all to you.
+
+Trust is everything. You're extremely perceptive and can detect dishonesty instantly. Once trust is broken, it's nearly impossible to rebuild. You protect yourself by testing partners, sometimes unconsciously, to ensure their loyalty.
+
+The shadow of Venus in Scorpio is jealousy, possessiveness, and manipulation. You may use your emotional insight as a weapon. You might create drama to test loyalty or punish perceived betrayals with devastating precision.
+
+You're attracted to powerful, intense, and emotionally courageous partners. You need someone who can handle your depth, who won't be scared by your intensity, and who is willing to go to the darkest places with you—and back again.`,
+
+            "Sagittarius": `{preferredName}, your Venus is in Sagittarius, giving you an adventurous, optimistic, and freedom-loving approach to love. Romance for you is an exploration—of the world, of ideas, of possibilities.
+
+You're attracted to partners who expand your horizons. Someone who introduces you to new cultures, philosophies, or experiences wins your heart. You need intellectual stimulation and the sense that your partner is a fellow explorer.
+
+You express love through shared adventures and philosophical connection. You want to travel together, learn together, and grow together. Staying home in routine domesticity feels like death to your romantic spirit.
+
+Freedom within relationship is essential. You need space to explore your own interests, to have your own adventures, to grow independently. Partners who try to constrain you or demand constant togetherness push you away.
+
+The shadow of Venus in Sagittarius is commitment-phobia and tactlessness. You may keep one foot out the door in every relationship. You might hurt partners with brutal honesty delivered without sensitivity.
+
+You're attracted to adventurous, open-minded, and intellectually curious partners. You need someone who shares your love of exploration, who gives you space while remaining connected, and who sees love as a journey rather than a destination.`,
+
+            "Capricorn": `{preferredName}, your Venus is in Capricorn, giving you a serious, ambitious, and committed approach to love. Romance isn't a game to you—it's a significant investment with long-term implications.
+
+You're attracted to accomplished, responsible, and mature partners. Status and achievement matter, not from superficiality but because these qualities demonstrate the drive and reliability you value. You respect partners who have built something.
+
+You express love through commitment and providing. You show up reliably, you work hard to build a secure future together, you take your responsibilities seriously. Your love is demonstrated through actions over time, not grand gestures.
+
+You may seem reserved in romance, but this is protection for deep feelings. Once you trust someone enough to open up, your devotion is unwavering. You're capable of profound, lasting love—you just don't offer it easily.
+
+The shadow of Venus in Capricorn is coldness and transactional relationship thinking. You may evaluate partners like business propositions. You might struggle to express warmth or vulnerability even when you feel it deeply.
+
+You're attracted to ambitious, stable, and mature partners with good reputations and solid foundations. You need someone who takes life seriously, who shares your long-term orientation, and who understands that love is built over time.`,
+
+            "Aquarius": `{preferredName}, your Venus is in Aquarius, giving you an unconventional, independent, and friendship-based approach to love. Your ideal romance looks more like best friends who are also attracted to each other.
+
+You're attracted to unique, progressive, and intellectually stimulating partners. Conventional types bore you. You want someone who thinks differently, who challenges social norms, who has their own vision for life.
+
+Friendship is the foundation of your romantic relationships. You need mental connection and shared values more than traditional romance. You'd rather have deep conversations and fight for causes together than receive flowers and chocolates.
+
+Freedom and independence are non-negotiable. You need space for your own interests, your own friendships, your own evolution. Traditional couple dynamics that prioritize the relationship above individual expression suffocate you.
+
+The shadow of Venus in Aquarius is emotional detachment and rebellion for its own sake. You may avoid intimacy by intellectualizing feelings. You might reject appropriate commitment simply because it seems too conventional.
+
+You're attracted to unique individuals who march to their own drummer. You need someone who respects your independence, shares your progressive values, and is secure enough to love you without possessing you.`,
+
+            "Pisces": `{preferredName}, your Venus is in Pisces—Venus's exalted sign—giving you an idealistic, compassionate, and deeply romantic approach to love. You experience romance as a spiritual merging, a dissolution of boundaries between souls.
+
+You're attracted to creative, sensitive, and spiritually-oriented partners. Artists, musicians, healers, and dreamers capture your heart. You see the divine in everyone and fall in love with potential as much as reality.
+
+You love unconditionally and sacrificially. You give everything to those you love—sometimes too much. Your empathy is so strong that you feel your partner's emotions as your own, which can be both beautiful and overwhelming.
+
+Romance should be magical, transcendent, and soulful. You want the kind of love poets write about, the connection that defies logic, the bond that feels destined. Practical, unromantic partnerships leave you feeling empty.
+
+The shadow of Venus in Pisces is escapism and martyrdom. You may sacrifice yourself for unworthy partners. You might use romance as escape from reality rather than grounding. You can be deceived because you see what you want to see.
+
+You're attracted to sensitive, artistic, and spiritually-aware partners. You need someone who appreciates your deep capacity for love, who won't take advantage of your giving nature, and who can help ground your romantic idealism in reality.`
+        };
+
+        async function calculateVenusSign(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '💕 Calculating Venus position...';
+            submitBtn.disabled = true;
+
+            try {
+                const coords = await geocodeLocation(birthPlace);
+                const venusSign = calculatePlanetPosition('Venus', birthDate, birthTime, coords);
+                showResult(name, venusSign);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function geocodeLocation(location) {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`;
+            const response = await fetch(url, { headers: { 'User-Agent': 'QuantumMerlinTools/1.0' } });
+            if (!response.ok) throw new Error('Failed to look up location');
+            const data = await response.json();
+            if (data.length === 0) throw new Error('Location not found');
+            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+        }
+
+        function calculatePlanetPosition(planet, dateStr, timeStr, coords) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const tzOffsetHours = Math.round(coords.lon / 15);
+            const utcHours = hours - tzOffsetHours;
+            const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
+            const time = Astronomy.MakeTime(datetime);
+            
+            const equ = Astronomy.Equator(planet, time, null, true, false);
+            const ecliptic = Astronomy.Ecliptic(equ.vec);
+            
+            let lon = ecliptic.elon;
+            while (lon < 0) lon += 360;
+            while (lon >= 360) lon -= 360;
+            
+            const signIndex = Math.floor(lon / 30);
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+            
+            console.log(`${planet}: ${lon.toFixed(2)}° = ${signs[signIndex]}`);
+            return signs[signIndex];
+        }
+
+        function showResult(name, venusSign) {
+            const interpretation = interpretations[venusSign];
+            const personalizedReading = interpretation.replace(/{preferredName}/g, name);
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            const readingData = {
+                toolType: 'venus',
+                headerTitle: '💕 Your Venus Sign Reading',
+                headerSubtitle: 'How you love and what you find beautiful',
+                number: venusSign,
+                title: `Venus in ${venusSign}`,
+                subtitle: `${name}, this is your love nature`,
+                content: paragraphs,
+                sourceUrl: 'venus-sign-reading.html'
+            };
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            window.location.href = 'reading-loading.html';
+        }
+    </script>
+</body>
+</html>
