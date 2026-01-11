@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Zodiac Reading | Quantum Merlin</title>
+    <meta name="description" content="Discover your Chinese Zodiac animal and element, revealing your personality, strengths, and cosmic path.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ef4444 0%, #fbbf24 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #fbbf24;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(30, 30, 45, 0.9);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+        .input-section { margin-bottom: 30px; }
+        .input-group {
+            margin-bottom: 25px;
+        }
+        .input-group label {
+            display: block;
+            color: #fbbf24;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.2);
+            border-radius: 10px;
+            color: #e0e0e0;
+            font-size: 1.1em;
+            font-family: 'Cormorant Garamond', serif;
+            transition: all 0.3s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 600px) {
+            .input-row { grid-template-columns: 1fr; }
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ef4444 0%, #fbbf24 100%);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 1.3em;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+            transition: all 0.4s;
+            box-shadow: 0 5px 25px rgba(251, 191, 36, 0.4);
+        }
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(251, 191, 36, 0.6);
+        }
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .back-link {
+            display: inline-block;
+            color: #ef4444;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+            position: relative;
+            z-index: 10;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .info-box {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .info-box h3 {
+            color: #fbbf24;
+            font-family: 'Cinzel', serif;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="tools_index.html" class="back-link">← Back to Quantum Merlin Hub</a>
+        
+        <div class="header">
+            <h1>🐉 Chinese Zodiac Reading</h1>
+            <p>Discover your animal sign, elemental influence, and ancient wisdom</p>
+        </div>
+
+        <div class="tool-card">
+            <form onsubmit="calculateChineseZodiac(event)">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="preferredName">Your Name (Optional)</label>
+                        <input type="text" id="preferredName" placeholder="What should we call you?">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="birthDate">Birth Date *</label>
+                        <input type="date" id="birthDate" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">🐉 Reveal My Chinese Zodiac</button>
+            </form>
+
+            <div class="info-box">
+                <h3>📜 About Chinese Zodiac</h3>
+                <p>The Chinese Zodiac follows a 12-year cycle, with each year represented by an animal. Combined with the five elements (Wood, Fire, Earth, Metal, Water) rotating every 2 years, this creates a 60-year cycle of unique combinations that shape your personality, strengths, and life path.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const animals = {
+            "Rat": {
+                years: [1924, 1936, 1948, 1960, 1972, 1984, 1996, 2008, 2020],
+                emoji: "🐀",
+                traits: "Quick-witted, resourceful, versatile, kind",
+                reading: `{preferredName}, you were born in the Year of the Rat — the first sign of the Chinese Zodiac, symbolizing new beginnings, intelligence, and adaptability.
+
+**Your Natural Gifts**
+
+Rats are incredibly quick-witted and resourceful. You have a sharp mind that can assess situations rapidly and find creative solutions where others see only obstacles. Your intelligence isn't just academic—it's practical, street-smart, and deeply intuitive.
+
+You're naturally charming and sociable, able to make friends easily and navigate social situations with grace. People are drawn to your wit, humor, and genuine interest in them. You remember details about people that others forget, making them feel seen and valued.
+
+**Your Inner Drive**
+
+Deep down, security matters immensely to you. You work hard to build stability—financially, emotionally, and in relationships. You're not greedy, but you do appreciate having a safety net. This makes you an excellent saver and planner.
+
+You're adaptable and versatile, able to thrive in various environments. When circumstances change, you pivot quickly rather than resisting. This flexibility is one of your greatest strengths in an unpredictable world.
+
+**Your Challenges**
+
+Sometimes your quick mind can lead to overthinking or worry. You might see problems before they exist, creating unnecessary stress. Learning to trust that things will work out is an ongoing lesson.
+
+You can be a bit opportunistic, always looking for the next advantage. While this serves you well professionally, make sure you're not cutting corners ethically or taking shortcuts that could harm relationships.
+
+**In Love & Relationships**
+
+In love, you're passionate and devoted once you commit. You show affection through thoughtful gestures and remembering what matters to your partner. You need someone who appreciates your intelligence and can match your mental agility.
+
+You're protective of those you love, sometimes to the point of being a bit controlling. You want to help and guide, but remember to let others make their own choices and mistakes.
+
+**Career & Life Path**
+
+You excel in careers requiring quick thinking, adaptability, and people skills. Sales, entrepreneurship, writing, design, and anything involving strategy or problem-solving suits you well.
+
+You're meant to be a pioneer in your own way—starting things, initiating projects, seeing opportunities others miss. Trust your instincts and don't be afraid to take calculated risks.`
+            },
+            "Ox": {
+                years: [1925, 1937, 1949, 1961, 1973, 1985, 1997, 2009, 2021],
+                emoji: "🐂",
+                traits: "Diligent, dependable, strong, determined",
+                reading: `{preferredName}, you were born in the Year of the Ox — a symbol of strength, reliability, and unwavering determination.
+
+**Your Natural Gifts**
+
+You possess incredible perseverance and stamina. When you commit to something, you see it through no matter how long it takes. Others may sprint, but you're the marathon runner who ultimately crosses the finish line.
+
+Your reliability is legendary. People know they can count on you to deliver on your promises, show up on time, and do quality work. This trustworthiness makes you invaluable in any team or relationship.
+
+You have a methodical, organized approach to life. You prefer systems, routines, and step-by-step plans. While others chase shiny objects, you're building something solid and lasting.
+
+**Your Inner Drive**
+
+You value stability, tradition, and proven methods. You're not interested in reinventing the wheel—you'd rather perfect what already works. This makes you an excellent preserver of knowledge and keeper of standards.
+
+Hard work doesn't scare you; in fact, you take pride in it. You believe in earning what you have through honest effort. Quick fixes and shortcuts don't appeal to you—you want to build something real.
+
+**Your Challenges**
+
+Your stubbornness can sometimes work against you. Once you've made up your mind, you resist changing course even when new information suggests you should. Learning to be flexible without sacrificing your values is key.
+
+You can be overly serious and forget to have fun. You're so focused on responsibilities and goals that you might miss out on spontaneous joy. Remember that rest and play are productive too.
+
+**In Love & Relationships**
+
+In relationships, you're loyal to a fault. Once you commit, you're in for life. You show love through actions more than words—providing, protecting, and creating stability for those you care about.
+
+You need a partner who appreciates your steady nature and doesn't try to rush you or make you into something you're not. You thrive with someone who values depth over excitement.
+
+**Career & Life Path**
+
+You excel in careers requiring patience, precision, and long-term thinking. Agriculture, construction, finance, education, and any field where quality and consistency matter suit you perfectly.
+
+Your life purpose involves building something lasting—whether that's a business, a family legacy, strong relationships, or tangible contributions to your community. You're here to show the power of sustained effort.`
+            },
+            "Tiger": {
+                years: [1926, 1938, 1950, 1962, 1974, 1986, 1998, 2010, 2022],
+                emoji: "🐅",
+                traits: "Brave, confident, competitive, charismatic",
+                reading: `{preferredName}, you were born in the Year of the Tiger — embodying courage, passion, and natural leadership.
+
+**Your Natural Gifts**
+
+You radiate confidence and charisma. When you enter a room, people notice. There's a magnetic quality to your presence that draws others to you. You're a natural leader who inspires through example and enthusiasm.
+
+Your bravery is remarkable. You're willing to take risks others fear, stand up for what's right, and face challenges head-on. This courage isn't recklessness—it comes from deep self-trust and belief in your abilities.
+
+You have intense passion for whatever captures your interest. When you commit to something, you go all in with full energy and focus. This intensity makes you capable of extraordinary achievements.
+
+**Your Inner Drive**
+
+Freedom and independence are sacred to you. You resist being controlled, managed, or told what to do. You need space to roam, explore, and make your own choices. You'd rather fail on your own terms than succeed following someone else's plan.
+
+Competition energizes you. You love a good challenge and thrive when you have something to conquer or prove. This competitive spirit pushes you to excel and refuse mediocrity.
+
+**Your Challenges**
+
+Your intensity can be overwhelming for others. You operate at such high energy that calmer people might feel steamrolled. Learning to modulate your approach based on the situation serves you well.
+
+Impulsiveness can get you into trouble. You act quickly on gut feelings, which sometimes works brilliantly and sometimes leads to preventable mistakes. Pausing to consider consequences—just briefly—can save you unnecessary drama.
+
+**In Love & Relationships**
+
+You're passionate and romantic, bringing exciting energy to relationships. You love deeply and express it openly. Your partner needs to be secure enough to handle your strong personality without trying to tame you.
+
+You need a relationship that allows independence and doesn't feel restrictive. Too many rules or expectations make you feel trapped. You thrive with someone who's confident enough to be your equal.
+
+**Career & Life Path**
+
+You excel in careers involving leadership, competition, or pioneering new territory. Entrepreneurship, sports, military, creative arts, or any field where you can be bold and innovative suits your spirit.
+
+Your life purpose involves breaking new ground, standing up for the underdog, and showing others what's possible through courage. You're meant to be a warrior in whatever arena calls to you.`
+            },
+            "Rabbit": {
+                years: [1927, 1939, 1951, 1963, 1975, 1987, 1999, 2011, 2023],
+                emoji: "🐇",
+                traits: "Gentle, quiet, elegant, kind",
+                reading: `{preferredName}, you were born in the Year of the Rabbit — symbolizing grace, sensitivity, and refined wisdom.
+
+**Your Natural Gifts**
+
+You possess a gentle elegance that puts others at ease. There's a refinement to how you move through the world—thoughtful, considerate, and aesthetically aware. You appreciate beauty and create it wherever you go.
+
+Your emotional intelligence is exceptional. You read people and situations with remarkable accuracy, sensing undercurrents others miss entirely. This makes you an excellent mediator, counselor, and friend.
+
+You have a peaceful presence that calms chaotic environments. In stressful situations, your tranquility helps others find their center. You don't add to the noise—you reduce it through your serene approach.
+
+**Your Inner Drive**
+
+Harmony matters deeply to you. You work to create peaceful, beautiful environments both externally and in relationships. Conflict disturbs you, and you'll go to great lengths to avoid or resolve it.
+
+You value quality over quantity in all things—relationships, possessions, experiences. You'd rather have a few deep connections than many superficial ones. You're selective about where you invest your energy.
+
+**Your Challenges**
+
+Your conflict-avoidance can sometimes prevent necessary confrontations. You might swallow your feelings to keep the peace, leading to resentment. Learning that healthy conflict can strengthen relationships is important.
+
+You can be overly cautious, missing opportunities because you're waiting for perfect conditions. Sometimes you need to take a calculated risk even when you can't see all the outcomes.
+
+**In Love & Relationships**
+
+In love, you're romantic, devoted, and incredibly attentive to your partner's needs. You express affection through thoughtful gestures and creating a beautiful, peaceful home environment.
+
+You need a partner who's gentle and appreciates your sensitivity. Harsh, aggressive people wound you deeply. You thrive with someone who values emotional connection and creates a safe space for vulnerability.
+
+**Career & Life Path**
+
+You excel in careers involving aesthetics, diplomacy, counseling, or creating peaceful environments. Design, hospitality, mediation, therapy, art, or any field requiring sensitivity and refinement suits you.
+
+Your life purpose involves bringing beauty, peace, and emotional healing to the world. You show others that gentleness is strength and that creating harmony is noble work.`
+            },
+            "Dragon": {
+                years: [1928, 1940, 1952, 1964, 1976, 1988, 2000, 2012, 2024],
+                emoji: "🐉",
+                traits: "Confident, intelligent, enthusiastic, ambitious",
+                reading: `{preferredName}, you were born in the Year of the Dragon — the most auspicious sign, representing power, wisdom, and extraordinary potential.
+
+**Your Natural Gifts**
+
+You possess a larger-than-life energy that's impossible to ignore. Dragons command attention without trying—there's something almost mythical about your presence. People sense they're encountering someone special when they meet you.
+
+Your confidence borders on fearlessness. You believe in yourself deeply and aren't intimidated by challenges that would stop others. This self-assurance becomes a self-fulfilling prophecy—you succeed because you expect to.
+
+You're blessed with natural charisma and magnetism. People want to follow you, support your vision, and be part of your journey. You inspire others to think bigger and reach higher.
+
+**Your Inner Drive**
+
+You're meant for great things and you know it. This isn't arrogance—it's a deep knowing that you're here to make a significant impact. You're not satisfied with ordinary achievements; you want to leave a legacy.
+
+Perfectionism drives you. You set incredibly high standards for yourself and often for others. You don't do things halfway—it's excellence or nothing. This pursuit of greatness propels you forward.
+
+**Your Challenges**
+
+Your intensity and high expectations can exhaust those around you. Not everyone operates at your level or shares your vision. Learning patience with people who move at different speeds is essential.
+
+Pride can be your downfall. When things go wrong, admitting mistakes or asking for help feels almost impossible. Remember that vulnerability isn't weakness—it's how you connect authentically with others.
+
+**In Love & Relationships**
+
+In love, you're passionate, generous, and romantic. You want a relationship that feels epic, not ordinary. You need a partner who can match your energy and won't be intimidated by your strength.
+
+You can be demanding in relationships, expecting your partner to meet your high standards. Accepting imperfection—in them and yourself—allows for deeper intimacy. Remember that love isn't a performance.
+
+**Career & Life Path**
+
+You excel in high-visibility careers where you can lead, innovate, and make your mark. Entrepreneurship, entertainment, politics, executive leadership, or any field where you can be at the forefront suits your spirit.
+
+Your life purpose involves using your gifts to uplift others and create positive change on a large scale. You're meant to be a visionary who shows what's possible.`
+            },
+            "Snake": {
+                years: [1929, 1941, 1953, 1965, 1977, 1989, 2001, 2013, 2025],
+                emoji: "🐍",
+                traits: "Wise, enigmatic, intuitive, sophisticated",
+                reading: `{preferredName}, you were born in the Year of the Snake — representing profound wisdom, mystery, and transformative power.
+
+**Your Natural Gifts**
+
+You possess deep wisdom that seems to come from ancient sources. You understand human nature, see patterns others miss, and have insights that sometimes startle people with their accuracy.
+
+Your intuition is remarkably strong. You sense truth beneath appearances, read between lines, and know things without being told how you know. This psychic quality makes you an excellent judge of character and situations.
+
+There's an enigmatic quality to you that draws people in. You don't reveal everything about yourself, maintaining an air of mystery that makes you fascinating. You understand the power of strategic disclosure.
+
+**Your Inner Drive**
+
+You value depth, substance, and authenticity. Surface-level interactions bore you—you want to explore the hidden depths of life, psychology, and spirituality. You're naturally drawn to esoteric knowledge and transformative experiences.
+
+Transformation is your theme. Like a snake shedding its skin, you reinvent yourself periodically, releasing old identities to embrace new versions of yourself. Change doesn't scare you—it's how you evolve.
+
+**Your Challenges**
+
+Your secretive nature can create distance in relationships. You hold your cards so close that people struggle to truly know you. Learning to be vulnerable and open—with the right people—deepens your connections.
+
+You can be overly suspicious, seeing threats or deception where none exists. Your ability to perceive hidden agendas is valuable, but not everyone has ulterior motives. Sometimes trust is warranted.
+
+**In Love & Relationships**
+
+In love, you're deeply passionate but selective. You don't give your heart easily, but when you do, it's profound and transformative. You need a partner who appreciates your depth and doesn't try to force you to be light and superficial.
+
+Jealousy and possessiveness can surface if you feel insecure. You want deep loyalty and exclusivity in relationships. Finding someone equally committed allows you to relax your guard.
+
+**Career & Life Path**
+
+You excel in careers requiring insight, strategy, and working with hidden knowledge. Psychology, research, investigative work, finance, healing arts, or any field involving transformation suits you perfectly.
+
+Your life purpose involves helping others transform and see deeper truths. You're meant to be a guide through difficult transitions, showing that endings are also beginnings.`
+            },
+            "Horse": {
+                years: [1930, 1942, 1954, 1966, 1978, 1990, 2002, 2014, 2026],
+                emoji: "🐴",
+                traits: "Energetic, independent, warm-hearted, free-spirited",
+                reading: `{preferredName}, you were born in the Year of the Horse — symbolizing freedom, enthusiasm, and boundless energy.
+
+**Your Natural Gifts**
+
+You radiate infectious enthusiasm that lifts everyone around you. Your optimism and zest for life are genuinely inspiring. When you're excited about something, others can't help but get excited too.
+
+Your energy seems limitless. You can work hard, play hard, and still have reserves left over. This vitality makes you capable of juggling multiple projects and interests simultaneously without burning out.
+
+You're incredibly independent and self-reliant. You don't wait for permission or approval—you make decisions and take action confidently. This autonomy is both your superpower and what you guard most fiercely.
+
+**Your Inner Drive**
+
+Freedom is your oxygen. You need space to roam, explore, and make your own choices without restriction. Any situation that feels confining or limiting triggers your flight response.
+
+Adventure calls to you. You're meant to experience life fully—travel, try new things, meet diverse people, and collect stories. Staying in one place too long or doing the same thing repeatedly feels like death.
+
+**Your Challenges**
+
+Your need for freedom can make commitment difficult. Whether in relationships or careers, you resist feeling trapped. Learning that commitment to the right things actually expands rather than limits you is key.
+
+Restlessness can prevent you from seeing things through. You start projects with tremendous enthusiasm, but when the initial excitement fades, you're already onto the next thing. Developing follow-through serves your long-term success.
+
+**In Love & Relationships**
+
+In love, you're warm, passionate, and honest. You bring excitement and spontaneity to relationships. You need a partner who gives you freedom and joins you on adventures rather than trying to tame or cage you.
+
+You can be a bit commitment-phobic, fearing that settling down means giving up your independence. The right partner understands that you need autonomy within the relationship.
+
+**Career & Life Path**
+
+You excel in careers offering variety, movement, and independence. Travel, sales, athletics, event planning, entrepreneurship, or any field where no two days are the same suits your spirit.
+
+Your life purpose involves inspiring others through your enthusiasm and showing that life is meant to be experienced fully. You're meant to be an explorer in whatever domain calls to you.`
+            },
+            "Goat": {
+                years: [1931, 1943, 1955, 1967, 1979, 1991, 2003, 2015, 2027],
+                emoji: "🐐",
+                traits: "Gentle, calm, creative, compassionate",
+                reading: `{preferredName}, you were born in the Year of the Goat — representing creativity, kindness, and artistic sensitivity.
+
+**Your Natural Gifts**
+
+You possess remarkable creative abilities. Whether through art, music, writing, design, or simply how you approach problems, you see possibilities others don't. Your imagination is rich and your aesthetic sense refined.
+
+Your compassion runs deep. You genuinely care about others' wellbeing and feel their pain almost as your own. This empathy makes you a natural healer, counselor, and supporter of those who are struggling.
+
+You have a gentle, peaceful presence that makes people feel safe. There's no harshness or aggression in you—just kindness, understanding, and acceptance. People open up to you because they sense you won't judge.
+
+**Your Inner Drive**
+
+Beauty and harmony are essential to your wellbeing. You need to live and work in environments that are aesthetically pleasing and emotionally peaceful. Harsh, ugly, or conflict-filled spaces drain your energy.
+
+Creative expression isn't optional for you—it's how you process life and maintain balance. When you can't create, you feel lost. Your art, in whatever form, is your way of making sense of the world.
+
+**Your Challenges**
+
+Your sensitivity can make you vulnerable to being overwhelmed by harsh realities. You might escape into fantasy or avoid confronting difficult truths. Building emotional resilience while maintaining your soft heart is important.
+
+Indecisiveness can paralyze you. You see so many perspectives and possibilities that choosing becomes agonizing. Trusting your gut and accepting that imperfect action beats perfect inaction helps you move forward.
+
+**In Love & Relationships**
+
+In love, you're tender, devoted, and incredibly nurturing. You create a beautiful, peaceful home and show affection through caring gestures. You need a partner who appreciates your sensitivity and protects your gentle nature.
+
+You can be overly dependent in relationships, looking to your partner for security and direction. Developing your own strength while maintaining your softness creates healthier dynamics.
+
+**Career & Life Path**
+
+You excel in creative fields, healing professions, or any work involving beauty and compassion. Art, music, therapy, design, childcare, or nonprofit work aligns with your gentle, creative spirit.
+
+Your life purpose involves bringing beauty, healing, and kindness to a world that desperately needs it. You show others that gentleness is a gift, not a weakness.`
+            },
+            "Monkey": {
+                years: [1932, 1944, 1956, 1968, 1980, 1992, 2004, 2016, 2028],
+                emoji: "🐵",
+                traits: "Witty, intelligent, curious, playful",
+                reading: `{preferredName}, you were born in the Year of the Monkey — symbolizing cleverness, versatility, and joyful mischief.
+
+**Your Natural Gifts**
+
+Your intelligence is sharp and multifaceted. You learn quickly, adapt easily, and can master almost anything you set your mind to. Your brain works fast, making connections and seeing solutions that elude others.
+
+Wit and humor are your social superpowers. You're naturally entertaining, able to make people laugh and keep situations light. Your playful energy brightens any gathering and helps defuse tension.
+
+You're incredibly versatile and resourceful. You can pivot between different roles, learn new skills rapidly, and figure out creative solutions with whatever resources are available. Limitation doesn't limit you—it inspires innovation.
+
+**Your Inner Drive**
+
+Curiosity drives you. You want to try everything, learn everything, experience everything. Life is one big playground to explore. Boredom is your enemy—you need constant mental stimulation and new challenges.
+
+You love solving puzzles and outsmarting obstacles. The more complex the problem, the more engaged you become. You approach life like a game where the fun is figuring out the strategy.
+
+**Your Challenges**
+
+Your cleverness can slide into manipulation if you're not careful. You're so good at reading people and situations that using that ability for selfish gain becomes tempting. Choosing integrity over advantage builds real success.
+
+Commitment and focus can be difficult. You have so many interests and abilities that concentrating on one path feels limiting. Learning to channel your versatility into mastery rather than dabbling creates lasting achievement.
+
+**In Love & Relationships**
+
+In relationships, you're fun, engaging, and spontaneous. You keep things interesting with your wit and playfulness. You need a partner who can match your mental agility and appreciates your mischievous side.
+
+You can be a bit of a flirt—not necessarily in serious pursuit but because you enjoy the playful interaction. Clear boundaries and genuine commitment help your partner feel secure.
+
+**Career & Life Path**
+
+You excel in careers requiring intelligence, adaptability, and problem-solving. Consulting, technology, entertainment, sales, or any field where you can use your wit and versatility suits you perfectly.
+
+Your life purpose involves bringing playfulness and creative problem-solving to the world. You show others that intelligence doesn't have to be serious and that approaching challenges with humor often yields the best solutions.`
+            },
+            "Rooster": {
+                years: [1933, 1945, 1957, 1969, 1981, 1993, 2005, 2017, 2029],
+                emoji: "🐓",
+                traits: "Observant, hardworking, confident, honest",
+                reading: `{preferredName}, you were born in the Year of the Rooster — representing precision, honesty, and proud self-expression.
+
+**Your Natural Gifts**
+
+You're incredibly observant, noticing details others completely miss. Your eye for imperfection makes you excellent at quality control, editing, and improving systems. Nothing escapes your attention.
+
+Honesty defines you. You speak truth directly, sometimes brutally. While this can ruffle feathers, people appreciate knowing exactly where they stand with you. There's no hidden agenda or manipulation—just straightforward authenticity.
+
+You have natural confidence and aren't afraid to stand out. Like the rooster crowing at dawn, you're comfortable being visible, vocal, and center stage. This self-assurance draws opportunities to you.
+
+**Your Inner Drive**
+
+Excellence matters deeply to you. You set high standards and work diligently to meet them. Half-measures and mediocrity frustrate you. You believe if something's worth doing, it's worth doing right.
+
+Order and organization bring you peace. You create systems, maintain schedules, and keep your environment neat. This structure isn't rigidity—it's the foundation that allows you to be productive and effective.
+
+**Your Challenges**
+
+Your perfectionism can be harsh—both self-directed and toward others. You see flaws so clearly that overlooking them feels impossible. Learning to accept "good enough" and appreciate effort even when results aren't perfect helps your relationships.
+
+Your blunt honesty sometimes wounds unnecessarily. Truth without compassion can be cruel. Developing tact—delivering truth wrapped in kindness—makes you more effective in influencing others.
+
+**In Love & Relationships**
+
+In love, you're loyal, devoted, and straightforward. You expect the same honesty you give and can't tolerate games or deception. You need a partner who appreciates your directness and shares your values.
+
+You can be critical in relationships, pointing out flaws or areas for improvement. Remember to balance criticism with appreciation. Your partner needs to hear what you love about them, not just what needs fixing.
+
+**Career & Life Path**
+
+You excel in careers requiring precision, attention to detail, and high standards. Accounting, editing, quality assurance, military, law, or any field where excellence and accuracy matter suits your nature.
+
+Your life purpose involves upholding standards and speaking truth when others remain silent. You're meant to be a guardian of quality and integrity in whatever domain you choose.`
+            },
+            "Dog": {
+                years: [1934, 1946, 1958, 1970, 1982, 1994, 2006, 2018, 2030],
+                emoji: "🐕",
+                traits: "Loyal, honest, friendly, protective",
+                reading: `{preferredName}, you were born in the Year of the Dog — symbolizing unwavering loyalty, integrity, and protective devotion.
+
+**Your Natural Gifts**
+
+Your loyalty is legendary. Once you commit to someone or something, you're in completely. You stand by your people through thick and thin, never abandoning them when things get tough.
+
+You possess deep integrity. Right and wrong aren't abstract concepts to you—they're lived principles. You'd rather suffer yourself than compromise your values or betray someone's trust.
+
+Your protective instinct is strong. You watch out for those you care about, sensing danger and stepping in when needed. People feel safe around you because they know you have their back.
+
+**Your Inner Drive**
+
+Justice matters profoundly to you. You can't stand seeing unfairness, bullying, or abuse of power. You're the one who speaks up when everyone else stays silent, defends the vulnerable, and fights for what's right.
+
+Authenticity and honesty guide you. You can't fake enthusiasm or pretend to be something you're not. This genuineness makes people trust you—they know you're real, not performing.
+
+**Your Challenges**
+
+Your strong sense of right and wrong can make you judgmental. You see things in black and white when most of life exists in shades of gray. Developing compassion for human complexity—including your own—brings wisdom.
+
+Worry and anxiety can plague you. You're always anticipating what could go wrong, preparing for worst-case scenarios. This vigilance protects you, but it also prevents you from fully relaxing and enjoying the present.
+
+**In Love & Relationships**
+
+In love, you're devoted, faithful, and protective. You're the partner who remembers anniversaries, shows up in crises, and never wavers in commitment. You need someone who values loyalty as much as you do.
+
+You can be overly anxious in relationships, worrying about potential problems or betrayals. Learning to trust and not project past hurts onto current partners allows for deeper intimacy.
+
+**Career & Life Path**
+
+You excel in careers involving service, protection, or advocacy. Law enforcement, military, social work, veterinary medicine, teaching, or any field where you can protect and serve aligns with your nature.
+
+Your life purpose involves standing up for the vulnerable, maintaining integrity in corrupt systems, and showing the power of unwavering loyalty. You're meant to be a guardian in whatever form that takes.`
+            },
+            "Pig": {
+                years: [1935, 1947, 1959, 1971, 1983, 1995, 2007, 2019, 2031],
+                emoji: "🐷",
+                traits: "Generous, compassionate, diligent, optimistic",
+                reading: `{preferredName}, you were born in the Year of the Pig — representing generosity, contentment, and sincere goodness.
+
+**Your Natural Gifts**
+
+Your generosity knows few bounds. You give freely—time, resources, energy—without keeping score or expecting return. This open-handedness creates abundance in your life through reciprocity and good karma.
+
+You possess genuine kindness and compassion. There's no pretense or ulterior motive in your goodness—you're simply a good person who wants others to be happy. This purity of intention is rare and precious.
+
+Your optimism is unshakeable. Even when life gets hard, you maintain faith that things will work out. This positive outlook isn't naive—it's a conscious choice to focus on possibilities rather than problems.
+
+**Your Inner Drive**
+
+You seek contentment and pleasure in life's simple gifts. Good food, comfortable surroundings, loving relationships, and peaceful days bring you genuine joy. You don't need extravagance—just quality and genuine connection.
+
+Building security for yourself and loved ones motivates you. You work hard, not for status or power, but to create a stable, comfortable life where everyone has enough. Your definition of wealth includes emotional richness.
+
+**Your Challenges**
+
+Your trust can be exploited. You see the good in people and give them the benefit of the doubt, sometimes when they don't deserve it. Learning to set boundaries and recognize red flags protects you from being taken advantage of.
+
+Indulgence can be an issue. You enjoy life's pleasures—food, comfort, leisure—and can overdo it. Finding balance between enjoyment and discipline keeps you healthy and productive.
+
+**In Love & Relationships**
+
+In love, you're affectionate, loyal, and nurturing. You create a warm, welcoming home and express love through caring actions. You need a partner who appreciates your giving nature and reciprocates your devotion.
+
+You can be overly accommodating, putting others' needs before your own until you're depleted. Learning that self-care enables better care for others is essential.
+
+**Career & Life Path**
+
+You excel in careers involving hospitality, caregiving, cooking, or any field where you can nurture others. Restaurant work, healthcare, social services, teaching, or hospitality suits your generous spirit.
+
+Your life purpose involves showing that goodness, generosity, and simple contentment are paths to happiness. You teach others that wealth isn't just material—it's love, connection, and peace of mind.`
+            }
+        };
+
+        const elements = {
+            "Metal": {
+                years: [0, 1],
+                traits: "Determined, independent, strong-willed",
+                modifier: "Metal adds strength, determination, and unwavering focus to your animal sign. You're more independent, ambitious, and capable of standing firm in your convictions."
+            },
+            "Water": {
+                years: [2, 3],
+                traits: "Flexible, intuitive, empathetic",
+                modifier: "Water adds fluidity, intuition, and emotional depth to your animal sign. You're more adaptable, perceptive, and able to go with the flow while maintaining your essence."
+            },
+            "Wood": {
+                years: [4, 5],
+                traits: "Creative, expansive, growth-oriented",
+                modifier: "Wood adds creativity, growth, and expansiveness to your animal sign. You're more imaginative, generous, and always seeking to develop and improve."
+            },
+            "Fire": {
+                years: [6, 7],
+                traits: "Passionate, dynamic, expressive",
+                modifier: "Fire adds passion, energy, and expressive power to your animal sign. You're more dynamic, charismatic, and driven by intense enthusiasm."
+            },
+            "Earth": {
+                years: [8, 9],
+                traits: "Stable, practical, nurturing",
+                modifier: "Earth adds stability, practicality, and grounding to your animal sign. You're more reliable, patient, and focused on building solid foundations."
+            }
+        };
+
+        async function calculateChineseZodiac(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value || 'Friend';
+            const birthDate = document.getElementById('birthDate').value;
+            
+            if (!birthDate) {
+                alert('Please enter your birth date');
+                return;
+            }
+
+            const date = new Date(birthDate);
+            const year = date.getFullYear();
+            
+            // Calculate Chinese New Year for this year (approximate - between Jan 21 and Feb 20)
+            const chineseNewYear = getChineseNewYear(year);
+            
+            // If born before Chinese New Year, use previous year
+            const chineseYear = date < chineseNewYear ? year - 1 : year;
+            
+            // Find animal based on year
+            let animal = '';
+            for (const [animalName, data] of Object.entries(animals)) {
+                if (data.years.includes(chineseYear)) {
+                    animal = animalName;
+                    break;
+                }
+                // If not in stored years, calculate based on 12-year cycle
+                const baseYear = data.years[0];
+                const yearDiff = chineseYear - baseYear;
+                if (yearDiff >= 0 && yearDiff % 12 === 0) {
+                    animal = animalName;
+                    break;
+                }
+            }
+            
+            // If still not found, calculate from a known year
+            if (!animal) {
+                const animalCycle = ['Rat', 'Ox', 'Tiger', 'Rabbit', 'Dragon', 'Snake', 'Horse', 'Goat', 'Monkey', 'Rooster', 'Dog', 'Pig'];
+                const index = (chineseYear - 4) % 12; // 2004 was Monkey, so we calculate from there
+                animal = animalCycle[index >= 0 ? index : index + 12];
+            }
+            
+            // Calculate element based on last digit of year
+            const lastDigit = chineseYear % 10;
+            let element = '';
+            for (const [elementName, data] of Object.entries(elements)) {
+                if (data.years.includes(lastDigit)) {
+                    element = elementName;
+                    break;
+                }
+            }
+            
+            const animalData = animals[animal];
+            const elementData = elements[element];
+            
+            // Create personalized reading
+            const personalizedReading = animalData.reading.replace(/{preferredName}/g, name);
+            const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+            
+            const elementSection = `<div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 10px; padding: 20px; margin: 25px 0;">
+                <h3 style="color: #fbbf24; font-family: 'Cinzel', serif; margin-bottom: 10px;">✨ Your Element: ${element}</h3>
+                <p style="color: #d1d5db; margin-bottom: 10px;"><strong>Traits:</strong> ${elementData.traits}</p>
+                <p style="color: #d1d5db;">${elementData.modifier}</p>
+            </div>`;
+            
+            const readingData = {
+                toolType: 'chinese-zodiac',
+                headerTitle: '🐉 Your Chinese Zodiac Reading',
+                headerSubtitle: 'Ancient wisdom reveals your path',
+                number: `${element} ${animal}`,
+                title: `${element} ${animal} ${animalData.emoji}`,
+                subtitle: `${name}, born in ${chineseYear}`,
+                content: elementSection + paragraphs,
+                sourceUrl: 'chinese-zodiac-reading.html'
+            };
+            
+            sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+            window.location.href = 'reading-loading.html';
+        }
+        
+        // Approximate Chinese New Year calculation
+        function getChineseNewYear(year) {
+            // This is simplified - actual dates vary
+            // Chinese New Year is between Jan 21 and Feb 20
+            const dates = {
+                2020: new Date(2020, 0, 25),
+                2021: new Date(2021, 1, 12),
+                2022: new Date(2022, 1, 1),
+                2023: new Date(2023, 0, 22),
+                2024: new Date(2024, 1, 10),
+                2025: new Date(2025, 0, 29),
+                2026: new Date(2026, 1, 17)
+            };
+            
+            // Default to Feb 1 if specific year not found
+            return dates[year] || new Date(year, 1, 1);
+        }
+    </script>
+</body>
+</html>
