@@ -500,11 +500,7 @@
             const activeProfile = localStorage.getItem('quantumMerlinActiveProfile') || '';
             const defaultDelete = activeProfile || profileNames[0];
             
-            const profileName = prompt('Enter profile name to remove:
-
-Saved profiles:
-' + profileNames.join('
-'), defaultDelete);
+            const profileName = prompt('Enter profile name to remove:\\n\\nSaved profiles:\\n' + profileNames.join('\\n'), defaultDelete);
             if (profileName && profiles[profileName]) {
                 if (confirm('Remove profile "' + profileName + '"? This cannot be undone.')) {
                     deleteProfile(profileName);
