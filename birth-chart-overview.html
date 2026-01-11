@@ -297,11 +297,14 @@
             const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
             const time = Astronomy.MakeTime(datetime);
             
+            // Create observer at birth location
+            const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
+            
             const planets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
             const chart = {};
             
             planets.forEach(planet => {
-                const equ = Astronomy.Equator(planet, time, null, true, false);
+                const equ = Astronomy.Equator(planet, time, observer, true, true);
                 const ecliptic = Astronomy.Ecliptic(equ.vec);
                 let lon = ecliptic.elon;
                 while (lon < 0) lon += 360;

@@ -382,8 +382,11 @@ Your drive is: to CONNECT, to create, to heal, to dissolve boundaries between se
                 const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
                 const time = Astronomy.MakeTime(datetime);
                 
+                // Create observer at birth location
+                const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
+                
                 console.log('Calculating', planet, 'for', datetime.toISOString());
-                const equ = Astronomy.Equator(planet, time, null, true, false);
+                const equ = Astronomy.Equator(planet, time, observer, true, true);
                 if (!equ || !equ.vec) throw new Error('Failed to get equatorial coordinates');
                 
                 const ecliptic = Astronomy.Ecliptic(equ.vec);

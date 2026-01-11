@@ -401,7 +401,10 @@ Your path to abundance: Trust deeply, give generously, follow spiritual guidance
             const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
             const time = Astronomy.MakeTime(datetime);
             
-            const equ = Astronomy.Equator(planet, time, null, true, false);
+            // Create observer at birth location
+            const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
+            
+            const equ = Astronomy.Equator(planet, time, observer, true, true);
             const ecliptic = Astronomy.Ecliptic(equ.vec);
             
             let lon = ecliptic.elon;
