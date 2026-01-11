@@ -369,13 +369,25 @@
 
         function calculateMoonPosition(dateStr, timeStr, coords) {
             try {
-                // Combine date and time - use local timezone interpretation
-                const datetime = new Date(`${dateStr}T${timeStr}:00`);
+                // Parse date and time components
+                const [year, month, day] = dateStr.split('-').map(Number);
+                const [hours, minutes] = timeStr.split(':').map(Number);
+                
+                // Estimate timezone offset from longitude (15 degrees = 1 hour)
+                // This gives us the "natural" timezone for the birth location
+                const tzOffsetHours = Math.round(coords.lon / 15);
+                
+                // Create a UTC date by adjusting for the birth location's timezone
+                // If born at 13:30 in UTC+4, that's 09:30 UTC
+                const utcHours = hours - tzOffsetHours;
+                
+                // Create Date in UTC
+                const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
                 
                 // Create astronomical time
                 const time = Astronomy.MakeTime(datetime);
                 
-                // Create observer at birth location (required for accurate calculation)
+                // Create observer at birth location
                 const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
                 
                 // Get Moon's equatorial coordinates from observer's perspective
@@ -394,6 +406,12 @@
                 
                 const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
                               'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+                
+                console.log(`Birth: ${dateStr} ${timeStr} at ${coords.name}`);
+                console.log(`Estimated TZ offset: UTC+${tzOffsetHours}`);
+                console.log(`UTC time: ${datetime.toISOString()}`);
+                console.log(`Moon ecliptic longitude: ${lon.toFixed(2)}°`);
+                console.log(`Moon sign: ${signs[signIndex]}`);
                 
                 return signs[signIndex];
             } catch (error) {

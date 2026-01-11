@@ -367,8 +367,18 @@
 
         function calculateRisingPosition(dateStr, timeStr, coords) {
             try {
-                // Combine date and time
-                const datetime = new Date(`${dateStr}T${timeStr}:00`);
+                // Parse date and time components
+                const [year, month, day] = dateStr.split('-').map(Number);
+                const [hours, minutes] = timeStr.split(':').map(Number);
+                
+                // Estimate timezone offset from longitude (15 degrees = 1 hour)
+                const tzOffsetHours = Math.round(coords.lon / 15);
+                
+                // Create a UTC date by adjusting for the birth location's timezone
+                const utcHours = hours - tzOffsetHours;
+                
+                // Create Date in UTC
+                const datetime = new Date(Date.UTC(year, month - 1, day, utcHours, minutes, 0));
                 
                 // Create observer location
                 const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
@@ -412,6 +422,12 @@
                 
                 const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
                               'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+                
+                console.log(`Birth: ${dateStr} ${timeStr} at ${coords.name}`);
+                console.log(`Estimated TZ offset: UTC+${tzOffsetHours}`);
+                console.log(`UTC time: ${datetime.toISOString()}`);
+                console.log(`Ascendant degree: ${ascDegrees.toFixed(2)}°`);
+                console.log(`Rising sign: ${signs[signIndex]}`);
                 
                 return signs[signIndex];
             } catch (error) {
