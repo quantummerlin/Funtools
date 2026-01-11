@@ -375,6 +375,12 @@
     
     <script>
         // Version: 20260112083146 - Auto-generated cache buster
+        // Global error handler to catch any issues
+        window.onerror = function(msg, url, line) {
+            alert('Error: ' + msg + ' at line ' + line);
+            return false;
+        };
+        
         function goBack() { window.location.href = 'tools_index.html'; }
         
         function showDeleteProfileDialog() {
