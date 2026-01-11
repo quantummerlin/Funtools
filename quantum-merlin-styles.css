@@ -564,6 +564,9 @@ button.submit-btn:active {
     font-size: clamp(0.9rem, 2vw, 1rem);
     width: auto;
     display: inline-block;
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
 }
 
 .back-btn:hover {
@@ -571,6 +574,20 @@ button.submit-btn:active {
     border-color: var(--text-accent-purple);
     box-shadow: 0 0 25px rgba(191, 90, 242, 0.4);
     transform: translateY(-2px);
+}
+
+/* ===== BACK LINK ===== */
+.back-link {
+    display: inline-block;
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.back-link:hover {
+    text-decoration: underline;
 }
 
 /* ===== HIGHLIGHT CLASS ===== */
