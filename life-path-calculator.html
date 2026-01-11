@@ -299,7 +299,7 @@
         
         <div class="tool-card">
             
-            <form id="toolForm" onsubmit="return handleFormSubmit(event)">
+            <div id="toolForm">
 
             <!-- Profile Management Section -->
             <div class="profile-section" style="background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 15px 20px; margin-bottom: 25px;">
@@ -350,8 +350,8 @@
     </div>
 </div>
 
-                <button type="submit">Reveal My Life Path</button>
-            </form>
+                <button type="button" onclick="handleFormSubmit()">Reveal My Life Path</button>
+            </div>
             
             <div id="result" class="result">
                 <div class="result-header">
@@ -455,15 +455,18 @@
             return reduceToSingle(dayReduced + monthReduced + yearReduced);
         }
 
-        function handleFormSubmit(e) {
-            e.preventDefault();
+        function handleFormSubmit() {
+            var preferredName = document.getElementById('preferredName').value;
+            var birthDate = document.getElementById('birthDate').value;
             
-            const preferredName = document.getElementById('preferredName').value;
-            const birthDate = document.getElementById('birthDate').value;
+            if (!preferredName || !birthDate) {
+                alert('Please enter your name and birth date');
+                return;
+            }
             
-            const lifePathNumber = calculateLifePath(birthDate);
+            var lifePathNumber = calculateLifePath(birthDate);
             
-            const interpretations = {
+            var interpretations = {
                 1: {
                     title: "The Pioneer & Leader",
                     traits: "independent, innovative, ambitious, determined",
@@ -598,17 +601,21 @@
                 <p><strong>Guidance for Your Journey:</strong> ${interpretation.advice}</p>
             `;
             
-            // Display results inline on the same page
-            document.getElementById('resultTitle').textContent = `Life Path ${lifePathNumber}: ${interpretation.title}`;
-            document.getElementById('resultSubtitle').textContent = `${preferredName}, here is your personalized reading`;
-            document.getElementById('resultContent').innerHTML = resultContent;
+            // Build reading data and redirect
+            var readingData = {
+                toolType: 'life-path',
+                headerTitle: 'Your Life Path Reading',
+                headerSubtitle: 'Your soul journey has been illuminated',
+                number: lifePathNumber,
+                title: 'Life Path ' + lifePathNumber + ': ' + interpretation.title,
+                subtitle: preferredName + ', here is your personalized reading',
+                content: resultContent,
+                sourceUrl: 'life-path-calculator.html'
+            };
             
-            // Show the result section and scroll to it
-            const resultDiv = document.getElementById('result');
-            resultDiv.style.display = 'block';
-            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            
-            return false;
+            // Always use URL params - works in all browsers including private mode
+            var encodedData = encodeURIComponent(JSON.stringify(readingData));
+            window.location.href = 'reading-loading.html?data=' + encodedData;
         }
         
     </script>
