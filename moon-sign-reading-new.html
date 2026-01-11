@@ -236,6 +236,7 @@
             .tool-card { padding: 30px 20px; }
         }
     </style>
+    <script src="auto-fill.js"></script>
 </head>
 <body>
     <div class="container">
@@ -246,9 +247,6 @@
 
         <div class="tool-card">
             <div class="profile-controls">
-                <select id="profileSelect" class="profile-select">
-                    <option value="">Select a profile...</option>
-                </select>
                 <button type="button" class="profile-btn" onclick="showSaveProfileDialog()">💾 Save Profile</button>
                 <button type="button" class="profile-btn" onclick="showDeleteProfileDialog()">🗑️ Delete Profile</button>
                 <button type="button" class="profile-btn clear-btn" onclick="clearSavedData()">✨ Clear Form</button>
@@ -386,10 +384,7 @@
             document.getElementById('calculator-form').style.display = 'none';
         }
 
-        // Profile Management
-        function getAllProfiles() {
-            const profiles = localStorage.getItem('quantumMerlinProfiles');
-            return profiles ? JSON.parse(profiles) : {};
+        ;
         }
 
         function saveProfile(profileName) {
@@ -415,16 +410,7 @@
             alert(`Profile "${profileName}" saved! ✨`);
         }
 
-        function loadProfile(profileName) {
-            const profiles = getAllProfiles();
-            const profileData = profiles[profileName];
-            
-            if (!profileData) return;
-            
-            if (profileData.preferredName && document.getElementById('preferredName')) {
-                document.getElementById('preferredName').value = profileData.preferredName;
-            }
-            if (profileData.birthDate && document.getElementById('birthDate')) {
+        if (profileData.birthDate && document.getElementById('birthDate')) {
                 document.getElementById('birthDate').value = profileData.birthDate;
             }
             if (profileData.birthTime && document.getElementById('birthTime')) {
@@ -451,20 +437,7 @@
             alert(`Profile "${profileName}" deleted`);
         }
 
-        function updateProfileDropdown() {
-            const profiles = getAllProfiles();
-            const dropdown = document.getElementById('profileSelect');
-            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile');
-            
-            dropdown.innerHTML = '<option value="">Select a profile...</option>';
-            
-            Object.keys(profiles).forEach(name => {
-                const option = document.createElement('option');
-                option.value = name;
-                option.textContent = name;
-                if (name === activeProfile) option.selected = true;
-                dropdown.appendChild(option);
-            });
+        );
         }
 
         function showSaveProfileDialog() {

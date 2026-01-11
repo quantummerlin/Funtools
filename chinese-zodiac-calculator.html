@@ -119,6 +119,7 @@
         .share-btn { background: #f0f0f0; color: #333; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
         .share-btn:hover { background: #e0e0e0; }
     </style>
+    <script src="auto-fill.js"></script>
 </head>
 <body>
     <div class="container">
@@ -206,28 +207,7 @@
         
     
         // Load saved data from localStorage
-        function loadSavedData() {
-            const savedData = localStorage.getItem('quantumMerlinUserData');
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                
-                // Map of possible field names to data keys
-                const fieldMappings = {
-                    'preferredName': 'preferredName',
-                    'name': 'preferredName',
-                    'yourName': 'preferredName',
-                    'birthName': 'birthName',
-                    'fullName': 'birthName',
-                    'birthDate': 'birthDate',
-                    'date': 'birthDate',
-                    'dob': 'birthDate',
-                    'birthdate': 'birthDate',
-                    'birthTime': 'birthTime',
-                    'time': 'birthTime',
-                    'birthPlace': 'birthPlace',
-                    'place': 'birthPlace',
-                    'location': 'birthPlace'
-                };
+        ;
                 
                 Object.keys(fieldMappings).forEach(fieldId => {
                     const field = document.getElementById(fieldId);

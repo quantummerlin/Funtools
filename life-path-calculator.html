@@ -288,6 +288,7 @@
             border-color: #ec4899;
         }
     </style>
+    <script src="auto-fill.js"></script>
 </head>
 <body>
     <div class="container">
@@ -305,10 +306,7 @@
                 <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
                     <div style="display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px;">
                         <label style="color: #BF5AF2; font-family: 'Cinzel', serif; white-space: nowrap; font-size: 0.95em;">👤 Profile:</label>
-                        <select id="profileSelect" onchange="onProfileChange()" style="flex: 1; background: rgba(0,0,0,0.4); border: 1px solid rgba(191, 90, 242, 0.4); color: #E8E4D9; padding: 10px 14px; border-radius: 8px; font-family: 'Cormorant Garamond', serif; font-size: 1em; cursor: pointer;">
-                            <option value="">Select or type to create...</option>
-                        </select>
-                    </div>
+                        </div>
                     <button type="button" onclick="showDeleteProfileDialog()" class="profile-btn" style="background: rgba(236, 72, 153, 0.1); border: 1px solid rgba(236, 72, 153, 0.4); color: #ec4899; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-family: 'Cinzel', serif; font-size: 0.85em; transition: all 0.3s;">
                         🗑️ Remove Profile
                     </button>
@@ -383,20 +381,11 @@
         // ===== ENHANCED PROFILE MANAGEMENT WITH AUTO-SAVE =====
         
         // Get all saved profiles
-        function getAllProfiles() {
-            const profiles = localStorage.getItem('quantumMerlinProfiles');
-            return profiles ? JSON.parse(profiles) : {};
+        ;
         }
         
         // Auto-save current form data
-        function autoSaveData() {
-            const userData = {
-                preferredName: document.getElementById('preferredName')?.value || '',
-                birthName: document.getElementById('birthName')?.value || '',
-                birthDate: document.getElementById('birthDate')?.value || '',
-                birthTime: document.getElementById('birthTime')?.value || '',
-                birthPlace: document.getElementById('birthPlace')?.value || ''
-            };
+        ;
             
             // Always save to current user data for cross-tool persistence
             localStorage.setItem('quantumMerlinUserData', JSON.stringify(userData));
@@ -411,16 +400,7 @@
         }
         
         // Load a profile into the form
-        function loadProfile(profileName) {
-            const profiles = getAllProfiles();
-            const profileData = profiles[profileName];
-            
-            if (!profileData) return;
-            
-            if (document.getElementById('preferredName')) {
-                document.getElementById('preferredName').value = profileData.preferredName || '';
-            }
-            if (document.getElementById('birthName')) {
+        if (document.getElementById('birthName')) {
                 document.getElementById('birthName').value = profileData.birthName || '';
             }
             if (document.getElementById('birthDate')) {
@@ -454,34 +434,12 @@
         }
         
         // Update the profile dropdown with saved profiles
-        function updateProfileDropdown() {
-            const dropdown = document.getElementById('profileSelect');
-            if (!dropdown) return;
-            
-            const profiles = getAllProfiles();
-            const activeProfile = localStorage.getItem('quantumMerlinActiveProfile') || '';
-            
-            dropdown.innerHTML = '<option value="">Select or type to create...</option>';
-            
-            Object.keys(profiles).sort().forEach(profileName => {
-                const option = document.createElement('option');
-                option.value = profileName;
-                option.textContent = profileName;
-                if (profileName === activeProfile) {
-                    option.selected = true;
-                }
-                dropdown.appendChild(option);
+        dropdown.appendChild(option);
             });
         }
         
         // Handle profile selection change
-        function onProfileChange() {
-            const dropdown = document.getElementById('profileSelect');
-            const profileName = dropdown.value;
-            
-            if (profileName) {
-                loadProfile(profileName);
-            } else {
+        else {
                 // If "Select or type to create..." is chosen, ask for new profile name
                 const newName = prompt('Enter a name for the new profile:');
                 if (newName && newName.trim()) {
@@ -538,15 +496,7 @@
         }
         
         // Load saved data from localStorage (cross-tool persistence)
-        function loadSavedData() {
-            const savedData = localStorage.getItem('quantumMerlinUserData');
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                
-                if (document.getElementById('preferredName') && data.preferredName) {
-                    document.getElementById('preferredName').value = data.preferredName;
-                }
-                if (document.getElementById('birthName') && data.birthName) {
+        if (document.getElementById('birthName') && data.birthName) {
                     document.getElementById('birthName').value = data.birthName;
                 }
                 if (document.getElementById('birthDate') && data.birthDate) {
@@ -565,22 +515,8 @@
         }
         
         // Attach auto-save to all input fields
-        function setupAutoSave() {
-            const fields = ['preferredName', 'birthName', 'birthDate', 'birthTime', 'birthPlace'];
-            fields.forEach(fieldId => {
-                const field = document.getElementById(fieldId);
-                if (field) {
-                    field.addEventListener('input', autoSaveData);
-                    field.addEventListener('change', autoSaveData);
-                }
-            });
-        }
-        
-        // Initialize on page load
-        window.addEventListener('DOMContentLoaded', function() {
-            loadSavedData();
-            setupAutoSave();
         });
+        }
         
         // ===== END PROFILE MANAGEMENT =====
 
