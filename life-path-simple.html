@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>Life Path Calculator - Simple</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a2e; color: #fff; }
+        input, button { padding: 15px; margin: 10px 0; width: 100%; box-sizing: border-box; font-size: 16px; }
+        button { background: #6366f1; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .card { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; max-width: 500px; margin: 0 auto; }
+        h1 { color: #a5b4fc; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Life Path Calculator</h1>
+        
+        <form id="lifePathForm" onsubmit="return submitForm(event)">
+            <label>Your Name:</label>
+            <input type="text" id="nameInput" placeholder="Enter your name" required>
+            
+            <label>Birth Date:</label>
+            <input type="date" id="dateInput" required>
+            
+            <button type="submit">Calculate Life Path</button>
+        </form>
+    </div>
+    
+    <script>
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = String(num).split('').reduce(function(a, b) { return a + parseInt(b); }, 0);
+            }
+            return num;
+        }
+        
+        function calculateLifePath(dateStr) {
+            var parts = dateStr.split('-');
+            var year = parseInt(parts[0]);
+            var month = parseInt(parts[1]);
+            var day = parseInt(parts[2]);
+            
+            var dayR = reduceToSingle(day);
+            var monthR = reduceToSingle(month);
+            var yearR = reduceToSingle(year);
+            
+            return reduceToSingle(dayR + monthR + yearR);
+        }
+        
+        function submitForm(e) {
+            e.preventDefault();
+            
+            var name = document.getElementById('nameInput').value;
+            var date = document.getElementById('dateInput').value;
+            var lifePathNumber = calculateLifePath(date);
+            
+            var readingData = {
+                toolType: 'life-path',
+                headerTitle: 'Your Life Path Reading',
+                headerSubtitle: 'Your soul journey revealed',
+                number: lifePathNumber,
+                title: 'Life Path ' + lifePathNumber,
+                subtitle: name + ', here is your reading',
+                content: '<p>Your Life Path Number is <strong>' + lifePathNumber + '</strong></p><p>This number reveals your core purpose in life.</p>',
+                sourceUrl: 'life-path-calculator.html'
+            };
+            
+            // Try sessionStorage, fallback to URL
+            try {
+                sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+                window.location.href = 'reading-loading.html';
+            } catch (err) {
+                var encoded = encodeURIComponent(JSON.stringify(readingData));
+                window.location.href = 'reading-loading.html?data=' + encoded;
+            }
+            
+            return false;
+        }
+    </script>
+</body>
+</html>
