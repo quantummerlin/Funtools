@@ -43,9 +43,14 @@
             font-family: 'Cormorant Garamond', serif;
             background: #0a0a0f;
             background-image: 
-                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+                /* Retro grid at bottom */
+                linear-gradient(transparent 60%, rgba(255, 0, 255, 0.03) 60%),
+                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(0, 255, 255, 0.03) 50px, rgba(0, 255, 255, 0.03) 51px),
+                repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255, 0, 255, 0.03) 50px, rgba(255, 0, 255, 0.03) 51px),
+                /* Neon glow spots */
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 215, 0, 0.15) 0%, transparent 50%);
             min-height: 100vh;
             padding: 15px;
             color: #e0e0e0;
@@ -56,39 +61,78 @@
             margin: 0 auto;
         }
         
+        /* Retro Wizard Header */
         .header {
             text-align: center;
             color: white;
             margin-bottom: 30px;
             padding: 25px 15px;
+            position: relative;
+        }
+        
+        .wizard-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #ff00ff;
+            box-shadow: 
+                0 0 20px rgba(255, 0, 255, 0.6),
+                0 0 40px rgba(0, 255, 255, 0.4),
+                0 0 60px rgba(255, 0, 255, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            animation: wizardGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes wizardGlow {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 20px rgba(255, 0, 255, 0.6),
+                    0 0 40px rgba(0, 255, 255, 0.4),
+                    0 0 60px rgba(255, 0, 255, 0.3);
+                border-color: #ff00ff;
+            }
+            50% { 
+                box-shadow: 
+                    0 0 30px rgba(0, 255, 255, 0.8),
+                    0 0 50px rgba(255, 0, 255, 0.5),
+                    0 0 70px rgba(0, 255, 255, 0.4);
+                border-color: #00ffff;
+            }
         }
         
         .header h1 {
             font-family: 'Cinzel Decorative', serif;
             font-size: clamp(1.5rem, 7vw, 3rem);
             margin-bottom: 12px;
-            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 50%, #ffff00 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 40px rgba(251, 191, 36, 0.3);
-            letter-spacing: clamp(0px, 0.5vw, 2px);
-            animation: glow 3s ease-in-out infinite;
+            letter-spacing: clamp(2px, 1vw, 6px);
+            animation: neonGlow 3s ease-in-out infinite;
+            text-transform: uppercase;
         }
         
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.4)); }
-            50% { filter: drop-shadow(0 0 30px rgba(6, 182, 212, 0.6)); }
+        @keyframes neonGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.8)) drop-shadow(0 0 20px rgba(255, 0, 255, 0.4));
+            }
+            50% { 
+                filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.9)) drop-shadow(0 0 30px rgba(0, 255, 255, 0.5));
+            }
         }
         
         .header .tagline {
             font-family: 'Cinzel', serif;
             font-size: clamp(0.9rem, 3vw, 1.2rem);
-            color: #06b6d4;
+            color: #00ffff;
             margin-bottom: 8px;
-            letter-spacing: 1px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             font-weight: 600;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
         
         .header .subtitle {
@@ -99,16 +143,19 @@
             margin: 0 auto;
             line-height: 1.5;
             font-weight: 500;
+            color: #ff99ff;
         }
         
-        /* Search Bar */
+        /* Search Bar - Retro Style */
         .search-bar {
-            background: rgba(20, 20, 30, 0.8);
-            border: 2px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 10, 20, 0.9);
+            border: 2px solid #00ffff;
             border-radius: 25px;
             padding: 14px 20px;
             margin-bottom: 25px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 0 15px rgba(0, 255, 255, 0.3),
+                inset 0 0 10px rgba(0, 255, 255, 0.1);
         }
         
         .search-bar input {
@@ -125,13 +172,14 @@
             color: #6b7280;
         }
         
-        /* Collapsible Categories */
+        /* Collapsible Categories - Retro Style */
         .category-section {
             margin-bottom: 15px;
             border-radius: 15px;
             overflow: hidden;
-            background: rgba(20, 20, 30, 0.6);
-            border: 1px solid rgba(6, 182, 212, 0.2);
+            background: rgba(10, 10, 20, 0.8);
+            border: 2px solid rgba(255, 0, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.1);
         }
         
         .category-header {
@@ -140,34 +188,37 @@
             align-items: center;
             padding: 18px 20px;
             cursor: pointer;
-            background: rgba(20, 20, 30, 0.8);
+            background: linear-gradient(90deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1));
             transition: all 0.3s;
             -webkit-tap-highlight-color: transparent;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
         }
         
         .category-header:hover {
-            background: rgba(6, 182, 212, 0.1);
+            background: linear-gradient(90deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
+            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
         }
         
         .category-header.active {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
-            border-bottom: 1px solid rgba(6, 182, 212, 0.3);
+            background: linear-gradient(90deg, rgba(255, 0, 255, 0.25), rgba(0, 255, 255, 0.25));
+            border-bottom: 1px solid rgba(0, 255, 255, 0.4);
         }
         
         .category-header h2 {
             font-family: 'Cinzel', serif;
             font-size: clamp(1rem, 4vw, 1.3rem);
-            color: #fbbf24;
+            color: #ff00ff;
             display: flex;
             align-items: center;
             gap: 12px;
             font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
         }
         
         .category-header .count {
             font-family: 'Cormorant Garamond', serif;
             font-size: 0.9rem;
-            color: #06b6d4;
+            color: #00ffff;
             opacity: 0.8;
         }
         
@@ -209,13 +260,15 @@
             }
         }
         
-        /* Tool Cards - Mobile Optimized */
+        /* Tool Cards - Retro 80s Style */
         .tool-card {
-            background: rgba(30, 30, 45, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.15);
+            background: linear-gradient(135deg, rgba(20, 10, 30, 0.9), rgba(10, 20, 30, 0.9));
+            border: 2px solid rgba(255, 0, 255, 0.3);
             border-radius: 12px;
             padding: 18px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
             transition: all 0.3s;
             cursor: pointer;
             text-decoration: none;
@@ -228,14 +281,17 @@
         
         .tool-card:hover, .tool-card:active {
             transform: translateY(-3px);
-            border-color: rgba(251, 191, 36, 0.4);
-            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.2);
+            border-color: #00ffff;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 255, 0.4),
+                0 0 40px rgba(255, 0, 255, 0.2),
+                inset 0 0 15px rgba(0, 255, 255, 0.1);
         }
         
         .tool-icon {
             font-size: 2.2rem;
             flex-shrink: 0;
-            filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.4));
+            filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.6));
         }
         
         .tool-info {
@@ -248,11 +304,12 @@
             font-size: 1.05rem;
             font-weight: 600;
             margin-bottom: 4px;
-            color: #fbbf24;
+            color: #ff00ff;
+            text-shadow: 0 0 8px rgba(255, 0, 255, 0.4);
         }
         
         .tool-description {
-            color: #b0b0b0;
+            color: #99ccff;
             font-size: 0.95rem;
             line-height: 1.4;
             display: -webkit-box;
@@ -261,10 +318,10 @@
             overflow: hidden;
         }
         
-        /* Ad Space */
+        /* Ad Space - Retro Style */
         .ad-space {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
-            border: 2px dashed rgba(251, 191, 36, 0.3);
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.1) 0%, rgba(0, 255, 255, 0.1) 100%);
+            border: 2px dashed rgba(255, 215, 0, 0.5);
             border-radius: 15px;
             padding: 25px 20px;
             text-align: center;
@@ -494,6 +551,7 @@
 <body>
     <div class="container">
         <div class="header">
+            <img src="RetroMerlin.jpg" alt="Quantum Merlin" class="wizard-logo">
             <h1>QUANTUM MERLIN</h1>
             <p class="tagline">Ancient Patterns. Modern Interfaces.</p>
             <p class="subtitle">Mapping time, numbers, and celestial cycles into clear moments for aligned action</p>
