@@ -98,7 +98,7 @@
         if (!storageAvailable) return;
         
         // Find the form or first input container
-        const form = document.querySelector('form') || document.querySelector('.form-section');
+        const form = document.querySelector('form') || document.querySelector('#toolForm') || document.querySelector('.form-section') || document.querySelector('.tool-card');
         if (!form) return;
         
         // Check if we already added it
