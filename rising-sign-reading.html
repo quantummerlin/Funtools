@@ -325,12 +325,22 @@
 
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'ðŸ”® Calculating astronomical positions...';
+            submitBtn.textContent = 'Looking up location...';
             submitBtn.disabled = true;
 
+            let coords;
             try {
-                // Get coordinates
-                const coords = await geocodeLocation(birthPlace);
+                coords = await geocodeLocation(birthPlace);
+            } catch (error) {
+                console.error('Geocoding error:', error);
+                alert('Could not find location: "' + birthPlace + '"\n\nPlease enter a valid city and country (e.g., "Melbourne, Australia" or "New York, USA").');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+
+            try {
+                submitBtn.textContent = 'Calculating rising sign...';
                 
                 // Calculate Rising Sign position
                 const risingSign = calculateRisingPosition(birthDate, birthTime, coords);
@@ -340,7 +350,7 @@
                 
             } catch (error) {
                 console.error('Rising sign calculation error:', error);
-                alert('Unable to calculate rising sign. Please try a different location format (e.g., "New York, NY" or "London, UK").');
+                alert('Error calculating rising sign: ' + error.message);
             } finally {
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
