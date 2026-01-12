@@ -332,15 +332,15 @@
                 // Get coordinates
                 const coords = await geocodeLocation(birthPlace);
                 
-                // Calculate Moon position
+                // Calculate Rising Sign position
                 const risingSign = calculateRisingPosition(birthDate, birthTime, coords);
                 
                 // Show result
                 showResult(name, risingSign);
-                autoSaveData();
                 
             } catch (error) {
-                alert('Error: ' + error.message + '\n\nPlease check your birth location format (e.g., "Los Angeles, USA") and try again.');
+                console.error('Rising sign calculation error:', error);
+                alert('Unable to calculate rising sign. Please try a different location format (e.g., "New York, NY" or "London, UK").');
             } finally {
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
