@@ -299,7 +299,7 @@
         
         <div class="tool-card">
             
-            <form id="toolForm">
+            <div id="toolForm">
 
             <!-- Profile Management Section -->
             <div class="profile-section" style="background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 15px 20px; margin-bottom: 25px;">
@@ -332,8 +332,8 @@
     
 </div>
 
-                <button type="submit">Reveal My Soul's Desire</button>
-            </form>
+                <button type="button" onclick="handleFormSubmit()">Reveal My Soul's Desire</button>
+            </div>
             
             <div id="result" class="result">
                 <div class="result-header">
@@ -426,10 +426,13 @@
             return reduceToSingle(dayReduced + monthReduced + yearReduced);
         }
 
-        document.getElementById('toolForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        function handleFormSubmit() {
+            const preferredName = document.getElementById('preferredName').value.trim();
             
-            const preferredName = document.getElementById('preferredName').value;
+            if (!preferredName) {
+                alert('Please enter your name');
+                return;
+            }
             const birthName = preferredName;
             
             const soulUrge = calculateVowelNumber(birthName);
@@ -589,7 +592,7 @@
                 const encodedData = encodeURIComponent(JSON.stringify(readingData));
                 window.location.href = 'reading-loading.html?data=' + encodedData;
             }
-        });
+        }
         
     </script>
 </body>
