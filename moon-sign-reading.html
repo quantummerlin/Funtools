@@ -492,13 +492,7 @@
                 const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
                               'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
                 
-                console.log(`=== Moon Sign Calculation ===`);
-                console.log(`Birth: ${dateStr} ${timeStr} at ${coords.name}`);
-                console.log(`Location: lat=${coords.lat.toFixed(4)}, lon=${coords.lon.toFixed(4)}`);
-                console.log(`Solar time offset: ${solarTimeOffset.toFixed(2)} hours`);
-                console.log(`UTC datetime: ${datetime.toISOString()}`);
-                console.log(`Moon ecliptic longitude: ${lon.toFixed(2)}°`);
-                console.log(`Moon sign: ${signs[signIndex]} (${signIndex * 30}°-${(signIndex + 1) * 30}°)`);
+                console.log(`Moon: ${lon.toFixed(2)}° = ${signs[signIndex]}`);
                 
                 return signs[signIndex];
             } catch (error) {
