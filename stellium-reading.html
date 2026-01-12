@@ -293,9 +293,13 @@
                     if (planet === 'Moon') {
                         const moonPos = Astronomy.EclipticGeoMoon(time);
                         positions[planet] = getZodiacSign(moonPos.lon);
+                    } else if (planet === 'Sun') {
+                        const sunPos = Astronomy.SunPosition(time);
+                        positions[planet] = getZodiacSign(sunPos.elon);
                     } else {
-                        const lon = Astronomy.EclipticLongitude(planet, time);
-                        positions[planet] = getZodiacSign(lon);
+                        const geo = Astronomy.GeoVector(planet, time, true);
+                        const ecl = Astronomy.Ecliptic(geo);
+                        positions[planet] = getZodiacSign(ecl.elon);
                     }
                 }
                 
