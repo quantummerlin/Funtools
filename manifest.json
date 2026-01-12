@@ -1,0 +1,30 @@
+{
+  "name": "Quantum Merlin - Mystical Tools",
+  "short_name": "Quantum Merlin",
+  "description": "Discover your cosmic destiny with numerology, astrology, and mystical calculators",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#bf5af2",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "RetroMerlin.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "RetroMerlin.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "RetroMerlin.jpg",
+      "sizes": "144x144",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}
