@@ -590,11 +590,22 @@
             <!-- Relationship Section -->
             <div class="category-section">
                 <div class="category-header" onclick="toggleCategory('relationship')">
-                    <h2>💕 Relationship <span class="count">(3 tools)</span></h2>
+                    <h2>💕 Relationship <span class="count">(6 tools)</span></h2>
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="category-content" id="relationship-content">
                     <div class="tools-grid" id="relationship-grid"></div>
+                </div>
+            </div>
+            
+            <!-- Life Purpose Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('purpose')">
+                    <h2>🎯 Life Purpose <span class="count">(6 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="purpose-content">
+                    <div class="tools-grid" id="purpose-grid"></div>
                 </div>
             </div>
             
@@ -775,6 +786,17 @@
             { title: "Deep Love Compatibility", description: "Comprehensive numerological love compatibility analysis.", category: "relationship", file: "love-compatibility-reading.html" },
             { title: "Soul Mate Connection", description: "Discover if you've found your true soul mate.", category: "relationship", file: "soul-mate-analysis.html" },
             { title: "Relationship Life Path", description: "How your Life Path numbers interact in love.", category: "relationship", file: "relationship-life-path.html" },
+            { title: "Synastry Reading", description: "Explore the planetary aspects between you and your partner.", category: "relationship", file: "synastry-reading.html" },
+            { title: "Composite Chart Reading", description: "Discover the unique entity created when two souls merge.", category: "relationship", file: "composite-chart-reading.html" },
+            { title: "Relationship Karma Reading", description: "Discover past life bonds and karmic connections.", category: "relationship", file: "relationship-karma-reading.html" },
+            
+            // Life Purpose Tools
+            { title: "North Node Reading", description: "Discover your soul's evolutionary direction and life purpose.", category: "purpose", file: "north-node-reading.html" },
+            { title: "South Node Reading", description: "Explore your past life gifts and karmic patterns.", category: "purpose", file: "south-node-reading.html" },
+            { title: "Life Mission Reading", description: "Your complete life mission through numerology and astrology.", category: "purpose", file: "life-mission-reading.html" },
+            { title: "Dharma Number Reading", description: "Discover your spiritual purpose and divine calling.", category: "purpose", file: "dharma-number-reading.html" },
+            { title: "Vocation Reading", description: "Discover your true career calling and vocational path.", category: "purpose", file: "vocation-reading.html" },
+            { title: "Soul Contract Reading", description: "Reveal the spiritual agreements and life lessons you chose.", category: "purpose", file: "soul-contract-reading.html" },
             
             // Astrology Tools
             { title: "Zodiac Sign Calculator", description: "Find your zodiac sign based on your birth date.", category: "astrology", file: "zodiac-calculator.html" },
@@ -942,7 +964,7 @@ ${formData.message}
         });
         
         // Initialize all category grids
-        ['numerology', 'relationship', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
+        ['numerology', 'relationship', 'purpose', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
             renderCategoryTools(cat);
         });
         
@@ -951,7 +973,7 @@ ${formData.message}
             toggleCategory('numerology');
         } else {
             // On desktop, open all categories
-            ['numerology', 'relationship', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
+            ['numerology', 'relationship', 'purpose', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
                 toggleCategory(cat);
             });
         }

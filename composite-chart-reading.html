@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composite Chart Reading - Your Relationship Entity | Quantum Merlin</title>
+    <meta name="description" content="Discover your composite chart - the unique entity created when two souls merge in relationship.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(255, 215, 0, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(255, 105, 180, 0.4); }
+        .composite-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .planet-card { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin: 0.5rem 0; display: flex; align-items: center; gap: 1rem; }
+        .planet-icon { font-size: 2rem; width: 50px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">⊕</div>
+            <h1>Composite Chart Reading</h1>
+            <p class="tool-description">Discover the unique entity created when your two souls merge in relationship</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateComposite(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h3 style="text-align: center; margin-bottom: 1rem;">Person 1</h3>
+                    <div class="form-group">
+                        <label for="name1">Name</label>
+                        <input type="text" id="name1" required placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate1">Birth Date</label>
+                        <input type="date" id="birthDate1" required>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="text-align: center; margin-bottom: 1rem;">Person 2</h3>
+                    <div class="form-group">
+                        <label for="name2">Name</label>
+                        <input type="text" id="name2" required placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate2">Birth Date</label>
+                        <input type="date" id="birthDate2" required>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">⊕ Create Composite Chart</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
+    <script>
+        const signSymbols = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+        const signNames = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+        const planetSymbols = { Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂', Jupiter: '♃', Saturn: '♄' };
+
+        const compositeMeanings = {
+            Sun: {
+                planet: "Composite Sun",
+                represents: "Your relationship's core identity and purpose",
+                signs: {
+                    Aries: "An active, pioneering relationship that thrives on adventure and new beginnings",
+                    Taurus: "A stable, sensual relationship focused on building security and enjoying pleasure",
+                    Gemini: "A communicative, intellectually stimulating relationship filled with variety",
+                    Cancer: "A nurturing, emotionally bonded relationship centered on home and family",
+                    Leo: "A creative, passionate relationship that shines brightly in the world",
+                    Virgo: "A practical, service-oriented relationship focused on improvement",
+                    Libra: "A harmonious, balanced relationship centered on partnership itself",
+                    Scorpio: "An intense, transformative relationship with deep emotional bonds",
+                    Sagittarius: "An adventurous, growth-oriented relationship seeking meaning",
+                    Capricorn: "A serious, ambitious relationship focused on achievement and legacy",
+                    Aquarius: "A unique, freedom-loving relationship with humanitarian ideals",
+                    Pisces: "A spiritual, compassionate relationship with deep soul connection"
+                }
+            },
+            Moon: {
+                planet: "Composite Moon",
+                represents: "Your emotional climate and how you nurture each other",
+                signs: {
+                    Aries: "Emotionally direct and action-oriented - feelings are expressed immediately",
+                    Taurus: "Emotionally stable and comfort-seeking - you create security together",
+                    Gemini: "Emotionally communicative - you process feelings through talking",
+                    Cancer: "Deeply emotional and nurturing - strong home and family focus",
+                    Leo: "Warm, generous emotions - you make each other feel special",
+                    Virgo: "Practical emotional care - you help each other in tangible ways",
+                    Libra: "Harmonious emotional atmosphere - you seek balance in feelings",
+                    Scorpio: "Intense emotional bonds - deep, sometimes overwhelming feelings",
+                    Sagittarius: "Optimistic emotional climate - you uplift each other",
+                    Capricorn: "Reserved but loyal emotions - you build emotional security slowly",
+                    Aquarius: "Friendly emotional tone - respect for each other's independence",
+                    Pisces: "Highly empathic and spiritual - you feel each other deeply"
+                }
+            },
+            Venus: {
+                planet: "Composite Venus",
+                represents: "How you express love and what brings you pleasure together",
+                signs: {
+                    Aries: "Love is passionate, spontaneous, and exciting - you keep romance alive through action",
+                    Taurus: "Love is sensual, steady, and physical - you bond through touch and pleasure",
+                    Gemini: "Love is expressed through words, wit, and mental connection",
+                    Cancer: "Love is nurturing, protective, and centered on emotional care",
+                    Leo: "Love is dramatic, generous, and expressed through grand gestures",
+                    Virgo: "Love is shown through acts of service and practical support",
+                    Libra: "Love is romantic, harmonious, and focused on togetherness",
+                    Scorpio: "Love is intense, transformative, and deeply passionate",
+                    Sagittarius: "Love is adventurous, fun, and growth-oriented",
+                    Capricorn: "Love is serious, committed, and expressed through loyalty",
+                    Aquarius: "Love is unconventional, friendly, and respects individuality",
+                    Pisces: "Love is spiritual, romantic, and transcendent"
+                }
+            },
+            Mars: {
+                planet: "Composite Mars",
+                represents: "How you take action together and handle conflict",
+                signs: {
+                    Aries: "Quick to act and quick to recover from conflict - high energy dynamic",
+                    Taurus: "Slow, steady action - stubborn in conflict but rarely explosive",
+                    Gemini: "Action through communication - conflicts are talked through",
+                    Cancer: "Protective action - conflicts touch deep emotional wounds",
+                    Leo: "Bold, dramatic action - ego can fuel conflicts",
+                    Virgo: "Methodical action - criticism can cause friction",
+                    Libra: "Diplomatic action - passive-aggressive conflict patterns",
+                    Scorpio: "Intense, strategic action - conflicts go deep",
+                    Sagittarius: "Adventurous action - conflicts blow over quickly",
+                    Capricorn: "Disciplined action - conflicts about responsibilities",
+                    Aquarius: "Independent action - conflicts about freedom",
+                    Pisces: "Intuitive action - conflicts may be avoided or confused"
+                }
+            },
+            Jupiter: {
+                planet: "Composite Jupiter",
+                represents: "Where you grow together and find meaning as a couple",
+                signs: {
+                    Aries: "Growth through taking initiative and being pioneers together",
+                    Taurus: "Growth through building material security and enjoying life",
+                    Gemini: "Growth through learning, communication, and social connection",
+                    Cancer: "Growth through family, emotional depth, and creating home",
+                    Leo: "Growth through creativity, self-expression, and celebration",
+                    Virgo: "Growth through service, health, and practical improvement",
+                    Libra: "Growth through partnership, art, and social harmony",
+                    Scorpio: "Growth through transformation, depth, and shared resources",
+                    Sagittarius: "Growth through adventure, philosophy, and expansion",
+                    Capricorn: "Growth through achievement, discipline, and building legacy",
+                    Aquarius: "Growth through innovation, friendship, and humanitarian ideals",
+                    Pisces: "Growth through spirituality, compassion, and transcendence"
+                }
+            },
+            Saturn: {
+                planet: "Composite Saturn",
+                represents: "Your relationship's challenges and areas requiring work",
+                signs: {
+                    Aries: "Challenge to balance independence with togetherness",
+                    Taurus: "Challenge around security, possessions, and values",
+                    Gemini: "Challenge around communication and commitment",
+                    Cancer: "Challenge around emotional expression and family",
+                    Leo: "Challenge around ego, recognition, and appreciation",
+                    Virgo: "Challenge around criticism, perfection, and service",
+                    Libra: "Challenge around balance, fairness, and decisions",
+                    Scorpio: "Challenge around trust, intimacy, and control",
+                    Sagittarius: "Challenge around freedom, beliefs, and commitment",
+                    Capricorn: "Challenge around responsibility, time, and status",
+                    Aquarius: "Challenge around individuality within partnership",
+                    Pisces: "Challenge around boundaries, escapism, and reality"
+                }
+            }
+        };
+
+        function getPlanetPosition(planetName, time) {
+            if (planetName === 'Sun') {
+                return Astronomy.SunPosition(time).elon;
+            } else if (planetName === 'Moon') {
+                return Astronomy.EclipticGeoMoon(time).lon;
+            } else {
+                const body = Astronomy.Body[planetName];
+                const geo = Astronomy.GeoVector(body, time, true);
+                return Astronomy.Ecliptic(geo).elon;
+            }
+        }
+
+        function getPositions(birthDate) {
+            const [year, month, day] = birthDate.split('-').map(Number);
+            const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+            const time = Astronomy.MakeTime(date);
+            
+            return {
+                Sun: getPlanetPosition('Sun', time),
+                Moon: getPlanetPosition('Moon', time),
+                Venus: getPlanetPosition('Venus', time),
+                Mars: getPlanetPosition('Mars', time),
+                Jupiter: getPlanetPosition('Jupiter', time),
+                Saturn: getPlanetPosition('Saturn', time)
+            };
+        }
+
+        function getMidpoint(pos1, pos2) {
+            // Calculate midpoint considering the circular nature of degrees
+            let diff = Math.abs(pos1 - pos2);
+            let midpoint;
+            
+            if (diff <= 180) {
+                midpoint = (pos1 + pos2) / 2;
+            } else {
+                midpoint = ((pos1 + pos2) / 2 + 180) % 360;
+            }
+            
+            return midpoint;
+        }
+
+        function getSign(longitude) {
+            const signIndex = Math.floor(longitude / 30);
+            return signNames[signIndex];
+        }
+
+        async function calculateComposite(event) {
+            event.preventDefault();
+            
+            const name1 = document.getElementById('name1').value;
+            const name2 = document.getElementById('name2').value;
+            const birthDate1 = document.getElementById('birthDate1').value;
+            const birthDate2 = document.getElementById('birthDate2').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '⊕ Calculating...';
+            submitBtn.disabled = true;
+
+            try {
+                const positions1 = getPositions(birthDate1);
+                const positions2 = getPositions(birthDate2);
+                
+                const composite = {};
+                for (const planet in positions1) {
+                    composite[planet] = {
+                        longitude: getMidpoint(positions1[planet], positions2[planet]),
+                        sign: getSign(getMidpoint(positions1[planet], positions2[planet]))
+                    };
+                }
+                
+                showResult(name1, name2, composite);
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showResult(name1, name2, composite) {
+            const relationshipName = `${name1} & ${name2}`;
+            
+            const planetsHTML = Object.keys(composite).map(planet => {
+                const data = composite[planet];
+                const meaning = compositeMeanings[planet];
+                const signIndex = signNames.indexOf(data.sign);
+                
+                return `
+                    <div class="planet-card">
+                        <div class="planet-icon">${planetSymbols[planet]}</div>
+                        <div>
+                            <strong>${meaning.planet} in ${data.sign} ${signSymbols[signIndex]}</strong>
+                            <p style="opacity: 0.8; font-size: 0.85rem; margin: 0.25rem 0;">${meaning.represents}</p>
+                            <p style="margin: 0;">${meaning.signs[data.sign]}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Determine relationship dominant element
+            const elementCount = { Fire: 0, Earth: 0, Air: 0, Water: 0 };
+            const elements = { Aries: 'Fire', Leo: 'Fire', Sagittarius: 'Fire', Taurus: 'Earth', Virgo: 'Earth', Capricorn: 'Earth', Gemini: 'Air', Libra: 'Air', Aquarius: 'Air', Cancer: 'Water', Scorpio: 'Water', Pisces: 'Water' };
+            
+            for (const planet in composite) {
+                elementCount[elements[composite[planet].sign]]++;
+            }
+            
+            const dominantElement = Object.entries(elementCount).sort((a, b) => b[1] - a[1])[0][0];
+            const elementMeanings = {
+                Fire: "Your relationship is energetic, passionate, and action-oriented",
+                Earth: "Your relationship is practical, stable, and grounded",
+                Air: "Your relationship is intellectual, communicative, and social",
+                Water: "Your relationship is emotional, intuitive, and deeply connected"
+            };
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="composite-symbol">💑</div>
+                    <h2>The ${relationshipName} Composite</h2>
+                    <p style="text-align: center; font-style: italic;">Your relationship as a unique entity</p>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin: 1.5rem 0; text-align: center;">
+                        <h3>Dominant Element: ${dominantElement}</h3>
+                        <p>${elementMeanings[dominantElement]}</p>
+                    </div>
+                    
+                    <h3>Your Composite Planets</h3>
+                    ${planetsHTML}
+                    
+                    <div style="background: linear-gradient(135deg, rgba(255,105,180,0.2), rgba(255,215,0,0.1)); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h3>Understanding Your Composite Chart</h3>
+                        <p>The composite chart is created by finding the midpoint between each of your planets. 
+                        It represents the relationship itself as a third entity - not ${name1}, not ${name2}, 
+                        but "${relationshipName}" as its own being.</p>
+                        <p style="margin-top: 1rem;">This chart shows:</p>
+                        <ul>
+                            <li>Your relationship's purpose (Composite Sun)</li>
+                            <li>Your emotional climate together (Composite Moon)</li>
+                            <li>How you love together (Composite Venus)</li>
+                            <li>How you act together (Composite Mars)</li>
+                            <li>Where you grow (Composite Jupiter)</li>
+                            <li>Where you're challenged (Composite Saturn)</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

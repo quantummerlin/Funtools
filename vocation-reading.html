@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocation Reading - Your Career Calling | Quantum Merlin</title>
+    <meta name="description" content="Discover your true vocation and career calling through numerology and astrology.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(70, 130, 180, 0.2), rgba(138, 43, 226, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(70, 130, 180, 0.4); }
+        .vocation-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .career-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .career-card { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">💼</div>
+            <h1>Vocation Reading</h1>
+            <p class="tool-description">Discover your true career calling through the wisdom of numerology and the Midheaven</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateVocation(event)">
+            <div class="form-group">
+                <label for="preferredName">Your Name (optional)</label>
+                <input type="text" id="preferredName" placeholder="How should we address you?">
+            </div>
+            <div class="form-group">
+                <label for="fullName">Full Birth Name</label>
+                <input type="text" id="fullName" required placeholder="As it appears on your birth certificate">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <button type="submit" class="submit-btn">💼 Discover Your Vocation</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const expressionNumberCareers = {
+            1: {
+                title: "The Executive Pioneer",
+                strengths: ["Leadership", "Innovation", "Independence", "Self-motivation"],
+                careers: ["Entrepreneur", "CEO", "Innovator", "Inventor", "Coach", "Freelancer", "Consultant", "Director"],
+                avoid: ["Repetitive tasks", "Heavy supervision", "Team-dependent roles"],
+                advice: "You thrive when you can lead, innovate, and work autonomously. Avoid roles where you're just a cog in the machine."
+            },
+            2: {
+                title: "The Diplomatic Partner",
+                strengths: ["Mediation", "Cooperation", "Detail orientation", "Support"],
+                careers: ["Counselor", "Mediator", "Assistant", "Human Resources", "Diplomat", "Collaborator", "Partnership roles"],
+                avoid: ["High-pressure competition", "Solo leadership", "Aggressive environments"],
+                advice: "You excel in supportive roles that require diplomacy and partnership. Your success comes through others."
+            },
+            3: {
+                title: "The Creative Communicator",
+                strengths: ["Creativity", "Communication", "Entertainment", "Inspiration"],
+                careers: ["Artist", "Writer", "Speaker", "Entertainer", "Marketing", "Social Media", "Teacher", "Designer"],
+                avoid: ["Isolated work", "Pure analysis", "Rigid structure"],
+                advice: "You need creative expression in your work. Your joy and enthusiasm are your greatest professional assets."
+            },
+            4: {
+                title: "The Master Builder",
+                strengths: ["Organization", "Reliability", "Systems", "Structure"],
+                careers: ["Engineer", "Architect", "Project Manager", "Accountant", "Administrator", "Developer", "Analyst"],
+                avoid: ["Chaos", "Last-minute changes", "Unreliable environments"],
+                advice: "You build things that last. Your methodical approach and reliability make you invaluable in structured environments."
+            },
+            5: {
+                title: "The Dynamic Adventurer",
+                strengths: ["Versatility", "Adaptability", "Communication", "Freedom"],
+                careers: ["Sales", "Travel Industry", "Marketing", "Journalism", "Public Relations", "Consulting", "Adventure Guide"],
+                avoid: ["Routine", "Desk-bound jobs", "Long-term commitment to one thing"],
+                advice: "You need variety and freedom. The worst thing for you is being stuck doing the same thing every day."
+            },
+            6: {
+                title: "The Nurturing Professional",
+                strengths: ["Care", "Responsibility", "Aesthetics", "Service"],
+                careers: ["Healthcare", "Teaching", "Counseling", "Interior Design", "Hospitality", "Family Business", "Healing Arts"],
+                avoid: ["Impersonal corporations", "Uncaring environments", "Purely profit-driven work"],
+                advice: "You need to feel you're helping others. Beauty and care should be part of your work environment."
+            },
+            7: {
+                title: "The Analytical Specialist",
+                strengths: ["Research", "Analysis", "Expertise", "Depth"],
+                careers: ["Scientist", "Researcher", "Analyst", "Professor", "Technical Specialist", "Writer", "Investigator"],
+                avoid: ["Shallow work", "Excessive socializing", "Superficial roles"],
+                advice: "You need depth and specialization. Become an expert in something that fascinates you."
+            },
+            8: {
+                title: "The Business Titan",
+                strengths: ["Management", "Finance", "Power", "Achievement"],
+                careers: ["Executive", "Banker", "Real Estate", "Business Owner", "Financial Advisor", "Politician", "Judge"],
+                avoid: ["Subordinate roles", "Low-status work", "Financially limited fields"],
+                advice: "You're built for business success. Don't settle for roles that don't match your ambition and capability."
+            },
+            9: {
+                title: "The Humanitarian Artist",
+                strengths: ["Compassion", "Art", "Global vision", "Wisdom"],
+                careers: ["Nonprofit", "Arts", "International Work", "Healing", "Teaching", "Philanthropy", "Humanitarian Aid"],
+                avoid: ["Selfish industries", "Small-minded environments", "Purely profit-driven work"],
+                advice: "You need to feel you're contributing to humanity. Your work must have meaning beyond personal gain."
+            },
+            11: {
+                title: "The Spiritual Messenger",
+                strengths: ["Inspiration", "Vision", "Teaching", "Intuition"],
+                careers: ["Spiritual Teacher", "Counselor", "Motivational Speaker", "Healer", "Artist", "Metaphysician", "Minister"],
+                avoid: ["Purely materialistic work", "High-pressure environments", "Skeptical cultures"],
+                advice: "You're here to inspire and illuminate. Your sensitivity is a gift that needs the right environment to flourish."
+            },
+            22: {
+                title: "The Master Builder",
+                strengths: ["Large-scale vision", "Practical manifestation", "Leadership", "Systems"],
+                careers: ["Architect", "Executive", "Political Leader", "Developer", "International Business", "Institution Builder"],
+                avoid: ["Small projects", "Limited scope", "Pure theory without action"],
+                advice: "You're capable of building things that impact millions. Don't waste your energy on small visions."
+            },
+            33: {
+                title: "The Master Healer-Teacher",
+                strengths: ["Healing", "Teaching", "Unconditional love", "Service"],
+                careers: ["Master Teacher", "Healer", "Spiritual Leader", "Humanitarian Leader", "Counselor", "Nonprofit Director"],
+                avoid: ["Self-serving industries", "Competitive environments", "Harsh workplaces"],
+                advice: "You're a natural healer and teacher. Your presence itself is therapeutic. Choose work that honors this gift."
+            }
+        };
+
+        const sunSignCareers = {
+            "Aries": ["Athletics", "Military", "Entrepreneurship", "Emergency Services", "Sales Leadership"],
+            "Taurus": ["Banking", "Real Estate", "Culinary Arts", "Music", "Agriculture", "Luxury Goods"],
+            "Gemini": ["Writing", "Teaching", "Journalism", "Sales", "Social Media", "Translation"],
+            "Cancer": ["Healthcare", "Real Estate", "Hospitality", "Childcare", "Nutrition", "History"],
+            "Leo": ["Entertainment", "Management", "Fashion", "Politics", "Children's Work", "Creative Direction"],
+            "Virgo": ["Healthcare", "Analysis", "Editing", "Quality Control", "Nutrition", "Veterinary"],
+            "Libra": ["Law", "Design", "Diplomacy", "Counseling", "Art", "Fashion", "Mediation"],
+            "Scorpio": ["Psychology", "Research", "Investigation", "Surgery", "Finance", "Crisis Management"],
+            "Sagittarius": ["Education", "Travel", "Publishing", "Law", "Philosophy", "International Business"],
+            "Capricorn": ["Management", "Government", "Finance", "Architecture", "Administration", "Elder Care"],
+            "Aquarius": ["Technology", "Science", "Humanitarian Work", "Astrology", "Innovation", "Social Reform"],
+            "Pisces": ["Arts", "Healing", "Film", "Music", "Spirituality", "Photography", "Charity Work"]
+        };
+
+        function calculateExpressionNumber(name) {
+            const values = {
+                'a':1,'b':2,'c':3,'d':4,'e':5,'f':6,'g':7,'h':8,'i':9,
+                'j':1,'k':2,'l':3,'m':4,'n':5,'o':6,'p':7,'q':8,'r':9,
+                's':1,'t':2,'u':3,'v':4,'w':5,'x':6,'y':7,'z':8
+            };
+            
+            let sum = 0;
+            name.toLowerCase().replace(/[^a-z]/g, '').split('').forEach(letter => {
+                sum += values[letter] || 0;
+            });
+            
+            while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+                sum = String(sum).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            
+            return sum;
+        }
+
+        function getSunSign(month, day) {
+            const signs = [
+                { name: "Capricorn", startMonth: 1, startDay: 1, endMonth: 1, endDay: 19 },
+                { name: "Aquarius", startMonth: 1, startDay: 20, endMonth: 2, endDay: 18 },
+                { name: "Pisces", startMonth: 2, startDay: 19, endMonth: 3, endDay: 20 },
+                { name: "Aries", startMonth: 3, startDay: 21, endMonth: 4, endDay: 19 },
+                { name: "Taurus", startMonth: 4, startDay: 20, endMonth: 5, endDay: 20 },
+                { name: "Gemini", startMonth: 5, startDay: 21, endMonth: 6, endDay: 20 },
+                { name: "Cancer", startMonth: 6, startDay: 21, endMonth: 7, endDay: 22 },
+                { name: "Leo", startMonth: 7, startDay: 23, endMonth: 8, endDay: 22 },
+                { name: "Virgo", startMonth: 8, startDay: 23, endMonth: 9, endDay: 22 },
+                { name: "Libra", startMonth: 9, startDay: 23, endMonth: 10, endDay: 22 },
+                { name: "Scorpio", startMonth: 10, startDay: 23, endMonth: 11, endDay: 21 },
+                { name: "Sagittarius", startMonth: 11, startDay: 22, endMonth: 12, endDay: 21 },
+                { name: "Capricorn", startMonth: 12, startDay: 22, endMonth: 12, endDay: 31 }
+            ];
+            
+            for (const sign of signs) {
+                if ((month === sign.startMonth && day >= sign.startDay) || 
+                    (month === sign.endMonth && day <= sign.endDay)) {
+                    return sign.name;
+                }
+            }
+            return "Capricorn";
+        }
+
+        async function calculateVocation(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value || 'Seeker';
+            const fullName = document.getElementById('fullName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const [year, month, day] = birthDate.split('-').map(Number);
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '💼 Calculating...';
+            submitBtn.disabled = true;
+
+            try {
+                const expressionNum = calculateExpressionNumber(fullName);
+                const sunSign = getSunSign(month, day);
+                
+                showResult(name, expressionNum, sunSign);
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('Error calculating: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showResult(name, expressionNum, sunSign) {
+            const expData = expressionNumberCareers[expressionNum];
+            const sunCareers = sunSignCareers[sunSign];
+            
+            // Find overlapping career themes
+            const allCareers = [...new Set([...expData.careers, ...sunCareers])];
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="vocation-symbol">💼✨</div>
+                    <h2>Your Vocational Blueprint</h2>
+                    
+                    <div class="career-card" style="background: linear-gradient(135deg, rgba(70,130,180,0.2), rgba(138,43,226,0.2));">
+                        <h3>Expression Number ${expressionNum}: ${expData.title}</h3>
+                        <p style="font-style: italic;">${expData.advice}</p>
+                    </div>
+                    
+                    <h3>Your Professional Strengths</h3>
+                    <div class="career-grid">
+                        ${expData.strengths.map(s => `<div class="career-card"><strong>${s}</strong></div>`).join('')}
+                    </div>
+                    
+                    <h3>Ideal Career Paths</h3>
+                    <p>Based on your Expression Number ${expressionNum}:</p>
+                    <div class="career-grid">
+                        ${expData.careers.map(c => `<div class="career-card">• ${c}</div>`).join('')}
+                    </div>
+                    
+                    <h3>${sunSign} Sun Career Affinity</h3>
+                    <p>Your ${sunSign} energy draws you toward:</p>
+                    <div class="career-grid">
+                        ${sunCareers.map(c => `<div class="career-card">• ${c}</div>`).join('')}
+                    </div>
+                    
+                    <h3>Environments to Avoid</h3>
+                    <ul>${expData.avoid.map(a => `<li>${a}</li>`).join('')}</ul>
+                    
+                    <div style="background: rgba(255,215,0,0.1); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h3>Your Vocation Formula</h3>
+                        <p style="text-align: center;">
+                            <strong>Expression ${expressionNum}</strong> (how you work) + 
+                            <strong>${sunSign}</strong> (where you shine) = 
+                            <strong>Your Unique Calling</strong>
+                        </p>
+                        <p>Look for careers that combine your ${expData.title} abilities with your ${sunSign} nature.</p>
+                    </div>
+                    
+                    <p style="margin-top: 2rem; text-align: center;">
+                        ${name}, your Expression Number ${expressionNum} shows HOW you work best, while your ${sunSign} Sun 
+                        shows WHERE you naturally shine. The intersection of these is your sweet spot for career fulfillment.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

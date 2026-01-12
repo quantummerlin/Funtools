@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Mission Reading - Your Divine Purpose | Quantum Merlin</title>
+    <meta name="description" content="Discover your complete life mission through the synthesis of numerology and astrology.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(255, 215, 0, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(255, 215, 0, 0.4); }
+        .mission-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .component { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin: 1rem 0; border-left: 3px solid var(--accent-color); }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">🎯</div>
+            <h1>Life Mission Reading</h1>
+            <p class="tool-description">Discover your complete life mission through the synthesis of your Life Path, North Node, and Sun Sign</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateMission(event)">
+            <div class="form-group">
+                <label for="preferredName">Your Name (optional)</label>
+                <input type="text" id="preferredName" placeholder="How should we address you?">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <button type="submit" class="submit-btn">🎯 Reveal Life Mission</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const lifePathMeanings = {
+            1: { theme: "Pioneer & Leader", mission: "initiate new paths and lead by example" },
+            2: { theme: "Peacemaker & Partner", mission: "create harmony and support others' growth" },
+            3: { theme: "Creative Communicator", mission: "inspire through joy, art, and expression" },
+            4: { theme: "Master Builder", mission: "create lasting structures and foundations" },
+            5: { theme: "Freedom Seeker", mission: "embrace change and teach through experience" },
+            6: { theme: "Nurturer & Healer", mission: "heal through love and create beautiful spaces" },
+            7: { theme: "Mystic & Seeker", mission: "discover deep truths and share wisdom" },
+            8: { theme: "Manifestor & Leader", mission: "master abundance and empower others" },
+            9: { theme: "Humanitarian & Sage", mission: "serve humanity with wisdom and compassion" },
+            11: { theme: "Spiritual Messenger", mission: "inspire and illuminate through higher vision" },
+            22: { theme: "Master Architect", mission: "build structures that transform humanity" },
+            33: { theme: "Master Teacher", mission: "heal and teach through unconditional love" }
+        };
+
+        const sunSignMeanings = {
+            "Aries": { element: "Fire", expression: "through bold initiative and courageous action" },
+            "Taurus": { element: "Earth", expression: "through patience, beauty, and grounded persistence" },
+            "Gemini": { element: "Air", expression: "through communication, curiosity, and versatility" },
+            "Cancer": { element: "Water", expression: "through emotional wisdom and nurturing care" },
+            "Leo": { element: "Fire", expression: "through creative self-expression and heartfelt leadership" },
+            "Virgo": { element: "Earth", expression: "through service, discernment, and practical improvement" },
+            "Libra": { element: "Air", expression: "through harmony, beauty, and balanced relationships" },
+            "Scorpio": { element: "Water", expression: "through transformation, depth, and regeneration" },
+            "Sagittarius": { element: "Fire", expression: "through wisdom, adventure, and inspiring truth" },
+            "Capricorn": { element: "Earth", expression: "through mastery, discipline, and lasting achievement" },
+            "Aquarius": { element: "Air", expression: "through innovation, humanitarian vision, and originality" },
+            "Pisces": { element: "Water", expression: "through compassion, creativity, and spiritual connection" }
+        };
+
+        const northNodeMeanings = {
+            "Aries": { direction: "toward independence and self-assertion", lesson: "courage and initiative" },
+            "Taurus": { direction: "toward stability and self-worth", lesson: "peace and groundedness" },
+            "Gemini": { direction: "toward curiosity and communication", lesson: "listening and learning" },
+            "Cancer": { direction: "toward emotional wisdom and nurturing", lesson: "vulnerability and care" },
+            "Leo": { direction: "toward creative self-expression", lesson: "following your heart" },
+            "Virgo": { direction: "toward practical service and discernment", lesson: "healthy boundaries" },
+            "Libra": { direction: "toward partnership and harmony", lesson: "cooperation and balance" },
+            "Scorpio": { direction: "toward depth and transformation", lesson: "emotional intimacy" },
+            "Sagittarius": { direction: "toward meaning and higher truth", lesson: "faith and vision" },
+            "Capricorn": { direction: "toward mastery and public contribution", lesson: "responsibility" },
+            "Aquarius": { direction: "toward humanitarian service", lesson: "collective consciousness" },
+            "Pisces": { direction: "toward spiritual surrender", lesson: "faith and compassion" }
+        };
+
+        function calculateLifePath(birthDate) {
+            const [year, month, day] = birthDate.split('-').map(Number);
+            let sum = 0;
+            
+            // Add all digits
+            String(day).split('').forEach(d => sum += parseInt(d));
+            String(month).split('').forEach(d => sum += parseInt(d));
+            String(year).split('').forEach(d => sum += parseInt(d));
+            
+            // Reduce until single digit or master number
+            while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+                sum = String(sum).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            
+            return sum;
+        }
+
+        function getSunSign(month, day) {
+            const signs = [
+                { name: "Capricorn", startMonth: 1, startDay: 1, endMonth: 1, endDay: 19 },
+                { name: "Aquarius", startMonth: 1, startDay: 20, endMonth: 2, endDay: 18 },
+                { name: "Pisces", startMonth: 2, startDay: 19, endMonth: 3, endDay: 20 },
+                { name: "Aries", startMonth: 3, startDay: 21, endMonth: 4, endDay: 19 },
+                { name: "Taurus", startMonth: 4, startDay: 20, endMonth: 5, endDay: 20 },
+                { name: "Gemini", startMonth: 5, startDay: 21, endMonth: 6, endDay: 20 },
+                { name: "Cancer", startMonth: 6, startDay: 21, endMonth: 7, endDay: 22 },
+                { name: "Leo", startMonth: 7, startDay: 23, endMonth: 8, endDay: 22 },
+                { name: "Virgo", startMonth: 8, startDay: 23, endMonth: 9, endDay: 22 },
+                { name: "Libra", startMonth: 9, startDay: 23, endMonth: 10, endDay: 22 },
+                { name: "Scorpio", startMonth: 10, startDay: 23, endMonth: 11, endDay: 21 },
+                { name: "Sagittarius", startMonth: 11, startDay: 22, endMonth: 12, endDay: 21 },
+                { name: "Capricorn", startMonth: 12, startDay: 22, endMonth: 12, endDay: 31 }
+            ];
+            
+            for (const sign of signs) {
+                if ((month === sign.startMonth && day >= sign.startDay) || 
+                    (month === sign.endMonth && day <= sign.endDay)) {
+                    return sign.name;
+                }
+            }
+            return "Capricorn";
+        }
+
+        function getNorthNodeSign(birthDate) {
+            const [year, month, day] = birthDate.split('-').map(Number);
+            const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+            const time = Astronomy.MakeTime(date);
+            
+            const nodeLon = Astronomy.TrueNode(time);
+            const signIndex = Math.floor(nodeLon / 30);
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                          'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+            return signs[signIndex];
+        }
+
+        async function calculateMission(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value || 'Seeker';
+            const birthDate = document.getElementById('birthDate').value;
+            const [year, month, day] = birthDate.split('-').map(Number);
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '🎯 Calculating...';
+            submitBtn.disabled = true;
+
+            try {
+                const lifePath = calculateLifePath(birthDate);
+                const sunSign = getSunSign(month, day);
+                const northNode = getNorthNodeSign(birthDate);
+                
+                showResult(name, lifePath, sunSign, northNode);
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('Error calculating: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showResult(name, lifePath, sunSign, northNode) {
+            const lpData = lifePathMeanings[lifePath];
+            const sunData = sunSignMeanings[sunSign];
+            const nnData = northNodeMeanings[northNode];
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="mission-symbol">🎯✨</div>
+                    <h2>Your Life Mission</h2>
+                    
+                    <div class="component">
+                        <h3>Life Path ${lifePath}: ${lpData.theme}</h3>
+                        <p><strong>Your Core Mission:</strong> To ${lpData.mission}</p>
+                        <p>This is the WHY of your existence - the fundamental purpose you're here to fulfill.</p>
+                    </div>
+                    
+                    <div class="component">
+                        <h3>Sun in ${sunSign} (${sunData.element})</h3>
+                        <p><strong>Your Expression:</strong> You fulfill your mission ${sunData.expression}</p>
+                        <p>This is the HOW - the style and energy you bring to your life purpose.</p>
+                    </div>
+                    
+                    <div class="component">
+                        <h3>North Node in ${northNode}</h3>
+                        <p><strong>Your Growth Direction:</strong> Moving ${nnData.direction}</p>
+                        <p><strong>Key Lesson:</strong> Developing ${nnData.lesson}</p>
+                        <p>This is the WHERE - the direction your soul is evolving toward.</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(138,43,226,0.2)); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h3 style="text-align: center;">Your Integrated Life Mission Statement</h3>
+                        <p style="font-size: 1.1rem; text-align: center; font-style: italic;">
+                            "${name}, you are here to ${lpData.mission}, expressing this ${sunData.expression}. 
+                            Your soul is evolving ${nnData.direction}, with your key growth area being ${nnData.lesson}."
+                        </p>
+                    </div>
+                    
+                    <h3>Living Your Mission</h3>
+                    <p>When you align with your Life Path ${lifePath} purpose, express through your ${sunSign} nature, 
+                    and grow toward your ${northNode} North Node, you experience flow, meaning, and fulfillment. 
+                    Challenges arise when you resist any of these three components.</p>
+                    
+                    <ul>
+                        <li><strong>Career Alignment:</strong> Choose work that allows you to ${lpData.mission} using your ${sunSign} gifts</li>
+                        <li><strong>Relationship Growth:</strong> Partners who support your ${northNode} development help you flourish</li>
+                        <li><strong>Daily Practice:</strong> Each day, find ways to express your ${sunSign} energy in service to your Life Path ${lifePath} mission</li>
+                    </ul>
+                    
+                    <p style="margin-top: 2rem; text-align: center; color: var(--accent-color);">
+                        ${name}, you are not here by accident. Your unique combination of Life Path ${lifePath}, 
+                        ${sunSign} Sun, and ${northNode} North Node creates a mission that only you can fulfill.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul Contract Reading - Your Life Lessons | Quantum Merlin</title>
+    <meta name="description" content="Discover your soul contract - the spiritual agreements and life lessons you came to learn.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(147, 112, 219, 0.2), rgba(138, 43, 226, 0.3)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(147, 112, 219, 0.4); }
+        .contract-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .lesson-card { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin: 1rem 0; border-left: 3px solid var(--accent-color); }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">📜</div>
+            <h1>Soul Contract Reading</h1>
+            <p class="tool-description">Discover the spiritual agreements and life lessons your soul chose before incarnation</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateContract(event)">
+            <div class="form-group">
+                <label for="preferredName">Your Name (optional)</label>
+                <input type="text" id="preferredName" placeholder="How should we address you?">
+            </div>
+            <div class="form-group">
+                <label for="fullName">Full Birth Name</label>
+                <input type="text" id="fullName" required placeholder="As it appears on your birth certificate">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <button type="submit" class="submit-btn">📜 Reveal Soul Contract</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const karmicLessons = {
+            1: { lesson: "Independence & Self-Worth", description: "Learning to stand on your own and value yourself without external validation" },
+            2: { lesson: "Cooperation & Patience", description: "Learning to work with others, trust in divine timing, and embrace partnership" },
+            3: { lesson: "Self-Expression & Joy", description: "Learning to express yourself authentically and not suppress your creativity" },
+            4: { lesson: "Discipline & Foundation", description: "Learning to build solid structures through persistent effort and organization" },
+            5: { lesson: "Freedom & Adaptability", description: "Learning to embrace change without fear and find freedom within responsibility" },
+            6: { lesson: "Responsibility & Love", description: "Learning to love without martyrdom and take responsibility without controlling" },
+            7: { lesson: "Faith & Inner Wisdom", description: "Learning to trust your intuition and develop spiritual understanding" },
+            8: { lesson: "Power & Manifestation", description: "Learning to use power ethically and create abundance without attachment" },
+            9: { lesson: "Compassion & Letting Go", description: "Learning to serve humanity and release what no longer serves you" }
+        };
+
+        const soulUrgeContracts = {
+            1: { desire: "To Lead & Originate", contract: "You contracted to learn leadership through facing situations requiring initiative" },
+            2: { desire: "To Unite & Harmonize", contract: "You contracted to learn balance through relationship challenges" },
+            3: { desire: "To Create & Express", contract: "You contracted to learn authentic expression through facing criticism or suppression" },
+            4: { desire: "To Build & Stabilize", contract: "You contracted to learn perseverance through obstacles and delays" },
+            5: { desire: "To Experience & Liberate", contract: "You contracted to learn true freedom through limitations and restrictions" },
+            6: { desire: "To Nurture & Beautify", contract: "You contracted to learn unconditional love through family challenges" },
+            7: { desire: "To Understand & Perfect", contract: "You contracted to develop faith through mystery and unanswered questions" },
+            8: { desire: "To Achieve & Master", contract: "You contracted to learn right use of power through power struggles" },
+            9: { desire: "To Serve & Transform", contract: "You contracted to develop universal love through loss and letting go" },
+            11: { desire: "To Inspire & Illuminate", contract: "You contracted to be a spiritual messenger through heightened sensitivity" },
+            22: { desire: "To Build & Transform", contract: "You contracted to manifest vision on a grand scale through significant challenges" },
+            33: { desire: "To Heal & Teach", contract: "You contracted to embody unconditional love through sacrificial experiences" }
+        };
+
+        const lifePathContracts = {
+            1: { theme: "The Pioneer Contract", agreement: "To develop individuality and show others the power of the self" },
+            2: { theme: "The Peacemaker Contract", agreement: "To bring harmony and demonstrate the power of cooperation" },
+            3: { theme: "The Artist Contract", agreement: "To bring joy and demonstrate the power of creative expression" },
+            4: { theme: "The Builder Contract", agreement: "To create foundations and demonstrate the power of dedicated work" },
+            5: { theme: "The Catalyst Contract", agreement: "To embrace change and demonstrate the power of adaptability" },
+            6: { theme: "The Healer Contract", agreement: "To nurture others and demonstrate the power of responsible love" },
+            7: { theme: "The Seeker Contract", agreement: "To find truth and demonstrate the power of inner wisdom" },
+            8: { theme: "The Master Contract", agreement: "To achieve mastery and demonstrate the power of manifestation" },
+            9: { theme: "The Sage Contract", agreement: "To serve humanity and demonstrate the power of universal love" },
+            11: { theme: "The Messenger Contract", agreement: "To inspire awakening and demonstrate the power of spiritual vision" },
+            22: { theme: "The Architect Contract", agreement: "To build lasting legacy and demonstrate the power of practical idealism" },
+            33: { theme: "The Teacher Contract", agreement: "To heal through love and demonstrate the power of compassionate service" }
+        };
+
+        function findMissingNumbers(name) {
+            const values = {
+                'a':1,'b':2,'c':3,'d':4,'e':5,'f':6,'g':7,'h':8,'i':9,
+                'j':1,'k':2,'l':3,'m':4,'n':5,'o':6,'p':7,'q':8,'r':9,
+                's':1,'t':2,'u':3,'v':4,'w':5,'x':6,'y':7,'z':8
+            };
+            
+            const present = new Set();
+            name.toLowerCase().replace(/[^a-z]/g, '').split('').forEach(letter => {
+                present.add(values[letter]);
+            });
+            
+            const missing = [];
+            for (let i = 1; i <= 9; i++) {
+                if (!present.has(i)) missing.push(i);
+            }
+            return missing;
+        }
+
+        function calculateSoulUrge(name) {
+            const vowelValues = { 'a':1,'e':5,'i':9,'o':6,'u':3 };
+            
+            let sum = 0;
+            name.toLowerCase().split('').forEach(letter => {
+                if (vowelValues[letter]) sum += vowelValues[letter];
+            });
+            
+            while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+                sum = String(sum).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return sum;
+        }
+
+        function calculateLifePath(birthDate) {
+            const [year, month, day] = birthDate.split('-').map(Number);
+            let sum = 0;
+            
+            String(day).split('').forEach(d => sum += parseInt(d));
+            String(month).split('').forEach(d => sum += parseInt(d));
+            String(year).split('').forEach(d => sum += parseInt(d));
+            
+            while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+                sum = String(sum).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return sum;
+        }
+
+        async function calculateContract(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value || 'Seeker';
+            const fullName = document.getElementById('fullName').value;
+            const birthDate = document.getElementById('birthDate').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '📜 Decoding...';
+            submitBtn.disabled = true;
+
+            try {
+                const missingNumbers = findMissingNumbers(fullName);
+                const soulUrge = calculateSoulUrge(fullName);
+                const lifePath = calculateLifePath(birthDate);
+                
+                showResult(name, missingNumbers, soulUrge, lifePath);
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showResult(name, missingNumbers, soulUrge, lifePath) {
+            const soulData = soulUrgeContracts[soulUrge];
+            const lifeData = lifePathContracts[lifePath];
+            
+            const karmicHTML = missingNumbers.length > 0 
+                ? missingNumbers.map(num => {
+                    const lesson = karmicLessons[num];
+                    return `
+                        <div class="lesson-card">
+                            <h4>Karmic Lesson ${num}: ${lesson.lesson}</h4>
+                            <p>${lesson.description}</p>
+                        </div>
+                    `;
+                }).join('')
+                : '<p style="text-align: center; color: var(--accent-color);">Your name contains all numbers - you carry no specific karmic lessons and have a broad life experience ahead.</p>';
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="contract-symbol">📜✨</div>
+                    <h2>Your Soul Contract</h2>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>${lifeData.theme}</h3>
+                        <p><strong>Core Agreement:</strong> ${lifeData.agreement}</p>
+                        <p>This is the main purpose you agreed to before birth - the central theme of your incarnation.</p>
+                    </div>
+                    
+                    <h3>Soul Urge ${soulUrge}: ${soulData.desire}</h3>
+                    <div class="lesson-card">
+                        <p><strong>Your Contract:</strong> ${soulData.contract}</p>
+                        <p>This reveals the deepest motivation behind your soul's agreements - what you truly desire to experience and master.</p>
+                    </div>
+                    
+                    <h3>Karmic Lessons (Missing Numbers)</h3>
+                    <p>Numbers missing from your name indicate specific lessons your soul contracted to learn:</p>
+                    ${karmicHTML}
+                    
+                    <div style="background: linear-gradient(135deg, rgba(147,112,219,0.2), rgba(255,215,0,0.1)); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h3>Understanding Your Contract</h3>
+                        <p>Your soul contract is not punishment - it's curriculum. Before birth, your soul chose these lessons 
+                        because they offer the greatest opportunity for growth. Every challenge you face is a chance to fulfill 
+                        your agreement and evolve.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Signs you're fulfilling your contract:</strong></p>
+                        <ul>
+                            <li>Challenges feel meaningful rather than random</li>
+                            <li>You find peace even in difficult circumstances</li>
+                            <li>You recognize patterns and respond with wisdom</li>
+                            <li>Life becomes a teacher rather than an enemy</li>
+                        </ul>
+                    </div>
+                    
+                    <p style="margin-top: 2rem; text-align: center; font-style: italic;">
+                        ${name}, you signed this contract with wisdom and courage. Every lesson you master 
+                        brings you closer to the soul you came here to become.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

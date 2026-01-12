@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationship Karma Reading | Quantum Merlin</title>
+    <meta name="description" content="Discover the karmic connections and past life bonds between you and your partner.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.3)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(138, 43, 226, 0.4); }
+        .karma-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .karma-card { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin: 1rem 0; border-left: 3px solid var(--accent-color); }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">☸️</div>
+            <h1>Relationship Karma Reading</h1>
+            <p class="tool-description">Discover the karmic connections, past life bonds, and spiritual lessons in your relationship</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateKarma(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h3 style="text-align: center; margin-bottom: 1rem;">Person 1</h3>
+                    <div class="form-group">
+                        <label for="name1">Name</label>
+                        <input type="text" id="name1" required placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate1">Birth Date</label>
+                        <input type="date" id="birthDate1" required>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="text-align: center; margin-bottom: 1rem;">Person 2</h3>
+                    <div class="form-group">
+                        <label for="name2">Name</label>
+                        <input type="text" id="name2" required placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate2">Birth Date</label>
+                        <input type="date" id="birthDate2" required>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">☸️ Reveal Karmic Connection</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
+    <script>
+        const signNames = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+        
+        const karmicPairings = {
+            'Aries-Libra': { type: 'Polarity Karma', theme: 'Self vs. Partnership', description: 'You are learning the balance between independence and relationship. Past lives may have swung to extremes - total selfishness or complete self-sacrifice.' },
+            'Taurus-Scorpio': { type: 'Polarity Karma', theme: 'Possession vs. Surrender', description: 'You are working through issues of control, attachment, and letting go. Past lives involved power dynamics around resources, sexuality, or emotions.' },
+            'Gemini-Sagittarius': { type: 'Polarity Karma', theme: 'Knowledge vs. Wisdom', description: 'You are balancing information with meaning, details with the big picture. Past lives involved teaching, learning, or philosophical conflicts.' },
+            'Cancer-Capricorn': { type: 'Polarity Karma', theme: 'Home vs. Career', description: 'You are balancing emotional needs with worldly achievement. Past lives involved family duty versus personal ambition.' },
+            'Leo-Aquarius': { type: 'Polarity Karma', theme: 'Self vs. Collective', description: 'You are balancing personal recognition with group service. Past lives involved leadership roles and their responsibilities.' },
+            'Virgo-Pisces': { type: 'Polarity Karma', theme: 'Analysis vs. Faith', description: 'You are balancing practical service with spiritual surrender. Past lives involved healing, service, or religious institutions.' }
+        };
+
+        const southNodeKarma = {
+            'Aries': 'Past life as warriors or competitors - learning to cooperate',
+            'Taurus': 'Past life attachment to material security - learning to share',
+            'Gemini': 'Past life scattered connections - learning depth',
+            'Cancer': 'Past life family enmeshment - learning healthy boundaries',
+            'Leo': 'Past life seeking recognition - learning humility in love',
+            'Virgo': 'Past life criticism and perfectionism - learning acceptance',
+            'Libra': 'Past life people-pleasing - learning authentic self-expression',
+            'Scorpio': 'Past life power struggles - learning trust and simplicity',
+            'Sagittarius': 'Past life preaching and wandering - learning to listen and stay',
+            'Capricorn': 'Past life workaholism - learning emotional intimacy',
+            'Aquarius': 'Past life detachment - learning heart connection',
+            'Pisces': 'Past life escapism or martyrdom - learning healthy reality'
+        };
+
+        const lifePathKarma = {
+            same: 'Your identical Life Paths suggest you are soul family - possibly siblings, close friends, or romantic partners in past lives. You incarnated to continue unfinished work together.',
+            complementary: 'Your complementary Life Paths suggest a karmic contract - you agreed to teach each other what you each came to learn.',
+            challenging: 'Your challenging Life Path combination suggests past life conflicts that you\'ve returned to resolve. This relationship is powerful medicine for both souls.'
+        };
+
+        function getLifePath(birthDate) {
+            const [year, month, day] = birthDate.split('-').map(Number);
+            let sum = 0;
+            String(day).split('').forEach(d => sum += parseInt(d));
+            String(month).split('').forEach(d => sum += parseInt(d));
+            String(year).split('').forEach(d => sum += parseInt(d));
+            while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+                sum = String(sum).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return sum;
+        }
+
+        function getNorthNodeSign(birthDate) {
+            const [year, month, day] = birthDate.split('-').map(Number);
+            const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+            const time = Astronomy.MakeTime(date);
+            const nodeLon = Astronomy.TrueNode(time);
+            return signNames[Math.floor(nodeLon / 30)];
+        }
+
+        function getSouthNodeSign(northNode) {
+            const idx = signNames.indexOf(northNode);
+            return signNames[(idx + 6) % 12];
+        }
+
+        function getSaturnSign(birthDate) {
+            const [year, month, day] = birthDate.split('-').map(Number);
+            const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+            const time = Astronomy.MakeTime(date);
+            const geo = Astronomy.GeoVector(Astronomy.Body.Saturn, time, true);
+            const saturnLon = Astronomy.Ecliptic(geo).elon;
+            return signNames[Math.floor(saturnLon / 30)];
+        }
+
+        function getKarmicConnectionType(lp1, lp2) {
+            if (lp1 === lp2) return 'same';
+            if (Math.abs(lp1 - lp2) === 1 || (lp1 + lp2) === 10) return 'complementary';
+            return 'challenging';
+        }
+
+        function areOpposites(sign1, sign2) {
+            const idx1 = signNames.indexOf(sign1);
+            const idx2 = signNames.indexOf(sign2);
+            return Math.abs(idx1 - idx2) === 6;
+        }
+
+        function areSameSign(sign1, sign2) {
+            return sign1 === sign2;
+        }
+
+        async function calculateKarma(event) {
+            event.preventDefault();
+            
+            const name1 = document.getElementById('name1').value;
+            const name2 = document.getElementById('name2').value;
+            const birthDate1 = document.getElementById('birthDate1').value;
+            const birthDate2 = document.getElementById('birthDate2').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '☸️ Reading karma...';
+            submitBtn.disabled = true;
+
+            try {
+                const data = {
+                    name1, name2,
+                    lp1: getLifePath(birthDate1),
+                    lp2: getLifePath(birthDate2),
+                    nn1: getNorthNodeSign(birthDate1),
+                    nn2: getNorthNodeSign(birthDate2),
+                    saturn1: getSaturnSign(birthDate1),
+                    saturn2: getSaturnSign(birthDate2)
+                };
+                data.sn1 = getSouthNodeSign(data.nn1);
+                data.sn2 = getSouthNodeSign(data.nn2);
+                
+                showResult(data);
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showResult(data) {
+            const lpType = getKarmicConnectionType(data.lp1, data.lp2);
+            
+            // Check for nodal connections
+            let nodalKarma = [];
+            if (areSameSign(data.nn1, data.nn2)) {
+                nodalKarma.push({ type: 'Shared Destiny', desc: 'Your North Nodes are in the same sign - you are on the same evolutionary path. This is a soul contract to grow together.' });
+            }
+            if (areOpposites(data.nn1, data.nn2)) {
+                nodalKarma.push({ type: 'Complementary Evolution', desc: 'Your North Nodes are opposite - each of you has already mastered what the other is learning. You are natural teachers for each other.' });
+            }
+            if (areSameSign(data.nn1, data.sn2) || areSameSign(data.nn2, data.sn1)) {
+                nodalKarma.push({ type: 'Karmic Teaching Contract', desc: 'One partner\'s North Node aligns with the other\'s South Node - you knew each other in a past life. One is here to help the other evolve beyond old patterns.' });
+            }
+            
+            // Check for Saturn connections
+            let saturnKarma = [];
+            if (areSameSign(data.saturn1, data.saturn2)) {
+                saturnKarma.push({ type: 'Shared Karmic Lessons', desc: 'Your Saturns are in the same sign - you share the same karmic curriculum. You face similar challenges and can support each other through Saturn\'s tests.' });
+            }
+            
+            // Check for polarity karma
+            const checkPolarity = (s1, s2) => {
+                const pairs = ['Aries-Libra', 'Taurus-Scorpio', 'Gemini-Sagittarius', 'Cancer-Capricorn', 'Leo-Aquarius', 'Virgo-Pisces'];
+                for (const pair of pairs) {
+                    const [a, b] = pair.split('-');
+                    if ((s1 === a && s2 === b) || (s1 === b && s2 === a)) {
+                        return karmicPairings[pair];
+                    }
+                }
+                return null;
+            };
+            
+            const southNodePolarity = checkPolarity(data.sn1, data.sn2);
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="karma-symbol">☸️✨</div>
+                    <h2>Karmic Connection: ${data.name1} & ${data.name2}</h2>
+                    
+                    <div class="karma-card">
+                        <h3>Life Path Karma</h3>
+                        <p><strong>${data.name1}:</strong> Life Path ${data.lp1} | <strong>${data.name2}:</strong> Life Path ${data.lp2}</p>
+                        <p style="margin-top: 0.5rem;">${lifePathKarma[lpType]}</p>
+                    </div>
+                    
+                    <h3>Nodal Axis Connections</h3>
+                    <div class="karma-card">
+                        <p><strong>${data.name1}:</strong> North Node ${data.nn1} / South Node ${data.sn1}</p>
+                        <p><strong>${data.name2}:</strong> North Node ${data.nn2} / South Node ${data.sn2}</p>
+                    </div>
+                    
+                    ${nodalKarma.length > 0 ? nodalKarma.map(k => `
+                        <div class="karma-card">
+                            <h4>🔮 ${k.type}</h4>
+                            <p>${k.desc}</p>
+                        </div>
+                    `).join('') : '<p>No major nodal connections found.</p>'}
+                    
+                    <h3>Past Life Patterns to Heal</h3>
+                    <div class="karma-card">
+                        <p><strong>${data.name1}'s South Node in ${data.sn1}:</strong> ${southNodeKarma[data.sn1]}</p>
+                    </div>
+                    <div class="karma-card">
+                        <p><strong>${data.name2}'s South Node in ${data.sn2}:</strong> ${southNodeKarma[data.sn2]}</p>
+                    </div>
+                    
+                    ${southNodePolarity ? `
+                        <div class="karma-card" style="border-color: gold;">
+                            <h4>⚡ ${southNodePolarity.type}: ${southNodePolarity.theme}</h4>
+                            <p>${southNodePolarity.description}</p>
+                        </div>
+                    ` : ''}
+                    
+                    ${saturnKarma.length > 0 ? `
+                        <h3>Saturn Karma</h3>
+                        ${saturnKarma.map(k => `
+                            <div class="karma-card">
+                                <h4>🪐 ${k.type}</h4>
+                                <p>${k.desc}</p>
+                            </div>
+                        `).join('')}
+                    ` : ''}
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h3>Working with Relationship Karma</h3>
+                        <p>Karmic connections aren't punishments - they're opportunities. You've come together to:</p>
+                        <ul>
+                            <li>Complete unfinished business from past lives</li>
+                            <li>Learn specific lessons together</li>
+                            <li>Heal old wounds through new choices</li>
+                            <li>Evolve beyond outdated patterns</li>
+                        </ul>
+                        <p style="margin-top: 1rem;">The intensity of karmic relationships can feel fated because it IS. 
+                        But fate brought you together - free will determines how you grow.</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

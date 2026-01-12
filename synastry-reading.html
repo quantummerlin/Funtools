@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synastry Reading - Planetary Connections | Quantum Merlin</title>
+    <meta name="description" content="Explore the planetary aspects between you and your partner with this detailed synastry analysis.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(138, 43, 226, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(255, 105, 180, 0.4); }
+        .synastry-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .aspect-card { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin: 0.5rem 0; }
+        .aspect-harmonious { border-left: 3px solid #4CAF50; }
+        .aspect-challenging { border-left: 3px solid #f44336; }
+        .aspect-neutral { border-left: 3px solid #FFC107; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">☍</div>
+            <h1>Synastry Reading</h1>
+            <p class="tool-description">Discover the planetary connections between you and your partner</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateSynastry(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div>
+                    <h3 style="text-align: center; margin-bottom: 1rem;">Person 1</h3>
+                    <div class="form-group">
+                        <label for="name1">Name</label>
+                        <input type="text" id="name1" required placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate1">Birth Date</label>
+                        <input type="date" id="birthDate1" required>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="text-align: center; margin-bottom: 1rem;">Person 2</h3>
+                    <div class="form-group">
+                        <label for="name2">Name</label>
+                        <input type="text" id="name2" required placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate2">Birth Date</label>
+                        <input type="date" id="birthDate2" required>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">☍ Analyze Synastry</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
+    <script>
+        const planetSymbols = {
+            Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂',
+            Jupiter: '♃', Saturn: '♄', Uranus: '♅', Neptune: '♆', Pluto: '♇'
+        };
+
+        const aspectMeanings = {
+            conjunction: { symbol: '☌', name: 'Conjunction', type: 'neutral', orb: 10 },
+            opposition: { symbol: '☍', name: 'Opposition', type: 'challenging', orb: 8 },
+            trine: { symbol: '△', name: 'Trine', type: 'harmonious', orb: 8 },
+            square: { symbol: '□', name: 'Square', type: 'challenging', orb: 8 },
+            sextile: { symbol: '⚹', name: 'Sextile', type: 'harmonious', orb: 6 }
+        };
+
+        const aspectInterpretations = {
+            'Sun-Sun': { conjunction: 'Your core identities merge - you feel like extensions of each other', opposition: 'Opposite approaches to life create both attraction and tension', trine: 'Natural harmony in self-expression and life goals', square: 'Ego clashes challenge you to grow', sextile: 'Supportive energy for each other\'s goals' },
+            'Sun-Moon': { conjunction: 'Deep soul connection - feels fated and comfortable', opposition: 'Emotional needs and identity may conflict', trine: 'Natural emotional understanding', square: 'Identity conflicts with emotional needs', sextile: 'Easy emotional support' },
+            'Moon-Moon': { conjunction: 'Deep emotional resonance - you feel each other\'s moods', opposition: 'Different emotional needs require balance', trine: 'Natural emotional harmony', square: 'Emotional conflicts need attention', sextile: 'Gentle emotional support' },
+            'Venus-Mars': { conjunction: 'Powerful attraction and romantic chemistry', opposition: 'Magnetic attraction with push-pull dynamics', trine: 'Natural romantic and physical harmony', square: 'Passionate but potentially volatile', sextile: 'Gentle romantic attraction' },
+            'Venus-Venus': { conjunction: 'Similar values and love styles', opposition: 'Different approaches to love and beauty', trine: 'Natural harmony in love expression', square: 'Value conflicts need understanding', sextile: 'Supportive love expression' },
+            'Mars-Mars': { conjunction: 'Similar drive and energy levels', opposition: 'Competitive energy - can be stimulating or combative', trine: 'Harmonious action and energy', square: 'Conflicts in how you take action', sextile: 'Supportive energy exchange' },
+            'Sun-Venus': { conjunction: 'Mutual admiration and appreciation', opposition: 'Value differences with strong attraction', trine: 'Natural affection flows easily', square: 'What you value may conflict with identity', sextile: 'Easy appreciation of each other' },
+            'Sun-Mars': { conjunction: 'Energizing and activating each other', opposition: 'Can be competitive or motivating', trine: 'Support each other\'s actions', square: 'May trigger each other\'s anger', sextile: 'Gentle motivation' },
+            'Moon-Venus': { conjunction: 'Deep emotional affection', opposition: 'Emotions vs values may create tension', trine: 'Natural emotional harmony and affection', square: 'Emotional needs conflict with values', sextile: 'Gentle emotional love' },
+            'Moon-Mars': { conjunction: 'Emotions trigger action - can be passionate', opposition: 'Emotions vs action create dynamic tension', trine: 'Emotional support for action', square: 'Emotions can trigger conflicts', sextile: 'Supportive emotional energy' },
+            'Jupiter-Saturn': { conjunction: 'Balance of expansion and restriction', opposition: 'Growth vs limits create tension', trine: 'Balanced growth and stability', square: 'Optimism clashes with caution', sextile: 'Supportive growth with structure' }
+        };
+
+        function getPlanetPosition(planetName, time) {
+            if (planetName === 'Sun') {
+                return Astronomy.SunPosition(time).elon;
+            } else if (planetName === 'Moon') {
+                return Astronomy.EclipticGeoMoon(time).lon;
+            } else {
+                const body = Astronomy.Body[planetName];
+                const geo = Astronomy.GeoVector(body, time, true);
+                return Astronomy.Ecliptic(geo).elon;
+            }
+        }
+
+        function getPositions(birthDate) {
+            const [year, month, day] = birthDate.split('-').map(Number);
+            const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+            const time = Astronomy.MakeTime(date);
+            
+            return {
+                Sun: getPlanetPosition('Sun', time),
+                Moon: getPlanetPosition('Moon', time),
+                Mercury: getPlanetPosition('Mercury', time),
+                Venus: getPlanetPosition('Venus', time),
+                Mars: getPlanetPosition('Mars', time),
+                Jupiter: getPlanetPosition('Jupiter', time),
+                Saturn: getPlanetPosition('Saturn', time)
+            };
+        }
+
+        function findAspect(pos1, pos2) {
+            let diff = Math.abs(pos1 - pos2);
+            if (diff > 180) diff = 360 - diff;
+            
+            if (diff <= 10) return 'conjunction';
+            if (Math.abs(diff - 180) <= 8) return 'opposition';
+            if (Math.abs(diff - 120) <= 8) return 'trine';
+            if (Math.abs(diff - 90) <= 8) return 'square';
+            if (Math.abs(diff - 60) <= 6) return 'sextile';
+            return null;
+        }
+
+        async function calculateSynastry(event) {
+            event.preventDefault();
+            
+            const name1 = document.getElementById('name1').value;
+            const name2 = document.getElementById('name2').value;
+            const birthDate1 = document.getElementById('birthDate1').value;
+            const birthDate2 = document.getElementById('birthDate2').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '☍ Calculating...';
+            submitBtn.disabled = true;
+
+            try {
+                const positions1 = getPositions(birthDate1);
+                const positions2 = getPositions(birthDate2);
+                
+                const aspects = [];
+                const planets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn'];
+                
+                planets.forEach(p1 => {
+                    planets.forEach(p2 => {
+                        const aspect = findAspect(positions1[p1], positions2[p2]);
+                        if (aspect) {
+                            aspects.push({
+                                planet1: p1,
+                                planet2: p2,
+                                aspect: aspect,
+                                person1: name1,
+                                person2: name2
+                            });
+                        }
+                    });
+                });
+                
+                showResult(name1, name2, aspects);
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('Error: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showResult(name1, name2, aspects) {
+            const harmoniousAspects = aspects.filter(a => aspectMeanings[a.aspect].type === 'harmonious');
+            const challengingAspects = aspects.filter(a => aspectMeanings[a.aspect].type === 'challenging');
+            const neutralAspects = aspects.filter(a => aspectMeanings[a.aspect].type === 'neutral');
+            
+            const harmonyScore = Math.round((harmoniousAspects.length / (aspects.length || 1)) * 100);
+            
+            function renderAspect(a) {
+                const aspectInfo = aspectMeanings[a.aspect];
+                const key = `${a.planet1}-${a.planet2}`;
+                const reverseKey = `${a.planet2}-${a.planet1}`;
+                const interpretation = aspectInterpretations[key] || aspectInterpretations[reverseKey];
+                const meaning = interpretation ? interpretation[a.aspect] : 'A significant connection between these planetary energies';
+                
+                return `
+                    <div class="aspect-card aspect-${aspectInfo.type}">
+                        <strong>${planetSymbols[a.planet1]} ${a.planet1} ${aspectInfo.symbol} ${planetSymbols[a.planet2]} ${a.planet2}</strong>
+                        <span style="float: right; opacity: 0.7;">${aspectInfo.name}</span>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;">${meaning}</p>
+                    </div>
+                `;
+            }
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="synastry-symbol">💫❤️💫</div>
+                    <h2>Synastry: ${name1} & ${name2}</h2>
+                    
+                    <div style="text-align: center; margin: 1.5rem 0;">
+                        <div style="font-size: 2rem; color: var(--accent-color);">${harmonyScore}% Harmony</div>
+                        <p>${aspects.length} planetary aspects found</p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0; text-align: center;">
+                        <div style="background: rgba(76,175,80,0.2); padding: 1rem; border-radius: 10px;">
+                            <div style="font-size: 1.5rem;">${harmoniousAspects.length}</div>
+                            <div>Harmonious</div>
+                        </div>
+                        <div style="background: rgba(255,193,7,0.2); padding: 1rem; border-radius: 10px;">
+                            <div style="font-size: 1.5rem;">${neutralAspects.length}</div>
+                            <div>Conjunctions</div>
+                        </div>
+                        <div style="background: rgba(244,67,54,0.2); padding: 1rem; border-radius: 10px;">
+                            <div style="font-size: 1.5rem;">${challengingAspects.length}</div>
+                            <div>Challenging</div>
+                        </div>
+                    </div>
+                    
+                    ${harmoniousAspects.length > 0 ? `
+                        <h3 style="color: #4CAF50;">✨ Harmonious Connections</h3>
+                        ${harmoniousAspects.map(renderAspect).join('')}
+                    ` : ''}
+                    
+                    ${neutralAspects.length > 0 ? `
+                        <h3 style="color: #FFC107; margin-top: 1.5rem;">☌ Conjunctions (Power Points)</h3>
+                        ${neutralAspects.map(renderAspect).join('')}
+                    ` : ''}
+                    
+                    ${challengingAspects.length > 0 ? `
+                        <h3 style="color: #f44336; margin-top: 1.5rem;">⚡ Growth Opportunities</h3>
+                        ${challengingAspects.map(renderAspect).join('')}
+                    ` : ''}
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h3>Reading Your Synastry</h3>
+                        <p>Harmonious aspects (trines, sextiles) show where you naturally flow together. 
+                        Challenging aspects (squares, oppositions) show where you'll grow. 
+                        Conjunctions are powerful points that can go either way depending on awareness.</p>
+                        <p style="margin-top: 1rem;">The best relationships have a mix of all types - 
+                        harmony provides comfort while challenges provide growth.</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

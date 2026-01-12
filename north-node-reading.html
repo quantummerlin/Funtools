@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>North Node Reading - Your Soul's Destiny | Quantum Merlin</title>
+    <meta name="description" content="Discover your North Node sign and understand your soul's evolutionary direction and life purpose.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.3)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(138, 43, 226, 0.4); }
+        .node-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .axis-info { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">☊</div>
+            <h1>North Node Reading</h1>
+            <p class="tool-description">Discover your soul's evolutionary direction and the qualities you're meant to develop in this lifetime</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateNorthNode(event)">
+            <div class="form-group">
+                <label for="preferredName">Your Name (optional)</label>
+                <input type="text" id="preferredName" placeholder="How should we address you?">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <button type="submit" class="submit-btn">☊ Reveal Your North Node</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const interpretations = {
+            "Aries": {
+                symbol: "♈",
+                southNode: "Libra",
+                title: "North Node in Aries",
+                theme: "From Dependency to Self-Reliance",
+                lesson: "Your soul is learning to develop courage, independence, and self-assertion. You're moving away from over-reliance on others and people-pleasing toward authentic self-expression and bold action.",
+                gifts: ["Natural diplomacy and fairness", "Ability to see all perspectives", "Grace in relationships", "Peacemaking skills"],
+                challenges: ["Fear of conflict or asserting yourself", "Over-compromising your needs", "Waiting for permission", "Identity confusion through others"],
+                growth: ["Take initiative without waiting for approval", "Assert your needs clearly", "Embrace healthy conflict", "Develop a strong sense of 'I am'", "Lead rather than follow"],
+                career: "Leadership roles, entrepreneurship, athletics, pioneering fields, military, emergency services"
+            },
+            "Taurus": {
+                symbol: "♉",
+                southNode: "Scorpio",
+                title: "North Node in Taurus",
+                theme: "From Crisis to Stability",
+                lesson: "Your soul is learning to embrace simplicity, stability, and self-worth. You're moving from intensity and transformation toward peace, groundedness, and appreciating life's pleasures.",
+                gifts: ["Deep psychological insight", "Comfort with transformation", "Intensity and passion", "Investigative abilities"],
+                challenges: ["Addiction to drama or crisis", "Fear of vulnerability", "Controlling tendencies", "Difficulty with simplicity"],
+                growth: ["Cultivate inner peace and stability", "Develop your own resources and values", "Appreciate simple pleasures", "Build something lasting", "Trust in abundance"],
+                career: "Finance, agriculture, arts, music, luxury goods, real estate, banking, culinary arts"
+            },
+            "Gemini": {
+                symbol: "♊",
+                southNode: "Sagittarius",
+                title: "North Node in Gemini",
+                theme: "From Preaching to Listening",
+                lesson: "Your soul is learning curiosity, communication, and seeing multiple perspectives. You're moving from having all the answers toward asking better questions and staying open to learning.",
+                gifts: ["Natural wisdom and vision", "Philosophical understanding", "Teaching abilities", "Optimism and faith"],
+                challenges: ["Being preachy or dogmatic", "Overlooking details", "Restlessness and escapism", "Thinking you know best"],
+                growth: ["Listen more than you speak", "Stay curious and ask questions", "Value facts over beliefs", "Connect with your immediate community", "Embrace learning as ongoing"],
+                career: "Writing, journalism, teaching, sales, social media, communications, translation, local business"
+            },
+            "Cancer": {
+                symbol: "♋",
+                southNode: "Capricorn",
+                title: "North Node in Cancer",
+                theme: "From Achievement to Nurturing",
+                lesson: "Your soul is learning to embrace emotions, vulnerability, and caring for others. You're moving from career focus and control toward creating emotional security and home.",
+                gifts: ["Natural authority and discipline", "Achievement orientation", "Organizational skills", "Ambition and perseverance"],
+                challenges: ["Emotional repression", "Over-focus on status", "Difficulty with vulnerability", "Neglecting family for career"],
+                growth: ["Honor your emotions and intuition", "Create a nurturing home", "Allow yourself to need others", "Develop emotional intelligence", "Care for family and community"],
+                career: "Healthcare, counseling, childcare, real estate, hospitality, food service, family business"
+            },
+            "Leo": {
+                symbol: "♌",
+                southNode: "Aquarius",
+                title: "North Node in Leo",
+                theme: "From the Group to the Self",
+                lesson: "Your soul is learning self-expression, creativity, and stepping into the spotlight. You're moving from hiding in groups toward shining as an individual and following your heart.",
+                gifts: ["Humanitarian vision", "Objectivity and detachment", "Community consciousness", "Innovation and originality"],
+                challenges: ["Fear of standing out", "Over-identification with groups", "Emotional detachment", "Avoiding the spotlight"],
+                growth: ["Express your unique creativity", "Take center stage when called", "Follow your heart over logic", "Develop personal charisma", "Create from joy, not ideology"],
+                career: "Entertainment, arts, leadership, children's work, creativity industries, performance, royalty/luxury"
+            },
+            "Virgo": {
+                symbol: "♍",
+                southNode: "Pisces",
+                title: "North Node in Virgo",
+                theme: "From Escape to Service",
+                lesson: "Your soul is learning discernment, practical service, and healthy boundaries. You're moving from escapism and over-sacrifice toward grounded helpfulness and self-improvement.",
+                gifts: ["Spiritual sensitivity", "Compassion and empathy", "Artistic imagination", "Connection to the divine"],
+                challenges: ["Escapism and victim mentality", "Boundary confusion", "Impracticality", "Martyrdom or addiction"],
+                growth: ["Develop practical skills", "Serve others in tangible ways", "Create healthy routines", "Discern rather than absorb", "Ground spirituality in daily life"],
+                career: "Healthcare, nutrition, analysis, editing, veterinary, organizing, craftsmanship, quality control"
+            },
+            "Libra": {
+                symbol: "♎",
+                southNode: "Aries",
+                title: "North Node in Libra",
+                theme: "From Self to Partnership",
+                lesson: "Your soul is learning cooperation, diplomacy, and the art of relationship. You're moving from independence and self-focus toward harmony, fairness, and considering others.",
+                gifts: ["Strong self-identity", "Courage and initiative", "Independence", "Leadership abilities"],
+                challenges: ["Over-competitiveness", "Difficulty compromising", "Impatience with others", "Relationship conflicts"],
+                growth: ["Develop partnership skills", "Practice diplomacy and tact", "Consider others' perspectives", "Create beauty and harmony", "Learn to collaborate"],
+                career: "Law, diplomacy, counseling, design, art, fashion, mediation, public relations, partnerships"
+            },
+            "Scorpio": {
+                symbol: "♏",
+                southNode: "Taurus",
+                title: "North Node in Scorpio",
+                theme: "From Comfort to Transformation",
+                lesson: "Your soul is learning depth, transformation, and shared resources. You're moving from material security toward emotional intimacy and the power of letting go.",
+                gifts: ["Self-reliance and stability", "Practical abilities", "Appreciation for beauty", "Material resourcefulness"],
+                challenges: ["Attachment to comfort and possessions", "Resistance to change", "Superficiality", "Fear of intimacy"],
+                growth: ["Embrace deep transformation", "Share resources with others", "Explore psychological depths", "Release attachments", "Trust in regeneration"],
+                career: "Psychology, research, investigation, finance, healing, hospice, surgery, crisis management"
+            },
+            "Sagittarius": {
+                symbol: "♐",
+                southNode: "Gemini",
+                title: "North Node in Sagittarius",
+                theme: "From Facts to Meaning",
+                lesson: "Your soul is learning faith, vision, and the bigger picture. You're moving from scattered information toward wisdom, truth-seeking, and inspiring others with meaning.",
+                gifts: ["Intellectual curiosity", "Communication skills", "Versatility", "Local connections"],
+                challenges: ["Information without meaning", "Scattered focus", "Gossip or superficiality", "Fear of commitment"],
+                growth: ["Develop a personal philosophy", "Seek truth and meaning", "Take the long view", "Travel and expand horizons", "Teach and inspire others"],
+                career: "Higher education, publishing, travel, law, religion/spirituality, foreign affairs, philosophy"
+            },
+            "Capricorn": {
+                symbol: "♑",
+                southNode: "Cancer",
+                title: "North Node in Capricorn",
+                theme: "From Nurturing to Mastery",
+                lesson: "Your soul is learning discipline, achievement, and worldly contribution. You're moving from emotional dependency toward maturity, responsibility, and building your legacy.",
+                gifts: ["Emotional intelligence", "Nurturing abilities", "Strong intuition", "Family orientation"],
+                challenges: ["Over-dependency on family", "Emotional manipulation", "Fear of the public world", "Clinging to the past"],
+                growth: ["Develop professional mastery", "Build something lasting", "Take on responsibility", "Earn public respect", "Balance career and home"],
+                career: "Executive leadership, government, management, architecture, business ownership, elder care"
+            },
+            "Aquarius": {
+                symbol: "♒",
+                southNode: "Leo",
+                title: "North Node in Aquarius",
+                theme: "From Personal to Universal",
+                lesson: "Your soul is learning humanitarian vision, objectivity, and serving the collective. You're moving from personal drama toward group consciousness and progressive ideals.",
+                gifts: ["Creative self-expression", "Personal charisma", "Heart-centered living", "Joy and playfulness"],
+                challenges: ["Ego-centeredness", "Need for constant attention", "Drama and pride", "Difficulty with groups"],
+                growth: ["Contribute to humanity", "Value friendship over romance", "Embrace objectivity", "Support group goals", "Champion progressive causes"],
+                career: "Technology, science, humanitarian work, social reform, networking, invention, astrology, aviation"
+            },
+            "Pisces": {
+                symbol: "♓",
+                southNode: "Virgo",
+                title: "North Node in Pisces",
+                theme: "From Control to Surrender",
+                lesson: "Your soul is learning faith, compassion, and spiritual connection. You're moving from perfectionism and over-analysis toward trust, surrender, and universal love.",
+                gifts: ["Practical skills", "Analytical abilities", "Service orientation", "Attention to detail"],
+                challenges: ["Over-criticism and worry", "Perfectionism", "Difficulty with ambiguity", "Excessive analysis"],
+                growth: ["Develop faith and trust", "Embrace the mystical", "Release perfectionism", "Practice unconditional compassion", "Connect with the infinite"],
+                career: "Arts, music, spirituality, healing, film, photography, charitable work, monasteries, hospitals"
+            }
+        };
+
+        async function calculateNorthNode(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value || 'Seeker';
+            const birthDate = document.getElementById('birthDate').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '☊ Calculating...';
+            submitBtn.disabled = true;
+
+            try {
+                const [year, month, day] = birthDate.split('-').map(Number);
+                const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+                const time = Astronomy.MakeTime(date);
+                
+                // Get True Node position (North Node)
+                const nodePos = Astronomy.TrueNode(time);
+                const nodeLon = nodePos;
+                
+                const signIndex = Math.floor(nodeLon / 30);
+                const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                              'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+                const northNodeSign = signs[signIndex];
+                
+                showResult(name, northNodeSign);
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('Error calculating North Node: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showResult(name, northNodeSign) {
+            const data = interpretations[northNodeSign];
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="node-symbol">${data.symbol} ☊</div>
+                    <h2>${data.title}</h2>
+                    <h3 style="text-align: center; color: var(--accent-color);">${data.theme}</h3>
+                    
+                    <div class="axis-info">
+                        <p><strong>Your Nodal Axis:</strong> North Node in ${northNodeSign} / South Node in ${data.southNode}</p>
+                    </div>
+                    
+                    <h3>Your Soul's Lesson</h3>
+                    <p>${data.lesson.replace('{name}', name)}</p>
+                    
+                    <h3>Gifts from Your South Node (${data.southNode})</h3>
+                    <p>These are abilities you've already mastered - your comfort zone:</p>
+                    <ul>${data.gifts.map(g => `<li>${g}</li>`).join('')}</ul>
+                    
+                    <h3>Challenges to Overcome</h3>
+                    <p>These patterns may hold you back:</p>
+                    <ul>${data.challenges.map(c => `<li>${c}</li>`).join('')}</ul>
+                    
+                    <h3>Growth Direction</h3>
+                    <p>Focus on developing these qualities:</p>
+                    <ul>${data.growth.map(g => `<li>${g}</li>`).join('')}</ul>
+                    
+                    <h3>Career Paths Aligned with Your North Node</h3>
+                    <p>${data.career}</p>
+                    
+                    <p style="margin-top: 2rem; font-style: italic; text-align: center;">
+                        ${name}, your North Node is your soul's compass pointing toward growth. 
+                        While your South Node gifts come easily, true fulfillment comes from 
+                        stretching into your North Node qualities.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

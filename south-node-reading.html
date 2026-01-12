@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>South Node Reading - Past Life Patterns | Quantum Merlin</title>
+    <meta name="description" content="Explore your South Node sign to understand your past life gifts, karmic patterns, and comfort zone.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(75, 0, 130, 0.2), rgba(138, 43, 226, 0.3)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(138, 43, 226, 0.4); }
+        .node-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .past-life { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">☋</div>
+            <h1>South Node Reading</h1>
+            <p class="tool-description">Discover your past life gifts, karmic patterns, and the comfort zone you're evolving beyond</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateSouthNode(event)">
+            <div class="form-group">
+                <label for="preferredName">Your Name (optional)</label>
+                <input type="text" id="preferredName" placeholder="How should we address you?">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <button type="submit" class="submit-btn">☋ Reveal Your South Node</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const interpretations = {
+            "Aries": {
+                symbol: "♈",
+                northNode: "Libra",
+                title: "South Node in Aries",
+                pastLife: "Warrior, Pioneer, Independent Leader",
+                theme: "From Self-Reliance to Partnership",
+                gifts: ["Courage and bravery", "Self-reliance and independence", "Quick decision-making", "Leadership abilities", "Physical vitality", "Pioneering spirit"],
+                patterns: ["Going it alone when partnership would help", "Impatience with others' pace", "Anger and aggression patterns", "Difficulty compromising", "Starting conflicts unnecessarily"],
+                release: ["The need to always be first", "Excessive independence", "Anger as a defense mechanism", "Seeing others as opponents", "Impulsive reactions"],
+                wisdom: "Your past lives gave you tremendous courage and self-reliance. You know how to fight, lead, and survive alone. Now your soul asks you to learn the dance of partnership, to consider others, and to find strength in cooperation rather than competition."
+            },
+            "Taurus": {
+                symbol: "♉",
+                northNode: "Scorpio",
+                title: "South Node in Taurus",
+                pastLife: "Wealthy Landowner, Artisan, Hedonist",
+                theme: "From Comfort to Transformation",
+                gifts: ["Material security skills", "Appreciation of beauty", "Patience and persistence", "Sensual awareness", "Practical abilities", "Financial wisdom"],
+                patterns: ["Clinging to possessions or comfort", "Resistance to necessary change", "Stubbornness preventing growth", "Over-emphasis on material security", "Staying in situations too long"],
+                release: ["Attachment to material things", "Need for constant comfort", "Fear of loss and change", "Possessiveness in relationships", "Stagnation disguised as stability"],
+                wisdom: "Your past lives gave you mastery over the material world. You know how to build, accumulate, and enjoy earthly pleasures. Now your soul asks you to explore depths, embrace transformation, and discover that true security comes from within."
+            },
+            "Gemini": {
+                symbol: "♊",
+                northNode: "Sagittarius",
+                title: "South Node in Gemini",
+                pastLife: "Merchant, Messenger, Storyteller, Scholar",
+                theme: "From Information to Wisdom",
+                gifts: ["Communication skills", "Quick wit and intelligence", "Versatility and adaptability", "Networking abilities", "Writing and speaking", "Curiosity and learning"],
+                patterns: ["Scattered attention and restlessness", "Gossip or superficial conversation", "Information without meaning", "Commitment avoidance", "Nervous energy and anxiety"],
+                release: ["Need to know everything", "Scattered focus", "Superficial connections", "Constant mental chatter", "Fear of commitment"],
+                wisdom: "Your past lives gave you brilliant communication skills and insatiable curiosity. You know how to gather and share information. Now your soul asks you to seek meaning, develop wisdom, and focus on the bigger picture rather than endless details."
+            },
+            "Cancer": {
+                symbol: "♋",
+                northNode: "Capricorn",
+                title: "South Node in Cancer",
+                pastLife: "Caretaker, Mother, Homemaker, Tribal Member",
+                theme: "From Family to Career",
+                gifts: ["Emotional intelligence", "Nurturing abilities", "Strong intuition", "Family bonds", "Creating comfort", "Protective instincts"],
+                patterns: ["Over-dependency on family", "Emotional manipulation", "Moodiness and sensitivity", "Clinging to the past", "Using emotions to control"],
+                release: ["Need to be needed", "Family enmeshment", "Emotional dependency", "Living in the past", "Over-protecting others"],
+                wisdom: "Your past lives gave you profound emotional gifts and nurturing abilities. You know how to care for others and create emotional security. Now your soul asks you to step into the world, build your legacy, and develop professional mastery."
+            },
+            "Leo": {
+                symbol: "♌",
+                northNode: "Aquarius",
+                title: "South Node in Leo",
+                pastLife: "Royalty, Performer, Creator, Celebrity",
+                theme: "From Personal Glory to Collective Service",
+                gifts: ["Creative self-expression", "Natural charisma", "Leadership presence", "Generosity", "Dramatic flair", "Heart-centered living"],
+                patterns: ["Ego-centeredness and vanity", "Need for constant attention", "Drama and self-importance", "Difficulty sharing spotlight", "Pride blocking growth"],
+                release: ["Need to be special", "Constant validation seeking", "Personal drama", "Competitive ego", "Fear of being ordinary"],
+                wisdom: "Your past lives gave you confidence, creativity, and star power. You know how to shine and lead from the heart. Now your soul asks you to contribute to humanity, value friendship over fame, and use your gifts for the collective good."
+            },
+            "Virgo": {
+                symbol: "♍",
+                northNode: "Pisces",
+                title: "South Node in Virgo",
+                pastLife: "Healer, Servant, Craftsperson, Analyst",
+                theme: "From Perfection to Compassion",
+                gifts: ["Practical skills", "Analytical abilities", "Service orientation", "Attention to detail", "Health awareness", "Problem-solving"],
+                patterns: ["Over-criticism and perfectionism", "Excessive worry and anxiety", "Getting lost in details", "Harsh self-judgment", "Control through fixing"],
+                release: ["Perfectionism", "Critical nature", "Need to fix everything", "Worry and anxiety", "Excessive analysis"],
+                wisdom: "Your past lives gave you practical skills, analytical minds, and devotion to service. You know how to improve and perfect. Now your soul asks you to embrace imperfection, develop faith, and connect with the mystical dimensions of existence."
+            },
+            "Libra": {
+                symbol: "♎",
+                northNode: "Aries",
+                title: "South Node in Libra",
+                pastLife: "Diplomat, Artist, Partner, Mediator",
+                theme: "From Partnership to Self",
+                gifts: ["Diplomatic skills", "Aesthetic sense", "Relationship harmony", "Fairness and justice", "Social grace", "Peacemaking abilities"],
+                patterns: ["People-pleasing", "Indecision and fence-sitting", "Identity through relationships", "Avoiding conflict at any cost", "Losing self in partnership"],
+                release: ["Need for approval", "Dependency on relationships", "Excessive compromise", "Fear of conflict", "Living through others"],
+                wisdom: "Your past lives gave you grace, diplomacy, and relationship mastery. You know how to create harmony and please others. Now your soul asks you to discover who YOU are, assert your own needs, and develop the courage to stand alone."
+            },
+            "Scorpio": {
+                symbol: "♏",
+                northNode: "Taurus",
+                title: "South Node in Scorpio",
+                pastLife: "Shaman, Spy, Occultist, Power Broker",
+                theme: "From Intensity to Simplicity",
+                gifts: ["Psychological insight", "Transformative power", "Investigation skills", "Emotional depth", "Crisis management", "Regeneration abilities"],
+                patterns: ["Addiction to intensity and drama", "Power and control issues", "Obsessive tendencies", "Trust issues and secrecy", "Using sexuality for power"],
+                release: ["Need for crisis and drama", "Control and manipulation", "Obsessive attachments", "Power struggles", "Emotional intensity addiction"],
+                wisdom: "Your past lives gave you power, depth, and mastery over hidden forces. You know the secrets of transformation and the depths of the psyche. Now your soul asks you to embrace simplicity, build stability, and find peace in the ordinary."
+            },
+            "Sagittarius": {
+                symbol: "♐",
+                northNode: "Gemini",
+                title: "South Node in Sagittarius",
+                pastLife: "Philosopher, Priest, Explorer, Teacher",
+                theme: "From Preaching to Learning",
+                gifts: ["Philosophical wisdom", "Optimism and faith", "Teaching abilities", "Broad vision", "Adventure and exploration", "Inspirational presence"],
+                patterns: ["Being preachy or dogmatic", "Overlooking important details", "Restlessness and escapism", "Thinking you know best", "Exaggeration and over-promising"],
+                release: ["Know-it-all attitude", "Dogmatic beliefs", "Escapism through travel or philosophy", "Overlooking the obvious", "Over-confidence"],
+                wisdom: "Your past lives gave you wisdom, faith, and expansive vision. You know how to inspire and teach. Now your soul asks you to become a student again, listen more than you preach, and pay attention to the details right in front of you."
+            },
+            "Capricorn": {
+                symbol: "♑",
+                northNode: "Cancer",
+                title: "South Node in Capricorn",
+                pastLife: "Authority Figure, CEO, Elder, Builder",
+                theme: "From Achievement to Nurturing",
+                gifts: ["Professional mastery", "Discipline and structure", "Leadership and authority", "Ambition and persistence", "Organizational skills", "Legacy building"],
+                patterns: ["Emotional repression", "Over-focus on status", "Workaholism", "Cold or distant manner", "Controlling through authority"],
+                release: ["Career as identity", "Emotional suppression", "Need for control", "Status consciousness", "Fear of vulnerability"],
+                wisdom: "Your past lives gave you authority, achievement, and worldly success. You know how to build empires and command respect. Now your soul asks you to open your heart, nurture others, and create emotional rather than material security."
+            },
+            "Aquarius": {
+                symbol: "♒",
+                northNode: "Leo",
+                title: "South Node in Aquarius",
+                pastLife: "Revolutionary, Scientist, Humanitarian, Outsider",
+                theme: "From Group to Self",
+                gifts: ["Humanitarian vision", "Objectivity and detachment", "Innovation and originality", "Group consciousness", "Progressive thinking", "Friendship skills"],
+                patterns: ["Emotional detachment", "Over-identification with groups", "Rebelliousness for its own sake", "Fear of emotional intimacy", "Hiding in the collective"],
+                release: ["Hiding in groups", "Emotional coldness", "Excessive objectivity", "Fear of standing out", "Rebelliousness as identity"],
+                wisdom: "Your past lives gave you progressive vision and group consciousness. You know how to serve humanity and think outside the box. Now your soul asks you to step into the spotlight, follow your heart, and express your unique creative self."
+            },
+            "Pisces": {
+                symbol: "♓",
+                northNode: "Virgo",
+                title: "South Node in Pisces",
+                pastLife: "Mystic, Martyr, Artist, Recluse",
+                theme: "From Escapism to Service",
+                gifts: ["Spiritual connection", "Artistic sensitivity", "Compassion and empathy", "Imagination", "Healing presence", "Mystical awareness"],
+                patterns: ["Escapism and avoidance", "Victim mentality", "Boundary confusion", "Addiction tendencies", "Self-sacrifice to a fault"],
+                release: ["Escapism in any form", "Victim consciousness", "Boundary-less merging", "Chaos and confusion", "Over-idealization"],
+                wisdom: "Your past lives gave you deep spiritual connection and artistic sensitivity. You know how to merge with the infinite. Now your soul asks you to bring heaven to earth through practical service, discernment, and healthy boundaries."
+            }
+        };
+
+        async function calculateSouthNode(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value || 'Seeker';
+            const birthDate = document.getElementById('birthDate').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '☋ Calculating...';
+            submitBtn.disabled = true;
+
+            try {
+                const [year, month, day] = birthDate.split('-').map(Number);
+                const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+                const time = Astronomy.MakeTime(date);
+                
+                // Get True Node position (North Node)
+                const nodeLon = Astronomy.TrueNode(time);
+                
+                // South Node is opposite (180 degrees)
+                const southNodeLon = (nodeLon + 180) % 360;
+                
+                const signIndex = Math.floor(southNodeLon / 30);
+                const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                              'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+                const southNodeSign = signs[signIndex];
+                
+                showResult(name, southNodeSign);
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('Error calculating South Node: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showResult(name, southNodeSign) {
+            const data = interpretations[southNodeSign];
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="node-symbol">☋ ${data.symbol}</div>
+                    <h2>${data.title}</h2>
+                    <h3 style="text-align: center; color: var(--accent-color);">${data.theme}</h3>
+                    
+                    <div class="past-life">
+                        <p><strong>Past Life Archetype:</strong> ${data.pastLife}</p>
+                        <p><strong>Your Nodal Axis:</strong> South Node in ${southNodeSign} → North Node in ${data.northNode}</p>
+                    </div>
+                    
+                    <h3>Your Past Life Gifts</h3>
+                    <p>These abilities come naturally from previous incarnations:</p>
+                    <ul>${data.gifts.map(g => `<li>${g}</li>`).join('')}</ul>
+                    
+                    <h3>Karmic Patterns to Recognize</h3>
+                    <p>These unconscious patterns may keep you stuck:</p>
+                    <ul>${data.patterns.map(p => `<li>${p}</li>`).join('')}</ul>
+                    
+                    <h3>What to Release</h3>
+                    <p>Growth comes from letting go of:</p>
+                    <ul>${data.release.map(r => `<li>${r}</li>`).join('')}</ul>
+                    
+                    <h3>Soul Wisdom</h3>
+                    <p style="font-style: italic;">${data.wisdom}</p>
+                    
+                    <p style="margin-top: 2rem; text-align: center; color: var(--accent-color);">
+                        ${name}, your South Node represents mastery from past lives. These gifts are your foundation, 
+                        but over-reliance on them prevents growth. Use them wisely while stretching toward your North Node in ${data.northNode}.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dharma Number Reading - Your Spiritual Purpose | Quantum Merlin</title>
+    <meta name="description" content="Calculate your Dharma Number to understand your spiritual purpose and the divine work you're meant to do.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(255, 215, 0, 0.4); }
+        .dharma-number { font-size: 5rem; text-align: center; color: gold; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+        .dharma-meaning { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">☸</div>
+            <h1>Dharma Number Reading</h1>
+            <p class="tool-description">Discover your Dharma Number - the sacred vibration that reveals your spiritual purpose and divine calling</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateDharma(event)">
+            <div class="form-group">
+                <label for="preferredName">Your Name (optional)</label>
+                <input type="text" id="preferredName" placeholder="How should we address you?">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <button type="submit" class="submit-btn">☸ Calculate Dharma Number</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const interpretations = {
+            1: {
+                title: "The Divine Pioneer",
+                essence: "Leadership through Spirit",
+                purpose: "You are here to lead others toward spiritual awakening through your own pioneering example. Your dharma is to forge new paths in consciousness.",
+                service: "Your spiritual service involves initiating new spiritual movements, teaching through example, and showing others that the individual soul can lead the way to enlightenment.",
+                practices: ["Morning meditation at sunrise", "Leading group practices", "Solo spiritual retreats", "Teaching by doing", "Developing willpower practices"],
+                challenges: "Ego can disguise itself as spiritual leadership. Your challenge is to lead while remaining humble, to pioneer while staying connected to the collective.",
+                gift: "You incarnated to show that one person can change the spiritual trajectory of many. Your individual awakening ripples out to inspire countless others.",
+                mantra: "I lead by example. My awakening serves all beings."
+            },
+            2: {
+                title: "The Sacred Partner",
+                essence: "Unity through Love",
+                purpose: "You are here to demonstrate the spiritual power of relationship and cooperation. Your dharma is to show that enlightenment includes the other.",
+                service: "Your spiritual service involves healing through presence, supporting others' awakening, and demonstrating that love itself is a path to the divine.",
+                practices: ["Partner meditation", "Heart-opening practices", "Service to spiritual community", "Listening as spiritual practice", "Cultivating divine feminine energy"],
+                challenges: "Losing yourself in service to others. Your challenge is to remain spiritually strong while supporting, to give without depleting.",
+                gift: "You incarnated to prove that two hearts open faster than one. Your gift is making others feel seen, which accelerates their awakening.",
+                mantra: "In serving others, I find myself. In unity, I know the One."
+            },
+            3: {
+                title: "The Sacred Artist",
+                essence: "Creation as Worship",
+                purpose: "You are here to channel divine creativity into form. Your dharma is to show that beauty is a gateway to spirit and art is prayer.",
+                service: "Your spiritual service involves creating beauty that awakens others, speaking truth that inspires, and using creativity as a path to the sacred.",
+                practices: ["Creative expression as meditation", "Joyful movement practices", "Sacred singing or chanting", "Inspired writing", "Celebrating beauty in all forms"],
+                challenges: "Scattered energy and superficiality. Your challenge is to go deep into one creative expression rather than skating across many surfaces.",
+                gift: "You incarnated to remind humanity that the divine plays. Your joy is contagious and your creativity shows that spirit and matter dance together.",
+                mantra: "I create as the Creator creates. My joy is my offering."
+            },
+            4: {
+                title: "The Sacred Builder",
+                essence: "Structure as Service",
+                purpose: "You are here to build lasting spiritual foundations. Your dharma is to ground heaven on earth through patient, dedicated work.",
+                service: "Your spiritual service involves creating structures that support awakening, teaching discipline as a path, and demonstrating that sacred work is worship.",
+                practices: ["Consistent daily practice", "Building sacred spaces", "Karma yoga (work as worship)", "Earth-based spirituality", "Teaching through steady example"],
+                challenges: "Rigidity and missing the spirit for the form. Your challenge is to keep structures alive with spirit rather than becoming attached to the form.",
+                gift: "You incarnated to show that enlightenment is built brick by brick. Your patience and dedication create lasting vessels for divine energy.",
+                mantra: "I build temples for the spirit. My work is my prayer."
+            },
+            5: {
+                title: "The Sacred Messenger",
+                essence: "Freedom as Teaching",
+                purpose: "You are here to embody spiritual freedom and share it with others. Your dharma is to show that awakening means liberation from all limitation.",
+                service: "Your spiritual service involves breaking chains of conditioning, teaching through adventure, and demonstrating that spirit is found in change and movement.",
+                practices: ["Travel as pilgrimage", "Experiential learning", "Tantra and embodiment practices", "Teaching across cultures", "Embracing change as teacher"],
+                challenges: "Restlessness mistaken for freedom. Your challenge is to find the freedom that exists within stillness, not just in movement.",
+                gift: "You incarnated to prove that spirit cannot be caged. Your wild freedom inspires others to break their own invisible prisons.",
+                mantra: "I am free, and I free others. Life itself is my ashram."
+            },
+            6: {
+                title: "The Sacred Healer",
+                essence: "Love as Service",
+                purpose: "You are here to heal through love and create sacred family. Your dharma is to show that nurturing is a path to the divine.",
+                service: "Your spiritual service involves healing hearts, creating sanctuaries of love, and demonstrating that family (biological or chosen) is spiritual practice.",
+                practices: ["Heart-centered meditation", "Healing arts", "Creating sacred home", "Community building", "Nurturing as spiritual practice"],
+                challenges: "Martyrdom and over-giving. Your challenge is to love without losing yourself, to give without depleting your own divine connection.",
+                gift: "You incarnated to show that love heals all things. Your presence creates safe space for others to awaken in their own timing.",
+                mantra: "My love heals. My home is a temple. My family is my sangha."
+            },
+            7: {
+                title: "The Sacred Seeker",
+                essence: "Wisdom through Solitude",
+                purpose: "You are here to dive deep into spiritual mysteries and emerge with wisdom. Your dharma is to know, truly know, and then share that knowing.",
+                service: "Your spiritual service involves deep study, mystical exploration, and teaching the wisdom that comes from direct experience of the divine.",
+                practices: ["Silent retreat", "Deep meditation", "Mystical study", "Contemplation in nature", "Writing spiritual wisdom"],
+                challenges: "Isolation and spiritual pride. Your challenge is to share your wisdom rather than hoarding it, to connect rather than withdraw.",
+                gift: "You incarnated to go where others fear to tread and return with truth. Your depth of understanding lights the way for seekers.",
+                mantra: "I seek the truth within. My wisdom serves all beings."
+            },
+            8: {
+                title: "The Sacred Master",
+                essence: "Power in Service",
+                purpose: "You are here to master the material world while remaining spiritually aligned. Your dharma is to show that power and spirituality are not opposites.",
+                service: "Your spiritual service involves using material resources for spiritual good, demonstrating ethical abundance, and wielding power with wisdom.",
+                practices: ["Manifestation practices", "Ethical business as service", "Abundance meditation", "Teaching manifestation", "Karmic balancing work"],
+                challenges: "Corruption by power or rejection of material reality. Your challenge is the middle path - neither grasping nor rejecting worldly success.",
+                gift: "You incarnated to prove that awakened beings can shape the world. Your mastery shows that spirit can flow through all human endeavors.",
+                mantra: "I manifest heaven on earth. My power serves the greater good."
+            },
+            9: {
+                title: "The Sacred Sage",
+                essence: "Compassion in Completion",
+                purpose: "You are here to complete karmic cycles and embody universal compassion. Your dharma is to love all beings without exception.",
+                service: "Your spiritual service involves humanitarian work, teaching universal truths, and demonstrating that all paths lead to the same summit.",
+                practices: ["Compassion meditation (tonglen)", "Service to suffering beings", "Teaching universal principles", "Art that heals humanity", "Letting go practices"],
+                challenges: "Difficulty completing things and over-attachment to saving others. Your challenge is to serve without attachment to results.",
+                gift: "You incarnated as an old soul completing a great cycle. Your wisdom encompasses all paths and your compassion knows no bounds.",
+                mantra: "I serve all beings. I complete what I began. I am love."
+            },
+            11: {
+                title: "The Divine Channel",
+                essence: "Illumination through Inspiration",
+                purpose: "You are here to channel higher spiritual frequencies to humanity. Your dharma is to be a bridge between heaven and earth.",
+                service: "Your spiritual service involves inspired teaching, psychic awakening, and demonstrating that humans can directly access divine wisdom.",
+                practices: ["Channeling and intuition development", "Teaching metaphysics", "Inspiring through words", "Light body practices", "Dream work"],
+                challenges: "Nervous system overwhelm and impracticality. Your challenge is to ground your high frequency without dimming your light.",
+                gift: "You incarnated to prove that heaven speaks through humans. Your inspiration awakens dormant spiritual capacities in others.",
+                mantra: "I am a channel for divine light. My inspiration awakens humanity."
+            },
+            22: {
+                title: "The Master Builder",
+                essence: "Vision Made Manifest",
+                purpose: "You are here to build spiritual structures that transform humanity. Your dharma is to make the impossible possible on a grand scale.",
+                service: "Your spiritual service involves creating institutions, movements, or works that shift collective consciousness for generations.",
+                practices: ["Large-scale manifestation", "Building spiritual organizations", "Long-term visionary work", "Practical mysticism", "Training other teachers"],
+                challenges: "Overwhelm by the magnitude of your calling. Your challenge is to take it step by step while holding the grand vision.",
+                gift: "You incarnated as a master soul capable of reshaping reality. Your works will stand long after you've passed, continuing to awaken beings.",
+                mantra: "I build the future. My vision serves all generations."
+            },
+            33: {
+                title: "The Master Teacher",
+                essence: "Healing Love in Action",
+                purpose: "You are here to embody Christ consciousness - healing love that transforms everything it touches. Your dharma is divine compassion in action.",
+                service: "Your spiritual service involves healing at the collective level, teaching love as the ultimate truth, and demonstrating unconditional compassion.",
+                practices: ["Heart-centered service", "Healing presence", "Teaching love", "Selfless action", "Embodying divine mother/father energy"],
+                challenges: "Taking on others' suffering and burnout. Your challenge is to maintain your own connection to source while serving.",
+                gift: "You incarnated as a master healer-teacher. Your very presence heals, and your words carry the frequency of divine love.",
+                mantra: "I am love in action. My presence heals the world."
+            }
+        };
+
+        function calculateDharma(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value || 'Seeker';
+            const birthDate = document.getElementById('birthDate').value;
+            const [year, month, day] = birthDate.split('-').map(Number);
+            
+            // Dharma Number is calculated from the day of birth
+            // Single digits 1-9, keep 11, 22, 33 as master numbers
+            let dharmaNum = day;
+            
+            if (dharmaNum === 11 || dharmaNum === 22) {
+                // Keep master numbers
+            } else if (dharmaNum > 31) {
+                dharmaNum = reduceToSingle(dharmaNum);
+            } else if (dharmaNum > 9 && dharmaNum !== 11 && dharmaNum !== 22) {
+                dharmaNum = reduceToSingle(dharmaNum);
+            }
+            
+            // Special case for 33 (born on 3rd with other factors or day = 33 doesn't exist)
+            // For simplicity, we'll check if reduced day equals potential master
+            
+            showResult(name, dharmaNum);
+        }
+        
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = String(num).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+
+        function showResult(name, dharmaNum) {
+            const data = interpretations[dharmaNum];
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="dharma-number">${dharmaNum}</div>
+                    <h2>${data.title}</h2>
+                    <h3 style="text-align: center; color: gold;">${data.essence}</h3>
+                    
+                    <div class="dharma-meaning">
+                        <h3>Your Spiritual Purpose</h3>
+                        <p>${data.purpose}</p>
+                    </div>
+                    
+                    <h3>Your Sacred Service</h3>
+                    <p>${data.service}</p>
+                    
+                    <h3>Recommended Spiritual Practices</h3>
+                    <ul>${data.practices.map(p => `<li>${p}</li>`).join('')}</ul>
+                    
+                    <h3>Your Dharmic Challenge</h3>
+                    <p>${data.challenges}</p>
+                    
+                    <h3>Your Incarnation Gift</h3>
+                    <p>${data.gift}</p>
+                    
+                    <div style="background: rgba(255,215,0,0.1); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem; text-align: center;">
+                        <h3>Your Sacred Mantra</h3>
+                        <p style="font-size: 1.2rem; font-style: italic; color: gold;">"${data.mantra}"</p>
+                    </div>
+                    
+                    <p style="margin-top: 2rem; text-align: center;">
+                        ${name}, your Dharma Number ${dharmaNum} reveals your soul's sacred contract. 
+                        This is not just what you do, but what you ARE in service to the divine.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
