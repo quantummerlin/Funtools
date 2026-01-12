@@ -385,47 +385,90 @@
                 const [year, month, day] = dateStr.split('-').map(Number);
                 const [hours, minutes] = timeStr.split(':').map(Number);
                 
-                // For historical dates, use solar time based on longitude
-                // Each 15 degrees of longitude = 1 hour offset from UTC
-                const solarTimeOffset = coords.lon / 15;
+                // Better timezone estimation using known timezone data for major regions
+                // Default to solar time (longitude / 15), but override for known regions
+                let tzOffsetHours = coords.lon / 15;
+                
+                // Known timezone corrections for regions where simple longitude doesn't work
+                // UAE/Gulf is UTC+4
+                if (coords.lon >= 51 && coords.lon <= 60 && coords.lat >= 22 && coords.lat <= 27) {
+                    tzOffsetHours = 4;
+                }
+                // India is UTC+5.5
+                if (coords.lon >= 68 && coords.lon <= 97 && coords.lat >= 8 && coords.lat <= 37) {
+                    tzOffsetHours = 5.5;
+                }
+                // China uses UTC+8 throughout
+                if (coords.lon >= 73 && coords.lon <= 135 && coords.lat >= 18 && coords.lat <= 54) {
+                    if (coords.name && coords.name.toLowerCase().includes('china')) {
+                        tzOffsetHours = 8;
+                    }
+                }
+                // Western Europe (UK, Portugal, Ireland) is UTC+0/+1
+                if (coords.lon >= -10 && coords.lon <= 2 && coords.lat >= 36 && coords.lat <= 60) {
+                    tzOffsetHours = 0; // Standard time (add DST logic if needed)
+                }
+                // Central Europe is UTC+1
+                if (coords.lon >= 2 && coords.lon <= 25 && coords.lat >= 35 && coords.lat <= 60) {
+                    tzOffsetHours = 1;
+                }
+                // US Eastern is UTC-5
+                if (coords.lon >= -85 && coords.lon <= -65 && coords.lat >= 24 && coords.lat <= 50) {
+                    tzOffsetHours = -5;
+                }
+                // US Central is UTC-6
+                if (coords.lon >= -105 && coords.lon <= -85 && coords.lat >= 24 && coords.lat <= 50) {
+                    tzOffsetHours = -6;
+                }
+                // US Mountain is UTC-7
+                if (coords.lon >= -115 && coords.lon <= -105 && coords.lat >= 24 && coords.lat <= 50) {
+                    tzOffsetHours = -7;
+                }
+                // US Pacific is UTC-8
+                if (coords.lon >= -125 && coords.lon <= -115 && coords.lat >= 24 && coords.lat <= 50) {
+                    tzOffsetHours = -8;
+                }
                 
                 // Convert local time to UTC
-                let utcHours = hours - solarTimeOffset;
-                let utcMinutes = minutes;
+                const totalLocalMinutes = hours * 60 + minutes;
+                const tzOffsetMinutes = tzOffsetHours * 60;
+                let totalUtcMinutes = totalLocalMinutes - tzOffsetMinutes;
+                
+                // Handle day rollover
                 let utcDay = day;
                 let utcMonth = month;
                 let utcYear = year;
                 
-                // Handle hour overflow/underflow
-                while (utcHours < 0) {
-                    utcHours += 24;
+                if (totalUtcMinutes < 0) {
+                    totalUtcMinutes += 1440;
                     utcDay--;
-                }
-                while (utcHours >= 24) {
-                    utcHours -= 24;
+                    if (utcDay < 1) {
+                        utcMonth--;
+                        if (utcMonth < 1) {
+                            utcMonth = 12;
+                            utcYear--;
+                        }
+                        utcDay = new Date(utcYear, utcMonth, 0).getDate();
+                    }
+                } else if (totalUtcMinutes >= 1440) {
+                    totalUtcMinutes -= 1440;
                     utcDay++;
+                    const daysInMonth = new Date(utcYear, utcMonth, 0).getDate();
+                    if (utcDay > daysInMonth) {
+                        utcDay = 1;
+                        utcMonth++;
+                        if (utcMonth > 12) {
+                            utcMonth = 1;
+                            utcYear++;
+                        }
+                    }
                 }
                 
-                // Handle day overflow/underflow
-                const daysInMonth = new Date(utcYear, utcMonth, 0).getDate();
-                if (utcDay < 1) {
-                    utcMonth--;
-                    if (utcMonth < 1) {
-                        utcMonth = 12;
-                        utcYear--;
-                    }
-                    utcDay = new Date(utcYear, utcMonth, 0).getDate();
-                } else if (utcDay > daysInMonth) {
-                    utcDay = 1;
-                    utcMonth++;
-                    if (utcMonth > 12) {
-                        utcMonth = 1;
-                        utcYear++;
-                    }
-                }
+                const utcHours = Math.floor(totalUtcMinutes / 60);
+                const utcMinutes = totalUtcMinutes % 60;
                 
                 // Create Date in UTC
-                const datetime = new Date(Date.UTC(utcYear, utcMonth - 1, utcDay, Math.floor(utcHours), utcMinutes, 0));
+                const datetime = new Date(Date.UTC(utcYear, utcMonth - 1, utcDay, utcHours, utcMinutes, 0));
                 
                 // Create astronomical time
                 const time = Astronomy.MakeTime(datetime);

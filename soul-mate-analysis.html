@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soul Mate Connection Analysis | Quantum Merlin</title>
+    <meta name="description" content="Discover if you've found your soul mate through deep numerological analysis of karmic connections and spiritual bonds">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(79, 70, 229, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #a78bfa 0%, #c4b5fd 50%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #c4b5fd;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .person-section {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .person-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: #c4b5fd;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .input-group { margin-bottom: 20px; }
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #a78bfa;
+        }
+        .helper-text {
+            font-size: 0.85em;
+            color: #9ca3af;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: inherit;
+            background: rgba(10, 10, 20, 0.8);
+            color: #e0e0e0;
+            transition: all 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #a78bfa;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+        button[type="button"] {
+            width: 100%;
+            padding: 18px 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+        .result {
+            display: none;
+            margin-top: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(79, 70, 229, 0.1) 100%);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+        }
+        .result-header { text-align: center; margin-bottom: 30px; }
+        .connection-type {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2em;
+            background: linear-gradient(135deg, #a78bfa, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .soul-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .soul-star {
+            font-size: 2em;
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+        .soul-star.active {
+            opacity: 1;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.8);
+        }
+        .connection-section {
+            background: rgba(20, 20, 30, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2em;
+            color: #fbbf24;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .karmic-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #a78bfa, #6366f1);
+            padding: 3px 12px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            color: white;
+        }
+        .section-content {
+            color: #d1d5db;
+            line-height: 1.8;
+        }
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .number-box {
+            text-align: center;
+            padding: 15px;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 10px;
+        }
+        .number-value {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.8em;
+            color: #a78bfa;
+        }
+        .number-label {
+            font-size: 0.8em;
+            color: #9ca3af;
+        }
+        .karmic-indicator {
+            text-align: center;
+            padding: 20px;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+        .karmic-number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 3em;
+            color: #fbbf24;
+        }
+        .karmic-label {
+            font-family: 'Cinzel', serif;
+            color: #d1d5db;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 8px;
+            color: #a78bfa;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            transition: all 0.3s;
+        }
+        .back-btn:hover { background: rgba(139, 92, 246, 0.3); }
+    </style>
+    <script src="auto-fill.js?v=20260113"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔮 Soul Mate Connection Analysis</h1>
+            <p>Discover the karmic threads that bind two souls</p>
+        </div>
+        
+        <div class="tool-card">
+            <div id="toolForm">
+                <div class="person-section">
+                    <div class="person-title">✨ Soul 1 (You)</div>
+                    <div class="input-group">
+                        <label for="name1">Full Birth Name</label>
+                        <input type="text" id="name1" placeholder="Enter your full birth name" required>
+                        <div class="helper-text">The name you were given at birth carries your soul's vibration</div>
+                    </div>
+                    <div class="input-group">
+                        <label for="birthDate1">Date of Birth</label>
+                        <input type="date" id="birthDate1" required>
+                    </div>
+                </div>
+                
+                <div class="person-section">
+                    <div class="person-title">💫 Soul 2 (Potential Soul Mate)</div>
+                    <div class="input-group">
+                        <label for="name2">Full Birth Name</label>
+                        <input type="text" id="name2" placeholder="Enter their full birth name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="birthDate2">Date of Birth</label>
+                        <input type="date" id="birthDate2" required>
+                    </div>
+                </div>
+                
+                <button type="button" onclick="analyzeConnection()">Analyze Soul Mate Connection</button>
+            </div>
+            
+            <div id="result" class="result">
+                <div class="result-header">
+                    <div class="connection-type" id="connectionType">Soul Mate Connection</div>
+                    <div class="soul-indicator" id="soulIndicator"></div>
+                </div>
+                
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+        
+        <a href="tools_index.html" class="back-btn">← Back to All Tools</a>
+    </div>
+    
+    <script>
+        function letterToNumber(letter) {
+            const values = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+                'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
+            };
+            return values[letter.toUpperCase()] || 0;
+        }
+        
+        function reduceToSingle(num, preserveMaster = true) {
+            while (num > 9 && !(preserveMaster && (num === 11 || num === 22 || num === 33))) {
+                num = String(num).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function calculateLifePath(dateStr) {
+            const parts = dateStr.split('-');
+            const year = parseInt(parts[0]);
+            const month = parseInt(parts[1]);
+            const day = parseInt(parts[2]);
+            return reduceToSingle(reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(year));
+        }
+        
+        function calculateSoulUrge(name) {
+            const vowels = 'AEIOU';
+            const letters = name.toUpperCase().replace(/[^A-Z]/g, '');
+            const sum = letters.split('').reduce((acc, char) => 
+                vowels.includes(char) ? acc + letterToNumber(char) : acc, 0);
+            return reduceToSingle(sum);
+        }
+        
+        function calculateExpression(name) {
+            const letters = name.toUpperCase().replace(/[^A-Z]/g, '');
+            const sum = letters.split('').reduce((acc, char) => acc + letterToNumber(char), 0);
+            return reduceToSingle(sum);
+        }
+        
+        function calculateMaturity(lifePath, expression) {
+            return reduceToSingle(lifePath + expression);
+        }
+        
+        // Karmic Debt Numbers: 13, 14, 16, 19
+        function hasKarmicDebt(num) {
+            const karmicNumbers = [13, 14, 16, 19];
+            return karmicNumbers.includes(num);
+        }
+        
+        function calculateKarmicDebt(dateStr, name) {
+            const parts = dateStr.split('-');
+            const day = parseInt(parts[2]);
+            const month = parseInt(parts[1]);
+            const year = parseInt(parts[0]);
+            
+            // Check day
+            if (hasKarmicDebt(day)) return day;
+            
+            // Check life path before reduction
+            const lpSum = day + month + year;
+            if (hasKarmicDebt(lpSum)) return lpSum;
+            
+            // Check expression before reduction
+            const letters = name.toUpperCase().replace(/[^A-Z]/g, '');
+            const expSum = letters.split('').reduce((acc, char) => acc + letterToNumber(char), 0);
+            if (hasKarmicDebt(expSum)) return expSum;
+            
+            return null;
+        }
+        
+        // Calculate shared karmic lessons
+        function calculateMissingNumbers(name) {
+            const letters = name.toUpperCase().replace(/[^A-Z]/g, '');
+            const present = new Set();
+            
+            letters.split('').forEach(char => {
+                present.add(letterToNumber(char));
+            });
+            
+            const missing = [];
+            for (let i = 1; i <= 9; i++) {
+                if (!present.has(i)) missing.push(i);
+            }
+            return missing;
+        }
+        
+        // Soul Mate indicators
+        function calculateSoulMateIndicators(p1, p2) {
+            const indicators = [];
+            
+            // Same Life Path
+            if (p1.lifePath === p2.lifePath) {
+                indicators.push({ type: 'mirror', strength: 3, desc: 'Mirror Life Paths - You share the same soul journey' });
+            }
+            
+            // Life Paths that sum to master numbers
+            const lpSum = p1.lifePath + p2.lifePath;
+            if (lpSum === 11 || lpSum === 22 || lpSum === 33) {
+                indicators.push({ type: 'master', strength: 3, desc: `Combined Life Paths create Master Number ${lpSum}` });
+            }
+            
+            // Matching Soul Urges
+            if (p1.soulUrge === p2.soulUrge) {
+                indicators.push({ type: 'heart', strength: 3, desc: 'Matching Soul Urges - Your hearts desire the same things' });
+            }
+            
+            // Complementary Life Paths (1-8, 2-7, 3-6, 4-5)
+            const complements = [[1,8], [2,7], [3,6], [4,5]];
+            if (complements.some(pair => 
+                (pair[0] === p1.lifePath && pair[1] === p2.lifePath) ||
+                (pair[1] === p1.lifePath && pair[0] === p2.lifePath))) {
+                indicators.push({ type: 'balance', strength: 2, desc: 'Complementary Life Paths - You complete each other' });
+            }
+            
+            // Shared missing numbers (karmic lessons)
+            const sharedMissing = p1.missing.filter(n => p2.missing.includes(n));
+            if (sharedMissing.length >= 2) {
+                indicators.push({ type: 'karmic', strength: 2, desc: `Shared Karmic Lessons (${sharedMissing.join(', ')}) - Learning together` });
+            }
+            
+            // Matching Maturity Numbers
+            if (p1.maturity === p2.maturity) {
+                indicators.push({ type: 'destiny', strength: 2, desc: 'Matching Maturity Numbers - Growing toward the same destination' });
+            }
+            
+            // Expression and Soul Urge connection
+            if (p1.expression === p2.soulUrge || p2.expression === p1.soulUrge) {
+                indicators.push({ type: 'fulfillment', strength: 2, desc: 'Expression-Soul Urge bond - You fulfill each other\'s deepest needs' });
+            }
+            
+            return indicators;
+        }
+        
+        function determineSoulConnection(indicators, compatibility) {
+            const totalStrength = indicators.reduce((sum, i) => sum + i.strength, 0);
+            
+            if (totalStrength >= 8 && compatibility >= 75) {
+                return { 
+                    type: 'True Soul Mate', 
+                    level: 5,
+                    desc: 'The numerological evidence strongly suggests a profound soul mate connection. Your souls have likely journeyed together before and chosen to reunite in this lifetime.'
+                };
+            } else if (totalStrength >= 6 || (totalStrength >= 4 && compatibility >= 80)) {
+                return { 
+                    type: 'Soul Mate Connection', 
+                    level: 4,
+                    desc: 'Your connection shows significant soul mate indicators. This relationship carries spiritual significance and offers deep growth opportunities.'
+                };
+            } else if (totalStrength >= 4 || compatibility >= 70) {
+                return { 
+                    type: 'Karmic Connection', 
+                    level: 3,
+                    desc: 'You share a karmic bond, likely here to learn important lessons together. This connection has purpose and meaning beyond the ordinary.'
+                };
+            } else if (totalStrength >= 2) {
+                return { 
+                    type: 'Spiritual Companion', 
+                    level: 2,
+                    desc: 'You\'ve crossed paths for a reason. While not a traditional soul mate match, this connection offers valuable growth and experience.'
+                };
+            } else {
+                return { 
+                    type: 'Life Path Companion', 
+                    level: 1,
+                    desc: 'Your souls travel different paths but can still share meaningful experiences. This connection is about choice and conscious growth.'
+                };
+            }
+        }
+        
+        function analyzeConnection() {
+            const name1 = document.getElementById('name1').value.trim();
+            const name2 = document.getElementById('name2').value.trim();
+            const date1 = document.getElementById('birthDate1').value;
+            const date2 = document.getElementById('birthDate2').value;
+            
+            if (!name1 || !name2 || !date1 || !date2) {
+                alert('Please fill in all fields for both souls');
+                return;
+            }
+            
+            // Calculate core numbers
+            const p1 = {
+                lifePath: calculateLifePath(date1),
+                soulUrge: calculateSoulUrge(name1),
+                expression: calculateExpression(name1),
+                missing: calculateMissingNumbers(name1),
+                karmicDebt: calculateKarmicDebt(date1, name1)
+            };
+            p1.maturity = calculateMaturity(p1.lifePath, p1.expression);
+            
+            const p2 = {
+                lifePath: calculateLifePath(date2),
+                soulUrge: calculateSoulUrge(name2),
+                expression: calculateExpression(name2),
+                missing: calculateMissingNumbers(name2),
+                karmicDebt: calculateKarmicDebt(date2, name2)
+            };
+            p2.maturity = calculateMaturity(p2.lifePath, p2.expression);
+            
+            // Calculate compatibility score
+            let compatibility = 50;
+            if (p1.lifePath === p2.lifePath) compatibility += 20;
+            else if (Math.abs(p1.lifePath - p2.lifePath) <= 2) compatibility += 10;
+            
+            if (p1.soulUrge === p2.soulUrge) compatibility += 15;
+            if (p1.expression === p2.expression) compatibility += 10;
+            if (p1.maturity === p2.maturity) compatibility += 10;
+            
+            // Get soul mate indicators
+            const indicators = calculateSoulMateIndicators(p1, p2);
+            const connection = determineSoulConnection(indicators, compatibility);
+            
+            // Display results
+            document.getElementById('connectionType').textContent = connection.type;
+            
+            // Star indicator
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += `<span class="soul-star ${i <= connection.level ? 'active' : ''}">⭐</span>`;
+            }
+            document.getElementById('soulIndicator').innerHTML = stars;
+            
+            // Build results HTML
+            let html = `
+                <div class="connection-section">
+                    <div class="section-header">🌟 Soul Connection Analysis</div>
+                    <div class="section-content">${connection.desc}</div>
+                </div>
+                
+                <div class="numbers-grid">
+                    <div class="number-box">
+                        <div class="number-value">${p1.lifePath}</div>
+                        <div class="number-label">${name1.split(' ')[0]}'s Life Path</div>
+                    </div>
+                    <div class="number-box">
+                        <div class="number-value">${p2.lifePath}</div>
+                        <div class="number-label">${name2.split(' ')[0]}'s Life Path</div>
+                    </div>
+                    <div class="number-box">
+                        <div class="number-value">${p1.soulUrge}</div>
+                        <div class="number-label">${name1.split(' ')[0]}'s Soul Urge</div>
+                    </div>
+                    <div class="number-box">
+                        <div class="number-value">${p2.soulUrge}</div>
+                        <div class="number-label">${name2.split(' ')[0]}'s Soul Urge</div>
+                    </div>
+                    <div class="number-box">
+                        <div class="number-value">${p1.maturity}</div>
+                        <div class="number-label">${name1.split(' ')[0]}'s Maturity</div>
+                    </div>
+                    <div class="number-box">
+                        <div class="number-value">${p2.maturity}</div>
+                        <div class="number-label">${name2.split(' ')[0]}'s Maturity</div>
+                    </div>
+                </div>
+            `;
+            
+            if (indicators.length > 0) {
+                html += `<div class="connection-section">
+                    <div class="section-header">🔗 Soul Mate Indicators Found</div>
+                    <div class="section-content">
+                        <ul style="list-style: none; padding: 0;">
+                            ${indicators.map(i => `<li style="padding: 8px 0; border-bottom: 1px solid rgba(139,92,246,0.2);">
+                                ${'⭐'.repeat(i.strength)} ${i.desc}
+                            </li>`).join('')}
+                        </ul>
+                    </div>
+                </div>`;
+            }
+            
+            // Shared karmic lessons
+            const sharedMissing = p1.missing.filter(n => p2.missing.includes(n));
+            if (sharedMissing.length > 0) {
+                const lessonMeanings = {
+                    1: 'Independence and self-assertion',
+                    2: 'Cooperation and sensitivity',
+                    3: 'Self-expression and creativity',
+                    4: 'Hard work and foundation building',
+                    5: 'Freedom and adaptability',
+                    6: 'Responsibility and nurturing',
+                    7: 'Spiritual development and introspection',
+                    8: 'Material mastery and power',
+                    9: 'Compassion and humanitarianism'
+                };
+                
+                html += `<div class="connection-section">
+                    <div class="section-header">📚 Shared Karmic Lessons</div>
+                    <div class="section-content">
+                        <p>You are both learning these lessons in this lifetime:</p>
+                        <ul style="margin-top: 10px;">
+                            ${sharedMissing.map(n => `<li><strong>Number ${n}:</strong> ${lessonMeanings[n]}</li>`).join('')}
+                        </ul>
+                        <p style="margin-top: 15px; font-style: italic;">Shared lessons create opportunities for mutual growth and understanding.</p>
+                    </div>
+                </div>`;
+            }
+            
+            // Karmic debt analysis
+            if (p1.karmicDebt || p2.karmicDebt) {
+                const debtMeanings = {
+                    13: 'Past laziness or taking shortcuts - learning discipline and hard work',
+                    14: 'Past abuse of freedom - learning moderation and commitment',
+                    16: 'Past ego or vanity - learning humility through transformation',
+                    19: 'Past selfishness - learning to help others without expectation'
+                };
+                
+                html += `<div class="connection-section">
+                    <div class="section-header">⚖️ Karmic Debt in This Connection</div>
+                    <div class="section-content">
+                        ${p1.karmicDebt ? `<p><strong>${name1.split(' ')[0]}:</strong> Karmic Debt ${p1.karmicDebt} - ${debtMeanings[p1.karmicDebt]}</p>` : ''}
+                        ${p2.karmicDebt ? `<p><strong>${name2.split(' ')[0]}:</strong> Karmic Debt ${p2.karmicDebt} - ${debtMeanings[p2.karmicDebt]}</p>` : ''}
+                        <p style="margin-top: 15px; font-style: italic;">Karmic debts in a relationship offer opportunities for healing and growth when approached with awareness.</p>
+                    </div>
+                </div>`;
+            }
+            
+            document.getElementById('resultsContent').innerHTML = html;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

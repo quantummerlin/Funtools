@@ -587,6 +587,17 @@
                 <span class="ad-space-cta">Inquire About This Space →</span>
             </div>
             
+            <!-- Relationship Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('relationship')">
+                    <h2>💕 Relationship <span class="count">(3 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="relationship-content">
+                    <div class="tools-grid" id="relationship-grid"></div>
+                </div>
+            </div>
+            
             <!-- Astrology Section -->
             <div class="category-section">
                 <div class="category-header" onclick="toggleCategory('astrology')">
@@ -760,6 +771,11 @@
             { title: "Karmic Debt Reading", description: "Understand and transform your karmic patterns (13, 14, 16, 19).", category: "numerology", file: "karmic-debt-reading.html" },
             { title: "Master Number Deep Reading", description: "Master your 11, 22, or 33 spiritual potential.", category: "numerology", file: "master-number-reading.html" },
             
+            // Relationship Tools
+            { title: "Deep Love Compatibility", description: "Comprehensive numerological love compatibility analysis.", category: "relationship", file: "love-compatibility-reading.html" },
+            { title: "Soul Mate Connection", description: "Discover if you've found your true soul mate.", category: "relationship", file: "soul-mate-analysis.html" },
+            { title: "Relationship Life Path", description: "How your Life Path numbers interact in love.", category: "relationship", file: "relationship-life-path.html" },
+            
             // Astrology Tools
             { title: "Zodiac Sign Calculator", description: "Find your zodiac sign based on your birth date.", category: "astrology", file: "zodiac-calculator.html" },
             { title: "Moon Sign Reading", description: "Discover your emotional nature and inner world.", category: "astrology", file: "moon-sign-reading.html" },
@@ -926,7 +942,7 @@ ${formData.message}
         });
         
         // Initialize all category grids
-        ['numerology', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
+        ['numerology', 'relationship', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
             renderCategoryTools(cat);
         });
         
@@ -935,7 +951,7 @@ ${formData.message}
             toggleCategory('numerology');
         } else {
             // On desktop, open all categories
-            ['numerology', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
+            ['numerology', 'relationship', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
                 toggleCategory(cat);
             });
         }

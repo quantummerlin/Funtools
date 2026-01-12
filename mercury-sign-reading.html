@@ -402,16 +402,25 @@ Your mental gift is: IMAGINING possibilities, communicating with poetic depth, a
             const [year, month, day] = dateStr.split('-').map(Number);
             const [hours, minutes] = timeStr.split(':').map(Number);
             
-            // Use solar time offset based on longitude
-            const solarTimeOffset = coords.lon / 15;
-            let utcHours = hours - solarTimeOffset;
-            let utcDay = day;
+            // Better timezone estimation
+            let tzOffset = coords.lon / 15;
+            if (coords.lon >= 51 && coords.lon <= 60 && coords.lat >= 22 && coords.lat <= 27) tzOffset = 4;
+            if (coords.lon >= 68 && coords.lon <= 97 && coords.lat >= 8 && coords.lat <= 37) tzOffset = 5.5;
+            if (coords.lon >= 73 && coords.lon <= 135 && coords.lat >= 18 && coords.lat <= 54 && coords.name && coords.name.toLowerCase().includes('china')) tzOffset = 8;
+            if (coords.lon >= -10 && coords.lon <= 2 && coords.lat >= 36 && coords.lat <= 60) tzOffset = 0;
+            if (coords.lon >= 2 && coords.lon <= 25 && coords.lat >= 35 && coords.lat <= 60) tzOffset = 1;
+            if (coords.lon >= -85 && coords.lon <= -65 && coords.lat >= 24 && coords.lat <= 50) tzOffset = -5;
+            if (coords.lon >= -105 && coords.lon <= -85 && coords.lat >= 24 && coords.lat <= 50) tzOffset = -6;
+            if (coords.lon >= -115 && coords.lon <= -105 && coords.lat >= 24 && coords.lat <= 50) tzOffset = -7;
+            if (coords.lon >= -125 && coords.lon <= -115 && coords.lat >= 24 && coords.lat <= 50) tzOffset = -8;
             
-            // Handle hour overflow/underflow
-            while (utcHours < 0) { utcHours += 24; utcDay--; }
-            while (utcHours >= 24) { utcHours -= 24; utcDay++; }
+            // Convert to UTC
+            let totalUtc = (hours * 60 + minutes) - (tzOffset * 60);
+            let utcDay = day, utcMonth = month, utcYear = year;
+            if (totalUtc < 0) { totalUtc += 1440; utcDay--; if (utcDay < 1) { utcMonth--; if (utcMonth < 1) { utcMonth = 12; utcYear--; } utcDay = new Date(utcYear, utcMonth, 0).getDate(); } }
+            else if (totalUtc >= 1440) { totalUtc -= 1440; utcDay++; const dim = new Date(utcYear, utcMonth, 0).getDate(); if (utcDay > dim) { utcDay = 1; utcMonth++; if (utcMonth > 12) { utcMonth = 1; utcYear++; } } }
             
-            const datetime = new Date(Date.UTC(year, month - 1, utcDay, Math.floor(utcHours), minutes, 0));
+            const datetime = new Date(Date.UTC(utcYear, utcMonth - 1, utcDay, Math.floor(totalUtc/60), totalUtc%60, 0));
             const time = Astronomy.MakeTime(datetime);
             
             // Use EclipticLongitude for accurate planetary position

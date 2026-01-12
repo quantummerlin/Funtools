@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationship Life Path Compatibility | Quantum Merlin</title>
+    <meta name="description" content="Discover how your Life Path numbers interact in relationships - full compatibility analysis with strengths and challenges">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #10b981 0%, #60a5fa 50%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #6ee7b7;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .person-section {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .person-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: #6ee7b7;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .input-group { margin-bottom: 20px; }
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #34d399;
+        }
+        input[type="date"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: inherit;
+            background: rgba(10, 10, 20, 0.8);
+            color: #e0e0e0;
+            transition: all 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+        button[type="button"] {
+            width: 100%;
+            padding: 18px 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        }
+        .result {
+            display: none;
+            margin-top: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+        }
+        .result-header { text-align: center; margin-bottom: 30px; }
+        .compatibility-score {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 4em;
+            background: linear-gradient(135deg, #10b981, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .life-paths-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .path-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(59, 130, 246, 0.3));
+            border: 3px solid rgba(16, 185, 129, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .path-number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            color: #6ee7b7;
+        }
+        .path-label {
+            font-size: 0.8em;
+            color: #9ca3af;
+        }
+        .path-connector {
+            font-size: 2em;
+            color: #fbbf24;
+        }
+        .compatibility-section {
+            background: rgba(20, 20, 30, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2em;
+            color: #fbbf24;
+            margin-bottom: 15px;
+        }
+        .section-content {
+            color: #d1d5db;
+            line-height: 1.8;
+        }
+        .strength-list, .challenge-list {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        .strength-list li { padding: 8px 0; padding-left: 30px; position: relative; }
+        .strength-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .challenge-list li { padding: 8px 0; padding-left: 30px; position: relative; }
+        .challenge-list li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+        }
+        .advice-box {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        .advice-title {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            margin-bottom: 10px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 8px;
+            color: #34d399;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            transition: all 0.3s;
+        }
+        .back-btn:hover { background: rgba(16, 185, 129, 0.3); }
+    </style>
+    <script src="auto-fill.js?v=20260113"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛤️ Relationship Life Path Compatibility</h1>
+            <p>How your core life journeys align</p>
+        </div>
+        
+        <div class="tool-card">
+            <div id="toolForm">
+                <div class="person-section">
+                    <div class="person-title">🌟 Person 1</div>
+                    <div class="input-group">
+                        <label for="birthDate1">Date of Birth</label>
+                        <input type="date" id="birthDate1" required>
+                    </div>
+                </div>
+                
+                <div class="person-section">
+                    <div class="person-title">⭐ Person 2</div>
+                    <div class="input-group">
+                        <label for="birthDate2">Date of Birth</label>
+                        <input type="date" id="birthDate2" required>
+                    </div>
+                </div>
+                
+                <button type="button" onclick="calculateLifePathCompatibility()">Analyze Life Path Compatibility</button>
+            </div>
+            
+            <div id="result" class="result">
+                <div class="result-header">
+                    <div class="life-paths-display" id="pathsDisplay"></div>
+                    <div class="compatibility-score" id="compatScore">85%</div>
+                    <div style="color: #6ee7b7; font-family: 'Cinzel', serif;">Life Path Compatibility</div>
+                </div>
+                
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+        
+        <a href="tools_index.html" class="back-btn">← Back to All Tools</a>
+    </div>
+    
+    <script>
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = String(num).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function calculateLifePath(dateStr) {
+            const parts = dateStr.split('-');
+            const year = parseInt(parts[0]);
+            const month = parseInt(parts[1]);
+            const day = parseInt(parts[2]);
+            
+            const dayR = reduceToSingle(day);
+            const monthR = reduceToSingle(month);
+            const yearR = reduceToSingle(year);
+            
+            return reduceToSingle(dayR + monthR + yearR);
+        }
+        
+        // Life Path meanings
+        const lifePathMeanings = {
+            1: { name: 'The Leader', traits: ['Independent', 'Pioneering', 'Ambitious', 'Self-reliant'] },
+            2: { name: 'The Peacemaker', traits: ['Diplomatic', 'Sensitive', 'Cooperative', 'Supportive'] },
+            3: { name: 'The Communicator', traits: ['Creative', 'Expressive', 'Social', 'Optimistic'] },
+            4: { name: 'The Builder', traits: ['Practical', 'Hardworking', 'Loyal', 'Methodical'] },
+            5: { name: 'The Freedom Seeker', traits: ['Adventurous', 'Dynamic', 'Versatile', 'Progressive'] },
+            6: { name: 'The Nurturer', traits: ['Responsible', 'Caring', 'Harmonious', 'Domestic'] },
+            7: { name: 'The Seeker', traits: ['Analytical', 'Spiritual', 'Introspective', 'Wise'] },
+            8: { name: 'The Achiever', traits: ['Ambitious', 'Authoritative', 'Business-minded', 'Powerful'] },
+            9: { name: 'The Humanitarian', traits: ['Compassionate', 'Generous', 'Idealistic', 'Universal'] },
+            11: { name: 'The Intuitive', traits: ['Inspirational', 'Intuitive', 'Spiritual', 'Illuminating'] },
+            22: { name: 'The Master Builder', traits: ['Visionary', 'Practical', 'Ambitious', 'Powerful'] },
+            33: { name: 'The Master Teacher', traits: ['Nurturing', 'Selfless', 'Healing', 'Enlightening'] }
+        };
+        
+        // Comprehensive compatibility data
+        const compatibilityData = {
+            '1-1': {
+                score: 65,
+                description: 'Two leaders together can be powerful but challenging. Both want to be in charge.',
+                strengths: ['Mutual respect for ambition', 'Drive each other forward', 'Understand need for independence'],
+                challenges: ['Power struggles', 'Competition instead of cooperation', 'Neither wants to compromise'],
+                advice: 'Take turns leading. Create separate domains where each can excel independently.'
+            },
+            '1-2': {
+                score: 75,
+                description: 'A complementary match. The 1 leads while the 2 supports and harmonizes.',
+                strengths: ['Natural leader-supporter dynamic', '2 softens 1\'s edges', '1 gives 2 confidence'],
+                challenges: ['1 may overlook 2\'s needs', '2 may feel overshadowed', 'Balance of power issues'],
+                advice: 'The 1 must learn to listen and appreciate. The 2 must voice their needs clearly.'
+            },
+            '1-3': {
+                score: 85,
+                description: 'An energetic, creative pairing with natural chemistry and excitement.',
+                strengths: ['Creative synergy', 'Social and active together', 'Mutual inspiration'],
+                challenges: ['Can burn out quickly', 'Both avoid deep emotions', 'Need for constant stimulation'],
+                advice: 'Balance excitement with meaningful depth. Make time for quiet connection.'
+            },
+            '1-4': {
+                score: 55,
+                description: 'Different approaches to life. 1 is spontaneous, 4 is methodical.',
+                strengths: ['1 brings innovation', '4 provides stability', 'Can balance each other'],
+                challenges: ['1 finds 4 too rigid', '4 finds 1 too reckless', 'Fundamental tempo differences'],
+                advice: 'Appreciate what the other brings. 1 needs some structure, 4 needs some flexibility.'
+            },
+            '1-5': {
+                score: 90,
+                description: 'Exciting and adventurous! Both love freedom and new experiences.',
+                strengths: ['Endless adventures together', 'Mutual respect for independence', 'Never boring'],
+                challenges: ['Lack of stability', 'Can enable each other\'s excesses', 'Avoiding responsibility'],
+                advice: 'Create some anchors while maintaining freedom. Build something lasting together.'
+            },
+            '1-6': {
+                score: 65,
+                description: 'The leader meets the nurturer. Can work if 1 appreciates 6\'s care.',
+                strengths: ['6 creates home base for 1', '1 provides security', 'Complementary roles'],
+                challenges: ['1 may feel smothered', '6 may feel unappreciated', 'Different priorities'],
+                advice: 'The 1 must show gratitude. The 6 must allow some independence. Meet in the middle.'
+            },
+            '1-7': {
+                score: 70,
+                description: 'Interesting intellectual match. Both independent in different ways.',
+                strengths: ['Respect each other\'s space', 'Stimulating conversations', 'No codependency'],
+                challenges: ['Emotional distance', '7 too withdrawn for 1', '1 too demanding for 7'],
+                advice: 'Schedule quality time together. Share your inner worlds consciously.'
+            },
+            '1-8': {
+                score: 60,
+                description: 'Two powerhouses who may clash over control and direction.',
+                strengths: ['Mutual ambition', 'Can achieve great things together', 'Understand drive'],
+                challenges: ['Major power struggles', 'Neither backs down', 'Work may overshadow love'],
+                advice: 'Define separate areas of authority. Remember you\'re partners, not competitors.'
+            },
+            '1-9': {
+                score: 80,
+                description: 'The leader and the humanitarian. Inspiring and expansive together.',
+                strengths: ['Shared big-picture thinking', '9 softens 1\'s self-focus', 'Mutual admiration'],
+                challenges: ['9 too idealistic for practical 1', '1 may seem selfish to 9', 'Different motivations'],
+                advice: 'Blend personal ambition with higher purpose. Support each other\'s visions.'
+            },
+            '2-2': {
+                score: 75,
+                description: 'Deep emotional understanding but may lack initiative and direction.',
+                strengths: ['Profound empathy', 'Harmonious home', 'Natural understanding'],
+                challenges: ['Indecisiveness', 'Over-sensitivity', 'Need external motivation'],
+                advice: 'Take turns making decisions. Build confidence in leading together.'
+            },
+            '2-3': {
+                score: 80,
+                description: 'Beautiful creative and emotional blend. Supportive and joyful.',
+                strengths: ['2 grounds 3\'s creativity', '3 brings joy to 2', 'Artistic collaboration'],
+                challenges: ['3 may be too scattered', '2 may be too needy', 'Depth vs. breadth'],
+                advice: 'Balance socializing with intimate time. 3 should show consistent appreciation.'
+            },
+            '2-4': {
+                score: 85,
+                description: 'Stable and nurturing combination. Both value security and commitment.',
+                strengths: ['Solid foundation', 'Mutual loyalty', 'Shared values'],
+                challenges: ['Can become too routine', 'Both avoid risks', 'May lack excitement'],
+                advice: 'Inject spontaneity regularly. Dream together about growth and adventure.'
+            },
+            '2-5': {
+                score: 55,
+                description: 'Very different needs. 2 wants security, 5 wants freedom.',
+                strengths: ['Each offers what the other lacks', '5 expands 2\'s world', '2 offers 5 a home'],
+                challenges: ['5 feels trapped', '2 feels abandoned', 'Fundamental incompatibility'],
+                advice: 'This requires major compromise from both. Honest conversations are essential.'
+            },
+            '2-6': {
+                score: 95,
+                description: 'Excellent match! Both are nurturing, loving, and home-oriented.',
+                strengths: ['Deep emotional bond', 'Natural harmony', 'Family-oriented', 'Mutual care'],
+                challenges: ['May become codependent', 'Avoid conflict too much', 'Need outside interests'],
+                advice: 'Maintain individual identities. Welcome healthy disagreement.'
+            },
+            '2-7': {
+                score: 65,
+                description: '2 is emotional, 7 is mental. Can balance or frustrate each other.',
+                strengths: ['2 offers warmth to 7', '7 offers depth to 2', 'Respect differences'],
+                challenges: ['7 too withdrawn', '2 too needy', 'Different emotional languages'],
+                advice: 'Learn each other\'s needs. 7 must share feelings; 2 must give space.'
+            },
+            '2-8': {
+                score: 80,
+                description: 'Supportive partnership. 2 nurtures while 8 provides.',
+                strengths: ['Traditional balance works well', '8 offers security', '2 offers care'],
+                challenges: ['8 may dominate', '2 may lose identity', 'Power imbalance'],
+                advice: 'Ensure equal respect and voice. 2\'s contributions are equally valuable.'
+            },
+            '2-9': {
+                score: 75,
+                description: 'Sensitive souls who understand each other\'s depth.',
+                strengths: ['Compassionate bond', 'Shared idealism', 'Emotional intelligence'],
+                challenges: ['Both avoid confrontation', '9 may seem distant', 'Too much sensitivity'],
+                advice: 'Ground your idealism in practical action. Support each other\'s causes.'
+            },
+            '3-3': {
+                score: 70,
+                description: 'Fun and creative but may lack depth and responsibility.',
+                strengths: ['Never boring', 'Creative explosion', 'Social butterflies'],
+                challenges: ['Avoid serious topics', 'Financial irresponsibility', 'Scattered energy'],
+                advice: 'Balance fun with responsibility. Create meaningful projects together.'
+            },
+            '3-4': {
+                score: 50,
+                description: 'Very different energies. 3 is spontaneous, 4 is structured.',
+                strengths: ['4 grounds 3', '3 lightens 4', 'Can learn from differences'],
+                challenges: ['3 finds 4 boring', '4 finds 3 irresponsible', 'Fundamental friction'],
+                advice: 'Requires significant compromise. Focus on shared goals, accept differences.'
+            },
+            '3-5': {
+                score: 90,
+                description: 'Dynamic, exciting, and adventurous! Life is never dull.',
+                strengths: ['Constant excitement', 'Creative adventures', 'Mutual freedom'],
+                challenges: ['No anchor', 'Can spiral together', 'Avoiding adult responsibilities'],
+                advice: 'Create some stability. Channel your combined energy into lasting achievements.'
+            },
+            '3-6': {
+                score: 85,
+                description: 'Creative and nurturing blend. Warm, artistic, family-oriented.',
+                strengths: ['6 stabilizes 3', '3 brings joy', 'Beautiful home together'],
+                challenges: ['6 may feel burdened', '3 may feel controlled', 'Different priorities'],
+                advice: 'Share responsibilities fairly. Make creative expression a shared activity.'
+            },
+            '3-7': {
+                score: 60,
+                description: 'Surface meets depth. 3 is social, 7 is introspective.',
+                strengths: ['Can learn from each other', 'Intellectual conversations', '3 draws 7 out'],
+                challenges: ['7 needs too much alone time', '3 needs too much social time', 'Fundamental difference'],
+                advice: 'Respect different needs. Schedule both social and quiet time.'
+            },
+            '3-8': {
+                score: 65,
+                description: '3 is playful, 8 is serious. Can work if both appreciate the other.',
+                strengths: ['3 lightens 8', '8 grounds 3', 'Different strengths'],
+                challenges: ['8 thinks 3 is frivolous', '3 thinks 8 is too heavy', 'Misunderstandings'],
+                advice: 'Value what the other brings. 8 needs lightness; 3 needs direction.'
+            },
+            '3-9': {
+                score: 90,
+                description: 'Creative, inspiring, humanitarian. Beautiful soul connection.',
+                strengths: ['Shared creativity', 'Big-picture thinking', 'Inspirational together'],
+                challenges: ['Both avoid practical matters', 'May lack grounding', 'Idealistic'],
+                advice: 'Ground your visions in action. Create together for the greater good.'
+            },
+            '4-4': {
+                score: 75,
+                description: 'Solid and stable but may become rigid and routine.',
+                strengths: ['Shared values', 'Building together', 'Reliable partnership'],
+                challenges: ['Too rigid', 'Lack of spontaneity', 'May become boring'],
+                advice: 'Intentionally add variety. Take risks together occasionally.'
+            },
+            '4-5': {
+                score: 45,
+                description: 'Very challenging. 4 needs stability, 5 needs freedom.',
+                strengths: ['Can balance extremes', '4 offers anchor', '5 offers excitement'],
+                challenges: ['4 feels insecure', '5 feels trapped', 'Core needs conflict'],
+                advice: 'This match requires extraordinary compromise. Be clear about expectations.'
+            },
+            '4-6': {
+                score: 90,
+                description: 'Excellent domestic match. Both value home, family, security.',
+                strengths: ['Strong foundation', 'Shared goals', 'Reliable and nurturing'],
+                challenges: ['May become too routine', 'Both worry too much', 'Need to let loose'],
+                advice: 'Perfect your partnership with occasional adventures. Lighten up together.'
+            },
+            '4-7': {
+                score: 80,
+                description: 'Thoughtful match. Both are serious and need their space.',
+                strengths: ['Intellectual respect', 'Both appreciate solitude', 'Deep conversations'],
+                challenges: ['Emotional distance', 'Too much thinking', 'May lack warmth'],
+                advice: 'Make effort to connect emotionally, not just mentally. Show affection.'
+            },
+            '4-8': {
+                score: 95,
+                description: 'Powerhouse match! Building empires together with shared goals.',
+                strengths: ['Unbeatable work ethic', 'Material success', 'Mutual respect'],
+                challenges: ['All work, no play', 'May neglect relationship', 'Too serious'],
+                advice: 'Remember to nurture love, not just achievements. Schedule romance.'
+            },
+            '4-9': {
+                score: 60,
+                description: 'Different focuses. 4 is practical, 9 is idealistic.',
+                strengths: ['4 grounds 9\'s visions', '9 expands 4\'s view', 'Balance'],
+                challenges: ['4 finds 9 impractical', '9 finds 4 limited', 'Different motivations'],
+                advice: 'Combine practicality with idealism. Support each other\'s approaches.'
+            },
+            '5-5': {
+                score: 70,
+                description: 'Exciting but unstable. Constant adventure with no anchor.',
+                strengths: ['Endless excitement', 'Perfect travel partners', 'Total freedom'],
+                challenges: ['No stability', 'Can\'t commit', 'Enabling bad habits'],
+                advice: 'Create an anchor point together. Build something that lasts.'
+            },
+            '5-6': {
+                score: 50,
+                description: 'Challenging. 5 wants freedom, 6 wants domestic harmony.',
+                strengths: ['Each offers what other lacks', 'Can balance', '6 offers home base'],
+                challenges: ['5 feels trapped', '6 feels abandoned', 'Different life visions'],
+                advice: 'Major compromise needed. Very honest communication is essential.'
+            },
+            '5-7': {
+                score: 75,
+                description: 'Both independent and curious. Intellectual adventurers.',
+                strengths: ['Mutual independence', 'Exploring together', 'Intellectual connection'],
+                challenges: ['Emotional avoidance', '5 too fast for 7', 'Different paces'],
+                advice: 'Balance external adventure with inner exploration. Connect deeply.'
+            },
+            '5-8': {
+                score: 65,
+                description: '5 is free-spirited, 8 is controlled. Interesting tension.',
+                strengths: ['8 provides structure', '5 provides excitement', 'Dynamic energy'],
+                challenges: ['5 resists 8\'s control', '8 frustrated by 5', 'Power struggles'],
+                advice: 'Give each other space. 8 loosens up; 5 commits more. Meet in middle.'
+            },
+            '5-9': {
+                score: 85,
+                description: 'Adventurous humanitarians! Exploring the world together.',
+                strengths: ['Shared love of travel', 'Big-picture thinking', 'Freedom-loving'],
+                challenges: ['Both avoid routine', 'May lack grounding', 'Commitment issues'],
+                advice: 'Create a home base for your adventures. Ground your shared idealism.'
+            },
+            '6-6': {
+                score: 80,
+                description: 'Nurturing and domestic. Beautiful home but may lose individuality.',
+                strengths: ['Deep care for each other', 'Perfect homemakers', 'Family-focused'],
+                challenges: ['Codependency', 'Martyrdom competition', 'Need outside interests'],
+                advice: 'Maintain individual interests. Give to each other without keeping score.'
+            },
+            '6-7': {
+                score: 55,
+                description: '6 is warm and domestic, 7 needs solitude. Different needs.',
+                strengths: ['6 offers warmth', '7 offers wisdom', 'Can teach each other'],
+                challenges: ['6 feels rejected by 7\'s withdrawal', '7 feels smothered', 'Hurt feelings'],
+                advice: 'Understand and respect different needs. Clear communication essential.'
+            },
+            '6-8': {
+                score: 75,
+                description: 'Traditional roles work well. 6 nurtures, 8 provides.',
+                strengths: ['Clear roles', 'Material security', 'Strong family'],
+                challenges: ['Can be too traditional', '8 may dominate', '6 may lose identity'],
+                advice: 'Ensure equal respect and voice. Both contributions are valuable.'
+            },
+            '6-9': {
+                score: 90,
+                description: 'Beautiful humanitarian match. Both want to help and heal.',
+                strengths: ['Shared compassion', 'Helping others together', 'Deep understanding'],
+                challenges: ['May neglect own needs', 'Taking on too much', 'Need boundaries'],
+                advice: 'Care for yourselves as you care for others. Set healthy limits.'
+            },
+            '7-7': {
+                score: 70,
+                description: 'Deep thinkers together. Spiritual and intellectual connection.',
+                strengths: ['Profound understanding', 'Respect for solitude', 'Spiritual growth'],
+                challenges: ['Emotional distance', 'Too withdrawn', 'May live in parallel'],
+                advice: 'Make effort to connect actively. Share your inner worlds.'
+            },
+            '7-8': {
+                score: 65,
+                description: '7 is spiritual, 8 is material. Different values.',
+                strengths: ['7 offers depth', '8 offers security', 'Can balance'],
+                challenges: ['Different priorities', '7 finds 8 shallow', '8 finds 7 impractical'],
+                advice: 'Respect different values. Find common ground in achievement.'
+            },
+            '7-9': {
+                score: 80,
+                description: 'Spiritual seekers together. Deep, meaningful connection.',
+                strengths: ['Shared depth', 'Spiritual journeying', 'Wisdom together'],
+                challenges: ['Both avoid practical matters', 'May be too detached', 'In the clouds'],
+                advice: 'Ground your spiritual connection. Make your insights practical.'
+            },
+            '8-8': {
+                score: 70,
+                description: 'Two powerhouses! Can build empires or destroy each other.',
+                strengths: ['Massive achievement potential', 'Mutual respect', 'Shared ambition'],
+                challenges: ['Power struggles', 'Workaholism', 'Who\'s in charge?'],
+                advice: 'Define separate domains. Remember love matters more than success.'
+            },
+            '8-9': {
+                score: 75,
+                description: '8 is practical achiever, 9 is idealistic giver. Can blend well.',
+                strengths: ['8 provides resources for 9\'s causes', '9 gives 8 purpose', 'Balanced'],
+                challenges: ['Different motivations', '8 may seem greedy', '9 may seem naive'],
+                advice: 'Combine material success with humanitarian goals. Support each other\'s drives.'
+            },
+            '9-9': {
+                score: 75,
+                description: 'Two humanitarians! Inspiring but may forget about each other.',
+                strengths: ['Shared idealism', 'Helping the world together', 'Deep understanding'],
+                challenges: ['May neglect relationship', 'Giving to others, not each other', 'Unfocused'],
+                advice: 'Make your relationship a priority. You deserve your own compassion too.'
+            }
+        };
+        
+        // Master number additions
+        const masterCompatibility = {
+            '11': { relatesTo: 2, special: 'Highly intuitive and sensitive, the 11 brings spiritual awareness to relationships.' },
+            '22': { relatesTo: 4, special: 'The Master Builder brings vision and practicality, capable of creating something lasting.' },
+            '33': { relatesTo: 6, special: 'The Master Teacher brings extraordinary nurturing and healing energy to relationships.' }
+        };
+        
+        function getCompatibilityKey(lp1, lp2) {
+            const n1 = lp1 > 9 ? (lp1 === 11 ? 2 : lp1 === 22 ? 4 : 6) : lp1;
+            const n2 = lp2 > 9 ? (lp2 === 11 ? 2 : lp2 === 22 ? 4 : 6) : lp2;
+            const key1 = `${Math.min(n1, n2)}-${Math.max(n1, n2)}`;
+            return key1;
+        }
+        
+        function calculateLifePathCompatibility() {
+            const date1 = document.getElementById('birthDate1').value;
+            const date2 = document.getElementById('birthDate2').value;
+            
+            if (!date1 || !date2) {
+                alert('Please enter both birth dates');
+                return;
+            }
+            
+            const lp1 = calculateLifePath(date1);
+            const lp2 = calculateLifePath(date2);
+            
+            const key = getCompatibilityKey(lp1, lp2);
+            const compat = compatibilityData[key] || compatibilityData['1-1'];
+            
+            // Adjust score for master numbers
+            let score = compat.score;
+            let masterNote = '';
+            
+            if (lp1 > 9 || lp2 > 9) {
+                score = Math.min(100, score + 5);
+                if (lp1 > 9) masterNote += `<p>Life Path ${lp1} is a Master Number: ${masterCompatibility[lp1.toString()].special}</p>`;
+                if (lp2 > 9) masterNote += `<p>Life Path ${lp2} is a Master Number: ${masterCompatibility[lp2.toString()].special}</p>`;
+            }
+            
+            // Same life path bonus
+            if (lp1 === lp2) {
+                score = Math.min(100, score + 10);
+            }
+            
+            // Display results
+            document.getElementById('pathsDisplay').innerHTML = `
+                <div class="path-circle">
+                    <div class="path-number">${lp1}</div>
+                    <div class="path-label">Life Path 1</div>
+                </div>
+                <div class="path-connector">♡</div>
+                <div class="path-circle">
+                    <div class="path-number">${lp2}</div>
+                    <div class="path-label">Life Path 2</div>
+                </div>
+            `;
+            
+            document.getElementById('compatScore').textContent = score + '%';
+            
+            const lp1Info = lifePathMeanings[lp1] || lifePathMeanings[lp1 === 11 ? 11 : lp1 === 22 ? 22 : 33];
+            const lp2Info = lifePathMeanings[lp2] || lifePathMeanings[lp2 === 11 ? 11 : lp2 === 22 ? 22 : 33];
+            
+            let html = `
+                <div class="compatibility-section">
+                    <div class="section-header">🔮 Your Life Paths</div>
+                    <div class="section-content">
+                        <p><strong>Life Path ${lp1} - ${lp1Info.name}:</strong> ${lp1Info.traits.join(', ')}</p>
+                        <p><strong>Life Path ${lp2} - ${lp2Info.name}:</strong> ${lp2Info.traits.join(', ')}</p>
+                        ${masterNote}
+                    </div>
+                </div>
+                
+                <div class="compatibility-section">
+                    <div class="section-header">💫 Compatibility Overview</div>
+                    <div class="section-content">
+                        <p>${compat.description}</p>
+                    </div>
+                </div>
+                
+                <div class="compatibility-section">
+                    <div class="section-header">✨ Relationship Strengths</div>
+                    <div class="section-content">
+                        <ul class="strength-list">
+                            ${compat.strengths.map(s => `<li>${s}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="compatibility-section">
+                    <div class="section-header">⚡ Potential Challenges</div>
+                    <div class="section-content">
+                        <ul class="challenge-list">
+                            ${compat.challenges.map(c => `<li>${c}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="compatibility-section">
+                    <div class="section-header">💝 Advice for This Pairing</div>
+                    <div class="section-content">
+                        <div class="advice-box">
+                            <p>${compat.advice}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('resultsContent').innerHTML = html;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

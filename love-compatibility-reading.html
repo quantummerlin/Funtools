@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Love Compatibility Reading | Quantum Merlin</title>
+    <meta name="description" content="Discover your deep romantic compatibility through numerology - Life Path, Expression, Soul Urge, and Heart's Desire analysis">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: #e0e0e0;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #f472b6;
+            font-style: italic;
+        }
+        .tool-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(236, 72, 153, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        .person-section {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .person-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: #f472b6;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .input-group { margin-bottom: 20px; }
+        label {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #a78bfa;
+        }
+        .helper-text {
+            font-size: 0.85em;
+            color: #9ca3af;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-family: inherit;
+            background: rgba(10, 10, 20, 0.8);
+            color: #e0e0e0;
+            transition: all 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #ec4899;
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.2);
+        }
+        button[type="button"] {
+            width: 100%;
+            padding: 18px 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+        }
+        .result {
+            display: none;
+            margin-top: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border: 2px solid rgba(236, 72, 153, 0.3);
+            border-radius: 20px;
+        }
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .compatibility-score {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 4em;
+            background: linear-gradient(135deg, #ec4899, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .score-label {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: #f472b6;
+        }
+        .compatibility-section {
+            background: rgba(20, 20, 30, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2em;
+            color: #fbbf24;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-score {
+            background: rgba(236, 72, 153, 0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #f472b6;
+        }
+        .section-content {
+            color: #d1d5db;
+            line-height: 1.8;
+        }
+        .numbers-display {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .number-box {
+            text-align: center;
+            padding: 15px 25px;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 10px;
+        }
+        .number-value {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2em;
+            color: #a78bfa;
+        }
+        .number-label {
+            font-size: 0.85em;
+            color: #9ca3af;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 8px;
+            color: #a78bfa;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+        }
+    </style>
+    <script src="auto-fill.js?v=20260113"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💕 Deep Love Compatibility</h1>
+            <p>Discover the numerological bonds between two souls</p>
+        </div>
+        
+        <div class="tool-card">
+            <div id="toolForm">
+                <div class="person-section">
+                    <div class="person-title">💗 Person 1 (You)</div>
+                    <div class="input-group">
+                        <label for="name1">Full Name</label>
+                        <input type="text" id="name1" placeholder="Enter full birth name" required>
+                        <div class="helper-text">Use the name given at birth for accurate calculations</div>
+                    </div>
+                    <div class="input-group">
+                        <label for="birthDate1">Date of Birth</label>
+                        <input type="date" id="birthDate1" required>
+                    </div>
+                </div>
+                
+                <div class="person-section">
+                    <div class="person-title">💜 Person 2 (Partner)</div>
+                    <div class="input-group">
+                        <label for="name2">Full Name</label>
+                        <input type="text" id="name2" placeholder="Enter full birth name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="birthDate2">Date of Birth</label>
+                        <input type="date" id="birthDate2" required>
+                    </div>
+                </div>
+                
+                <button type="button" onclick="calculateCompatibility()">Reveal Your Love Compatibility</button>
+            </div>
+            
+            <div id="result" class="result">
+                <div class="result-header">
+                    <div class="compatibility-score" id="overallScore">85%</div>
+                    <div class="score-label">Overall Love Compatibility</div>
+                    <div class="numbers-display" id="numbersDisplay"></div>
+                </div>
+                
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+        
+        <a href="tools_index.html" class="back-btn">← Back to All Tools</a>
+    </div>
+    
+    <script>
+        // Pythagorean numerology values
+        function letterToNumber(letter) {
+            const values = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+                'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
+            };
+            return values[letter.toUpperCase()] || 0;
+        }
+        
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = String(num).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        // Life Path Number from birth date
+        function calculateLifePath(dateStr) {
+            const parts = dateStr.split('-');
+            const year = parseInt(parts[0]);
+            const month = parseInt(parts[1]);
+            const day = parseInt(parts[2]);
+            
+            const dayR = reduceToSingle(day);
+            const monthR = reduceToSingle(month);
+            const yearR = reduceToSingle(year);
+            
+            return reduceToSingle(dayR + monthR + yearR);
+        }
+        
+        // Expression Number (full name)
+        function calculateExpression(name) {
+            const letters = name.toUpperCase().replace(/[^A-Z]/g, '');
+            const sum = letters.split('').reduce((acc, char) => acc + letterToNumber(char), 0);
+            return reduceToSingle(sum);
+        }
+        
+        // Soul Urge Number (vowels only)
+        function calculateSoulUrge(name) {
+            const vowels = 'AEIOU';
+            const letters = name.toUpperCase().replace(/[^A-Z]/g, '');
+            const sum = letters.split('').reduce((acc, char) => 
+                vowels.includes(char) ? acc + letterToNumber(char) : acc, 0);
+            return reduceToSingle(sum);
+        }
+        
+        // Personality Number (consonants only)
+        function calculatePersonality(name) {
+            const vowels = 'AEIOU';
+            const letters = name.toUpperCase().replace(/[^A-Z]/g, '');
+            const sum = letters.split('').reduce((acc, char) => 
+                !vowels.includes(char) ? acc + letterToNumber(char) : acc, 0);
+            return reduceToSingle(sum);
+        }
+        
+        // Birthday Number
+        function calculateBirthday(dateStr) {
+            const day = parseInt(dateStr.split('-')[2]);
+            return reduceToSingle(day);
+        }
+        
+        // Compatibility score between two numbers (0-100)
+        function getNumberCompatibility(num1, num2) {
+            const compatibilityMatrix = {
+                1: { 1: 75, 2: 60, 3: 85, 4: 55, 5: 90, 6: 65, 7: 70, 8: 50, 9: 80, 11: 75, 22: 60, 33: 70 },
+                2: { 1: 60, 2: 80, 3: 70, 4: 85, 5: 55, 6: 95, 7: 65, 8: 80, 9: 75, 11: 90, 22: 85, 33: 90 },
+                3: { 1: 85, 2: 70, 3: 80, 4: 50, 5: 95, 6: 85, 7: 60, 8: 55, 9: 90, 11: 75, 22: 60, 33: 85 },
+                4: { 1: 55, 2: 85, 3: 50, 4: 75, 5: 45, 6: 80, 7: 85, 8: 95, 9: 60, 11: 70, 22: 95, 33: 75 },
+                5: { 1: 90, 2: 55, 3: 95, 4: 45, 5: 70, 6: 50, 7: 80, 8: 60, 9: 85, 11: 65, 22: 55, 33: 70 },
+                6: { 1: 65, 2: 95, 3: 85, 4: 80, 5: 50, 6: 85, 7: 55, 8: 75, 9: 90, 11: 85, 22: 90, 33: 95 },
+                7: { 1: 70, 2: 65, 3: 60, 4: 85, 5: 80, 6: 55, 7: 90, 8: 65, 9: 70, 11: 95, 22: 80, 33: 75 },
+                8: { 1: 50, 2: 80, 3: 55, 4: 95, 5: 60, 6: 75, 7: 65, 8: 80, 9: 70, 11: 60, 22: 95, 33: 70 },
+                9: { 1: 80, 2: 75, 3: 90, 4: 60, 5: 85, 6: 90, 7: 70, 8: 70, 9: 75, 11: 85, 22: 75, 33: 95 },
+                11: { 1: 75, 2: 90, 3: 75, 4: 70, 5: 65, 6: 85, 7: 95, 8: 60, 9: 85, 11: 90, 22: 85, 33: 95 },
+                22: { 1: 60, 2: 85, 3: 60, 4: 95, 5: 55, 6: 90, 7: 80, 8: 95, 9: 75, 11: 85, 22: 85, 33: 90 },
+                33: { 1: 70, 2: 90, 3: 85, 4: 75, 5: 70, 6: 95, 7: 75, 8: 70, 9: 95, 11: 95, 22: 90, 33: 95 }
+            };
+            
+            const n1 = num1 > 9 ? num1 : num1;
+            const n2 = num2 > 9 ? num2 : num2;
+            
+            if (compatibilityMatrix[n1] && compatibilityMatrix[n1][n2]) {
+                return compatibilityMatrix[n1][n2];
+            }
+            return 70; // Default
+        }
+        
+        // Get compatibility interpretation
+        function getCompatibilityMeaning(type, num1, num2, score) {
+            const meanings = {
+                lifePath: {
+                    high: `Your Life Paths (${num1} and ${num2}) create a powerful synergy. You both understand each other's fundamental approach to life, sharing similar values and goals. This is a foundation for lasting love.`,
+                    medium: `Your Life Paths (${num1} and ${num2}) offer complementary energies. While you approach life differently, these differences can create balance and growth if embraced with understanding.`,
+                    low: `Your Life Paths (${num1} and ${num2}) present challenges. You may have fundamentally different approaches to life, requiring extra effort to understand and appreciate each other's perspectives.`
+                },
+                expression: {
+                    high: `Your Expression Numbers (${num1} and ${num2}) indicate natural harmony in how you express yourselves. Communication flows easily between you, and you appreciate each other's talents and abilities.`,
+                    medium: `Your Expression Numbers (${num1} and ${num2}) show different communication styles. With patience, these differences can become complementary rather than conflicting.`,
+                    low: `Your Expression Numbers (${num1} and ${num2}) suggest you express yourselves quite differently. Conscious effort in communication will strengthen your bond.`
+                },
+                soulUrge: {
+                    high: `Your Soul Urge Numbers (${num1} and ${num2}) reveal deep heart connection. Your innermost desires and emotional needs align beautifully, creating profound intimacy.`,
+                    medium: `Your Soul Urge Numbers (${num1} and ${num2}) show different heart desires. Understanding what truly fulfills each other emotionally is key to deeper connection.`,
+                    low: `Your Soul Urge Numbers (${num1} and ${num2}) indicate different emotional needs. Open conversations about your deepest desires will help bridge this gap.`
+                },
+                personality: {
+                    high: `Your Personality Numbers (${num1} and ${num2}) suggest you present yourselves to the world in compatible ways. Others see you as a natural couple.`,
+                    medium: `Your Personality Numbers (${num1} and ${num2}) show you have different public personas. This can create an interesting dynamic as a couple.`,
+                    low: `Your Personality Numbers (${num1} and ${num2}) suggest different social styles. Learning to appreciate how each other navigates the world strengthens your bond.`
+                },
+                birthday: {
+                    high: `Your Birthday Numbers (${num1} and ${num2}) indicate natural talents that complement each other beautifully in this relationship.`,
+                    medium: `Your Birthday Numbers (${num1} and ${num2}) bring different gifts to the relationship, creating opportunities for mutual growth.`,
+                    low: `Your Birthday Numbers (${num1} and ${num2}) suggest you have different natural inclinations. Celebrating these differences enriches your partnership.`
+                }
+            };
+            
+            const level = score >= 80 ? 'high' : score >= 60 ? 'medium' : 'low';
+            return meanings[type][level];
+        }
+        
+        function calculateCompatibility() {
+            const name1 = document.getElementById('name1').value.trim();
+            const name2 = document.getElementById('name2').value.trim();
+            const date1 = document.getElementById('birthDate1').value;
+            const date2 = document.getElementById('birthDate2').value;
+            
+            if (!name1 || !name2 || !date1 || !date2) {
+                alert('Please fill in all fields for both people');
+                return;
+            }
+            
+            // Calculate all numbers for both people
+            const p1 = {
+                lifePath: calculateLifePath(date1),
+                expression: calculateExpression(name1),
+                soulUrge: calculateSoulUrge(name1),
+                personality: calculatePersonality(name1),
+                birthday: calculateBirthday(date1)
+            };
+            
+            const p2 = {
+                lifePath: calculateLifePath(date2),
+                expression: calculateExpression(name2),
+                soulUrge: calculateSoulUrge(name2),
+                personality: calculatePersonality(name2),
+                birthday: calculateBirthday(date2)
+            };
+            
+            // Calculate compatibility scores
+            const scores = {
+                lifePath: getNumberCompatibility(p1.lifePath, p2.lifePath),
+                expression: getNumberCompatibility(p1.expression, p2.expression),
+                soulUrge: getNumberCompatibility(p1.soulUrge, p2.soulUrge),
+                personality: getNumberCompatibility(p1.personality, p2.personality),
+                birthday: getNumberCompatibility(p1.birthday, p2.birthday)
+            };
+            
+            // Weighted average (Life Path and Soul Urge weighted higher for love)
+            const overallScore = Math.round(
+                (scores.lifePath * 0.30) +
+                (scores.expression * 0.15) +
+                (scores.soulUrge * 0.30) +
+                (scores.personality * 0.10) +
+                (scores.birthday * 0.15)
+            );
+            
+            // Display results
+            document.getElementById('overallScore').textContent = overallScore + '%';
+            
+            document.getElementById('numbersDisplay').innerHTML = `
+                <div class="number-box">
+                    <div class="number-value">${p1.lifePath}</div>
+                    <div class="number-label">${name1.split(' ')[0]}'s Life Path</div>
+                </div>
+                <div class="number-box">
+                    <div class="number-value">${p2.lifePath}</div>
+                    <div class="number-label">${name2.split(' ')[0]}'s Life Path</div>
+                </div>
+            `;
+            
+            const sections = [
+                { key: 'lifePath', title: '🛤️ Life Path Compatibility', n1: p1.lifePath, n2: p2.lifePath },
+                { key: 'soulUrge', title: '💖 Soul Urge (Heart\'s Desire) Compatibility', n1: p1.soulUrge, n2: p2.soulUrge },
+                { key: 'expression', title: '✨ Expression Number Compatibility', n1: p1.expression, n2: p2.expression },
+                { key: 'personality', title: '🎭 Personality Number Compatibility', n1: p1.personality, n2: p2.personality },
+                { key: 'birthday', title: '🎂 Birthday Number Compatibility', n1: p1.birthday, n2: p2.birthday }
+            ];
+            
+            let html = '';
+            sections.forEach(section => {
+                const score = scores[section.key];
+                const meaning = getCompatibilityMeaning(section.key, section.n1, section.n2, score);
+                html += `
+                    <div class="compatibility-section">
+                        <div class="section-header">
+                            <span>${section.title}</span>
+                            <span class="section-score">${score}%</span>
+                        </div>
+                        <div class="section-content">${meaning}</div>
+                    </div>
+                `;
+            });
+            
+            // Add overall interpretation
+            let overallMeaning = '';
+            if (overallScore >= 85) {
+                overallMeaning = `<p><strong>Exceptional Love Match!</strong> Your numerological profiles indicate a deeply harmonious connection. You share fundamental values, understand each other's emotional needs, and have the potential for a profoundly fulfilling relationship. This is a rare and beautiful alignment.</p>`;
+            } else if (overallScore >= 70) {
+                overallMeaning = `<p><strong>Strong Love Connection!</strong> Your numbers reveal a solid foundation for lasting love. While you may have some differences to navigate, the overall compatibility suggests you can build something beautiful together with mutual understanding.</p>`;
+            } else if (overallScore >= 55) {
+                overallMeaning = `<p><strong>Growth-Oriented Match.</strong> Your numerological compatibility shows areas of both harmony and challenge. These relationships often lead to significant personal growth as you learn from each other's different perspectives and approaches.</p>`;
+            } else {
+                overallMeaning = `<p><strong>Challenging but Transformative.</strong> Your numbers suggest you approach life quite differently. While this requires more conscious effort, such relationships can be deeply transformative, pushing both partners to grow beyond their comfort zones.</p>`;
+            }
+            
+            html += `<div class="compatibility-section">
+                <div class="section-header"><span>💫 Overall Love Reading</span></div>
+                <div class="section-content">${overallMeaning}</div>
+            </div>`;
+            
+            document.getElementById('resultsContent').innerHTML = html;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
