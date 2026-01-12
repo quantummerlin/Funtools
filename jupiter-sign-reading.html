@@ -413,6 +413,10 @@ Your path to abundance: Trust deeply, give generously, follow spiritual guidance
             if (coords.lon >= -105 && coords.lon <= -85 && coords.lat >= 24 && coords.lat <= 50) tzOffset = -6;
             if (coords.lon >= -115 && coords.lon <= -105 && coords.lat >= 24 && coords.lat <= 50) tzOffset = -7;
             if (coords.lon >= -125 && coords.lon <= -115 && coords.lat >= 24 && coords.lat <= 50) tzOffset = -8;
+            // Australia
+            if (coords.lon >= 113 && coords.lon <= 129 && coords.lat >= -45 && coords.lat <= -10) tzOffset = 8; // WA
+            if (coords.lon >= 129 && coords.lon <= 141 && coords.lat >= -45 && coords.lat <= -10) tzOffset = 9.5; // Central
+            if (coords.lon >= 141 && coords.lon <= 154 && coords.lat >= -45 && coords.lat <= -10) tzOffset = 10; // Eastern
             
             // Convert to UTC
             let totalUtc = (hours * 60 + minutes) - (tzOffset * 60);
@@ -423,8 +427,10 @@ Your path to abundance: Trust deeply, give generously, follow spiritual guidance
             const datetime = new Date(Date.UTC(utcYear, utcMonth - 1, utcDay, Math.floor(totalUtc/60), totalUtc%60, 0));
             const time = Astronomy.MakeTime(datetime);
             
-            // Use EclipticLongitude for accurate planetary position
-            const lon = Astronomy.EclipticLongitude(planet, time);
+            // Use geocentric position for astrology (Earth-centered view)
+            const geo = Astronomy.GeoVector(planet, time, true);
+            const ecl = Astronomy.Ecliptic(geo);
+            const lon = ecl.elon;
             
             const signIndex = Math.floor(lon / 30);
             const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 

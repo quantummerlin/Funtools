@@ -261,6 +261,10 @@
                 if (coords.lon >= -105 && coords.lon <= -85 && coords.lat >= 24 && coords.lat <= 50) tzOffsetHours = -6;
                 if (coords.lon >= -115 && coords.lon <= -105 && coords.lat >= 24 && coords.lat <= 50) tzOffsetHours = -7;
                 if (coords.lon >= -125 && coords.lon <= -115 && coords.lat >= 24 && coords.lat <= 50) tzOffsetHours = -8;
+                // Australia
+                if (coords.lon >= 113 && coords.lon <= 129 && coords.lat >= -45 && coords.lat <= -10) tzOffsetHours = 8; // WA
+                if (coords.lon >= 129 && coords.lon <= 141 && coords.lat >= -45 && coords.lat <= -10) tzOffsetHours = 9.5; // Central
+                if (coords.lon >= 141 && coords.lon <= 154 && coords.lat >= -45 && coords.lat <= -10) tzOffsetHours = 10; // Eastern
                 
                 // Convert to UTC
                 const totalLocalMinutes = hours * 60 + minutes;
