@@ -638,10 +638,10 @@
                 </div>
             </div>
             
-            <!-- Fortune Section -->
+            <!-- Fortune & Divination Section -->
             <div class="category-section">
                 <div class="category-header" onclick="toggleCategory('fortune')">
-                    <h2>Fortune & Divination <span class="count">(8 tools)</span></h2>
+                    <h2>🔮 Fortune & Divination <span class="count">(5 tools)</span></h2>
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="category-content" id="fortune-content">
@@ -656,25 +656,14 @@
                 <span class="ad-space-cta">Inquire About This Space →</span>
             </div>
             
-            <!-- Life Section -->
+            <!-- Life Cycles Section -->
             <div class="category-section">
                 <div class="category-header" onclick="toggleCategory('life')">
-                    <h2>📊 Life Tools <span class="count">(4 tools)</span></h2>
+                    <h2>📊 Life Cycles <span class="count">(3 tools)</span></h2>
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="category-content" id="life-content">
                     <div class="tools-grid" id="life-grid"></div>
-                </div>
-            </div>
-            
-            <!-- Entertainment Section -->
-            <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('entertainment')">
-                    <h2>🎲 Entertainment <span class="count">(4 tools)</span></h2>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="category-content" id="entertainment-content">
-                    <div class="tools-grid" id="entertainment-grid"></div>
                 </div>
             </div>
         </div>
@@ -836,27 +825,17 @@
             { title: "Brain Type Test", description: "Find out if you're left-brained or right-brained.", category: "personality", file: "brain-type-test.html" },
             { title: "Aura Color Test", description: "What color is your aura? Take this fun quiz!", category: "personality", file: "aura-color-test.html" },
             
-            // Fortune Tools
+            // Fortune & Divination Tools
             { title: "Daily Fortune", description: "Get your daily fortune and lucky numbers.", category: "fortune", file: "daily-fortune.html" },
             { title: "Crystal Ball", description: "Ask the crystal ball a yes/no question.", category: "fortune", file: "crystal-ball.html" },
-            { title: "Dice Roller", description: "Roll virtual dice for any game or decision.", category: "fortune", file: "dice-roller.html" },
-            { title: "Coin Flip", description: "Flip a coin for quick decisions.", category: "fortune", file: "coin-flip.html" },
-            { title: "Decision Wheel", description: "Spin the wheel to make decisions fun.", category: "fortune", file: "decision-wheel.html" },
-            { title: "Fortune Cookie", description: "Break a virtual fortune cookie for wisdom.", category: "fortune", file: "fortune-cookie.html" },
-            { title: "Yes No Oracle", description: "Get instant yes/no answers to your questions.", category: "fortune", file: "yes-no-oracle.html" },
+            { title: "Fortune Cookie", description: "Break a virtual fortune cookie for ancient wisdom.", category: "fortune", file: "fortune-cookie.html" },
+            { title: "Yes No Oracle", description: "Get instant yes/no answers from the divine.", category: "fortune", file: "yes-no-oracle.html" },
             { title: "Lucky Number Generator", description: "Generate your personal lucky numbers.", category: "fortune", file: "lucky-numbers.html" },
             
             // Life Tools
-            { title: "Age Calculator", description: "Calculate your exact age in years, months, days.", category: "life", file: "age-calculator.html" },
-            { title: "Time Until", description: "Count down to any important date.", category: "life", file: "time-until.html" },
-            { title: "Birthday Countdown", description: "Count down days until your next birthday.", category: "life", file: "birthday-countdown.html" },
-            { title: "Life Progress", description: "See how much of your life you've lived.", category: "life", file: "life-progress.html" },
-            
-            // Entertainment Tools
-            { title: "Random Fact Generator", description: "Get random interesting facts.", category: "entertainment", file: "random-fact.html" },
-            { title: "Color Generator", description: "Generate random colors and palettes.", category: "entertainment", file: "color-generator.html" },
-            { title: "Random Name Picker", description: "Pick random names from a list.", category: "entertainment", file: "random-name-picker.html" },
-            { title: "Password Generator", description: "Generate secure random passwords.", category: "entertainment", file: "password-generator.html" }
+            { title: "Age Calculator", description: "Calculate your exact age and life cycle phase.", category: "life", file: "age-calculator.html" },
+            { title: "Birthday Countdown", description: "Count down to your solar return - a new astrological year.", category: "life", file: "birthday-countdown.html" },
+            { title: "Life Progress", description: "See your life phases through numerology and astrology.", category: "life", file: "life-progress.html" }
         ];
         
         // Render tools for a specific category
@@ -976,7 +955,7 @@ ${formData.message}
         });
         
         // Initialize all category grids
-        ['numerology', 'relationship', 'purpose', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
+        ['numerology', 'relationship', 'purpose', 'astrology', 'personality', 'fortune', 'life'].forEach(cat => {
             renderCategoryTools(cat);
         });
         
@@ -985,7 +964,7 @@ ${formData.message}
             toggleCategory('numerology');
         } else {
             // On desktop, open all categories
-            ['numerology', 'relationship', 'purpose', 'astrology', 'personality', 'fortune', 'life', 'entertainment'].forEach(cat => {
+            ['numerology', 'relationship', 'purpose', 'astrology', 'personality', 'fortune', 'life'].forEach(cat => {
                 toggleCategory(cat);
             });
         }
