@@ -412,7 +412,6 @@
         }
 
         function handleFormSubmit() {
-            console.log('handleFormSubmit called');
             const preferredName = document.getElementById('preferredName').value.trim();
             
             if (!preferredName) {
@@ -562,7 +561,7 @@
             const readingData = {
                 toolType: 'soul-urge',
                 headerTitle: 'Your Soul Urge Reading',
-                headerSubtitle: 'Your heart\\'s deepest desires revealed',
+                headerSubtitle: "Your heart's deepest desires revealed",
                 number: soulUrge,
                 title: `Soul Urge ${soulUrge}: ${interpretation.title}`,
                 subtitle: `${preferredName}, this is what your heart truly desires`,

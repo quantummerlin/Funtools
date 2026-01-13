@@ -959,15 +959,7 @@ ${formData.message}
             renderCategoryTools(cat);
         });
         
-        // Open first category by default on mobile for better UX
-        if (window.innerWidth < 768) {
-            toggleCategory('numerology');
-        } else {
-            // On desktop, open all categories
-            ['numerology', 'relationship', 'purpose', 'astrology', 'personality', 'fortune', 'life'].forEach(cat => {
-                toggleCategory(cat);
-            });
-        }
+        // All categories start collapsed - user can expand as needed
     </script>
 </body>
 </html>
