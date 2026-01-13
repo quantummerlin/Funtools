@@ -702,3 +702,154 @@ button.submit-btn:active {
     background: rgba(0, 245, 255, 0.3);
     color: var(--text-primary);
 }
+
+/* ===== ALTERNATE TOOL LAYOUT (for newer tools) ===== */
+.tool-header {
+    text-align: center;
+    margin-bottom: clamp(25px, 5vw, 50px);
+    padding: clamp(15px, 4vw, 40px);
+}
+
+.tool-header .tool-icon {
+    font-size: clamp(3rem, 8vw, 5rem);
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 20px rgba(255, 217, 61, 0.5));
+}
+
+.tool-header h1 {
+    font-family: 'Cinzel Decorative', 'Cinzel', serif;
+    font-size: clamp(1.3rem, 4.5vw, 2.8rem);
+    margin-bottom: 15px;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: clamp(0px, 0.2vw, 2px);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.tool-header .tool-description {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.95rem, 2.5vw, 1.25rem);
+    color: var(--text-accent-cyan);
+    opacity: 0.9;
+    font-style: italic;
+}
+
+.tool-form {
+    background: var(--bg-card);
+    border: 2px solid rgba(0, 245, 255, 0.3);
+    border-radius: 20px;
+    padding: clamp(20px, 4vw, 50px);
+    margin-bottom: 30px;
+    box-shadow: 0 0 40px rgba(0, 245, 255, 0.1);
+}
+
+.tool-form h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--text-accent-gold);
+    margin-bottom: 1rem;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+}
+
+.tool-form .form-group {
+    margin-bottom: 20px;
+}
+
+.tool-form label {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-accent-cyan);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.tool-form input[type="text"],
+.tool-form input[type="date"],
+.tool-form input[type="time"],
+.tool-form select {
+    width: 100%;
+    padding: clamp(12px, 2vw, 15px);
+    border: 2px solid rgba(0, 245, 255, 0.3);
+    background: rgba(10, 10, 20, 0.8);
+    color: var(--text-primary);
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    transition: all 0.3s;
+}
+
+.tool-form input:focus,
+.tool-form select:focus {
+    outline: none;
+    border-color: var(--text-accent-gold);
+    box-shadow: 0 0 20px rgba(255, 217, 61, 0.3);
+}
+
+/* Dual-column layout for compatibility tools - responsive */
+.tool-form > div[style*="grid-template-columns: 1fr 1fr"] {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+}
+
+@media (min-width: 600px) {
+    .tool-form > div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+.result-section {
+    background: var(--bg-card);
+    border: 2px solid rgba(255, 217, 61, 0.3);
+    border-radius: 20px;
+    padding: clamp(20px, 4vw, 40px);
+    margin-top: 30px;
+}
+
+/* Profile selector for dual forms */
+.profile-selector {
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.profile-selector label {
+    color: #BF5AF2;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+.profile-selector select {
+    flex: 1;
+    min-width: 120px;
+    padding: 8px 12px;
+    background: rgba(10, 10, 20, 0.8);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    color: var(--text-primary);
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--text-accent-cyan);
+    text-decoration: none;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    font-family: 'Cinzel', serif;
+    transition: all 0.3s;
+}
+
+.back-link:hover {
+    color: var(--text-accent-gold);
+    transform: translateX(-5px);
+}
