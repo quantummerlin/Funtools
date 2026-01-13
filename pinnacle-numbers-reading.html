@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinnacle Numbers Reading | Quantum Merlin</title>
+    <meta name="description" content="Discover your four life pinnacles - the major themes and opportunities in each phase of your life.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(255, 215, 0, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(138, 43, 226, 0.4); }
+        .pinnacle-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .pinnacle { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border-left: 4px solid var(--accent-color); }
+        .current-pinnacle { border-left-color: gold; background: rgba(255,215,0,0.1); }
+        .timeline { display: flex; justify-content: space-between; margin: 2rem 0; flex-wrap: wrap; }
+        .timeline-item { text-align: center; padding: 1rem; flex: 1; min-width: 120px; }
+    </style>
+</head>
+<body>
+    <a href="tools_index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">🏔️</div>
+            <h1>Pinnacle Numbers Reading</h1>
+            <p class="tool-description">Discover the four major phases of your life and the opportunities each brings</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculatePinnacles(event)">
+            <div class="form-group">
+                <label for="preferredName">Your Name (optional)</label>
+                <input type="text" id="preferredName" placeholder="How should we address you?">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <button type="submit" class="submit-btn">🏔️ Calculate Pinnacles</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const pinnacleMeanings = {
+            1: { theme: "Independence & Leadership", description: "Learning to stand on your own, lead, and assert yourself. Opportunities for new beginnings and pioneering ventures.", focus: "Develop courage, initiative, and self-reliance" },
+            2: { theme: "Partnership & Cooperation", description: "Learning diplomacy, patience, and partnership. Opportunities through relationships and collaborative efforts.", focus: "Develop patience, cooperation, and emotional intelligence" },
+            3: { theme: "Expression & Creativity", description: "Learning creative expression and communication. Opportunities through artistic pursuits and social connections.", focus: "Develop creativity, joy, and self-expression" },
+            4: { theme: "Foundation & Hard Work", description: "Learning discipline and building solid foundations. Opportunities through persistent effort and practical work.", focus: "Develop discipline, organization, and persistence" },
+            5: { theme: "Freedom & Change", description: "Learning adaptability and embracing change. Opportunities through travel, variety, and new experiences.", focus: "Develop flexibility, courage to change, and resourcefulness" },
+            6: { theme: "Responsibility & Service", description: "Learning to nurture and take responsibility. Opportunities through family, community, and service.", focus: "Develop compassion, responsibility, and ability to nurture" },
+            7: { theme: "Wisdom & Spiritual Growth", description: "Learning to go within and develop wisdom. Opportunities through study, contemplation, and spiritual pursuits.", focus: "Develop intuition, wisdom, and spiritual understanding" },
+            8: { theme: "Power & Achievement", description: "Learning to handle power and achieve success. Opportunities through business and material accomplishment.", focus: "Develop ambition, business skills, and ability to manifest" },
+            9: { theme: "Completion & Humanitarian Service", description: "Learning compassion and letting go. Opportunities through service to humanity and artistic expression.", focus: "Develop compassion, wisdom, and ability to serve" },
+            11: { theme: "Illumination & Inspiration", description: "Learning to channel higher wisdom and inspire others. Opportunities through spiritual teaching and illumination.", focus: "Develop spiritual gifts, intuition, and ability to inspire" },
+            22: { theme: "Master Builder", description: "Learning to manifest grand visions into reality. Opportunities through large-scale projects that serve humanity.", focus: "Develop practical idealism and ability to build lasting structures" }
+        };
+
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22) {
+                num = String(num).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+
+        function calculatePinnacles(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value || 'Seeker';
+            const birthDate = document.getElementById('birthDate').value;
+            const [year, month, day] = birthDate.split('-').map(Number);
+            
+            const currentYear = new Date().getFullYear();
+            const currentAge = currentYear - year;
+            
+            // Calculate Life Path for transition ages
+            let lpSum = 0;
+            String(day).split('').forEach(d => lpSum += parseInt(d));
+            String(month).split('').forEach(d => lpSum += parseInt(d));
+            String(year).split('').forEach(d => lpSum += parseInt(d));
+            const lifePath = reduceToSingle(lpSum);
+            
+            // Calculate transition ages
+            const firstTransition = 36 - lifePath;
+            const secondTransition = firstTransition + 9;
+            const thirdTransition = secondTransition + 9;
+            
+            // Calculate pinnacle numbers
+            const monthReduced = reduceToSingle(month);
+            const dayReduced = reduceToSingle(day);
+            const yearReduced = reduceToSingle(year);
+            
+            const pinnacle1 = reduceToSingle(monthReduced + dayReduced);
+            const pinnacle2 = reduceToSingle(dayReduced + yearReduced);
+            const pinnacle3 = reduceToSingle(pinnacle1 + pinnacle2);
+            const pinnacle4 = reduceToSingle(monthReduced + yearReduced);
+            
+            const pinnacles = [
+                { number: pinnacle1, startAge: 0, endAge: firstTransition, label: "First Pinnacle" },
+                { number: pinnacle2, startAge: firstTransition, endAge: secondTransition, label: "Second Pinnacle" },
+                { number: pinnacle3, startAge: secondTransition, endAge: thirdTransition, label: "Third Pinnacle" },
+                { number: pinnacle4, startAge: thirdTransition, endAge: 120, label: "Fourth Pinnacle" }
+            ];
+            
+            showResult(name, pinnacles, currentAge);
+        }
+
+        function showResult(name, pinnacles, currentAge) {
+            const timeline = pinnacles.map(p => `
+                <div class="timeline-item">
+                    <div style="font-size: 2rem; color: ${currentAge >= p.startAge && currentAge < p.endAge ? 'gold' : 'var(--accent-color)'};">
+                        ${p.number}
+                    </div>
+                    <div style="font-size: 0.9rem; margin-top: 0.5rem;">
+                        Ages ${p.startAge}-${p.endAge === 120 ? '+' : p.endAge}
+                    </div>
+                    <div style="font-size: 0.8rem; opacity: 0.7;">
+                        ${p.label}
+                    </div>
+                </div>
+            `).join('');
+            
+            const pinnacleCards = pinnacles.map(p => {
+                const data = pinnacleMeanings[p.number];
+                const isCurrent = currentAge >= p.startAge && currentAge < p.endAge;
+                
+                return `
+                    <div class="pinnacle ${isCurrent ? 'current-pinnacle' : ''}">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3>${p.label}: ${p.number}</h3>
+                            <span style="font-size: 0.9rem; opacity: 0.8;">
+                                Ages ${p.startAge}-${p.endAge === 120 ? 'end of life' : p.endAge}
+                                ${isCurrent ? '✨ CURRENT' : ''}
+                            </span>
+                        </div>
+                        <h4 style="color: ${isCurrent ? 'gold' : 'var(--accent-color)'};">${data.theme}</h4>
+                        <p>${data.description}</p>
+                        <p style="margin-top: 0.5rem;"><strong>Focus:</strong> ${data.focus}</p>
+                    </div>
+                `;
+            }).join('');
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="pinnacle-symbol">🏔️</div>
+                    <h2>Your Life Pinnacles</h2>
+                    <p style="text-align: center; margin-bottom: 2rem;">Four major phases, each bringing unique opportunities and lessons</p>
+                    
+                    <div class="timeline">
+                        ${timeline}
+                    </div>
+                    
+                    ${pinnacleCards}
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h3>Understanding Your Pinnacles</h3>
+                        <p>Pinnacle Numbers represent the four major cycles of your life, each bringing specific 
+                        opportunities and lessons. Think of them as mountains to climb - each peak offers a different 
+                        view and teaches different skills.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>First Pinnacle (Spring):</strong> Foundation years - 
+                        learning and growth. This sets the tone for your early life.</p>
+                        
+                        <p style="margin-top: 0.5rem;"><strong>Second Pinnacle (Summer):</strong> Productive years - 
+                        building and achieving. Often your most challenging but productive period.</p>
+                        
+                        <p style="margin-top: 0.5rem;"><strong>Third Pinnacle (Autumn):</strong> Harvest years - 
+                        reaping what you've sown. The synthesis of your first two pinnacles.</p>
+                        
+                        <p style="margin-top: 0.5rem;"><strong>Fourth Pinnacle (Winter):</strong> Wisdom years - 
+                        teaching and legacy. This energy stays with you for the rest of your life.</p>
+                    </div>
+                    
+                    <p style="margin-top: 2rem; text-align: center; font-style: italic;">
+                        ${name}, you are currently ${currentAge} years old, experiencing your 
+                        ${pinnacles.find(p => currentAge >= p.startAge && currentAge < p.endAge).label}.
+                        Each pinnacle builds on the last - trust the journey.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

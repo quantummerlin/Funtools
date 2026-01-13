@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expression Number Reading | Quantum Merlin</title>
+    <meta name="description" content="Discover your Expression Number - the full portrait of your natural talents, abilities, and life purpose.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(186, 85, 211, 0.2), rgba(72, 209, 204, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(186, 85, 211, 0.4); }
+        .expression-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .reading-section { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+    <a href="tools_index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">🎭</div>
+            <h1>Expression Number Reading</h1>
+            <p class="tool-description">Discover your natural talents, abilities, and destined path</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateExpression(event)">
+            <div class="form-group">
+                <label for="fullName">Full Name at Birth</label>
+                <input type="text" id="fullName" required placeholder="e.g., John Michael Smith">
+                <small>Use your full birth certificate name for most accurate results</small>
+            </div>
+            <button type="submit" class="submit-btn">🎭 Get Reading</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const letterValues = {
+            'A': 1, 'J': 1, 'S': 1,
+            'B': 2, 'K': 2, 'T': 2,
+            'C': 3, 'L': 3, 'U': 3,
+            'D': 4, 'M': 4, 'V': 4,
+            'E': 5, 'N': 5, 'W': 5,
+            'F': 6, 'O': 6, 'X': 6,
+            'G': 7, 'P': 7, 'Y': 7,
+            'H': 8, 'Q': 8, 'Z': 8,
+            'I': 9, 'R': 9
+        };
+
+        const expressionReadings = {
+            1: {
+                title: "The Pioneer",
+                essence: "You were born to lead, innovate, and blaze new trails. Your name carries the vibration of independence and originality.",
+                talents: "Natural leadership, innovation, courage, independence, entrepreneurial spirit, self-motivation, pioneering vision",
+                lifeGoal: "To develop courage and lead others toward new frontiers. You're here to initiate, create, and stand independently.",
+                strengths: "Bold, original, confident, determined, creative, willing to take risks, natural authority",
+                challenges: "Can be overly aggressive, domineering, impatient, self-centered, or too independent to collaborate effectively",
+                career: "Entrepreneur, inventor, CEO, pioneer in any field, military leader, architect, innovator",
+                relationships: "You need a partner who respects your independence and can match your energy. You lead in relationships.",
+                advice: "Balance your need for independence with cooperation. Your leadership shines brightest when you inspire rather than dominate."
+            },
+            2: {
+                title: "The Peacemaker",
+                essence: "You were born to harmonize, mediate, and bring people together. Your name carries the vibration of sensitivity and diplomacy.",
+                talents: "Diplomacy, cooperation, intuition, musical ability, mediation, attention to detail, emotional intelligence",
+                lifeGoal: "To create harmony and peace through cooperation and understanding. You're here to unite, support, and facilitate.",
+                strengths: "Diplomatic, patient, sensitive, cooperative, intuitive, tactful, understanding, good listener",
+                challenges: "Can be oversensitive, passive-aggressive, indecisive, overly dependent, or fearful of conflict",
+                career: "Mediator, counselor, diplomat, musician, therapist, assistant, partnership roles, healer",
+                relationships: "You thrive in partnership and seek a deep, harmonious connection. You're the relationship glue.",
+                advice: "Develop confidence in your own opinions. Your gentleness is a strength, not a weakness - use it wisely."
+            },
+            3: {
+                title: "The Creative Communicator",
+                essence: "You were born to express, create, and bring joy. Your name carries the vibration of creativity and communication.",
+                talents: "Artistic expression, communication, writing, speaking, entertaining, optimism, social skills, imagination",
+                lifeGoal: "To express yourself creatively and inspire joy in others. You're here to communicate, create, and uplift.",
+                strengths: "Creative, expressive, optimistic, charming, artistic, socially adept, inspiring, joyful",
+                challenges: "Can be scattered, superficial, overly talkative, dramatic, or unable to focus on one thing",
+                career: "Writer, artist, performer, teacher, speaker, entertainer, designer, social media influencer",
+                relationships: "You need fun, communication, and self-expression in relationships. You bring joy and lightness.",
+                advice: "Focus your considerable creative energy. Discipline doesn't limit your expression - it amplifies it."
+            },
+            4: {
+                title: "The Master Builder",
+                essence: "You were born to build, organize, and create lasting structures. Your name carries the vibration of stability and hard work.",
+                talents: "Organization, discipline, practical skills, persistence, reliability, planning, systems thinking, craftsmanship",
+                lifeGoal: "To build solid foundations and create lasting value through dedicated work. You're here to organize and stabilize.",
+                strengths: "Reliable, disciplined, practical, organized, hardworking, detail-oriented, systematic, trustworthy",
+                challenges: "Can be rigid, stubborn, workaholic, resistant to change, or too focused on rules and procedures",
+                career: "Architect, engineer, accountant, project manager, contractor, administrator, craftsperson, organizer",
+                relationships: "You seek stability and loyalty in relationships. You show love through actions and dedication.",
+                advice: "Allow flexibility in your structures. Sometimes the most stable foundation includes space for growth."
+            },
+            5: {
+                title: "The Freedom Seeker",
+                essence: "You were born to experience, explore, and promote freedom. Your name carries the vibration of change and adventure.",
+                talents: "Adaptability, versatility, communication, marketing, travel, languages, quick thinking, resourcefulness",
+                lifeGoal: "To experience life fully and promote freedom for all. You're here to explore, adapt, and liberate.",
+                strengths: "Adventurous, versatile, adaptable, energetic, curious, progressive, freedom-loving, exciting",
+                challenges: "Can be restless, irresponsible, scattered, overindulgent, or unable to commit to anything long-term",
+                career: "Travel industry, sales, marketing, journalism, entertainer, translator, promoter, anything with variety",
+                relationships: "You need freedom and variety in relationships. You bring excitement and adventure to partnerships.",
+                advice: "Ground your freedom in purpose. True liberty comes from discipline, not escape from responsibility."
+            },
+            6: {
+                title: "The Nurturer",
+                essence: "You were born to nurture, heal, and take responsibility for others. Your name carries the vibration of love and service.",
+                talents: "Nurturing, counseling, teaching, healing, artistic ability, creating beauty, responsibility, compassion",
+                lifeGoal: "To nurture and serve your family and community. You're here to love, heal, and create harmony.",
+                strengths: "Caring, responsible, compassionate, artistic, protective, loyal, balanced, community-minded",
+                challenges: "Can be overly protective, martyrlike, interfering, perfectionist, or carry too much responsibility",
+                career: "Teacher, counselor, healer, nurse, interior designer, artist, chef, community service, parent",
+                relationships: "You're devoted in relationships and may give too much. You need to be needed.",
+                advice: "Learn when to let go. Not everyone needs your help, and you can't save everyone."
+            },
+            7: {
+                title: "The Seeker",
+                essence: "You were born to seek truth, develop wisdom, and understand life's mysteries. Your name carries the vibration of spirituality and analysis.",
+                talents: "Analysis, research, intuition, spiritual understanding, technical skill, introspection, teaching wisdom",
+                lifeGoal: "To seek truth and share wisdom. You're here to understand, analyze, and illuminate the mysteries of life.",
+                strengths: "Analytical, wise, intuitive, spiritual, perfectionistic, dignified, introspective, knowledgeable",
+                challenges: "Can be aloof, overly critical, isolated, secretive, or lost in analysis rather than living",
+                career: "Researcher, scientist, professor, spiritual teacher, analyst, investigator, philosopher, technical specialist",
+                relationships: "You need intellectual and spiritual connection. You may struggle with emotional expression.",
+                advice: "Balance your mind with your heart. Wisdom includes understanding that not everything can be analyzed."
+            },
+            8: {
+                title: "The Powerhouse",
+                essence: "You were born to achieve, build empires, and handle power. Your name carries the vibration of material mastery and authority.",
+                talents: "Business acumen, organization, leadership, financial management, vision, determination, efficiency",
+                lifeGoal: "To achieve material success and use power wisely. You're here to manifest, organize, and lead on a grand scale.",
+                strengths: "Ambitious, efficient, powerful, authoritative, organized, financially savvy, capable, executive",
+                challenges: "Can be materialistic, workaholic, controlling, ruthless, or sacrifice relationships for success",
+                career: "CEO, business owner, financial executive, politician, banker, real estate developer, corporate leader",
+                relationships: "You may struggle to balance work and relationships. You need a partner who understands your ambition.",
+                advice: "Remember that true power includes compassion. Money is a tool for good, not an end in itself."
+            },
+            9: {
+                title: "The Humanitarian",
+                essence: "You were born to serve humanity, teach, and bring completion. Your name carries the vibration of universal love and wisdom.",
+                talents: "Compassion, artistic ability, teaching, healing, philanthropy, idealism, universal understanding",
+                lifeGoal: "To serve humanity and promote universal love. You're here to teach, heal, and complete what others began.",
+                strengths: "Compassionate, artistic, idealistic, generous, understanding, wise, humanitarian, tolerant",
+                challenges: "Can be impractical, emotionally scattered, martyr-like, or trying to save everyone",
+                career: "Teacher, artist, healer, philanthropist, social worker, counselor, minister, humanitarian work",
+                relationships: "You love humanity but may struggle with one-on-one intimacy. You need a cause-driven partner.",
+                advice: "You can't save the world alone. Focus your compassion to make real change, and don't forget self-care."
+            },
+            11: {
+                title: "The Illuminator",
+                essence: "You were born to inspire, illuminate, and channel higher wisdom. Your name carries the master vibration of spiritual insight and inspiration.",
+                talents: "Intuition, inspiration, spiritual teaching, healing, channeling, idealism, inventiveness, illumination",
+                lifeGoal: "To inspire others and channel spiritual wisdom into the world. You're here to illuminate and elevate consciousness.",
+                strengths: "Intuitive, inspiring, idealistic, inventive, spiritual, visionary, charismatic, enlightening",
+                challenges: "Can be impractical, overly idealistic, nervous, self-doubting, or overwhelmed by your own sensitivity",
+                career: "Spiritual teacher, inventor, artist, healer, psychic, counselor, inspirational speaker, visionary leader",
+                relationships: "You need a spiritual connection and understanding partner. Your sensitivity requires gentle handling.",
+                advice: "Ground your inspiration in practical action. You're here to bridge heaven and earth, not escape to the clouds."
+            },
+            22: {
+                title: "The Master Builder",
+                essence: "You were born to turn grand visions into reality and build for humanity. Your name carries the master vibration of practical idealism.",
+                talents: "Manifesting grand visions, practical idealism, leadership, organization on a massive scale, building institutions",
+                lifeGoal: "To build lasting structures that serve humanity. You're here to turn impossible dreams into concrete reality.",
+                strengths: "Visionary, practical, powerful, organized, capable of greatness, builder of institutions, world-changer",
+                challenges: "Can feel overwhelmed by your mission, become dictatorial, or collapse under pressure if ungrounded",
+                career: "International business leader, political leader, large-scale organizer, institution builder, world-changer",
+                relationships: "You need a partner who understands your massive vision and can support your world-changing goals.",
+                advice: "Your path is demanding but rewarding. Stay grounded, take care of yourself, and trust in divine timing."
+            }
+        };
+
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = String(num).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+
+        function calculateExpression(event) {
+            event.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value.toUpperCase();
+            let sum = 0;
+            let letterBreakdown = [];
+            
+            for (let char of fullName) {
+                if (letterValues[char]) {
+                    sum += letterValues[char];
+                    letterBreakdown.push(`${char}=${letterValues[char]}`);
+                }
+            }
+            
+            const expressionNumber = reduceToSingle(sum);
+            showResult(fullName, expressionNumber, letterBreakdown);
+        }
+
+        function showResult(name, number, breakdown) {
+            const reading = expressionReadings[number];
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="expression-symbol">${number}</div>
+                    <h2>Expression Number ${number}: ${reading.title}</h2>
+                    <p style="text-align: center; font-style: italic; margin: 1rem 0;">
+                        The complete portrait of "${name}"
+                    </p>
+                    
+                    <div class="reading-section">
+                        <h3>✨ Your Essence</h3>
+                        <p>${reading.essence}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>🎁 Natural Talents</h3>
+                        <p>${reading.talents}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>🎯 Life Goal</h3>
+                        <p>${reading.lifeGoal}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>💪 Strengths</h3>
+                        <p>${reading.strengths}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>⚠️ Challenges to Overcome</h3>
+                        <p>${reading.challenges}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>💼 Career Paths</h3>
+                        <p>${reading.career}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>❤️ In Relationships</h3>
+                        <p>${reading.relationships}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>🌟 Soul Advice</h3>
+                        <p>${reading.advice}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h4>Calculation Breakdown</h4>
+                        <p style="font-size: 0.9rem; word-break: break-all;">
+                            ${breakdown.join(' + ')} = ${breakdown.reduce((sum, item) => sum + parseInt(item.split('=')[1]), 0)}
+                        </p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+                            Reduced to: ${number}
+                        </p>
+                    </div>
+                    
+                    <p style="margin-top: 2rem; text-align: center; font-style: italic;">
+                        Your Expression Number is the fullest description of your natural abilities.
+                        This is who you are at your core - embrace it!
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

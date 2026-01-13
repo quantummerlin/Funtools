@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lilith (Black Moon) Reading | Quantum Merlin</title>
+    <meta name="description" content="Discover your Lilith sign and understand your shadow self, hidden desires, and wild feminine power.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(139, 0, 139, 0.3), rgba(0, 0, 0, 0.5)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(139, 0, 139, 0.6); }
+        .lilith-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; color: #8b008b; }
+        .shadow-card { background: rgba(139, 0, 139, 0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0; border-left: 3px solid #8b008b; }
+    </style>
+</head>
+<body>
+    <a href="tools_index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">🌑</div>
+            <h1>Black Moon Lilith Reading</h1>
+            <p class="tool-description">Discover your shadow self, repressed desires, and wild feminine power through Lilith</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateLilith(event)">
+            <div class="form-group">
+                <label for="preferredName">Your Name (optional)</label>
+                <input type="text" id="preferredName" placeholder="How should we address you?">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <button type="submit" class="submit-btn">🌑 Reveal Your Lilith</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const signNames = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+        
+        const interpretations = {
+            "Aries": {
+                symbol: "♈",
+                title: "Lilith in Aries",
+                archetype: "The Warrior Queen",
+                shadow: "You've been shamed for your anger, aggression, or need to be first. Society told you to be nice, wait your turn, or let others lead. Your Lilith energy is raw, primal assertiveness that refuses to be tamed.",
+                repressed: ["Your anger and rage", "Sexual aggression or initiation", "Competitive drive", "Need to dominate", "Impulsive desires"],
+                expression: "You reclaim your power by owning your anger, leading unapologetically, and refusing to dim your fire. You teach that feminine rage is sacred and that women can be warriors too.",
+                sexuality: "Sexually, you need to conquer and initiate. You're turned on by challenge, competition, and raw physical passion. You may have been shamed for being 'too aggressive' sexually.",
+                healing: ["Allow yourself to feel and express anger", "Compete without apologizing", "Initiate in all areas of life", "Channel rage into activism", "Own your warrior nature"],
+                darkside: "Unhealed Lilith in Aries can manifest as violence, reckless behavior, inability to cooperate, or using sexuality as a weapon of dominance."
+            },
+            "Taurus": {
+                symbol: "♉",
+                title: "Lilith in Taurus",
+                archetype: "The Sensual Sovereign",
+                shadow: "You've been shamed for your sensuality, materialism, or physical appetites. Society told you to be less indulgent, less focused on pleasure, or that enjoying your body is wrong. Your Lilith energy is unapologetic earthly pleasure.",
+                repressed: ["Sensual and sexual pleasure", "Material desires and luxury", "Possessiveness", "Stubbornness", "Body autonomy"],
+                expression: "You reclaim your power by honoring your body's wisdom, enjoying pleasure without guilt, and building material security on your own terms. You teach that the body is sacred.",
+                sexuality: "Sexually, you need touch, sensuality, and unhurried pleasure. You're turned on by physical beauty, comfort, and being worshipped. You may have been shamed for enjoying sex 'too much.'",
+                healing: ["Indulge your senses guilt-free", "Own your material desires", "Honor your body as temple", "Be unapologetically stubborn", "Define your own values"],
+                darkside: "Unhealed Lilith in Taurus can manifest as greed, extreme possessiveness, using sexuality to gain material things, or hedonism without boundaries."
+            },
+            "Gemini": {
+                symbol: "♊",
+                title: "Lilith in Gemini",
+                archetype: "The Forbidden Voice",
+                shadow: "You've been shamed for your words, curiosity, or mental restlessness. Society told you to be quiet, stop asking questions, or that your thoughts are dangerous. Your Lilith energy is uncensored truth-telling.",
+                repressed: ["Your controversial opinions", "Sexual communication or dirty talk", "Intellectual superiority", "Gossip or secrets", "Mental manipulation"],
+                expression: "You reclaim your power by speaking taboo truths, asking forbidden questions, and using your mind as your weapon. You teach that women's words are powerful magic.",
+                sexuality: "Sexually, you need mental stimulation and verbal play. You're turned on by wit, conversation, and variety. You may have been shamed for talking about sex or having multiple partners.",
+                healing: ["Speak uncomfortable truths", "Write without censoring", "Ask taboo questions", "Own your intelligence", "Embrace mental restlessness"],
+                darkside: "Unhealed Lilith in Gemini can manifest as pathological lying, using words to wound, betraying secrets, or sexual manipulation through communication."
+            },
+            "Cancer": {
+                symbol: "♋",
+                title: "Lilith in Cancer",
+                archetype: "The Dark Mother",
+                shadow: "You've been shamed for your emotional needs, neediness, or maternal instincts (or lack thereof). Society told you to be less emotional, or that you should want to be a mother. Your Lilith energy is emotional sovereignty.",
+                repressed: ["Your emotional intensity", "Maternal ambivalence", "Need for emotional security", "Family rage", "Vulnerability as manipulation"],
+                expression: "You reclaim your power by honoring your emotional truth, choosing whether or not to mother, and refusing to caretake at your own expense. You teach that emotions are power.",
+                sexuality: "Sexually, you need emotional safety to surrender fully. You're turned on by nurturing and being nurtured. You may have been shamed for 'using sex' to get emotional needs met.",
+                healing: ["Feel all emotions without shame", "Choose family on your terms", "Nurture yourself first", "Express maternal rage", "Create safe emotional space"],
+                darkside: "Unhealed Lilith in Cancer can manifest as emotional manipulation, smothering, using vulnerability as control, or rage toward family."
+            },
+            "Leo": {
+                symbol: "♌",
+                title: "Lilith in Leo",
+                archetype: "The Dethroned Queen",
+                shadow: "You've been shamed for your ego, need for attention, or creative self-expression. Society told you to be humble, share the spotlight, or that you're too much. Your Lilith energy is unapologetic radiance.",
+                repressed: ["Your need to be seen and adored", "Creative or sexual expression", "Pride and ego", "Dramatic displays", "Desire for power"],
+                expression: "You reclaim your power by shining without apology, demanding the recognition you deserve, and creating from your heart's desire. You teach that women deserve the throne.",
+                sexuality: "Sexually, you need to be worshipped and seen. You're turned on by admiration, performance, and being the center of attention. You may have been shamed for being a 'sexual exhibitionist.'",
+                healing: ["Take center stage", "Demand recognition", "Create without apology", "Own your royal nature", "Shine bright"],
+                darkside: "Unhealed Lilith in Leo can manifest as narcissism, sexual conquest for ego, demanding constant attention, or crushing others to stay on top."
+            },
+            "Virgo": {
+                symbol: "♍",
+                title: "Lilith in Virgo",
+                archetype: "The Sacred Whore",
+                shadow: "You've been shamed for your body, sexuality, or 'imperfections.' Society told you to be pure, perfect, or asexual. Your Lilith energy is raw, earthy sexuality that refuses purity culture.",
+                repressed: ["Your sexual body and desires", "Imperfections and 'flaws'", "Critical nature", "Service or submission sexually", "Anal retentiveness"],
+                expression: "You reclaim your power by owning your sexuality as sacred, embracing your body's wisdom, and rejecting purity culture. You teach that the body is both holy and sexual.",
+                sexuality: "Sexually, you may be drawn to service, submission, or precise technique. You're turned on by purity/corruption fantasies. You were likely shamed for sexual thoughts or 'dirty' desires.",
+                healing: ["Reject purity culture", "Own sexual 'imperfections'", "Embrace earthy sexuality", "Use discernment, not shame", "Honor your body"],
+                darkside: "Unhealed Lilith in Virgo can manifest as sexual shame, eating disorders, self-harm, using criticism as weapon, or obsessive control of body/sexuality."
+            },
+            "Libra": {
+                symbol: "♎",
+                title: "Lilith in Libra",
+                archetype: "The Unpartnered",
+                shadow: "You've been shamed for your independence, difficulty compromising, or relationship choices. Society told you that you need a partner or that you're too demanding. Your Lilith energy is fierce autonomy within partnership.",
+                repressed: ["Your independence and autonomy", "Unconventional relationships", "Difficulty compromising", "Using sexuality to manipulate", "Rage at injustice"],
+                expression: "You reclaim your power by refusing to settle, demanding equal partnership, and staying whole within relationships. You teach that partnership should enhance, not complete you.",
+                sexuality: "Sexually, you may be drawn to unconventional partnerships or need to maintain autonomy even in intimacy. You're turned on by equality and fairness. You may have been shamed for sexual choices.",
+                healing: ["Stay whole in relationships", "Demand equality", "Refuse to settle", "Choose unconventional partnerships", "Balance autonomy and intimacy"],
+                darkside: "Unhealed Lilith in Libra can manifest as serial relationships, using sex to manipulate, inability to commit, or losing yourself in partnership."
+            },
+            "Scorpio": {
+                symbol: "♏",
+                title: "Lilith in Scorpio",
+                archetype: "The Dark Priestess",
+                shadow: "You've been shamed for your intensity, sexuality, or power. Society told you that you're too much, too sexual, too powerful, or too dark. Your Lilith energy is transformative sexual power.",
+                repressed: ["Your sexual power and magnetism", "Occult or taboo interests", "Desire for control or surrender", "Vengeful feelings", "Transformative rage"],
+                expression: "You reclaim your power by owning your sexual magnetism, embracing the darkness, and wielding transformative power. You teach that sex is magic and darkness is sacred.",
+                sexuality: "Sexually, you need depth, intensity, and transformation. You're turned on by power exchange, taboo, and soul-merging. You may have been demonized for your sexual power.",
+                healing: ["Own your sexual power", "Embrace the shadow", "Practice safe power exchange", "Transform through sex", "Wield magic consciously"],
+                darkside: "Unhealed Lilith in Scorpio can manifest as sexual obsession, manipulation, revenge, abuse of occult power, or using sexuality destructively."
+            },
+            "Sagittarius": {
+                symbol: "♐",
+                title: "Lilith in Sagittarius",
+                archetype: "The Wild Wanderer",
+                shadow: "You've been shamed for your restlessness, bluntness, or refusal to be tamed. Society told you to settle down, be realistic, or stop seeking. Your Lilith energy is untamed freedom and truth.",
+                repressed: ["Your need for freedom and adventure", "Brutal honesty", "Commitment-phobia", "Religious or philosophical rebellion", "Sexual exploration"],
+                expression: "You reclaim your power by refusing to be caged, speaking truth without filter, and exploring endlessly. You teach that some spirits cannot and should not be tamed.",
+                sexuality: "Sexually, you need variety, adventure, and freedom. You're turned on by exotic experiences and new horizons. You may have been shamed for sexual exploration or non-monogamy.",
+                healing: ["Embrace your wildness", "Speak blunt truth", "Explore without guilt", "Question all beliefs", "Refuse domestication"],
+                darkside: "Unhealed Lilith in Sagittarius can manifest as commitment-phobia, brutal insensitivity, using philosophy to avoid depth, or reckless sexual behavior."
+            },
+            "Capricorn": {
+                symbol: "♑",
+                title: "Lilith in Capricorn",
+                archetype: "The Dark Empress",
+                shadow: "You've been shamed for your ambition, authority, or desire for power. Society told you to be less ambitious, that power isn't feminine, or to stay in your place. Your Lilith energy is sovereign authority.",
+                repressed: ["Your ambition and desire for power", "Sexual dominance", "Cold calculation", "Using sex for advancement", "Authority over others"],
+                expression: "You reclaim your power by refusing to apologize for ambition, claiming authority, and building your empire. You teach that women deserve thrones and power.",
+                sexuality: "Sexually, you may be drawn to power dynamics, dominance, or taboo scenarios. You're turned on by authority and control. You may have been shamed for 'using' sexuality strategically.",
+                healing: ["Own your ambition", "Claim authority", "Build your empire", "Dominate unapologetically", "Use power wisely"],
+                darkside: "Unhealed Lilith in Capricorn can manifest as ruthless ambition, using sexuality to climb, cold manipulation, or becoming the oppressor."
+            },
+            "Aquarius": {
+                symbol: "♒",
+                title: "Lilith in Aquarius",
+                archetype: "The Alien Queen",
+                shadow: "You've been shamed for being different, weird, or emotionally detached. Society told you to conform, be normal, or be more emotional. Your Lilith energy is radical uniqueness and revolution.",
+                repressed: ["Your uniqueness and weirdness", "Emotional detachment", "Rebellious sexuality", "Group sexual dynamics", "Shocking others"],
+                expression: "You reclaim your power by embracing your alien nature, revolutionizing sexuality, and refusing to conform. You teach that different is divine.",
+                sexuality: "Sexually, you may be drawn to unconventional practices, group dynamics, or experimental sexuality. You're turned on by the unusual and forbidden. You may have been ostracized for sexual 'weirdness.'",
+                healing: ["Embrace your weirdness", "Revolutionize sexuality", "Refuse conformity", "Shock strategically", "Find your alien tribe"],
+                darkside: "Unhealed Lilith in Aquarius can manifest as using shock for attention, emotional unavailability, sexual experimentation without boundaries, or cold detachment."
+            },
+            "Pisces": {
+                symbol: "♓",
+                title: "Lilith in Pisces",
+                archetype: "The Mystic Seductress",
+                shadow: "You've been shamed for your fantasies, escapism, or spiritual sexuality. Society told you to be practical, that your dreams are unrealistic, or that sex and spirit don't mix. Your Lilith energy is transcendent sexuality.",
+                repressed: ["Your sexual fantasies", "Spiritual or tantric sexuality", "Escapist tendencies", "Boundary-less merging", "Victim/savior dynamics"],
+                expression: "You reclaim your power by honoring your fantasies, merging sex and spirit, and escaping into imagination. You teach that sexuality can be a path to the divine.",
+                sexuality: "Sexually, you need fantasy, romance, and transcendence. You're turned on by spiritual connection and merging boundaries. You may have been shamed for fantasy life or tantric practices.",
+                healing: ["Honor your fantasies", "Merge sex and spirituality", "Create strong boundaries", "Escape consciously", "Channel visions into art"],
+                darkside: "Unhealed Lilith in Pisces can manifest as sexual addiction, victim mentality, boundary violations, using spirituality to bypass reality, or deception in intimacy."
+            }
+        };
+
+        async function calculateLilith(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value || 'Seeker';
+            const birthDate = document.getElementById('birthDate').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '🌑 Calculating...';
+            submitBtn.disabled = true;
+
+            try {
+                const [year, month, day] = birthDate.split('-').map(Number);
+                const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+                
+                // Black Moon Lilith has a ~9 year cycle
+                // Simplified calculation: approximate position based on date
+                const daysFromEpoch = Math.floor((date - new Date('1900-01-01')) / (1000 * 60 * 60 * 24));
+                const lilithCycle = 3232.6; // days per sign approximately
+                const signIndex = Math.floor((daysFromEpoch % (lilithCycle * 12)) / lilithCycle);
+                const lilithSign = signNames[signIndex % 12];
+                
+                showResult(name, lilithSign);
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('Error calculating Lilith: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showResult(name, lilithSign) {
+            const data = interpretations[lilithSign];
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="lilith-symbol">🌑 ${data.symbol}</div>
+                    <h2>${data.title}</h2>
+                    <h3 style="text-align: center; color: #8b008b;">${data.archetype}</h3>
+                    
+                    <div class="shadow-card">
+                        <h3>🌒 Your Shadow Story</h3>
+                        <p>${data.shadow}</p>
+                    </div>
+                    
+                    <h3>What You've Repressed</h3>
+                    <ul>${data.repressed.map(r => `<li>${r}</li>`).join('')}</ul>
+                    
+                    <div class="shadow-card" style="border-color: #9370db;">
+                        <h3>✨ Reclaiming Your Power</h3>
+                        <p>${data.expression}</p>
+                    </div>
+                    
+                    <h3>🔥 Your Sexual Shadow</h3>
+                    <p>${data.sexuality}</p>
+                    
+                    <h3>🌱 Your Healing Path</h3>
+                    <ul>${data.healing.map(h => `<li>${h}</li>`).join('')}</ul>
+                    
+                    <div class="shadow-card" style="border-color: #8b0000; background: rgba(139, 0, 0, 0.1);">
+                        <h3>⚠️ The Shadow's Dark Side</h3>
+                        <p>${data.darkside}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h3>Understanding Lilith</h3>
+                        <p>Black Moon Lilith represents the part of you that has been shamed, repressed, and cast into shadow. 
+                        In mythology, Lilith was Adam's first wife who refused to submit and was demonized for it. 
+                        Your Lilith shows where you've been told to be less, where you've been shamed for your power, 
+                        and where you must reclaim your wild, untamed nature.</p>
+                        
+                        <p style="margin-top: 1rem;">This is not about becoming your worst self - it's about integrating 
+                        what you've repressed. The goal is to own your shadow consciously rather than acting it out unconsciously.</p>
+                    </div>
+                    
+                    <p style="margin-top: 2rem; text-align: center; font-style: italic; color: #8b008b;">
+                        ${name}, your Lilith is not your enemy - she's the part of you that refuses to be tamed. 
+                        Integration, not suppression, is the path to wholeness.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

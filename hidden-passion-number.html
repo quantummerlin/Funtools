@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hidden Passion Number | Quantum Merlin</title>
+    <meta name="description" content="Discover your Hidden Passion - the secret talent that appears most frequently in your name.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(255, 20, 147, 0.2), rgba(138, 43, 226, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(255, 20, 147, 0.4); }
+        .passion-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .chart { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 0.5rem; margin: 1.5rem 0; }
+        .chart-item { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; text-align: center; }
+        .chart-item.max { background: rgba(255, 20, 147, 0.3); border: 2px solid rgba(255, 20, 147, 0.8); }
+    </style>
+</head>
+<body>
+    <a href="tools_index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">🔥</div>
+            <h1>Hidden Passion Number</h1>
+            <p class="tool-description">Discover the secret talent hidden in your name</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculatePassion(event)">
+            <div class="form-group">
+                <label for="fullName">Full Name at Birth</label>
+                <input type="text" id="fullName" required placeholder="e.g., John Michael Smith">
+                <small>Your birth certificate name reveals your hidden talents</small>
+            </div>
+            <button type="submit" class="submit-btn">🔥 Reveal Hidden Passion</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const letterValues = {
+            'A': 1, 'J': 1, 'S': 1,
+            'B': 2, 'K': 2, 'T': 2,
+            'C': 3, 'L': 3, 'U': 3,
+            'D': 4, 'M': 4, 'V': 4,
+            'E': 5, 'N': 5, 'W': 5,
+            'F': 6, 'O': 6, 'X': 6,
+            'G': 7, 'P': 7, 'Y': 7,
+            'H': 8, 'Q': 8, 'Z': 8,
+            'I': 9, 'R': 9
+        };
+
+        const passionMeanings = {
+            1: {
+                passion: "Leadership & Independence",
+                description: "Your hidden passion is to lead and pioneer. You have an intense drive to be first, to stand out, and to assert your individuality.",
+                howItManifests: "You're naturally drawn to situations where you can take charge, start new projects, or do things your own way. Even if you're shy, there's a part of you that wants to be number one.",
+                whenActivated: "When you're allowed to lead or work independently, you come alive. You excel when you can innovate without interference.",
+                careers: "Entrepreneur, CEO, inventor, anything where you can be your own boss or pioneer new territory",
+                advice: "Don't suppress your leadership abilities. Even in collaborative settings, find ways to take initiative.",
+                secretPower: "The ability to motivate yourself and start things from scratch without needing anyone's approval"
+            },
+            2: {
+                passion: "Harmony & Partnership",
+                description: "Your hidden passion is to create peace and work in partnership. You have an intense sensitivity to discord and a gift for bringing people together.",
+                howItManifests: "You're naturally drawn to situations where you can mediate, support, or collaborate. Details fascinate you, and you notice what others miss.",
+                whenActivated: "When you're in a harmonious partnership or helping others get along, you shine. You excel at behind-the-scenes work.",
+                careers: "Mediator, counselor, assistant, diplomat, musician, anyone working in close partnership",
+                advice: "Your sensitivity is a superpower, not a weakness. Trust your ability to read between the lines.",
+                secretPower: "The ability to sense what others need and create harmony in any situation"
+            },
+            3: {
+                passion: "Creative Expression",
+                description: "Your hidden passion is to express yourself creatively and bring joy. You have an intense need to create, communicate, and inspire.",
+                howItManifests: "You're naturally drawn to creative activities - writing, speaking, art, or entertaining. You light up when you can express yourself.",
+                whenActivated: "When you're creating or communicating, you feel most alive. You excel when you can use words, images, or performance.",
+                careers: "Writer, artist, performer, teacher, speaker, designer, any creative field",
+                advice: "Make time for creative expression even if it's not your 'main job.' Your soul needs it.",
+                secretPower: "The ability to communicate ideas and emotions in ways that touch others' hearts"
+            },
+            4: {
+                passion: "Building & Organization",
+                description: "Your hidden passion is to build solid structures and create order. You have an intense drive to make things real, practical, and lasting.",
+                howItManifests: "You're naturally drawn to organizing, planning, building, or fixing things. You love creating systems and seeing tangible results.",
+                whenActivated: "When you're building something concrete or organizing chaos, you're in your element. You excel at detailed work.",
+                careers: "Builder, organizer, engineer, accountant, craftsperson, project manager",
+                advice: "Don't let others dismiss your practical nature as 'boring.' The world needs builders like you.",
+                secretPower: "The ability to turn ideas into reality through patient, persistent effort"
+            },
+            5: {
+                passion: "Freedom & Adventure",
+                description: "Your hidden passion is to experience life fully and promote freedom. You have an intense need for variety, change, and new experiences.",
+                howItManifests: "You're naturally drawn to anything new, exciting, or different. You love travel, learning, and experiencing all life offers.",
+                whenActivated: "When you're free to explore and try new things, you thrive. You excel in dynamic, changing environments.",
+                careers: "Travel industry, sales, marketing, journalism, anything with variety and freedom",
+                advice: "Don't let others make you feel irresponsible for needing freedom. It's your oxygen.",
+                secretPower: "The ability to adapt to anything and find opportunity in change"
+            },
+            6: {
+                passion: "Nurturing & Beauty",
+                description: "Your hidden passion is to nurture others and create beauty. You have an intense need to care for people and make things harmonious.",
+                howItManifests: "You're naturally drawn to helping, teaching, healing, or beautifying. You can't help but take care of others.",
+                whenActivated: "When you're nurturing others or creating beauty, you feel fulfilled. You excel in caring roles.",
+                careers: "Teacher, healer, counselor, parent, designer, chef, any nurturing or beautifying role",
+                advice: "Remember to nurture yourself too. You can't pour from an empty cup.",
+                secretPower: "The ability to create harmony, beauty, and healing wherever you go"
+            },
+            7: {
+                passion: "Truth & Understanding",
+                description: "Your hidden passion is to seek truth and understand life's mysteries. You have an intense need to dig deep and find answers.",
+                howItManifests: "You're naturally drawn to research, analysis, spirituality, or technical pursuits. Surface-level understanding doesn't satisfy you.",
+                whenActivated: "When you're investigating, analyzing, or contemplating deep questions, you're engaged. You excel at specialized knowledge.",
+                careers: "Researcher, analyst, scientist, spiritual teacher, technical specialist, investigator",
+                advice: "Don't let others make you feel weird for wanting to understand everything. Your depth is a gift.",
+                secretPower: "The ability to see beneath the surface and understand what others miss"
+            },
+            8: {
+                passion: "Power & Achievement",
+                description: "Your hidden passion is to achieve material success and handle power. You have an intense drive to accomplish great things and organize on a large scale.",
+                howItManifests: "You're naturally drawn to business, finance, or positions of authority. You think big and want to make things happen.",
+                whenActivated: "When you're in charge of major projects or handling significant resources, you excel. You thrive with responsibility.",
+                careers: "Executive, business owner, financial manager, politician, large-scale organizer",
+                advice: "Don't apologize for your ambition. The world needs people who can get big things done.",
+                secretPower: "The ability to manifest abundance and organize resources for maximum impact"
+            },
+            9: {
+                passion: "Service & Compassion",
+                description: "Your hidden passion is to serve humanity and express universal love. You have an intense desire to help others and make the world better.",
+                howItManifests: "You're naturally drawn to humanitarian causes, teaching, healing, or artistic pursuits. Other people's suffering moves you deeply.",
+                whenActivated: "When you're helping others or contributing to a cause larger than yourself, you feel purposeful. You excel at compassionate service.",
+                careers: "Humanitarian, teacher, healer, artist, counselor, social worker, philanthropist",
+                advice: "You can't save everyone. Focus your compassion where you can make real impact.",
+                secretPower: "The ability to love unconditionally and inspire others through your compassion"
+            }
+        };
+
+        function calculatePassion(event) {
+            event.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value.toUpperCase();
+            const frequency = {};
+            
+            for (let i = 1; i <= 9; i++) {
+                frequency[i] = 0;
+            }
+            
+            for (let char of fullName) {
+                if (letterValues[char]) {
+                    frequency[letterValues[char]]++;
+                }
+            }
+            
+            let maxCount = 0;
+            let passionNumber = 1;
+            
+            for (let num in frequency) {
+                if (frequency[num] > maxCount) {
+                    maxCount = frequency[num];
+                    passionNumber = parseInt(num);
+                }
+            }
+            
+            showResult(fullName, passionNumber, frequency, maxCount);
+        }
+
+        function showResult(name, number, frequency, maxCount) {
+            const reading = passionMeanings[number];
+            
+            const chartHTML = Object.keys(frequency).map(num => `
+                <div class="chart-item ${frequency[num] === maxCount ? 'max' : ''}">
+                    <div style="font-size: 1.5rem; font-weight: bold;">${num}</div>
+                    <div style="font-size: 0.9rem; opacity: 0.8;">${frequency[num]} times</div>
+                </div>
+            `).join('');
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="passion-symbol">🔥</div>
+                    <h2>Your Hidden Passion: ${number}</h2>
+                    <p style="text-align: center; font-style: italic; margin: 1rem 0;">
+                        The number ${number} appears ${maxCount} times in "${name}"
+                    </p>
+                    
+                    <div class="chart">
+                        ${chartHTML}
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>${reading.passion}</h3>
+                        <p>${reading.description}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h4>How It Manifests</h4>
+                        <p>${reading.howItManifests}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h4>When Activated</h4>
+                        <p>${reading.whenActivated}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h4>Career Expression</h4>
+                        <p>${reading.careers}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h4>💎 Your Secret Power</h4>
+                        <p style="color: var(--accent-color);">${reading.secretPower}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h4>🌟 Advice</h4>
+                        <p>${reading.advice}</p>
+                    </div>
+                    
+                    <p style="margin-top: 2rem; text-align: center; font-style: italic;">
+                        Your Hidden Passion reveals what you do naturally and effortlessly when you're being yourself.
+                        This is where your joy and power intersect.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

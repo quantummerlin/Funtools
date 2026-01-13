@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descendant Sign Reading | Quantum Merlin</title>
+    <meta name="description" content="Discover your Descendant sign - what you seek in partners and how others see you in relationships.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(186, 85, 211, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(255, 105, 180, 0.4); }
+        .descendant-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .reading-section { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+    <a href="tools_index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">💑</div>
+            <h1>Descendant Sign Reading</h1>
+            <p class="tool-description">Discover what you seek in partnerships and how others see you</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateDescendant(event)">
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <p style="text-align: center; opacity: 0.7; margin: 1rem 0;">
+                Note: Without birth time, we'll use your Sun sign to approximate your Rising sign,
+                which determines your Descendant. For most accurate results, get your full birth chart.
+            </p>
+            <button type="submit" class="submit-btn">💑 Find My Descendant</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.js"></script>
+    <script>
+        const zodiacSigns = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+        const zodiacSymbols = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
+
+        const descendantReadings = {
+            'Aries': {
+                yourRising: 'Libra',
+                symbol: '♈',
+                youSeek: "A partner who is bold, independent, and takes initiative. You're attracted to confident people who aren't afraid to lead.",
+                attraction: "Courage, directness, passion, independence, pioneering spirit, assertiveness, enthusiasm",
+                inPartnership: "You need a partner who challenges you, keeps things exciting, and isn't afraid of conflict. You want honesty and directness.",
+                whatYouProject: "In relationships, you come across as diplomatic and accommodating, but you actually crave a partner who will shake things up.",
+                lessonToLearn: "To balance your natural harmony-seeking with the passion and directness you desire. To embrace healthy conflict.",
+                idealPartner: "Someone who is assertive without being domineering, passionate without being reckless, independent yet committed.",
+                challenges: "You may attract overly aggressive partners or suppress your need for peace to accommodate a warrior type.",
+                advice: "You don't have to choose between peace and passion. Seek a partner who can be both fierce and fair."
+            },
+            'Taurus': {
+                yourRising: 'Scorpio',
+                symbol: '♉',
+                youSeek: "A partner with depth, intensity, and transformative power. You're drawn to mysterious, passionate people.",
+                attraction: "Intensity, emotional depth, mystery, loyalty, passion, transformative energy, power",
+                inPartnership: "You need a partner who goes deep, isn't afraid of darkness, and can handle your intensity. Surface-level won't satisfy you.",
+                whatYouProject: "You appear stable and easygoing, but you crave emotional intensity and transformation in partnerships.",
+                lessonToLearn: "To embrace depth and transformation while maintaining your stability. To trust the process of change.",
+                idealPartner: "Someone who is deeply emotional yet reliable, intense yet trustworthy, transformative yet committed.",
+                challenges: "You may attract dramatic or controlling partners, or struggle between your need for stability and intensity.",
+                advice: "True stability can handle intensity. Look for depth with devotion, not chaos with control."
+            },
+            'Gemini': {
+                yourRising: 'Sagittarius',
+                symbol: '♊',
+                youSeek: "A partner who is adventurous, philosophical, and expansive. You're attracted to free spirits and big thinkers.",
+                attraction: "Wisdom, adventure, optimism, freedom, philosophical depth, honesty, expansiveness",
+                inPartnership: "You need a partner who expands your horizons, tells the truth, and gives you freedom while staying committed.",
+                whatYouProject: "You seem curious and social, but you actually crave deep wisdom and philosophical connection in partnerships.",
+                lessonToLearn: "To balance your mental agility with the broader philosophical perspective you seek. To go deep as well as wide.",
+                idealPartner: "Someone who is wise yet curious, adventurous yet loyal, honest yet tactful, free yet committed.",
+                challenges: "You may attract preachy or unreliable partners, or struggle between your need for variety and meaning.",
+                advice: "Look for someone who teaches you through experience, not lectures. Seek adventure with purpose."
+            },
+            'Cancer': {
+                yourRising: 'Capricorn',
+                symbol: '♋',
+                youSeek: "A partner who is strong, reliable, and ambitious. You're drawn to people with structure and authority.",
+                attraction: "Strength, reliability, ambition, maturity, discipline, authority, stability, capability",
+                inPartnership: "You need a partner who provides structure, takes responsibility, and has their life together. You want to feel safe.",
+                whatYouProject: "You appear nurturing and emotional, but you crave strength and reliability in a partner.",
+                lessonToLearn: "To balance your emotional nature with the practicality you seek. To be both soft and strong.",
+                idealPartner: "Someone who is strong yet tender, ambitious yet caring, reliable yet emotionally present.",
+                challenges: "You may attract cold or workaholic partners, or try to be too independent to get the strength you need.",
+                advice: "True strength includes emotional availability. Seek capability with compassion, not just success."
+            },
+            'Leo': {
+                yourRising: 'Aquarius',
+                symbol: '♌',
+                youSeek: "A partner who is unique, intellectual, and independent. You're attracted to unconventional, humanitarian types.",
+                attraction: "Uniqueness, intellectual brilliance, independence, humanitarian values, originality, friendship",
+                inPartnership: "You need a partner who is your friend first, respects your individuality, and shares your ideals about making the world better.",
+                whatYouProject: "You appear warm and attention-seeking, but you actually crave intellectual connection and independence.",
+                lessonToLearn: "To balance your need for attention with the emotional space you seek. To be both special and equal.",
+                idealPartner: "Someone who is unique yet loyal, independent yet committed, intellectual yet warm, friendly yet romantic.",
+                challenges: "You may attract detached or overly eccentric partners, or suppress your warmth to appear cool.",
+                advice: "You can be both radiant and equal. Seek someone who celebrates your light while maintaining their own."
+            },
+            'Virgo': {
+                yourRising: 'Pisces',
+                symbol: '♍',
+                youSeek: "A partner who is spiritual, artistic, and compassionate. You're drawn to dreamers and empaths.",
+                attraction: "Spirituality, creativity, compassion, intuition, artistic talent, empathy, transcendence",
+                inPartnership: "You need a partner who sees beyond the material, connects spiritually, and brings magic to your practical life.",
+                whatYouProject: "You appear analytical and practical, but you crave spiritual depth and creative connection.",
+                lessonToLearn: "To balance your practicality with the spirituality you seek. To embrace both logic and magic.",
+                idealPartner: "Someone who is spiritual yet grounded, artistic yet reliable, compassionate yet boundaried.",
+                challenges: "You may attract spacey or victim-minded partners, or criticize the very dreaminess you crave.",
+                advice: "You don't have to choose between practical and magical. Seek someone who brings spirit into form."
+            },
+            'Libra': {
+                yourRising: 'Aries',
+                symbol: '♎',
+                youSeek: "A partner who is direct, passionate, and independent. You're attracted to bold, assertive people.",
+                attraction: "Directness, courage, passion, independence, assertiveness, honesty, initiative",
+                inPartnership: "You need a partner who takes charge, makes decisions, and brings excitement without steamrolling you.",
+                whatYouProject: "You appear partnership-oriented and diplomatic, but you crave passion and independence.",
+                lessonToLearn: "To develop your own assertiveness while maintaining your grace. To be both strong and harmonious.",
+                idealPartner: "Someone who is assertive yet considerate, passionate yet respectful, independent yet committed.",
+                challenges: "You may attract selfish or domineering partners, or lose yourself trying to keep the peace.",
+                advice: "True partnership includes healthy assertion. Seek someone who inspires your courage, not dominates you."
+            },
+            'Scorpio': {
+                yourRising: 'Taurus',
+                symbol: '♏',
+                youSeek: "A partner who is stable, sensual, and reliable. You're drawn to grounded, loyal people.",
+                attraction: "Stability, sensuality, reliability, loyalty, groundedness, patience, natural beauty",
+                inPartnership: "You need a partner who provides stability, won't abandon you, and can handle your intensity with patience.",
+                whatYouProject: "You appear intense and transformative, but you crave simple stability and loyalty.",
+                lessonToLearn: "To trust in simple pleasures and stable love. To allow yourself to relax and just be.",
+                idealPartner: "Someone who is stable yet deep, sensual yet loyal, patient yet passionate, grounded yet understanding.",
+                challenges: "You may attract stubborn or possessive partners, or test their loyalty until you push them away.",
+                advice: "True loyalty doesn't need constant testing. Seek someone whose stability can hold your intensity."
+            },
+            'Sagittarius': {
+                yourRising: 'Gemini',
+                symbol: '♐',
+                youSeek: "A partner who is curious, communicative, and mentally agile. You're attracted to clever, versatile people.",
+                attraction: "Intelligence, curiosity, communication skills, versatility, wit, mental agility, youthfulness",
+                inPartnership: "You need a partner who can match your mental energy, communicate well, and keep things interesting.",
+                whatYouProject: "You appear philosophical and adventurous, but you crave intellectual stimulation and communication.",
+                lessonToLearn: "To balance your big-picture thinking with attention to details and daily communication.",
+                idealPartner: "Someone who is intelligent yet wise, communicative yet deep, curious yet committed, witty yet sincere.",
+                challenges: "You may attract flighty or superficial partners, or dismiss the very details you need.",
+                advice: "Great adventure includes great conversation. Seek someone who explores ideas as much as places."
+            },
+            'Capricorn': {
+                yourRising: 'Cancer',
+                symbol: '♑',
+                youSeek: "A partner who is nurturing, emotional, and family-oriented. You're drawn to caring, sensitive people.",
+                attraction: "Emotional depth, nurturing nature, family values, sensitivity, care, intuition, warmth",
+                inPartnership: "You need a partner who softens you, provides emotional safety, and creates a warm home with you.",
+                whatYouProject: "You appear strong and ambitious, but you crave emotional nurturing and a sense of home.",
+                lessonToLearn: "To allow yourself to be vulnerable and receive care. To value emotions as much as achievements.",
+                idealPartner: "Someone who is nurturing yet strong, emotional yet stable, caring yet capable, warm yet not clingy.",
+                challenges: "You may attract overly dependent partners, or wall off from the very tenderness you need.",
+                advice: "Success means nothing without love. Seek someone who makes you feel safe to be soft."
+            },
+            'Aquarius': {
+                yourRising: 'Leo',
+                symbol: '♒',
+                youSeek: "A partner who is confident, warm, and creative. You're attracted to radiant, generous people.",
+                attraction: "Confidence, warmth, creativity, generosity, playfulness, loyalty, radiance",
+                inPartnership: "You need a partner who brings warmth to your coolness, loyalty to your independence, and heart to your head.",
+                whatYouProject: "You appear detached and intellectual, but you crave warmth, loyalty, and creative expression.",
+                lessonToLearn: "To balance your detachment with the warmth you seek. To let your heart lead sometimes.",
+                idealPartner: "Someone who is warm yet respectful of space, loyal yet independent, creative yet supportive of your ideals.",
+                challenges: "You may attract attention-seeking or dramatic partners, or remain too aloof for real connection.",
+                advice: "True connection doesn't threaten your freedom. Seek someone whose warmth melts your walls, not your independence."
+            },
+            'Pisces': {
+                yourRising: 'Virgo',
+                symbol: '♓',
+                youSeek: "A partner who is practical, helpful, and grounded. You're drawn to organized, competent people.",
+                attraction: "Practicality, competence, helpfulness, organization, reliability, analytical mind, attention to detail",
+                inPartnership: "You need a partner who grounds you, handles practical matters, and helps you manifest your dreams.",
+                whatYouProject: "You appear dreamy and spiritual, but you crave practical help and grounded partnership.",
+                lessonToLearn: "To value practical service as an expression of love. To bring your dreams into reality.",
+                idealPartner: "Someone who is practical yet spiritual, helpful yet not critical, grounded yet understanding of your sensitivity.",
+                challenges: "You may attract overly critical partners, or drift off rather than dealing with practical needs.",
+                advice: "Magic needs structure to manifest. Seek someone who helps you bring heaven to earth."
+            }
+        };
+
+        function getSunSign(birthDate) {
+            const date = new Date(birthDate);
+            const sunPos = Astronomy.SunPosition(new Astronomy.AstroTime(date));
+            const eclipticLon = sunPos.elon;
+            const signIndex = Math.floor(eclipticLon / 30);
+            return zodiacSigns[signIndex];
+        }
+
+        function getOppositeSign(sign) {
+            const index = zodiacSigns.indexOf(sign);
+            const oppositeIndex = (index + 6) % 12;
+            return zodiacSigns[oppositeIndex];
+        }
+
+        function calculateDescendant(event) {
+            event.preventDefault();
+            
+            const birthDate = document.getElementById('birthDate').value;
+            
+            // Get sun sign and approximate rising sign (opposite)
+            const sunSign = getSunSign(birthDate);
+            // For approximation, we'll use sun sign as potential rising influence
+            // Descendant is opposite the rising sign
+            // Since we don't have time, we'll create readings for all possibilities
+            // but present based on sun sign polarity
+            
+            // Use sun sign to approximate (Descendant = opposite of rising)
+            // We'll assume rising might be similar to sun or its opposite
+            const descendantSign = sunSign; // Simplified: using sun sign's descendant quality
+            
+            showResult(descendantSign);
+        }
+
+        function showResult(descendantSign) {
+            const reading = descendantReadings[descendantSign];
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="descendant-symbol">${reading.symbol}</div>
+                    <h2>Descendant in ${descendantSign}</h2>
+                    <p style="text-align: center; font-style: italic; margin: 1rem 0;">
+                        (Approximate Rising Sign: ${reading.yourRising})
+                    </p>
+                    
+                    <div class="reading-section">
+                        <h3>💖 What You Seek in Partners</h3>
+                        <p>${reading.youSeek}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>✨ You're Attracted To</h3>
+                        <p>${reading.attraction}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>🤝 In Partnership You Need</h3>
+                        <p>${reading.inPartnership}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>🎭 What You Project vs What You Seek</h3>
+                        <p>${reading.whatYouProject}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>📚 Your Relationship Lesson</h3>
+                        <p>${reading.lessonToLearn}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>💑 Your Ideal Partner</h3>
+                        <p>${reading.idealPartner}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>⚠️ Relationship Challenges</h3>
+                        <p>${reading.challenges}</p>
+                    </div>
+                    
+                    <div class="reading-section">
+                        <h3>🌟 Soul Advice</h3>
+                        <p>${reading.advice}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h4>Understanding Your Descendant</h4>
+                        <p>Your Descendant (7th house cusp) represents what you seek in partnerships and how 
+                        you approach one-on-one relationships. It's opposite your Rising sign (Ascendant), which 
+                        represents how you present yourself to the world.</p>
+                        <p style="margin-top: 0.5rem;">You're naturally ${reading.yourRising} Rising (the way you appear), 
+                        so you seek ${descendantSign} qualities in partners - the qualities that balance and complete you.</p>
+                        <p style="margin-top: 0.5rem;"><em>Note: This reading is approximate without exact birth time. 
+                        For your true Descendant, get a full birth chart with accurate birth time.</em></p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

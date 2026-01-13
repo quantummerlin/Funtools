@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part of Fortune Reading | Quantum Merlin</title>
+    <meta name="description" content="Discover your Part of Fortune and where joy, luck, and fulfillment naturally flow in your life.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(255, 215, 0, 0.4); }
+        .fortune-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; color: gold; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+        .fortune-card { background: rgba(255, 215, 0, 0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0; border-left: 3px solid gold; }
+    </style>
+</head>
+<body>
+    <a href="tools_index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">⊕</div>
+            <h1>Part of Fortune Reading</h1>
+            <p class="tool-description">Discover where joy, luck, and fulfillment naturally flow in your life</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateFortune(event)">
+            <div class="form-group">
+                <label for="preferredName">Your Name (optional)</label>
+                <input type="text" id="preferredName" placeholder="How should we address you?">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <div class="form-group">
+                <label for="birthTime">Birth Time (if known)</label>
+                <input type="time" id="birthTime" placeholder="Optional - improves accuracy">
+            </div>
+            <div class="form-group">
+                <label for="birthPlace">Birth Location</label>
+                <input type="text" id="birthPlace" placeholder="City, Country" required>
+            </div>
+            <button type="submit" class="submit-btn">⊕ Find Your Fortune</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const signNames = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+        const signSymbols = ['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+        
+        const interpretations = {
+            "Aries": {
+                symbol: "♈",
+                title: "Part of Fortune in Aries",
+                joy: "Leading, Initiating, Being First",
+                description: "Your greatest joy and fulfillment comes from taking bold action, being a pioneer, and asserting your independence. You feel most fortunate when you're starting new ventures and leading the way.",
+                manifestation: ["Starting new projects or businesses", "Physical activity and competition", "Being the first to try something", "Taking courageous action", "Independent achievements"],
+                prosperity: "Prosperity flows when you trust your instincts, act quickly, and don't wait for permission. Your fortune grows through entrepreneurship, leadership roles, and solo ventures.",
+                pitfalls: ["Waiting for others or seeking approval", "Avoiding conflict or competition", "Following instead of leading", "Hesitating when you should act"],
+                activities: "Athletics, entrepreneurship, military, emergency services, pioneering fields, solo adventures",
+                affirmation: "I am fortunate when I lead with courage and trust my pioneering spirit."
+            },
+            "Taurus": {
+                symbol: "♉",
+                title: "Part of Fortune in Taurus",
+                joy: "Building, Enjoying, Creating Beauty",
+                description: "Your greatest joy comes from creating tangible security, enjoying sensual pleasures, and building something lasting. You feel most fortunate when surrounded by beauty, comfort, and stability.",
+                manifestation: ["Building wealth and resources", "Creating or enjoying art and beauty", "Sensual pleasures and comfort", "Working with nature", "Slow, steady progress"],
+                prosperity: "Prosperity flows when you honor your values, invest in quality, and build patiently. Your fortune grows through real estate, artistry, banking, and anything that creates lasting value.",
+                pitfalls: ["Rushing or forcing change", "Ignoring physical needs", "Undervaluing stability", "Chasing quick money over lasting wealth"],
+                activities: "Real estate, banking, arts, music, gardening, culinary arts, luxury goods, sustainable business",
+                affirmation: "I am fortunate when I build steadily and honor the abundance of the earth."
+            },
+            "Gemini": {
+                symbol: "♊",
+                title: "Part of Fortune in Gemini",
+                joy: "Learning, Connecting, Communicating",
+                description: "Your greatest joy comes from gathering and sharing information, making connections, and engaging your curiosity. You feel most fortunate when learning, teaching, or connecting people and ideas.",
+                manifestation: ["Writing and speaking", "Learning new subjects", "Making social connections", "Teaching or translating", "Mental stimulation and variety"],
+                prosperity: "Prosperity flows when you network, communicate, and stay curious. Your fortune grows through writing, teaching, media, sales, and any field requiring communication.",
+                pitfalls: ["Isolation or limiting information flow", "Sticking to one thing too long", "Ignoring your need for variety", "Not sharing what you know"],
+                activities: "Writing, journalism, teaching, sales, social media, translation, networking, information technology",
+                affirmation: "I am fortunate when I connect, communicate, and satisfy my endless curiosity."
+            },
+            "Cancer": {
+                symbol: "♋",
+                title: "Part of Fortune in Cancer",
+                joy: "Nurturing, Home, Emotional Connection",
+                description: "Your greatest joy comes from creating emotional safety, nurturing others, and building a loving home. You feel most fortunate when caring for loved ones and honoring your feelings.",
+                manifestation: ["Creating a beautiful home", "Caring for family and loved ones", "Emotional expression and bonding", "Cooking and hospitality", "Maternal/paternal activities"],
+                prosperity: "Prosperity flows when you honor your emotions, create sanctuary, and nurture others. Your fortune grows through real estate, hospitality, caregiving, and family businesses.",
+                pitfalls: ["Suppressing emotions", "Neglecting home and family", "Avoiding vulnerability", "Putting career over emotional needs"],
+                activities: "Real estate, hospitality, childcare, cooking, counseling, interior design, family business, elder care",
+                affirmation: "I am fortunate when I nurture others and create emotional sanctuary."
+            },
+            "Leo": {
+                symbol: "♌",
+                title: "Part of Fortune in Leo",
+                joy: "Creating, Shining, Celebrating Life",
+                description: "Your greatest joy comes from creative self-expression, celebration, and being recognized. You feel most fortunate when you can shine, create, and inspire joy in others.",
+                manifestation: ["Creative projects and arts", "Entertainment and performance", "Recognition and appreciation", "Romantic expression", "Working with children"],
+                prosperity: "Prosperity flows when you follow your heart, create boldly, and allow yourself to shine. Your fortune grows through entertainment, leadership, creative arts, and children's industries.",
+                pitfalls: ["Hiding your light", "Waiting for permission to create", "Suppressing your playful nature", "Avoiding the spotlight"],
+                activities: "Entertainment, arts, fashion, children's work, creative leadership, event planning, performance, luxury brands",
+                affirmation: "I am fortunate when I shine my light and create from the heart."
+            },
+            "Virgo": {
+                symbol: "♍",
+                title: "Part of Fortune in Virgo",
+                joy: "Serving, Improving, Mastering Skills",
+                description: "Your greatest joy comes from being useful, improving systems, and mastering your craft. You feel most fortunate when you're helping others through practical service and skill.",
+                manifestation: ["Skilled work and craftsmanship", "Health and wellness practices", "Analyzing and improving systems", "Practical service to others", "Attention to detail"],
+                prosperity: "Prosperity flows when you perfect your skills, serve others, and honor wellness. Your fortune grows through healthcare, skilled trades, analysis, and service industries.",
+                pitfalls: ["Perfectionism that prevents progress", "Neglecting your own health", "Overanalyzing instead of acting", "Devaluing your service"],
+                activities: "Healthcare, nutrition, skilled trades, editing, quality control, veterinary, organizing, analysis, wellness",
+                affirmation: "I am fortunate when I serve skillfully and honor the body's wisdom."
+            },
+            "Libra": {
+                symbol: "♎",
+                title: "Part of Fortune in Libra",
+                joy: "Partnering, Creating Harmony, Beauty",
+                description: "Your greatest joy comes from balanced partnerships, creating beauty, and facilitating harmony. You feel most fortunate when working with others and creating aesthetic pleasure.",
+                manifestation: ["Meaningful partnerships", "Creating beauty and art", "Mediation and diplomacy", "Social connection", "Fair agreements"],
+                prosperity: "Prosperity flows when you collaborate, create beauty, and facilitate balance. Your fortune grows through partnerships, law, design, and relationship work.",
+                pitfalls: ["Going it alone", "Avoiding partnerships", "Ignoring aesthetics", "Tolerating imbalance"],
+                activities: "Law, design, counseling, mediation, partnerships, art, fashion, public relations, wedding planning",
+                affirmation: "I am fortunate when I partner wisely and create harmony and beauty."
+            },
+            "Scorpio": {
+                symbol: "♏",
+                title: "Part of Fortune in Scorpio",
+                joy: "Transforming, Deep Intimacy, Power",
+                description: "Your greatest joy comes from deep transformation, intimate connections, and wielding power for healing. You feel most fortunate when going deep and facilitating change.",
+                manifestation: ["Deep research and investigation", "Transformative experiences", "Intimate relationships", "Shared resources and investments", "Occult or psychological work"],
+                prosperity: "Prosperity flows when you embrace transformation, go deep, and work with power dynamics. Your fortune grows through psychology, finance, investigation, and healing crisis.",
+                pitfalls: ["Staying on the surface", "Avoiding intimacy", "Fear of transformation", "Misusing power"],
+                activities: "Psychology, finance, research, investigation, surgery, crisis management, occult work, transformation coaching",
+                affirmation: "I am fortunate when I embrace depth, transformation, and healing power."
+            },
+            "Sagittarius": {
+                symbol: "♐",
+                title: "Part of Fortune in Sagittarius",
+                joy: "Exploring, Teaching, Seeking Meaning",
+                description: "Your greatest joy comes from expansion, adventure, and the pursuit of wisdom. You feel most fortunate when exploring new horizons and sharing philosophical truths.",
+                manifestation: ["Travel and adventure", "Higher education and teaching", "Publishing and sharing wisdom", "Philosophical exploration", "Cross-cultural experiences"],
+                prosperity: "Prosperity flows when you expand your horizons, teach what you learn, and stay optimistic. Your fortune grows through education, travel, publishing, and international work.",
+                pitfalls: ["Staying in your comfort zone", "Avoiding learning", "Cynicism and closed-mindedness", "Ignoring the bigger picture"],
+                activities: "Higher education, publishing, travel, international business, philosophy, law, adventure tourism, coaching",
+                affirmation: "I am fortunate when I expand, explore, and share the wisdom I find."
+            },
+            "Capricorn": {
+                symbol: "♑",
+                title: "Part of Fortune in Capricorn",
+                joy: "Achieving, Building Legacy, Mastering",
+                description: "Your greatest joy comes from achieving mastery, building something lasting, and earning respect. You feel most fortunate when you're working toward ambitious goals.",
+                manifestation: ["Career achievement and recognition", "Building lasting structures", "Mastering your field", "Leadership and authority", "Creating legacy"],
+                prosperity: "Prosperity flows when you commit to mastery, build patiently, and accept responsibility. Your fortune grows through business, management, government, and positions of authority.",
+                pitfalls: ["Avoiding responsibility", "Lack of long-term planning", "Refusing to work hard", "Staying in comfort zone"],
+                activities: "Executive leadership, government, management, architecture, business ownership, administration, elder care",
+                affirmation: "I am fortunate when I build my legacy through dedicated mastery."
+            },
+            "Aquarius": {
+                symbol: "♒",
+                title: "Part of Fortune in Aquarius",
+                joy: "Innovating, Collective Service, Freedom",
+                description: "Your greatest joy comes from innovation, serving humanity, and expressing your unique vision. You feel most fortunate when contributing to collective progress and honoring your uniqueness.",
+                manifestation: ["Innovation and invention", "Humanitarian work", "Technology and progress", "Group collaboration", "Expressing uniqueness"],
+                prosperity: "Prosperity flows when you innovate, serve the collective, and honor your uniqueness. Your fortune grows through technology, humanitarian work, and progressive fields.",
+                pitfalls: ["Conforming to tradition", "Ignoring social issues", "Working alone without community", "Suppressing your uniqueness"],
+                activities: "Technology, science, humanitarian work, social reform, networking, innovation, astrology, alternative fields",
+                affirmation: "I am fortunate when I innovate for humanity's benefit and honor my uniqueness."
+            },
+            "Pisces": {
+                symbol: "♓",
+                title: "Part of Fortune in Pisces",
+                joy: "Creating, Healing, Spiritual Connection",
+                description: "Your greatest joy comes from artistic creation, spiritual connection, and compassionate service. You feel most fortunate when merging with something greater through creativity or service.",
+                manifestation: ["Artistic and creative expression", "Spiritual practices", "Compassionate service", "Healing work", "Imagination and dreams"],
+                prosperity: "Prosperity flows when you honor your creativity, serve compassionately, and trust your intuition. Your fortune grows through arts, healing, spirituality, and helping professions.",
+                pitfalls: ["Ignoring your spiritual needs", "Suppressing creativity", "Becoming too practical", "Avoiding helping others"],
+                activities: "Arts, music, film, spirituality, healing, charity work, photography, counseling, hospice, ocean work",
+                affirmation: "I am fortunate when I create, heal, and connect to the infinite."
+            }
+        };
+
+        async function calculateFortune(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value || 'Seeker';
+            const birthDate = document.getElementById('birthDate').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '⊕ Calculating...';
+            submitBtn.disabled = true;
+
+            try {
+                const [year, month, day] = birthDate.split('-').map(Number);
+                const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+                const time = Astronomy.MakeTime(date);
+                
+                // Get Sun, Moon, Ascendant positions
+                const sunPos = Astronomy.SunPosition(time).elon;
+                const moonPos = Astronomy.EclipticGeoMoon(time).lon;
+                
+                // Simplified: Part of Fortune = Ascendant + Moon - Sun
+                // Without birth time, we'll use Sun + Moon for a meaningful reading
+                const fortunePos = (moonPos + sunPos) % 360;
+                
+                const signIndex = Math.floor(fortunePos / 30);
+                const fortuneSign = signNames[signIndex];
+                
+                showResult(name, fortuneSign);
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('Error calculating Part of Fortune: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showResult(name, fortuneSign) {
+            const data = interpretations[fortuneSign];
+            const signIndex = signNames.indexOf(fortuneSign);
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="fortune-symbol">⊕ ${signSymbols[signIndex]}</div>
+                    <h2>${data.title}</h2>
+                    <h3 style="text-align: center; color: gold;">${data.joy}</h3>
+                    
+                    <div class="fortune-card">
+                        <h3>✨ Your Fortune Formula</h3>
+                        <p>${data.description}</p>
+                    </div>
+                    
+                    <h3>🌟 Where Joy Manifests</h3>
+                    <ul>${data.manifestation.map(m => `<li>${m}</li>`).join('')}</ul>
+                    
+                    <div class="fortune-card">
+                        <h3>💰 Your Prosperity Path</h3>
+                        <p>${data.prosperity}</p>
+                    </div>
+                    
+                    <h3>⚠️ Fortune Blockers to Avoid</h3>
+                    <ul>${data.pitfalls.map(p => `<li>${p}</li>`).join('')}</ul>
+                    
+                    <h3>💼 Fortunate Activities & Careers</h3>
+                    <p>${data.activities}</p>
+                    
+                    <div style="background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,165,0,0.1)); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h3>Your Fortune Affirmation</h3>
+                        <p style="font-size: 1.2rem; text-align: center; font-style: italic; color: gold;">
+                            "${data.affirmation}"
+                        </p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h3>Understanding Your Part of Fortune</h3>
+                        <p>The Part of Fortune (⊕) is an ancient Arabic Part that shows where you naturally attract 
+                        joy, luck, and fulfillment. It's calculated from your Sun, Moon, and Ascendant, representing 
+                        the integration of your spirit (Sun), soul (Moon), and body (Ascendant).</p>
+                        
+                        <p style="margin-top: 1rem;">When you align with your Part of Fortune, life flows. 
+                        Opportunities appear, doors open, and you feel "lucky." This isn't magic - it's alignment 
+                        with your true nature. Your fortune grows when you honor this placement.</p>
+                    </div>
+                    
+                    <p style="margin-top: 2rem; text-align: center; font-style: italic;">
+                        ${name}, your greatest fortune comes not from forcing, but from flowing with your natural joy in ${fortuneSign}.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Day Number | Quantum Merlin</title>
+    <meta name="description" content="Discover your Personal Day Number - the energy and opportunities of today based on your numerology.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 105, 180, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(255, 215, 0, 0.4); }
+        .day-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .cycle-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .cycle-box { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; text-align: center; }
+    </style>
+</head>
+<body>
+    <a href="tools_index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">📅</div>
+            <h1>Personal Day Number</h1>
+            <p class="tool-description">Discover today's energy and opportunities for you</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculatePersonalDay(event)">
+            <div class="form-group">
+                <label for="birthDate">Your Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <div class="form-group">
+                <label for="targetDate">Date to Check (leave blank for today)</label>
+                <input type="date" id="targetDate">
+            </div>
+            <button type="submit" class="submit-btn">📅 Calculate</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        const personalDayMeanings = {
+            1: {
+                title: "Personal Day 1: New Beginnings",
+                energy: "Fresh starts, leadership, independence",
+                activities: "Start new projects, take initiative, make important decisions, assert yourself, work independently",
+                favorable: "Starting anything new, leadership opportunities, taking charge, being bold",
+                avoid: "Being aggressive or domineering, ignoring others' input, impatience",
+                affirmation: "I am courageous and ready for new beginnings.",
+                color: "Red",
+                advice: "This is your day to lead and start fresh. Whatever you begin today has strong energy behind it."
+            },
+            2: {
+                title: "Personal Day 2: Cooperation & Patience",
+                energy: "Partnership, diplomacy, sensitivity",
+                activities: "Collaborate with others, work on relationships, pay attention to details, listen carefully, mediate conflicts",
+                favorable: "Partnership work, counseling, detailed work, cooperation, emotional connections",
+                avoid: "Forcing decisions, being confrontational, rushing things, working alone when collaboration is better",
+                affirmation: "I am patient and work harmoniously with others.",
+                color: "Orange",
+                advice: "Today is about connection and cooperation. Your sensitivity and diplomatic skills are heightened."
+            },
+            3: {
+                title: "Personal Day 3: Expression & Joy",
+                energy: "Creativity, communication, socializing",
+                activities: "Express yourself creatively, communicate ideas, socialize, entertain, write, speak, create art",
+                favorable: "Creative projects, social events, communication, presentations, entertainment, joy",
+                avoid: "Scattering energy, gossip, being overly dramatic, avoiding responsibilities for fun",
+                affirmation: "I express myself joyfully and creatively.",
+                color: "Yellow",
+                advice: "Let your creative and social side shine. This is a day for expression and enjoying life."
+            },
+            4: {
+                title: "Personal Day 4: Work & Organization",
+                energy: "Discipline, hard work, building",
+                activities: "Organize, build systems, work hard on practical matters, pay bills, fix things, create structure",
+                favorable: "Detailed work, organization, building foundations, practical tasks, financial planning",
+                avoid: "Being too rigid, overworking, resisting necessary change, missing the forest for the trees",
+                affirmation: "I build solid foundations through dedicated work.",
+                color: "Green",
+                advice: "Roll up your sleeves and get practical work done. Results come from steady, patient effort today."
+            },
+            5: {
+                title: "Personal Day 5: Freedom & Change",
+                energy: "Change, adventure, freedom",
+                activities: "Try new experiences, travel, promote ideas, embrace change, network, be adventurous",
+                favorable: "Travel, new experiences, change, marketing, sales, networking, spontaneity",
+                avoid: "Recklessness, irresponsibility, scattered energy, avoiding commitments",
+                affirmation: "I embrace change and welcome new experiences.",
+                color: "Blue",
+                advice: "Expect the unexpected and welcome it. This is a day for adventure and positive change."
+            },
+            6: {
+                title: "Personal Day 6: Love & Responsibility",
+                energy: "Nurturing, family, service",
+                activities: "Care for others, spend time with family, beautify your space, teach, counsel, take on responsibilities",
+                favorable: "Family matters, counseling, teaching, home improvements, artistic pursuits, service",
+                avoid: "Martyrdom, interfering where not wanted, perfectionism, taking on too much",
+                affirmation: "I nurture others while maintaining healthy boundaries.",
+                color: "Indigo",
+                advice: "Your caring nature is strong today. Help others, but remember to care for yourself too."
+            },
+            7: {
+                title: "Personal Day 7: Reflection & Wisdom",
+                energy: "Introspection, analysis, spirituality",
+                activities: "Meditate, analyze, study, research, spend time alone, seek spiritual understanding, contemplate",
+                favorable: "Research, spiritual practices, studying, analysis, solitude, technical work, contemplation",
+                avoid: "Isolation, overthinking, being too critical, avoiding people entirely",
+                affirmation: "I trust my inner wisdom and spiritual guidance.",
+                color: "Violet",
+                advice: "Go within today. This is a day for reflection, study, and spiritual connection."
+            },
+            8: {
+                title: "Personal Day 8: Power & Achievement",
+                energy: "Ambition, success, material matters",
+                activities: "Handle business, make financial decisions, take on leadership, organize large projects, pursue goals",
+                favorable: "Business dealings, financial matters, leadership, organizing, achieving goals, making power moves",
+                avoid: "Being ruthless, materialistic focus only, dominating others, ignoring spiritual needs",
+                affirmation: "I achieve success while maintaining integrity.",
+                color: "Pink",
+                advice: "This is a power day for you. Handle important business and pursue your ambitions."
+            },
+            9: {
+                title: "Personal Day 9: Completion & Compassion",
+                energy: "Endings, compassion, service",
+                activities: "Complete projects, let go of what's finished, serve others, forgive, practice compassion, donate",
+                favorable: "Finishing things, charitable work, forgiveness, artistic pursuits, humanitarian service, letting go",
+                avoid: "Starting new things (finish first), holding grudges, being impractical, emotional drama",
+                affirmation: "I release what no longer serves and embrace compassion.",
+                color: "Gold",
+                advice: "Finish what you've started and let go of what's done. Your compassion is especially strong today."
+            }
+        };
+
+        function reduceToSingle(num) {
+            while (num > 9) {
+                num = String(num).split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+
+        function calculatePersonalDay(event) {
+            event.preventDefault();
+            
+            const birthDate = document.getElementById('birthDate').value;
+            const [birthYear, birthMonth, birthDay] = birthDate.split('-').map(Number);
+            
+            // Use target date or today
+            let targetDate;
+            const targetInput = document.getElementById('targetDate').value;
+            if (targetInput) {
+                targetDate = new Date(targetInput);
+            } else {
+                targetDate = new Date();
+            }
+            
+            const month = targetDate.getMonth() + 1;
+            const day = targetDate.getDate();
+            const year = targetDate.getFullYear();
+            
+            // Calculate Personal Year
+            const personalYearSum = reduceToSingle(birthMonth) + reduceToSingle(birthDay) + reduceToSingle(year);
+            const personalYear = reduceToSingle(personalYearSum);
+            
+            // Calculate Personal Month
+            const personalMonthSum = personalYear + reduceToSingle(month);
+            const personalMonth = reduceToSingle(personalMonthSum);
+            
+            // Calculate Personal Day
+            const personalDaySum = personalMonth + reduceToSingle(day);
+            const personalDay = reduceToSingle(personalDaySum);
+            
+            showResult(personalDay, personalMonth, personalYear, targetDate);
+        }
+
+        function showResult(dayNum, monthNum, yearNum, date) {
+            const reading = personalDayMeanings[dayNum];
+            const dateStr = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="day-symbol">${dayNum}</div>
+                    <h2>${reading.title}</h2>
+                    <p style="text-align: center; font-style: italic; margin: 1rem 0;">
+                        ${dateStr}
+                    </p>
+                    
+                    <div class="cycle-info">
+                        <div class="cycle-box">
+                            <div style="font-size: 1.5rem; font-weight: bold; color: var(--accent-color);">${yearNum}</div>
+                            <div style="font-size: 0.9rem; margin-top: 0.5rem;">Personal Year</div>
+                        </div>
+                        <div class="cycle-box">
+                            <div style="font-size: 1.5rem; font-weight: bold; color: var(--accent-color);">${monthNum}</div>
+                            <div style="font-size: 0.9rem; margin-top: 0.5rem;">Personal Month</div>
+                        </div>
+                        <div class="cycle-box">
+                            <div style="font-size: 1.5rem; font-weight: bold; color: gold;">${dayNum}</div>
+                            <div style="font-size: 0.9rem; margin-top: 0.5rem;">Personal Day</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>Today's Energy</h3>
+                        <p>${reading.energy}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>✅ Favorable Activities</h3>
+                        <p>${reading.activities}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>🌟 Best For</h3>
+                        <p>${reading.favorable}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>⚠️ Avoid Today</h3>
+                        <p>${reading.avoid}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>🎨 Color of the Day</h3>
+                        <p>${reading.color}</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,215,0,0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border: 1px solid rgba(255,215,0,0.3);">
+                        <h3>💫 Daily Affirmation</h3>
+                        <p style="font-style: italic; text-align: center; font-size: 1.1rem; color: gold;">
+                            "${reading.affirmation}"
+                        </p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>Guidance</h3>
+                        <p>${reading.advice}</p>
+                    </div>
+                    
+                    <p style="margin-top: 2rem; text-align: center; font-style: italic; opacity: 0.8;">
+                        Your Personal Day Number is part of larger cycles - your Personal Month (${monthNum}) and 
+                        Personal Year (${yearNum}). All three work together to shape your experiences.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

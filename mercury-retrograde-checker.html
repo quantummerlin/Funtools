@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercury Retrograde Checker | Quantum Merlin</title>
+    <meta name="description" content="Check if Mercury is retrograde and learn what it means for communication, technology, and travel.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(138, 43, 226, 0.4); }
+        .mercury-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .retrograde { color: #ff6b6b; }
+        .direct { color: #51cf66; }
+        .periods-list { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; }
+        .period { padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body>
+    <a href="tools_index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">☿</div>
+            <h1>Mercury Retrograde Checker</h1>
+            <p class="tool-description">Find out if Mercury is retrograde and what to expect</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="checkMercury(event)">
+            <div class="form-group">
+                <label for="checkDate">Date to Check (leave blank for today)</label>
+                <input type="date" id="checkDate">
+            </div>
+            <button type="submit" class="submit-btn">☿ Check Mercury</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Mercury Retrograde periods for 2024-2026
+        const retrogradePeriods = [
+            // 2024
+            { start: new Date('2024-04-01'), end: new Date('2024-04-25'), sign: 'Aries' },
+            { start: new Date('2024-08-05'), end: new Date('2024-08-28'), sign: 'Virgo' },
+            { start: new Date('2024-11-26'), end: new Date('2024-12-15'), sign: 'Sagittarius' },
+            // 2025
+            { start: new Date('2025-03-15'), end: new Date('2025-04-07'), sign: 'Aries' },
+            { start: new Date('2025-07-18'), end: new Date('2025-08-11'), sign: 'Leo' },
+            { start: new Date('2025-11-09'), end: new Date('2025-11-29'), sign: 'Sagittarius' },
+            // 2026
+            { start: new Date('2026-02-26'), end: new Date('2026-03-20'), sign: 'Pisces' },
+            { start: new Date('2026-06-29'), end: new Date('2026-07-23'), sign: 'Cancer' },
+            { start: new Date('2026-10-24'), end: new Date('2026-11-13'), sign: 'Scorpio' }
+        ];
+
+        function checkMercury(event) {
+            event.preventDefault();
+            
+            const dateInput = document.getElementById('checkDate').value;
+            const checkDate = dateInput ? new Date(dateInput) : new Date();
+            
+            let isRetrograde = false;
+            let currentPeriod = null;
+            let nextPeriod = null;
+            let previousPeriod = null;
+            
+            // Check if date is in retrograde period
+            for (let period of retrogradePeriods) {
+                if (checkDate >= period.start && checkDate <= period.end) {
+                    isRetrograde = true;
+                    currentPeriod = period;
+                    break;
+                }
+            }
+            
+            // Find next and previous periods
+            for (let i = 0; i < retrogradePeriods.length; i++) {
+                if (retrogradePeriods[i].start > checkDate && !nextPeriod) {
+                    nextPeriod = retrogradePeriods[i];
+                }
+                if (retrogradePeriods[i].end < checkDate) {
+                    previousPeriod = retrogradePeriods[i];
+                }
+            }
+            
+            showResult(checkDate, isRetrograde, currentPeriod, nextPeriod, previousPeriod);
+        }
+
+        function formatDate(date) {
+            return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        }
+
+        function daysUntil(date) {
+            const now = new Date();
+            const diff = date - now;
+            return Math.ceil(diff / (1000 * 60 * 60 * 24));
+        }
+
+        function showResult(date, isRetrograde, currentPeriod, nextPeriod, previousPeriod) {
+            const dateStr = formatDate(date);
+            const status = isRetrograde ? 
+                `<span class="retrograde">YES - Mercury is Retrograde ☿℞</span>` :
+                `<span class="direct">NO - Mercury is Direct ☿</span>`;
+            
+            let periodInfo = '';
+            if (isRetrograde && currentPeriod) {
+                const daysLeft = daysUntil(currentPeriod.end);
+                periodInfo = `
+                    <div style="background: rgba(255,107,107,0.2); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border: 2px solid rgba(255,107,107,0.5);">
+                        <h3>Current Retrograde Period</h3>
+                        <p><strong>${formatDate(currentPeriod.start)} - ${formatDate(currentPeriod.end)}</strong></p>
+                        <p>In ${currentPeriod.sign}</p>
+                        <p>${daysLeft > 0 ? `${daysLeft} days remaining` : 'Ending today!'}</p>
+                    </div>
+                `;
+            }
+            
+            let nextInfo = '';
+            if (nextPeriod) {
+                const daysUntilNext = daysUntil(nextPeriod.start);
+                nextInfo = `
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>Next Retrograde Period</h3>
+                        <p><strong>${formatDate(nextPeriod.start)} - ${formatDate(nextPeriod.end)}</strong></p>
+                        <p>In ${nextPeriod.sign}</p>
+                        <p>${daysUntilNext > 0 ? `Starting in ${daysUntilNext} days` : 'Starting today!'}</p>
+                    </div>
+                `;
+            }
+            
+            const allPeriods = retrogradePeriods
+                .filter(p => p.start.getFullYear() >= new Date().getFullYear())
+                .map(p => `
+                    <div class="period">
+                        <strong>${formatDate(p.start)} - ${formatDate(p.end)}</strong> in ${p.sign}
+                    </div>
+                `).join('');
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="mercury-symbol">☿</div>
+                    <h2 style="text-align: center;">${dateStr}</h2>
+                    <div style="font-size: 1.5rem; text-align: center; margin: 1rem 0;">
+                        ${status}
+                    </div>
+                    
+                    ${periodInfo}
+                    ${nextInfo}
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>What is Mercury Retrograde?</h3>
+                        <p>Mercury Retrograde occurs 3-4 times per year when Mercury appears to move backward in the sky 
+                        from Earth's perspective. This optical illusion is associated with disruptions in:</p>
+                        <ul>
+                            <li><strong>Communication:</strong> Misunderstandings, miscommunications, arguments</li>
+                            <li><strong>Technology:</strong> Computer glitches, phone problems, software issues</li>
+                            <li><strong>Travel:</strong> Delays, cancellations, lost luggage</li>
+                            <li><strong>Contracts:</strong> Missed details, changing terms, delays</li>
+                            <li><strong>Electronics:</strong> Breakdowns, malfunctions</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>⚠️ What to Avoid During Mercury Retrograde</h3>
+                        <ul>
+                            <li>Signing major contracts (if you must, read everything carefully)</li>
+                            <li>Starting new projects or launching businesses</li>
+                            <li>Buying electronics or vehicles</li>
+                            <li>Making major purchases</li>
+                            <li>Having important conversations without clarity</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>✅ What to Do During Mercury Retrograde</h3>
+                        <ul>
+                            <li><strong>Review:</strong> Go over old projects and plans</li>
+                            <li><strong>Revise:</strong> Edit, refine, and improve existing work</li>
+                            <li><strong>Reconnect:</strong> Reach out to old friends and contacts</li>
+                            <li><strong>Reflect:</strong> Think about past decisions and patterns</li>
+                            <li><strong>Rest:</strong> Slow down and process your life</li>
+                            <li><strong>Backup:</strong> Save your important data and files</li>
+                            <li><strong>Double-check:</strong> Confirm appointments and travel plans</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h3>💫 The Positive Side</h3>
+                        <p>Mercury Retrograde isn't all bad! This is actually a powerful time for:</p>
+                        <ul>
+                            <li>Completing unfinished projects</li>
+                            <li>Reconnecting with your past in healthy ways</li>
+                            <li>Gaining new insights about old situations</li>
+                            <li>Fixing things that have been broken</li>
+                            <li>Internal reflection and personal growth</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="periods-list">
+                        <h3>All Retrograde Periods (2024-2026)</h3>
+                        ${allPeriods}
+                    </div>
+                    
+                    <p style="margin-top: 2rem; text-align: center; font-style: italic;">
+                        Remember: Mercury Retrograde is a time to slow down, review, and reconnect - not to panic!
+                        Stay flexible, communicate clearly, and backup your data.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+
+        // Auto-check on load
+        window.onload = () => {
+            const event = new Event('submit');
+            document.getElementById('toolForm').dispatchEvent(event);
+        };
+    </script>
+</body>
+</html>

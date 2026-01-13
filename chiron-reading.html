@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiron Reading - The Wounded Healer | Quantum Merlin</title>
+    <meta name="description" content="Discover your Chiron sign and understand your deepest wound and greatest healing gift.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
+    <style>
+        .result-card { background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.3)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(138, 43, 226, 0.4); }
+        .chiron-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
+        .wound-card { background: rgba(244, 67, 54, 0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0; border-left: 3px solid #f44336; }
+        .gift-card { background: rgba(76, 175, 80, 0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0; border-left: 3px solid #4CAF50; }
+    </style>
+</head>
+<body>
+    <a href="tools_index.html" class="back-link">← Back to Tools</a>
+    
+    <div class="container">
+        <div class="tool-header">
+            <div class="tool-icon">⚕️</div>
+            <h1>Chiron Reading</h1>
+            <p class="tool-description">Discover your deepest wound and your greatest healing gift through the wounded healer asteroid</p>
+        </div>
+
+        <form id="toolForm" class="tool-form" onsubmit="calculateChiron(event)">
+            <div class="form-group">
+                <label for="preferredName">Your Name (optional)</label>
+                <input type="text" id="preferredName" placeholder="How should we address you?">
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Birth Date</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            <button type="submit" class="submit-btn">⚕️ Reveal Your Chiron</button>
+        </form>
+
+        <div id="result" class="result-section" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Chiron orbital period is approximately 50 years
+        // Using simplified ephemeris data for Chiron sign placement by birth year
+        const chironByYear = {
+            1960: 'Pisces', 1961: 'Pisces', 1962: 'Pisces', 1963: 'Pisces', 1964: 'Pisces',
+            1965: 'Pisces', 1966: 'Pisces', 1967: 'Pisces', 1968: 'Aries', 1969: 'Aries',
+            1970: 'Aries', 1971: 'Aries', 1972: 'Aries', 1973: 'Aries', 1974: 'Aries',
+            1975: 'Aries', 1976: 'Aries', 1977: 'Taurus', 1978: 'Taurus', 1979: 'Taurus',
+            1980: 'Taurus', 1981: 'Taurus', 1982: 'Taurus', 1983: 'Taurus', 1984: 'Gemini',
+            1985: 'Gemini', 1986: 'Gemini', 1987: 'Gemini', 1988: 'Gemini', 1989: 'Cancer',
+            1990: 'Cancer', 1991: 'Cancer', 1992: 'Cancer', 1993: 'Cancer', 1994: 'Cancer',
+            1995: 'Leo', 1996: 'Leo', 1997: 'Leo', 1998: 'Leo', 1999: 'Virgo',
+            2000: 'Virgo', 2001: 'Virgo', 2002: 'Virgo', 2003: 'Virgo', 2004: 'Libra',
+            2005: 'Libra', 2006: 'Libra', 2007: 'Libra', 2008: 'Libra', 2009: 'Aquarius',
+            2010: 'Aquarius', 2011: 'Pisces', 2012: 'Pisces', 2013: 'Pisces', 2014: 'Pisces',
+            2015: 'Pisces', 2016: 'Pisces', 2017: 'Pisces', 2018: 'Pisces', 2019: 'Aries',
+            2020: 'Aries', 2021: 'Aries', 2022: 'Aries', 2023: 'Aries', 2024: 'Aries',
+            2025: 'Aries', 2026: 'Aries', 2027: 'Taurus'
+        };
+
+        const interpretations = {
+            "Aries": {
+                symbol: "♈",
+                title: "Chiron in Aries",
+                wound: "The Wound of Identity",
+                woundDescription: "You carry a deep wound around your right to exist, assert yourself, and take up space. You may have experienced rejection, dismissal, or attacks on your identity early in life. This creates a fear of being yourself, asserting your needs, or showing anger.",
+                manifestations: ["Fear of conflict or standing up for yourself", "Feeling invisible or unimportant", "Anger turned inward (depression)", "Imposter syndrome", "Over-apologizing for existing"],
+                gift: "The Gift of Courage",
+                giftDescription: "Your wound becomes your medicine. You become a champion for those who can't speak for themselves. You teach others to find their voice, claim their identity, and stand up with courage.",
+                healing: ["Practice asserting yourself in small ways", "Allow yourself to feel and express anger healthily", "Recognize your right to exist exactly as you are", "Help others find their courage", "Channel warrior energy into advocacy"],
+                career: "Advocate, coach, martial arts instructor, crisis counselor, empowerment speaker"
+            },
+            "Taurus": {
+                symbol: "♉",
+                title: "Chiron in Taurus",
+                wound: "The Wound of Worth",
+                woundDescription: "You carry a deep wound around your value, security, and worthiness. You may have experienced poverty, instability, or having your worth tied to what you own or produce. This creates anxiety around money, possessions, and self-worth.",
+                manifestations: ["Money anxiety regardless of actual finances", "Feeling unworthy of comfort or pleasure", "Hoarding or extreme minimalism", "Tying self-worth to productivity", "Body image issues"],
+                gift: "The Gift of True Value",
+                giftDescription: "Your wound becomes your wisdom. You teach others that worth is intrinsic, not earned. You help people find security within themselves and appreciate the simple abundance of existence.",
+                healing: ["Separate your worth from your net worth", "Practice receiving without guilt", "Connect with your body through gentle practices", "Help others see their inherent value", "Appreciate abundance in small things"],
+                career: "Financial counselor, body positive advocate, earth-based healer, sustainable living teacher"
+            },
+            "Gemini": {
+                symbol: "♊",
+                title: "Chiron in Gemini",
+                wound: "The Wound of Voice",
+                woundDescription: "You carry a deep wound around communication, being heard, and mental validity. You may have been told you talk too much, ask too many questions, or that your thoughts don't matter. This creates anxiety around speaking and being understood.",
+                manifestations: ["Fear of speaking up or over-explaining", "Feeling misunderstood", "Anxiety about saying the wrong thing", "Difficulty making decisions", "Scattered thoughts or learning difficulties"],
+                gift: "The Gift of Translation",
+                giftDescription: "Your wound becomes your bridge. You can communicate complex ideas simply because you've struggled to be heard. You help others find their words and make connections between different worlds of thought.",
+                healing: ["Write or speak without self-censorship", "Trust that your voice matters", "Help others communicate their truth", "Study multiple perspectives", "Teach what you've learned"],
+                career: "Writer, translator, speech therapist, teacher, mediator, journalist"
+            },
+            "Cancer": {
+                symbol: "♋",
+                title: "Chiron in Cancer",
+                wound: "The Wound of Belonging",
+                woundDescription: "You carry a deep wound around home, family, and emotional safety. You may have experienced an unstable home, emotional neglect, or been made to feel you don't belong. This creates a fear of vulnerability and difficulty trusting emotional safety.",
+                manifestations: ["Difficulty trusting others with your emotions", "Over-caretaking others while neglecting self", "Feeling like an outsider in your own family", "Trouble creating a sense of home", "Emotional armor or hypersensitivity"],
+                gift: "The Gift of Sanctuary",
+                giftDescription: "Your wound becomes your shelter. You create the emotional safety for others that you needed. You become a surrogate family for the lost, teaching that home is something we create, not just inherit.",
+                healing: ["Create rituals that make you feel safe", "Allow yourself to need others", "Be the parent to yourself you needed", "Create chosen family", "Help others feel emotionally safe"],
+                career: "Therapist, foster parent, hospice worker, home organizer, family counselor"
+            },
+            "Leo": {
+                symbol: "♌",
+                title: "Chiron in Leo",
+                wound: "The Wound of Visibility",
+                woundDescription: "You carry a deep wound around recognition, creativity, and being seen. You may have been shamed for shining, told you're too much, or had your creative expression mocked. This creates a fear of visibility and self-expression.",
+                manifestations: ["Hiding your light or over-compensating with ego", "Fear of being judged or criticized", "Blocked creativity", "Feeling overlooked or invisible", "Difficulty accepting compliments"],
+                gift: "The Gift of Radiance",
+                giftDescription: "Your wound becomes your stage. You learn to shine not for validation but for the joy of expression. You help others step into their spotlight and create from the heart without fear.",
+                healing: ["Create art just for yourself", "Practice being seen without performing", "Celebrate others' success genuinely", "Let yourself play and be silly", "Shine to inspire, not to prove"],
+                career: "Creative coach, performer, children's advocate, art therapist, motivational speaker"
+            },
+            "Virgo": {
+                symbol: "♍",
+                title: "Chiron in Virgo",
+                wound: "The Wound of Perfection",
+                woundDescription: "You carry a deep wound around being good enough, useful, and perfect. You may have been criticized for small mistakes or made to feel your worth depends on being flawless. This creates anxiety, criticism, and a feeling of never being enough.",
+                manifestations: ["Perfectionism and harsh self-criticism", "Chronic health anxiety or issues", "Feeling flawed or broken", "Over-analyzing everything", "Difficulty accepting imperfection"],
+                gift: "The Gift of Wholeness",
+                giftDescription: "Your wound becomes your healing. You learn that wholeness includes flaws. You help others see that 'good enough' is perfect, and that our cracks are where the light gets in.",
+                healing: ["Practice self-compassion over self-improvement", "Accept your body as it is", "Make intentional mistakes", "Help others with their 'flaws'", "Find the sacred in imperfection"],
+                career: "Holistic healer, nutritionist, disability advocate, organizer, wellness counselor"
+            },
+            "Libra": {
+                symbol: "♎",
+                title: "Chiron in Libra",
+                wound: "The Wound of Relationship",
+                woundDescription: "You carry a deep wound around partnerships, fairness, and being chosen. You may have experienced betrayal, rejection in relationships, or witnessed toxic partnerships. This creates a fear of commitment and difficulty with balance in relationships.",
+                manifestations: ["Fear of being alone or fear of commitment", "Losing yourself in relationships", "Attracting unbalanced partnerships", "Difficulty setting boundaries", "People-pleasing to keep peace"],
+                gift: "The Gift of Sacred Union",
+                giftDescription: "Your wound becomes your wisdom. You learn to be whole within yourself first. You teach others about healthy partnership, fair negotiation, and that being alone is better than being poorly accompanied.",
+                healing: ["Practice being comfortable alone", "Set clear boundaries in relationships", "Model healthy partnership", "Mediate conflicts for others", "Balance giving and receiving"],
+                career: "Relationship counselor, mediator, divorce coach, wedding planner with integrity, justice advocate"
+            },
+            "Scorpio": {
+                symbol: "♏",
+                title: "Chiron in Scorpio",
+                wound: "The Wound of Trust",
+                woundDescription: "You carry a deep wound around betrayal, power, and emotional safety. You may have experienced violation, manipulation, or abuse of power. This creates issues with trust, intimacy, and fear of losing control.",
+                manifestations: ["Difficulty trusting others deeply", "Control issues or giving power away", "Fear of intimacy or sexual shame", "Attraction to crisis or intensity", "Holding grudges or secretiveness"],
+                gift: "The Gift of Transformation",
+                giftDescription: "Your wound becomes your power. You understand the depths of pain and therefore the heights of healing. You guide others through their darkest moments and teach that what doesn't kill us can transform us.",
+                healing: ["Work through trauma with professionals", "Practice vulnerability in safe spaces", "Transform pain into power", "Help others heal from abuse", "Embrace your shadow work"],
+                career: "Trauma therapist, death doula, depth psychologist, tantric healer, investigator of injustice"
+            },
+            "Sagittarius": {
+                symbol: "♐",
+                title: "Chiron in Sagittarius",
+                wound: "The Wound of Meaning",
+                woundDescription: "You carry a deep wound around truth, belief, and life's meaning. You may have experienced religious trauma, been punished for questioning, or had your faith shattered. This creates a crisis of meaning and difficulty with belief systems.",
+                manifestations: ["Cynicism or blind faith", "Fear of being trapped by beliefs", "Searching for meaning but never finding it", "Religious trauma or spiritual bypassing", "Difficulty with optimism"],
+                gift: "The Gift of Wisdom",
+                giftDescription: "Your wound becomes your teaching. You question everything and therefore discover what's truly true for you. You help others find their own path and meaning rather than inheriting others' beliefs.",
+                healing: ["Explore many philosophies without attachment", "Question your assumptions", "Find meaning in the journey itself", "Teach others to think for themselves", "Travel to expand perspective"],
+                career: "Philosophy teacher, religious trauma counselor, travel guide, wisdom keeper, spiritual teacher"
+            },
+            "Capricorn": {
+                symbol: "♑",
+                title: "Chiron in Capricorn",
+                wound: "The Wound of Authority",
+                woundDescription: "You carry a deep wound around success, authority, and achievement. You may have experienced harsh authority figures, impossible standards, or lack of support for your ambitions. This creates fear of failure and difficulty with self-authority.",
+                manifestations: ["Workaholic tendencies or fear of ambition", "Difficulty with authority figures", "Feeling like a fraud despite success", "Harsh inner critic", "Difficulty achieving or fear of achieving"],
+                gift: "The Gift of True Mastery",
+                giftDescription: "Your wound becomes your achievement. You learn that true authority comes from within, not external validation. You help others build sustainable success and become their own authority.",
+                healing: ["Define success for yourself", "Practice self-authority", "Mentor others compassionately", "Build something that lasts", "Balance achievement with self-care"],
+                career: "Compassionate mentor, ethical business coach, elder advocate, career counselor, sustainable builder"
+            },
+            "Aquarius": {
+                symbol: "♒",
+                title: "Chiron in Aquarius",
+                wound: "The Wound of Belonging",
+                woundDescription: "You carry a deep wound around being different, acceptance, and belonging to the collective. You may have been outcast for being unique, punished for innovation, or made to feel alien. This creates a fear of rejection and difficulty balancing individuality with community.",
+                manifestations: ["Feeling like an outsider or alien", "Rebelling to the point of isolation", "Difficulty with groups or over-conforming", "Fear of showing your true weirdness", "Emotional detachment as protection"],
+                gift: "The Gift of Innovation",
+                giftDescription: "Your wound becomes your revolution. You learn that your differences are your gifts. You help others embrace their uniqueness and create communities where everyone belongs precisely because of their differences.",
+                healing: ["Embrace your weirdness fully", "Find your tribe of misfits", "Use technology to connect", "Advocate for the marginalized", "Innovate while staying grounded"],
+                career: "Social innovator, LGBTQ+ advocate, tech for good, community organizer, futurist"
+            },
+            "Pisces": {
+                symbol: "♓",
+                title: "Chiron in Pisces",
+                wound: "The Wound of Dissolution",
+                woundDescription: "You carry a deep wound around boundaries, victimhood, and spiritual connection. You may have experienced betrayal of faith, boundary violations, or been made to feel responsible for others' pain. This creates confusion about where you end and others begin.",
+                manifestations: ["Boundary confusion or codependency", "Addiction or escapism tendencies", "Feeling like a victim or savior", "Difficulty with reality or grounding", "Absorbing others' emotions"],
+                gift: "The Gift of Compassion",
+                giftDescription: "Your wound becomes your connection to all beings. You understand suffering deeply and therefore can offer true compassion. You help others heal through your presence and teach that we can be connected without being consumed.",
+                healing: ["Establish strong energetic boundaries", "Ground spiritual practice in reality", "Serve others without sacrificing self", "Use creativity to process emotions", "Help others heal without absorbing their pain"],
+                career: "Energy healer, addiction counselor, artist, meditation teacher, hospice worker, ocean advocate"
+            }
+        };
+
+        async function calculateChiron(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('preferredName').value || 'Seeker';
+            const birthDate = document.getElementById('birthDate').value;
+            const year = parseInt(birthDate.split('-')[0]);
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '⚕️ Calculating...';
+            submitBtn.disabled = true;
+
+            try {
+                let chironSign = chironByYear[year];
+                
+                if (!chironSign) {
+                    if (year < 1960) {
+                        // Before 1960, use approximate 50-year cycle
+                        const cycleYear = ((year - 1910) % 50) + 1960;
+                        chironSign = chironByYear[cycleYear] || 'Aries';
+                    } else {
+                        chironSign = 'Aries'; // Default for future years
+                    }
+                }
+                
+                showResult(name, chironSign);
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('Error calculating Chiron: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showResult(name, chironSign) {
+            const data = interpretations[chironSign];
+            
+            const resultHTML = `
+                <div class="result-card">
+                    <div class="chiron-symbol">⚕️ ${data.symbol}</div>
+                    <h2>${data.title}</h2>
+                    <h3 style="text-align: center; color: var(--accent-color);">${data.wound}</h3>
+                    
+                    <div class="wound-card">
+                        <h3>💔 Your Core Wound</h3>
+                        <p>${data.woundDescription}</p>
+                        
+                        <h4>How This Shows Up:</h4>
+                        <ul>${data.manifestations.map(m => `<li>${m}</li>`).join('')}</ul>
+                    </div>
+                    
+                    <div class="gift-card">
+                        <h3>✨ ${data.gift}</h3>
+                        <p>${data.giftDescription}</p>
+                    </div>
+                    
+                    <h3>🌱 Your Healing Path</h3>
+                    <ul>${data.healing.map(h => `<li>${h}</li>`).join('')}</ul>
+                    
+                    <h3>💼 Healing Careers for You</h3>
+                    <p>${data.career}</p>
+                    
+                    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                        <h3>Understanding Your Chiron</h3>
+                        <p>Chiron represents your "wounded healer" archetype. The area where you carry the deepest wound 
+                        becomes the area where you develop the greatest healing gift. Your pain is not punishment - 
+                        it's preparation for the medicine you're meant to bring to the world.</p>
+                        
+                        <p style="margin-top: 1rem;">The Chiron Return (around age 50) is when Chiron comes back to its natal position. 
+                        This is a profound time of healing your core wound and stepping fully into your healer role.</p>
+                    </div>
+                    
+                    <p style="margin-top: 2rem; text-align: center; font-style: italic;">
+                        ${name}, your wound is not your weakness - it's your wisdom waiting to be born. 
+                        The very thing that broke you can become the medicine that heals others.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('toolForm').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
