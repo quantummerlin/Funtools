@@ -14,6 +14,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap&v=20260111121803&v=20260111121858&v=20260111132525&v=20260112083146" rel="stylesheet">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="profile-manager.js"></script>
+    <script src="auto-fill.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -306,7 +308,11 @@
                 <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
                     <div style="display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px;">
                         <label style="color: #BF5AF2; font-family: 'Cinzel', serif; white-space: nowrap; font-size: 0.95em;">👤 Profile:</label>
-                        </div>
+                        <select id="profileSelect" class="profile-select" onchange="onProfileChange()"></select>
+                    </div>
+                    <button type="button" onclick="showSaveProfileDialog()" class="profile-btn">
+                        💾 Save Profile
+                    </button>
                     <button type="button" onclick="showDeleteProfileDialog()" class="profile-btn" style="background: rgba(236, 72, 153, 0.1); border: 1px solid rgba(236, 72, 153, 0.4); color: #ec4899; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-family: 'Cinzel', serif; font-size: 0.85em; transition: all 0.3s;">
                         🗑️ Remove Profile
                     </button>
