@@ -176,14 +176,16 @@
         }
         
         /* Share section */
-        .share-section {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid rgba(251, 191, 36, 0.2);
+        .share-section-bottom {
+            margin-top: 30px;
+            padding: 30px;
+            background: rgba(20, 20, 30, 0.6);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 15px;
             text-align: center;
         }
         
-        .share-section p {
+        .share-section-bottom p {
             color: #9A8F7A;
             margin-bottom: 15px;
         }
@@ -217,6 +219,10 @@
         /* Related readings */
         .related-section {
             margin-top: 40px;
+            padding: 30px;
+            background: rgba(20, 20, 30, 0.6);
+            border: 1px solid rgba(191, 90, 242, 0.3);
+            border-radius: 20px;
         }
         
         .related-section h3 {
@@ -224,7 +230,14 @@
             font-size: 1.5rem;
             color: #fbbf24;
             text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .related-intro {
+            text-align: center;
+            color: #9A8F7A;
             margin-bottom: 25px;
+            font-size: 1.05rem;
         }
         
         .related-grid {
@@ -241,12 +254,33 @@
             text-align: center;
             text-decoration: none;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .related-card.new-tool::before {
+            content: '✨ NEW';
+            position: absolute;
+            top: 10px;
+            right: -25px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0a0a0f;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 3px 30px;
+            transform: rotate(45deg);
         }
         
         .related-card:hover {
             transform: translateY(-5px);
             border-color: #bf5af2;
             box-shadow: 0 10px 30px rgba(191, 90, 242, 0.2);
+        }
+        
+        .related-card .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
         }
         
         .related-card h4 {
@@ -258,6 +292,53 @@
         .related-card p {
             color: #9A8F7A;
             font-size: 0.95rem;
+        }
+        
+        /* Progress section */
+        .progress-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(20, 20, 30, 0.6);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .progress-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .progress-icon {
+            font-size: 1.5rem;
+        }
+        
+        .progress-text {
+            color: #E8E4D9;
+            font-size: 1.1rem;
+        }
+        
+        .progress-text strong {
+            color: #fbbf24;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ec4899);
+            border-radius: 6px;
+            transition: width 0.5s ease;
+            width: 0%;
         }
         
         /* Ad space at bottom */
@@ -356,29 +437,42 @@
                 <a href="advertise.html" class="ad-cta">Learn About Advertising →</a>
             </div>
             
-            <!-- Share Section -->
-            <div class="share-section">
-                <p>Found this enlightening? Share your cosmic discovery:</p>
-                <div class="share-buttons">
-                    <a href="#" class="share-btn" onclick="shareOnTwitter(); return false;">🐦 Twitter</a>
-                    <a href="#" class="share-btn" onclick="shareOnFacebook(); return false;">📘 Facebook</a>
-                    <a href="#" class="share-btn" onclick="copyLink(); return false;">📋 Copy Link</a>
-                </div>
-            </div>
         </div>
         
         <!-- Related Readings -->
         <div class="related-section">
-            <h3>Deepen Your Understanding</h3>
+            <h3>✨ Continue Your Journey</h3>
+            <p class="related-intro" id="relatedIntro">Discover more about yourself with these readings:</p>
             <div class="related-grid" id="relatedGrid">
                 <!-- Dynamic related tools -->
+            </div>
+        </div>
+        
+        <!-- Progress Tracker -->
+        <div class="progress-section" id="progressSection">
+            <div class="progress-header">
+                <span class="progress-icon">🔮</span>
+                <span class="progress-text">Your Journey: <strong id="progressCount">0</strong> of <strong id="progressTotal">0</strong> tools explored</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
             </div>
         </div>
         
         <!-- Action Buttons -->
         <div class="action-buttons">
             <a href="#" class="action-btn" id="tryAnotherBtn">Try Another Reading</a>
-            <a href="tools_index.html" class="action-btn secondary">← Back to All Tools</a>
+            <a href="tools_index.html" class="action-btn secondary">← Browse All Tools</a>
+        </div>
+        
+        <!-- Share Section - At the bottom -->
+        <div class="share-section-bottom">
+            <p>Enjoyed your reading? Share the magic:</p>
+            <div class="share-buttons">
+                <a href="#" class="share-btn" onclick="shareOnTwitter(); return false;">🐦 Twitter</a>
+                <a href="#" class="share-btn" onclick="shareOnFacebook(); return false;">📘 Facebook</a>
+                <a href="#" class="share-btn" onclick="copyLink(); return false;">📋 Copy Link</a>
+            </div>
         </div>
         
         <!-- Bottom Ad Space -->
@@ -396,9 +490,10 @@
         <a href="tools_index.html" class="action-btn">Browse All Tools</a>
     </div>
     
+    <script src="tool-tracker.js"></script>
     <script>
         // Version: 20260112083146 - Auto-generated cache buster
-        // Related tools data
+        // Related tools data (fallback if ToolTracker doesn't have them)
         const relatedTools = {
             'life-path': [
                 { url: 'destiny-number-calculator.html', title: 'Destiny Number', desc: 'Discover your life mission' },
@@ -529,6 +624,11 @@
             
             const reading = JSON.parse(readingData);
             
+            // Track this tool as used
+            if (reading.sourceUrl && window.ToolTracker) {
+                ToolTracker.markUsed(reading.sourceUrl);
+            }
+            
             // Update page title
             document.title = `${reading.title} | Quantum Merlin`;
             document.getElementById('pageTitle').textContent = `${reading.title} | Quantum Merlin`;
@@ -551,17 +651,67 @@
             // Update "Try Another" button
             document.getElementById('tryAnotherBtn').href = reading.sourceUrl || 'tools_index.html';
             
-            // Load related tools
-            const toolType = reading.toolType || 'default';
-            const related = relatedTools[toolType] || relatedTools['default'];
-            const relatedGrid = document.getElementById('relatedGrid');
+            // Load related tools - prioritize unused ones
+            loadRelatedTools(reading.toolType, reading.sourceUrl);
             
-            relatedGrid.innerHTML = related.map(tool => `
-                <a href="${tool.url}" class="related-card">
-                    <h4>${tool.title}</h4>
-                    <p>${tool.desc}</p>
-                </a>
-            `).join('');
+            // Update progress
+            updateProgress();
+        }
+        
+        function loadRelatedTools(toolType, currentUrl) {
+            const relatedGrid = document.getElementById('relatedGrid');
+            const relatedIntro = document.getElementById('relatedIntro');
+            const usedTools = window.ToolTracker ? ToolTracker.getUsedTools() : [];
+            
+            // Get suggested tools from tracker (prioritizes unused)
+            let suggestions = [];
+            
+            if (window.ToolTracker) {
+                suggestions = ToolTracker.getSuggestedTools(3, currentUrl);
+            }
+            
+            // Fallback to static related tools
+            if (suggestions.length === 0) {
+                const staticRelated = relatedTools[toolType] || relatedTools['default'];
+                suggestions = staticRelated.map(t => ({
+                    url: t.url,
+                    title: t.title,
+                    desc: t.desc,
+                    icon: '🔮'
+                }));
+            }
+            
+            // Check if any are new (unused)
+            const hasNewTools = suggestions.some(t => !usedTools.includes(t.url) && !t.alreadyUsed);
+            
+            if (hasNewTools) {
+                relatedIntro.textContent = "✨ Discover new readings you haven't tried yet:";
+            } else {
+                relatedIntro.textContent = "Revisit these popular readings:";
+            }
+            
+            relatedGrid.innerHTML = suggestions.map(tool => {
+                const isNew = !usedTools.includes(tool.url) && !tool.alreadyUsed;
+                return `
+                    <a href="${tool.url}" class="related-card${isNew ? ' new-tool' : ''}">
+                        <span class="tool-icon">${tool.icon || '🔮'}</span>
+                        <h4>${tool.title}</h4>
+                        <p>${tool.desc}</p>
+                    </a>
+                `;
+            }).join('');
+        }
+        
+        function updateProgress() {
+            if (!window.ToolTracker) {
+                document.getElementById('progressSection').style.display = 'none';
+                return;
+            }
+            
+            const progress = ToolTracker.getProgress();
+            document.getElementById('progressCount').textContent = progress.used;
+            document.getElementById('progressTotal').textContent = progress.total;
+            document.getElementById('progressBar').style.width = progress.percentage + '%';
         }
         
         // Share functions
