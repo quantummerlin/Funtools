@@ -1,230 +1,655 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy | Quantum Merlin</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>Privacy Policy | Quantum Merlin - Your Data Protected by Ancient Wisdom</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --merlin-purple: #2d1b4e;
+            --rose-pink: #ff6b9d;
+            --quantum-gold: #daa520;
+            --ancient-gold: #ffd700;
+            --mystic-cyan: #00f5ff;
+            --deep-void: #0a0015;
+            --ethereal-white: #f0e6ff;
+            --shield-blue: #4a90d9;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            background: #0a0a0f;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
-            color: #E8E4D9;
+            background: var(--deep-void);
+            color: var(--ethereal-white);
             line-height: 1.8;
-            min-height: 100vh;
+            overflow-x: hidden;
             font-size: 18px;
+            min-height: 100vh;
         }
-        
+
+        /* Floating Orbs */
+        .magical-orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            filter: blur(60px);
+            animation: float-orb 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(74, 144, 217, 0.25) 0%, transparent 70%);
+            top: 5%; left: -15%;
+        }
+
+        .orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(218, 165, 32, 0.2) 0%, transparent 70%);
+            top: 50%; right: -10%;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+            bottom: 10%; left: 20%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float-orb {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+            25% { transform: translate(50px, -30px) scale(1.1); opacity: 0.8; }
+            50% { transform: translate(-30px, 40px) scale(0.9); opacity: 0.5; }
+            75% { transform: translate(40px, 20px) scale(1.05); opacity: 0.7; }
+        }
+
+        /* Aurora Effect */
+        .aurora {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                linear-gradient(45deg, transparent 40%, rgba(74, 144, 217, 0.04) 45%, transparent 50%),
+                linear-gradient(-45deg, transparent 40%, rgba(218, 165, 32, 0.03) 45%, transparent 50%);
+            background-size: 400% 400%;
+            animation: aurora-flow 20s ease-in-out infinite;
+        }
+
+        @keyframes aurora-flow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Floating Shield Particles */
+        .shield-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            animation: shield-float 12s infinite ease-in-out;
+        }
+
+        .shield-particle::before {
+            content: '🛡️';
+            font-size: 1.2rem;
+            filter: drop-shadow(0 0 10px rgba(74, 144, 217, 0.5));
+        }
+
+        .shield-particle:nth-child(1) { left: 8%; animation-delay: 0s; }
+        .shield-particle:nth-child(2) { left: 22%; animation-delay: 3s; }
+        .shield-particle:nth-child(3) { left: 48%; animation-delay: 6s; }
+        .shield-particle:nth-child(4) { left: 68%; animation-delay: 2s; }
+        .shield-particle:nth-child(5) { left: 88%; animation-delay: 5s; }
+
+        @keyframes shield-float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Container */
         .container {
+            position: relative;
+            z-index: 10;
             max-width: 900px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 40px 25px;
         }
-        
-        .header {
+
+        /* Header */
+        .page-header {
             text-align: center;
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid rgba(251, 191, 36, 0.3);
+            padding: 60px 20px 50px;
+            animation: fadeSlideDown 1s ease-out;
         }
-        
-        .header h1 {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+
+        @keyframes fadeSlideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: pulse-glow 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(74, 144, 217, 0.5));
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(74, 144, 217, 0.5)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 50px rgba(74, 144, 217, 0.8)); }
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--shield-blue), var(--quantum-gold), var(--mystic-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 15px;
+            letter-spacing: 3px;
         }
-        
-        .header p {
-            color: #9A8F7A;
-            font-size: 1.1rem;
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: rgba(240, 230, 255, 0.7);
             font-style: italic;
         }
-        
-        .back-link {
+
+        .last-updated {
             display: inline-block;
-            margin-bottom: 30px;
-            color: #06b6d4;
-            text-decoration: none;
-            font-family: 'Cinzel', serif;
-            transition: color 0.3s;
+            margin-top: 25px;
+            padding: 10px 25px;
+            background: rgba(74, 144, 217, 0.15);
+            border: 1px solid rgba(74, 144, 217, 0.3);
+            border-radius: 30px;
+            font-size: 0.95rem;
+            color: var(--shield-blue);
+            animation: shimmer 3s ease-in-out infinite;
         }
-        
-        .back-link:hover {
-            color: #fbbf24;
+
+        @keyframes shimmer {
+            0%, 100% { box-shadow: 0 0 15px rgba(74, 144, 217, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(74, 144, 217, 0.4); }
         }
-        
-        .content-card {
-            background: rgba(20, 20, 30, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+
+        /* Summary Card */
+        .summary-card {
+            background: linear-gradient(145deg, rgba(74, 144, 217, 0.1), rgba(45, 27, 78, 0.3));
+            border: 1px solid rgba(74, 144, 217, 0.25);
             border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
+            padding: 35px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+            animation: fadeSlideUp 1s ease-out 0.3s both;
         }
-        
-        h2 {
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(74, 144, 217, 0.1), transparent);
+            animation: card-shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes card-shimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+
+        .summary-card h2 {
             font-family: 'Cinzel', serif;
-            color: #fbbf24;
-            font-size: 1.5rem;
-            margin: 30px 0 15px 0;
+            font-size: 1.6rem;
+            color: var(--quantum-gold);
+            margin-bottom: 25px;
         }
-        
-        h2:first-child {
-            margin-top: 0;
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
         }
-        
-        p {
+
+        .summary-section h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--shield-blue);
             margin-bottom: 15px;
-            color: #E8E4D9;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(74, 144, 217, 0.2);
         }
-        
-        ul {
-            margin: 15px 0 15px 30px;
-        }
-        
-        li {
-            margin-bottom: 10px;
-            color: #E8E4D9;
-        }
-        
-        .highlight {
-            color: #06b6d4;
-        }
-        
-        .good {
-            color: #4ade80;
-        }
-        
-        .legal-nav {
+
+        .summary-section ul { list-style: none; }
+
+        .summary-section li {
+            padding: 8px 0;
+            font-size: 1.05rem;
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(191, 90, 242, 0.3);
+            align-items: flex-start;
+            gap: 10px;
+            transition: transform 0.3s ease;
         }
-        
-        .legal-nav a {
-            color: #9A8F7A;
+
+        .summary-section li:hover { transform: translateX(5px); }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(45, 27, 78, 0.2);
+            border: 1px solid rgba(218, 165, 32, 0.15);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section:hover {
+            border-color: rgba(218, 165, 32, 0.35);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .content-section h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--quantum-gold);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .content-section h2 .section-icon {
+            font-size: 1.8rem;
+            animation: gentle-bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes gentle-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .content-section h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            color: var(--mystic-cyan);
+            margin: 25px 0 12px;
+        }
+
+        .content-section p {
+            margin-bottom: 15px;
+            color: rgba(240, 230, 255, 0.85);
+            font-size: 1.1rem;
+        }
+
+        .content-section ul { margin: 15px 0 15px 25px; }
+        .content-section li { margin-bottom: 10px; color: rgba(240, 230, 255, 0.8); }
+        .content-section a { color: var(--mystic-cyan); text-decoration: none; transition: color 0.3s; }
+        .content-section a:hover { color: var(--quantum-gold); }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(74, 144, 217, 0.15), rgba(74, 144, 217, 0.05));
+            border-left: 4px solid var(--shield-blue);
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box::after {
+            content: '🛡️';
+            position: absolute;
+            right: 15px; top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            opacity: 0.15;
+        }
+
+        .highlight-box p { margin: 0; color: var(--ethereal-white); }
+
+        /* Contact Box */
+        .contact-box {
+            background: linear-gradient(135deg, rgba(218, 165, 32, 0.15), rgba(218, 165, 32, 0.05));
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            border-radius: 15px;
+            padding: 25px 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .contact-box h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--quantum-gold);
+            margin-bottom: 15px;
+        }
+
+        .contact-box a {
+            color: var(--mystic-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-box a:hover {
+            color: var(--quantum-gold);
+            text-shadow: 0 0 15px rgba(218, 165, 32, 0.5);
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 50px 0;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--merlin-purple), rgba(45, 27, 78, 0.8));
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            border-radius: 50px;
+            color: var(--ethereal-white);
             text-decoration: none;
             font-family: 'Cinzel', serif;
-            padding: 10px 20px;
-            border: 1px solid rgba(191, 90, 242, 0.3);
-            border-radius: 8px;
-            transition: all 0.3s;
+            font-size: 1rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .legal-nav a:hover {
-            border-color: #bf5af2;
-            color: #bf5af2;
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.2), transparent);
+            transition: left 0.5s ease;
         }
-        
-        .legal-nav a.active {
-            border-color: #fbbf24;
-            color: #fbbf24;
+
+        .nav-btn:hover::before { left: 100%; }
+
+        .nav-btn:hover {
+            border-color: var(--quantum-gold);
+            box-shadow: 0 5px 25px rgba(218, 165, 32, 0.3);
+            transform: translateY(-3px);
         }
-        
-        .effective-date {
+
+        /* Footer */
+        .page-footer {
             text-align: center;
-            color: #6B6B6B;
-            font-size: 0.9rem;
-            margin-top: 30px;
+            padding: 50px 20px;
+            margin-top: 80px;
+            background: linear-gradient(135deg, rgba(45, 27, 78, 0.95), rgba(74, 144, 217, 0.4));
+            border-top: 3px solid var(--quantum-gold);
+            border-radius: 15px 15px 0 0;
+            box-shadow: 
+                0 -10px 50px rgba(218, 165, 32, 0.3),
+                inset 0 1px 0 rgba(218, 165, 32, 0.5);
+        }
+
+        .page-footer p { 
+            color: #ffffff; 
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-shadow: 0 0 20px rgba(218, 165, 32, 0.8);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: var(--quantum-gold);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            text-shadow: 0 0 15px rgba(218, 165, 32, 0.6);
+        }
+
+        .footer-links a:hover { 
+            color: var(--mystic-cyan); 
+            text-shadow: 0 0 20px rgba(0, 245, 255, 0.8); 
         }
         
-        .privacy-badge {
-            display: inline-block;
-            background: rgba(74, 222, 128, 0.2);
-            border: 1px solid rgba(74, 222, 128, 0.5);
-            color: #4ade80;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-right: 10px;
+        .footer-links span { 
+            color: #ffffff; 
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; letter-spacing: 1px; }
+            .summary-grid { grid-template-columns: 1fr; }
+            .container { padding: 20px 15px 60px; }
+            .content-section { padding: 20px; }
+            .summary-card { padding: 25px 20px; }
+            .nav-buttons { 
+                flex-direction: column; 
+                align-items: center;
+                gap: 15px;
+            }
+            .nav-btn {
+                width: 90%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            .page-footer {
+                padding: 30px 15px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="aurora"></div>
+    <div class="magical-orb orb-1"></div>
+    <div class="magical-orb orb-2"></div>
+    <div class="magical-orb orb-3"></div>
+    <div class="shield-particle"></div>
+    <div class="shield-particle"></div>
+    <div class="shield-particle"></div>
+    <div class="shield-particle"></div>
+    <div class="shield-particle"></div>
+
     <div class="container">
-        <a href="tools_index.html" class="back-link">← Back to Tools</a>
-        
-        <div class="header">
-            <h1>🔒 Privacy Policy</h1>
-            <p>How we protect your cosmic data and personal information</p>
+        <header class="page-header">
+            <div class="header-icon">🔒</div>
+            <h1>PRIVACY POLICY</h1>
+            <p class="subtitle">Your Sacred Data, Protected by Ancient Wisdom</p>
+            <span class="last-updated">✨ Last Updated: January 1, 2026</span>
+        </header>
+
+        <div class="summary-card">
+            <h2>📋 The Mystic's Quick Guide</h2>
+            <div class="summary-grid">
+                <div class="summary-section">
+                    <h3>What We Collect</h3>
+                    <ul>
+                        <li><span>✅</span> Birth data (stored locally on YOUR device)</li>
+                        <li><span>✅</span> Anonymous usage analytics</li>
+                        <li><span>✅</span> Ad interaction data via partners</li>
+                    </ul>
+                </div>
+                <div class="summary-section">
+                    <h3>What We DON'T Do</h3>
+                    <ul>
+                        <li><span>❌</span> Sell your personal data</li>
+                        <li><span>❌</span> Store birth data on servers</li>
+                        <li><span>❌</span> Require account creation</li>
+                        <li><span>❌</span> Collect payment info</li>
+                    </ul>
+                </div>
+                <div class="summary-section">
+                    <h3>Your Magical Control</h3>
+                    <ul>
+                        <li><span>🔒</span> All data stays on YOUR device</li>
+                        <li><span>🗑️</span> Clear your data anytime</li>
+                        <li><span>🚫</span> Opt-out of tracking</li>
+                        <li><span>📥</span> Export your readings</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        
-        <div class="content-card">
-            <h2>Our Privacy Promise</h2>
-            <p><span class="privacy-badge">🛡️ Privacy First</span> Quantum Merlin is designed with your privacy in mind. We believe your spiritual journey is personal, and your data should stay that way.</p>
-            
-            <h2>1. Information We Collect</h2>
-            <p><span class="good">Good news:</span> We collect minimal information. Here's what we use:</p>
+
+        <section class="content-section">
+            <h2><span class="section-icon">🏰</span> 1. The Wizard's Commitment</h2>
+            <p>Welcome, Seeker of Cosmic Wisdom! At Quantum Merlin, we believe that your personal data is as sacred as the ancient scrolls themselves. This Privacy Policy explains how we collect, protect, and honor the information you entrust to us on your mystical journey.</p>
+            <div class="highlight-box">
+                <p><strong>Our Core Promise:</strong> Your birth data and personal readings never leave your device. We have no access to your individual cosmic calculations—they belong to you alone.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2><span class="section-icon">📜</span> 2. Information We Collect</h2>
+            <h3>2.1 Information You Provide</h3>
             <ul>
-                <li><span class="highlight">Birth dates and names</span> - Only used locally in your browser to generate readings. We do NOT store this on any server.</li>
-                <li><span class="highlight">Profile data</span> - Stored only in your browser's local storage. Never sent to us.</li>
-                <li><span class="highlight">Tool usage</span> - Tracked locally in your browser to show your journey progress. We don't see this.</li>
+                <li><strong>Birth Data:</strong> Date, time, and location of birth for numerology calculations</li>
+                <li><strong>Names:</strong> For numerology analysis and sigil generation</li>
+                <li><strong>Questions:</strong> Topics you explore within our mystical tools</li>
             </ul>
-            
-            <h2>2. Local Storage</h2>
-            <p>Quantum Merlin uses your browser's localStorage to:</p>
+            <p><em>Important: All this data is stored locally in your browser's localStorage and never transmitted to our servers.</em></p>
+            <h3>2.2 Automatically Collected Data</h3>
             <ul>
-                <li>Save your profiles for convenience</li>
-                <li>Remember which tools you've used</li>
-                <li>Store your preferences</li>
+                <li><strong>Analytics:</strong> Anonymous usage patterns via Google Analytics</li>
+                <li><strong>Device Info:</strong> Browser type, screen size, general location</li>
+                <li><strong>Ad Data:</strong> Interaction with advertisements through Google AdSense</li>
             </ul>
-            <p>This data <span class="good">never leaves your device</span>. You can clear it anytime through your browser settings.</p>
-            
-            <h2>3. What We DON'T Do</h2>
+        </section>
+
+        <section class="content-section">
+            <h2><span class="section-icon">🛡️</span> 3. How We Protect Your Data</h2>
+            <p>Like the protective wards around Merlin's tower, we employ multiple layers of security:</p>
             <ul>
-                <li>❌ We don't sell your data</li>
-                <li>❌ We don't track you across websites</li>
-                <li>❌ We don't store your birth information on our servers</li>
-                <li>❌ We don't share your information with third parties</li>
-                <li>❌ We don't require account creation</li>
+                <li><strong>Local Storage:</strong> Personal data never leaves your device</li>
+                <li><strong>No Accounts:</strong> No passwords to hack, no databases to breach</li>
+                <li><strong>Encrypted Connections:</strong> All site traffic uses HTTPS encryption</li>
+                <li><strong>Minimal Collection:</strong> We only gather what's necessary</li>
             </ul>
-            
-            <h2>4. Cookies</h2>
-            <p>We use minimal cookies only for essential functionality. We do not use tracking cookies or advertising cookies.</p>
-            
-            <h2>5. Third-Party Services</h2>
-            <p>We may use:</p>
+        </section>
+
+        <section class="content-section">
+            <h2><span class="section-icon">🍪</span> 4. Cookies & Tracking</h2>
+            <h3>Essential Cookies</h3>
+            <p>Required for the site to function properly, including remembering your preferences and progress.</p>
+            <h3>Analytics Cookies</h3>
+            <p>Google Analytics helps us understand how seekers use our tools. This data is anonymized and aggregated.</p>
+            <h3>Advertising Cookies</h3>
+            <p>Google AdSense uses cookies to display relevant advertisements. You can opt out through Google's Ad Settings.</p>
+            <div class="highlight-box">
+                <p><strong>Your Choice:</strong> You can disable cookies in your browser settings, though some features may not work as intended.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2><span class="section-icon">🤝</span> 5. Third-Party Services</h2>
             <ul>
-                <li><span class="highlight">Google Fonts</span> - To display our beautiful typography</li>
-                <li><span class="highlight">Hosting services</span> - To serve the website (standard web hosting)</li>
+                <li><strong>Google Analytics:</strong> Usage patterns (<a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a>)</li>
+                <li><strong>Google AdSense:</strong> Advertisements (<a href="https://policies.google.com/technologies/ads" target="_blank">Ad Policy</a>)</li>
+                <li><strong>Cloudflare:</strong> Security & performance (<a href="https://www.cloudflare.com/privacypolicy/" target="_blank">Privacy Policy</a>)</li>
             </ul>
-            <p>These services have their own privacy policies.</p>
-            
-            <h2>6. Your Rights</h2>
-            <p>You have the right to:</p>
+        </section>
+
+        <section class="content-section">
+            <h2><span class="section-icon">⚡</span> 6. Your Sacred Rights</h2>
             <ul>
-                <li>Clear your local data at any time (browser settings → clear site data)</li>
-                <li>Use our tools without providing real personal information</li>
-                <li>Contact us with any privacy concerns</li>
+                <li><strong>Access:</strong> View all data stored in your browser's localStorage</li>
+                <li><strong>Delete:</strong> Clear your data with one click in our settings</li>
+                <li><strong>Export:</strong> Download your readings and calculations</li>
+                <li><strong>Opt-Out:</strong> Disable analytics and personalized ads</li>
+                <li><strong>Portability:</strong> Your data is in standard formats</li>
             </ul>
-            
-            <h2>7. Children's Privacy</h2>
-            <p>Quantum Merlin is intended for users aged 13 and older. We do not knowingly collect information from children under 13.</p>
-            
-            <h2>8. Changes to This Policy</h2>
-            <p>We may update this Privacy Policy from time to time. We will notify users of any significant changes by updating the effective date.</p>
-            
-            <div class="legal-nav">
+        </section>
+
+        <section class="content-section">
+            <h2><span class="section-icon">👶</span> 7. Children's Privacy</h2>
+            <p>Quantum Merlin is designed for users aged 13 and older. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal data, please contact us immediately.</p>
+        </section>
+
+        <section class="content-section">
+            <h2><span class="section-icon">🔄</span> 8. Policy Updates</h2>
+            <p>As the cosmic energies shift, so too may this policy. We will notify you of significant changes through:</p>
+            <ul>
+                <li>Updated "Last Modified" date at the top of this page</li>
+                <li>Prominent notice on our homepage for major changes</li>
+            </ul>
+        </section>
+
+        <div class="contact-box">
+            <h3>📬 Questions About Your Privacy?</h3>
+            <p>The Wizard welcomes your inquiries about data protection.</p>
+            <p>Reach us at: <a href="mailto:privacy@quantummerlin.com">privacy@quantummerlin.com</a></p>
+        </div>
+
+        <nav class="nav-buttons">
+            <a href="tools_index.html" class="nav-btn"><span>🏠</span> Back to All Tools</a>
+            <a href="terms.html" class="nav-btn"><span>📜</span> Terms of Service</a>
+            <a href="disclaimer.html" class="nav-btn"><span>⚠️</span> Disclaimer</a>
+        </nav>
+
+        <footer class="page-footer">
+            <p>© 2026 Quantum Merlin | All Rights Reserved</p>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <span>•</span>
                 <a href="terms.html">Terms of Service</a>
-                <a href="privacy.html" class="active">Privacy Policy</a>
+                <span>•</span>
                 <a href="disclaimer.html">Disclaimer</a>
             </div>
-            
-            <p class="effective-date">Effective Date: January 2026</p>
-        </div>
+        </footer>
     </div>
+
+    <script>
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.content-section').forEach(section => observer.observe(section));
+
+        // Parallax orbs
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.magical-orb');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            orbs.forEach((orb, i) => {
+                const speed = (i + 1) * 20;
+                orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+    </script>
 </body>
 </html>
