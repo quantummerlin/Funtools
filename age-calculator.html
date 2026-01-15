@@ -14,6 +14,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap&v=20260111121803&v=20260111121858&v=20260111132525&v=20260112083146" rel="stylesheet">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <link rel="stylesheet" href="go-deeper.css">
+    <script src="tool-tracker.js?v=20260115"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -278,7 +280,19 @@
             });
         });
 
+        // Initialize Go Deeper section
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.ToolTracker && typeof ToolTracker.renderGoDeeper === 'function') {
+                ToolTracker.renderGoDeeper('goDeeper', 3);
+            }
+        });
+
     </script>
+
+    <!-- Go Deeper Section -->
+    <div class="container">
+        <div class="go-deeper-section" id="goDeeper"></div>
+    </div>
 
     <!-- Legal Footer -->
     <footer class="legal-footer">

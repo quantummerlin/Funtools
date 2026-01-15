@@ -182,6 +182,56 @@
             box-shadow: 0 0 15px rgba(255, 0, 255, 0.1);
         }
         
+        /* Journey Progress */
+        .journey-progress {
+            background: linear-gradient(135deg, rgba(20, 10, 30, 0.8), rgba(10, 20, 30, 0.8));
+            border: 1px solid rgba(191, 90, 242, 0.3);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .journey-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .journey-icon {
+            font-size: 1.3rem;
+        }
+        
+        .journey-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: #E8E4D9;
+        }
+        
+        .journey-text strong {
+            color: #06b6d4;
+        }
+        
+        .journey-bar-container {
+            width: 100%;
+            max-width: 400px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        .journey-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #bf5af2, #06b6d4, #fbbf24);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+        
         .category-header {
             display: flex;
             justify-content: space-between;
@@ -277,6 +327,30 @@
             align-items: center;
             gap: 15px;
             -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+        
+        .tool-card.new-tool {
+            border-color: rgba(251, 191, 36, 0.5);
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.5),
+                0 0 15px rgba(251, 191, 36, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        
+        .tool-card .new-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a2e;
+            font-size: 0.6rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4);
         }
         
         .tool-card:hover, .tool-card:active {
@@ -546,6 +620,7 @@
             display: none;
         }
     </style>
+<script src="tool-tracker.js?v=20260115"></script>
 <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
 </head>
 <body>
@@ -559,6 +634,17 @@
         
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="🔍 Search all tools...">
+        </div>
+        
+        <!-- Journey Progress -->
+        <div class="journey-progress" id="journeyProgress">
+            <div class="journey-header">
+                <span class="journey-icon">🌟</span>
+                <span class="journey-text">Your Journey: <strong id="journeyCount">0</strong> of <strong id="journeyTotal">0</strong> tools explored</span>
+            </div>
+            <div class="journey-bar-container">
+                <div class="journey-bar" id="journeyBar"></div>
+            </div>
         </div>
         
         <!-- Search Results (hidden by default) -->
@@ -842,15 +928,19 @@
         function renderCategoryTools(category) {
             const grid = document.getElementById(`${category}-grid`);
             const categoryTools = tools.filter(t => t.category === category);
+            const usedTools = window.ToolTracker ? ToolTracker.getUsedTools() : [];
             
-            grid.innerHTML = categoryTools.map(tool => `
-                <div class="tool-card" onclick="window.location.href='${tool.file}'">
+            grid.innerHTML = categoryTools.map(tool => {
+                const isNew = !usedTools.includes(tool.file);
+                return `
+                <div class="tool-card${isNew ? ' new-tool' : ''}" onclick="window.location.href='${tool.file}'">
+                    ${isNew ? '<span class="new-badge">NEW</span>' : ''}
                     <div class="tool-info">
                         <div class="tool-title">${tool.title}</div>
                         <div class="tool-description">${tool.description}</div>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
         
         // Toggle category visibility
@@ -887,15 +977,19 @@
             if (filtered.length === 0) {
                 searchResultsGrid.innerHTML = '<p style="color: #9ca3af; padding: 20px; text-align: center;">No tools found matching your search.</p>';
             } else {
-                searchResultsGrid.innerHTML = filtered.map(tool => `
-                    <div class="tool-card" onclick="window.location.href='${tool.file}'">
+                const usedTools = window.ToolTracker ? ToolTracker.getUsedTools() : [];
+                searchResultsGrid.innerHTML = filtered.map(tool => {
+                    const isNew = !usedTools.includes(tool.file);
+                    return `
+                    <div class="tool-card${isNew ? ' new-tool' : ''}" onclick="window.location.href='${tool.file}'">
+                        ${isNew ? '<span class="new-badge">NEW</span>' : ''}
                         <div class="tool-icon">${tool.icon}</div>
                         <div class="tool-info">
                             <div class="tool-title">${tool.title}</div>
                             <div class="tool-description">${tool.description}</div>
                         </div>
                     </div>
-                `).join('');
+                `}).join('');
             }
         });
         
@@ -958,6 +1052,19 @@ ${formData.message}
         ['numerology', 'relationship', 'purpose', 'astrology', 'personality', 'fortune', 'life'].forEach(cat => {
             renderCategoryTools(cat);
         });
+        
+        // Update journey progress
+        function updateJourneyProgress() {
+            if (!window.ToolTracker) {
+                document.getElementById('journeyProgress').style.display = 'none';
+                return;
+            }
+            const progress = ToolTracker.getProgress();
+            document.getElementById('journeyCount').textContent = progress.used;
+            document.getElementById('journeyTotal').textContent = progress.total;
+            document.getElementById('journeyBar').style.width = progress.percentage + '%';
+        }
+        updateJourneyProgress();
         
         // All categories start collapsed - user can expand as needed
     </script>

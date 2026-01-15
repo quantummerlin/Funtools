@@ -238,6 +238,7 @@
             .tool-card { padding: 30px 20px; }
         }
     </style>
+    <script src="name-resonance.js?v=20260112"></script>
     <script src="auto-fill.js"></script>
 </head>
 <body>
@@ -321,6 +322,7 @@
             event.preventDefault();
             
             const name = document.getElementById('preferredName').value;
+            const birthName = document.getElementById('birthName') ? document.getElementById('birthName').value : '';
             const birthDate = document.getElementById('birthDate').value;
             const birthTime = document.getElementById('birthTime').value;
             const birthPlace = document.getElementById('birthPlace').value;
@@ -348,7 +350,7 @@
                 const moonSign = calculateMoonPosition(birthDate, birthTime, coords);
                 
                 // Show result
-                showResult(name, moonSign);
+                showResult(name, moonSign, birthName);
                 
             } catch (error) {
                 console.error('Calculation error:', error);
@@ -501,10 +503,19 @@
             }
         }
 
-        function showResult(name, moonSign) {
+        function showResult(name, moonSign, birthName) {
             const interpretation = interpretations[moonSign];
             const personalizedReading = interpretation.replace(/{preferredName}/g, name);
             const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            // Generate birth name resonance analysis if birth name provided
+            let nameResonanceHtml = '';
+            if (birthName && birthName.trim() !== '' && typeof NameResonance !== 'undefined') {
+                const resonance = NameResonance.generateAnalysis(birthName, name);
+                if (resonance) {
+                    nameResonanceHtml = resonance.html;
+                }
+            }
 
             // Store reading for the multi-page results flow
             const readingData = {
@@ -514,7 +525,7 @@
                 number: moonSign,
                 title: `Moon in ${moonSign}`,
                 subtitle: `${name}, discover your emotional depths`,
-                content: paragraphs,
+                content: nameResonanceHtml + paragraphs,
                 sourceUrl: 'moon-sign-reading.html'
             };
             // Try sessionStorage first, fallback to URL params for private browsing

@@ -261,6 +261,7 @@
             border-color: #ec4899;
         }
     </style>
+    <script src="name-resonance.js?v=20260112"></script>
     <script src="auto-fill.js"></script>
 </head>
 <body>
@@ -421,8 +422,17 @@
             // Convert paragraphs to HTML
             const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
 
+            // Generate birth name resonance analysis if birth name provided
+            let nameResonanceHtml = '';
+            if (birthName && birthName.trim() !== '' && typeof NameResonance !== 'undefined') {
+                const resonance = NameResonance.generateAnalysis(birthName, preferredName);
+                if (resonance) {
+                    nameResonanceHtml = resonance.html;
+                }
+            }
+
             document.getElementById('result-title').textContent = `Maturity Number ${number}: ${preferredName}`;
-            document.getElementById('result-content').innerHTML = paragraphs;
+            document.getElementById('result-content').innerHTML = nameResonanceHtml + paragraphs;
             document.getElementById('result').classList.add('show');
             document.getElementById('calculator-form').style.display = 'none';
         }

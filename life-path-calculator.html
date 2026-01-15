@@ -288,6 +288,7 @@
             border-color: #ec4899;
         }
     </style>
+    <script src="name-resonance.js?v=20260112"></script>
     <script src="auto-fill.js?v=20260112b"></script>
 </head>
 <body>
@@ -443,6 +444,7 @@
         function handleFormSubmit() {
             var preferredName = document.getElementById('preferredName').value;
             var birthDate = document.getElementById('birthDate').value;
+            var birthName = document.getElementById('birthName') ? document.getElementById('birthName').value : '';
             
             if (!preferredName || !birthDate) {
                 alert('Please enter your name and birth date');
@@ -576,9 +578,19 @@
             
             const interpretation = interpretations[lifePathNumber];
             
+            // Generate birth name resonance analysis if birth name provided
+            let nameResonanceHtml = '';
+            if (birthName && birthName.trim() !== '' && typeof NameResonance !== 'undefined') {
+                const resonance = NameResonance.generateAnalysis(birthName, preferredName);
+                if (resonance) {
+                    nameResonanceHtml = resonance.html;
+                }
+            }
+            
             const resultContent = `
                 <p><span class="highlight">Core Traits:</span> ${interpretation.traits}</p>
                 <p>${interpretation.description}</p>
+                ${nameResonanceHtml}
                 <p><strong>Your Core Nature:</strong> ${interpretation.core}</p>
                 <p><strong>Your Life Challenges:</strong> ${interpretation.challenges}</p>
                 <p><strong>Your Relationship Path:</strong> ${interpretation.relationships}</p>

@@ -1,8 +1,9 @@
 // Tool Usage Tracker for Quantum Merlin
-// Tracks which tools users have used and suggests unexplored ones
+// Tracks which tools users have used PER PROFILE and suggests unexplored ones
 
 const ToolTracker = (function() {
-    const STORAGE_KEY = 'quantumMerlinToolsUsed';
+    const STORAGE_KEY = 'quantumMerlinToolUsage';
+    const LEGACY_KEY = 'quantumMerlinToolsUsed'; // For migration
     
     // All available tools with categories
     const allTools = {
@@ -79,36 +80,87 @@ const ToolTracker = (function() {
         }
     }
     
-    // Get used tools
-    function getUsedTools() {
-        if (!isStorageAvailable()) return [];
+    // Get the active profile ID
+    function getActiveProfileId() {
         try {
-            const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : [];
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            return activeId || 'default';
         } catch (e) {
-            return [];
+            return 'default';
         }
     }
     
-    // Mark a tool as used
+    // Get all usage data
+    function getAllUsageData() {
+        if (!isStorageAvailable()) return {};
+        try {
+            const data = localStorage.getItem(STORAGE_KEY);
+            if (data) {
+                return JSON.parse(data);
+            }
+            // Migrate from legacy format if exists
+            const legacyData = localStorage.getItem(LEGACY_KEY);
+            if (legacyData) {
+                const legacyTools = JSON.parse(legacyData);
+                const migrated = { 'default': {} };
+                legacyTools.forEach(tool => {
+                    migrated['default'][tool] = { count: 1, lastUsed: Date.now() };
+                });
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+                return migrated;
+            }
+            return {};
+        } catch (e) {
+            return {};
+        }
+    }
+    
+    // Get used tools for current profile
+    function getUsedTools(profileId = null) {
+        const pid = profileId || getActiveProfileId();
+        const allData = getAllUsageData();
+        const profileData = allData[pid] || {};
+        return Object.keys(profileData);
+    }
+    
+    // Get usage count for a specific tool
+    function getToolUsageCount(toolUrl, profileId = null) {
+        const pid = profileId || getActiveProfileId();
+        const allData = getAllUsageData();
+        const profileData = allData[pid] || {};
+        const filename = toolUrl.split('/').pop().split('?')[0];
+        return profileData[filename] ? profileData[filename].count : 0;
+    }
+    
+    // Mark a tool as used (increments count)
     function markUsed(toolUrl) {
         if (!isStorageAvailable()) return;
         try {
-            const used = getUsedTools();
-            // Normalize the URL to just the filename
-            const filename = toolUrl.split('/').pop().split('?')[0];
-            if (!used.includes(filename)) {
-                used.push(filename);
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(used));
+            const allData = getAllUsageData();
+            const pid = getActiveProfileId();
+            
+            if (!allData[pid]) {
+                allData[pid] = {};
             }
+            
+            const filename = toolUrl.split('/').pop().split('?')[0];
+            
+            if (!allData[pid][filename]) {
+                allData[pid][filename] = { count: 0, lastUsed: 0 };
+            }
+            
+            allData[pid][filename].count++;
+            allData[pid][filename].lastUsed = Date.now();
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
         } catch (e) {
             // Storage error
         }
     }
     
-    // Get unused tools
-    function getUnusedTools() {
-        const used = getUsedTools();
+    // Get unused tools for current profile
+    function getUnusedTools(profileId = null) {
+        const used = getUsedTools(profileId);
         const unused = [];
         
         for (const [url, info] of Object.entries(allTools)) {
@@ -120,28 +172,34 @@ const ToolTracker = (function() {
         return unused;
     }
     
-    // Get suggested tools (prioritize unused, mix of categories)
-    function getSuggestedTools(count = 3, excludeUrl = null) {
-        const unused = getUnusedTools();
-        const used = getUsedTools();
+    // Get suggested tools (prioritize unused, then least used)
+    function getSuggestedTools(count = 3, excludeUrl = null, profileId = null) {
+        const pid = profileId || getActiveProfileId();
+        const allData = getAllUsageData();
+        const profileData = allData[pid] || {};
         
-        // Exclude current tool
-        let candidates = unused.filter(t => t.url !== excludeUrl);
-        
-        // If not enough unused, add some used ones
-        if (candidates.length < count) {
-            const usedTools = used
-                .filter(url => url !== excludeUrl && allTools[url])
-                .map(url => ({ url, ...allTools[url], alreadyUsed: true }));
-            candidates = [...candidates, ...usedTools];
+        // Build list with usage counts
+        const toolList = [];
+        for (const [url, info] of Object.entries(allTools)) {
+            if (url === excludeUrl) continue;
+            const usage = profileData[url] || { count: 0, lastUsed: 0 };
+            toolList.push({ url, ...info, usageCount: usage.count, lastUsed: usage.lastUsed });
         }
         
-        // Shuffle to add variety
-        candidates = candidates.sort(() => Math.random() - 0.5);
+        // Sort by: unused first, then least used, then oldest last used
+        toolList.sort((a, b) => {
+            // Unused (count 0) first
+            if (a.usageCount === 0 && b.usageCount > 0) return -1;
+            if (b.usageCount === 0 && a.usageCount > 0) return 1;
+            // Then by count (ascending)
+            if (a.usageCount !== b.usageCount) return a.usageCount - b.usageCount;
+            // Then by last used (oldest first)
+            return a.lastUsed - b.lastUsed;
+        });
         
-        // Try to get a mix of categories
+        // Get a mix of categories from the prioritized list
         const byCategory = {};
-        candidates.forEach(t => {
+        toolList.forEach(t => {
             if (!byCategory[t.category]) byCategory[t.category] = [];
             byCategory[t.category].push(t);
         });
@@ -149,30 +207,71 @@ const ToolTracker = (function() {
         const result = [];
         const categories = Object.keys(byCategory).sort(() => Math.random() - 0.5);
         
-        // Round-robin from categories
+        // Round-robin from categories (prioritizing unused/least used within each)
         let catIndex = 0;
-        while (result.length < count && candidates.length > 0) {
+        while (result.length < count && toolList.length > 0) {
             const cat = categories[catIndex % categories.length];
             if (byCategory[cat] && byCategory[cat].length > 0) {
                 result.push(byCategory[cat].shift());
             }
             catIndex++;
-            // Safety: if we've gone through all categories without adding, break
-            if (catIndex > categories.length * 2 && result.length === 0) break;
+            if (catIndex > categories.length * count) break;
         }
         
         return result;
     }
     
-    // Get progress stats
-    function getProgress() {
+    // Get progress stats for current profile
+    function getProgress(profileId = null) {
         const total = Object.keys(allTools).length;
-        const used = getUsedTools().length;
+        const used = getUsedTools(profileId).length;
         return {
             used,
             total,
             percentage: Math.round((used / total) * 100)
         };
+    }
+    
+    // Render "Go Deeper" suggestion section
+    function renderGoDeeper(containerId = 'goDeeper', count = 3) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        
+        const currentPage = window.location.pathname.split('/').pop();
+        const suggestions = getSuggestedTools(count, currentPage);
+        const progress = getProgress();
+        
+        if (suggestions.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: #9A8F7A;">You\'ve explored all available tools! 🎉</p>';
+            return;
+        }
+        
+        let html = `
+            <div class="go-deeper-header">
+                <h3>✨ Go Deeper</h3>
+                <p>Continue your journey of self-discovery</p>
+                <div class="progress-bar-mini">
+                    <div class="progress-fill" style="width: ${progress.percentage}%"></div>
+                </div>
+                <span class="progress-text">${progress.used} of ${progress.total} tools explored</span>
+            </div>
+            <div class="suggestion-cards">
+        `;
+        
+        suggestions.forEach(tool => {
+            const isNew = tool.usageCount === 0;
+            html += `
+                <a href="${tool.url}" class="suggestion-card ${isNew ? 'new-tool' : ''}">
+                    <span class="suggestion-icon">${tool.icon}</span>
+                    <span class="suggestion-title">${tool.title}</span>
+                    <span class="suggestion-desc">${tool.desc}</span>
+                    ${isNew ? '<span class="new-badge">NEW</span>' : ''}
+                </a>
+            `;
+        });
+        
+        html += '</div>';
+        container.innerHTML = html;
     }
     
     // Auto-track current page on load
@@ -198,6 +297,8 @@ const ToolTracker = (function() {
         getUnusedTools,
         getSuggestedTools,
         getProgress,
+        getToolUsageCount,
+        renderGoDeeper,
         allTools
     };
 })();

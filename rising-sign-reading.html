@@ -238,6 +238,7 @@
             .tool-card { padding: 30px 20px; }
         }
     </style>
+    <script src="name-resonance.js?v=20260112"></script>
     <script src="auto-fill.js"></script>
 </head>
 <body>
@@ -319,6 +320,7 @@
             event.preventDefault();
             
             const name = document.getElementById('preferredName').value;
+            const birthName = document.getElementById('birthName') ? document.getElementById('birthName').value : '';
             const birthDate = document.getElementById('birthDate').value;
             const birthTime = document.getElementById('birthTime').value;
             const birthPlace = document.getElementById('birthPlace').value;
@@ -346,7 +348,7 @@
                 const risingSign = calculateRisingPosition(birthDate, birthTime, coords);
                 
                 // Show result
-                showResult(name, risingSign);
+                showResult(name, risingSign, birthName);
                 
             } catch (error) {
                 console.error('Rising sign calculation error:', error);
@@ -524,10 +526,19 @@
             }
         }
 
-        function showResult(name, risingSign) {
+        function showResult(name, risingSign, birthName) {
             const interpretation = interpretations[risingSign];
             const personalizedReading = interpretation.replace(/{preferredName}/g, name);
             const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
+
+            // Generate birth name resonance analysis if birth name provided
+            let nameResonanceHtml = '';
+            if (birthName && birthName.trim() !== '' && typeof NameResonance !== 'undefined') {
+                const resonance = NameResonance.generateAnalysis(birthName, name);
+                if (resonance) {
+                    nameResonanceHtml = resonance.html;
+                }
+            }
 
             // Store reading for the multi-page results flow
             const readingData = {
@@ -537,7 +548,7 @@
                 number: risingSign,
                 title: `Rising Sign: ${risingSign}`,
                 subtitle: `${name}, this is how the world sees you`,
-                content: paragraphs,
+                content: nameResonanceHtml + paragraphs,
                 sourceUrl: 'rising-sign-reading.html'
             };
             // Try sessionStorage first, fallback to URL params for private browsing
