@@ -172,7 +172,10 @@ const ToolTracker = (function() {
         return unused;
     }
     
-    // Get suggested tools (prioritize unused, then least used)
+    // Priority categories for maximum impact (in order of priority)
+    const PRIORITY_CATEGORIES = ['numerology', 'astrology', 'purpose', 'relationship'];
+    
+    // Get suggested tools (prioritize unused, then least used, with high-impact categories first)
     function getSuggestedTools(count = 3, excludeUrl = null, profileId = null) {
         const pid = profileId || getActiveProfileId();
         const allData = getAllUsageData();
@@ -183,11 +186,16 @@ const ToolTracker = (function() {
         for (const [url, info] of Object.entries(allTools)) {
             if (url === excludeUrl) continue;
             const usage = profileData[url] || { count: 0, lastUsed: 0 };
-            toolList.push({ url, ...info, usageCount: usage.count, lastUsed: usage.lastUsed });
+            // Assign priority score (lower = higher priority)
+            const priorityIndex = PRIORITY_CATEGORIES.indexOf(info.category);
+            const priorityScore = priorityIndex >= 0 ? priorityIndex : PRIORITY_CATEGORIES.length;
+            toolList.push({ url, ...info, usageCount: usage.count, lastUsed: usage.lastUsed, priorityScore });
         }
         
-        // Sort by: unused first, then least used, then oldest last used
+        // Sort by: priority category, then unused first, then least used, then oldest last used
         toolList.sort((a, b) => {
+            // Priority categories first
+            if (a.priorityScore !== b.priorityScore) return a.priorityScore - b.priorityScore;
             // Unused (count 0) first
             if (a.usageCount === 0 && b.usageCount > 0) return -1;
             if (b.usageCount === 0 && a.usageCount > 0) return 1;
@@ -197,7 +205,7 @@ const ToolTracker = (function() {
             return a.lastUsed - b.lastUsed;
         });
         
-        // Get a mix of categories from the prioritized list
+        // Get a mix of priority categories from the prioritized list
         const byCategory = {};
         toolList.forEach(t => {
             if (!byCategory[t.category]) byCategory[t.category] = [];
@@ -205,17 +213,20 @@ const ToolTracker = (function() {
         });
         
         const result = [];
-        const categories = Object.keys(byCategory).sort(() => Math.random() - 0.5);
+        // Prioritize these categories in order, then add others
+        const priorityOrder = [...PRIORITY_CATEGORIES];
+        const otherCategories = Object.keys(byCategory).filter(c => !PRIORITY_CATEGORIES.includes(c));
+        const orderedCategories = [...priorityOrder.filter(c => byCategory[c]), ...otherCategories];
         
-        // Round-robin from categories (prioritizing unused/least used within each)
+        // Round-robin from categories (priority categories first)
         let catIndex = 0;
         while (result.length < count && toolList.length > 0) {
-            const cat = categories[catIndex % categories.length];
+            const cat = orderedCategories[catIndex % orderedCategories.length];
             if (byCategory[cat] && byCategory[cat].length > 0) {
                 result.push(byCategory[cat].shift());
             }
             catIndex++;
-            if (catIndex > categories.length * count) break;
+            if (catIndex > orderedCategories.length * count) break;
         }
         
         return result;
