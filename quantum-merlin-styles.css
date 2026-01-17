@@ -853,3 +853,194 @@ button.submit-btn:active {
     color: var(--text-accent-gold);
     transform: translateX(-5px);
 }
+
+/* ===== PWA ENHANCEMENT & CENTER ALIGNMENT ===== */
+
+/* Global center alignment */
+html, body {
+    text-align: center;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* Center all form elements and content */
+.tool-card,
+.tool-form,
+.result,
+.result-section,
+.profile-section {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Center input groups */
+.input-section,
+.input-group,
+.form-group {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Center labels but keep them visually aligned */
+label {
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+
+/* Center inputs within their containers */
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Keep result content readable with justified text on larger screens */
+.result-content {
+    text-align: center;
+}
+
+@media (min-width: 600px) {
+    .result-content {
+        text-align: justify;
+        text-align-last: center;
+    }
+    
+    .result-content p {
+        text-align: justify;
+    }
+}
+
+/* Center buttons */
+button,
+.back-btn,
+.submit-btn,
+.profile-btn,
+.share-btn {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+/* Keep share buttons in a row */
+.share-buttons {
+    justify-content: center;
+}
+
+.share-buttons .share-btn {
+    display: inline-block;
+}
+
+/* Center back link */
+.back-link {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: block;
+    width: fit-content;
+}
+
+/* PWA Safe Areas for notched devices */
+@supports (padding: env(safe-area-inset-top)) {
+    body {
+        padding-top: max(env(safe-area-inset-top), 15px);
+        padding-bottom: max(env(safe-area-inset-bottom), 15px);
+        padding-left: max(env(safe-area-inset-left), 15px);
+        padding-right: max(env(safe-area-inset-right), 15px);
+    }
+}
+
+/* PWA Standalone mode styles */
+@media (display-mode: standalone) {
+    /* Slightly larger tap targets for app mode */
+    button,
+    .share-btn,
+    .back-btn,
+    .profile-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Prevent text selection in app mode for cleaner UX */
+    .header h1,
+    .tool-header h1,
+    button,
+    .share-btn {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    
+    /* Smoother scrolling in app mode */
+    html {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Hide elements that don't make sense in app mode */
+    .browser-only {
+        display: none !important;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger tap targets on touch devices */
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    select {
+        min-height: 48px;
+    }
+    
+    button,
+    .share-btn,
+    .back-btn {
+        min-height: 48px;
+    }
+    
+    /* Disable hover effects that don't work well on touch */
+    button:hover,
+    .share-btn:hover,
+    .back-btn:hover {
+        transform: none;
+    }
+    
+    button:active,
+    .share-btn:active,
+    .back-btn:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .tool-card,
+    .result,
+    .profile-section {
+        border-width: 3px;
+    }
+    
+    button,
+    input,
+    select {
+        border-width: 3px;
+    }
+}
+
+/* Dark mode optimization (already dark, but ensure consistency) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+}

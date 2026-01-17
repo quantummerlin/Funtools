@@ -1,19 +1,24 @@
 {
-  "name": "Quantum Merlin - Mystical Tools",
+  "name": "Quantum Merlin - Ancient Patterns. Modern Interfaces.",
   "short_name": "Quantum Merlin",
-  "description": "Discover your cosmic destiny with numerology, astrology, and mystical calculators",
+  "description": "Map time, numbers, and celestial cycles into clear moments for aligned action — blending ancient pattern wisdom with modern interface clarity.",
   "start_url": "/tools_index.html",
   "scope": "/",
+  "id": "quantum-merlin-pwa",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#0a0a0f",
   "theme_color": "#bf5af2",
   "orientation": "portrait-primary",
+  "dir": "ltr",
+  "lang": "en",
+  "categories": ["lifestyle", "entertainment", "utilities"],
   "icons": [
     {
       "src": "RetroMerlin.jpg",
       "sizes": "512x512",
       "type": "image/jpeg",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "favicon.svg",
@@ -21,5 +26,30 @@
       "type": "image/svg+xml",
       "purpose": "any"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "Life Path Calculator",
+      "short_name": "Life Path",
+      "description": "Calculate your Life Path number",
+      "url": "/life-path-calculator.html",
+      "icons": [{"src": "favicon.svg", "sizes": "any"}]
+    },
+    {
+      "name": "Daily Fortune",
+      "short_name": "Fortune",
+      "description": "Get your daily mystical guidance",
+      "url": "/daily-fortune.html",
+      "icons": [{"src": "favicon.svg", "sizes": "any"}]
+    },
+    {
+      "name": "Moon Phase",
+      "short_name": "Moon",
+      "description": "Check current moon phase",
+      "url": "/moon-phase-calculator.html",
+      "icons": [{"src": "favicon.svg", "sizes": "any"}]
+    }
+  ],
+  "prefer_related_applications": false,
+  "handle_links": "preferred"
 }
