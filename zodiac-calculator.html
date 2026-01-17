@@ -247,9 +247,16 @@
                 document.getElementById('result').classList.add('show');
             });
         
-    
         // Load saved data from localStorage
-        ;
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const fieldMappings = {
+                    'birthDate': 'birthDate',
+                    'date': 'birthDate',
+                    'dob': 'birthDate'
+                };
                 
                 Object.keys(fieldMappings).forEach(fieldId => {
                     const field = document.getElementById(fieldId);
