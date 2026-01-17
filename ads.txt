@@ -1,0 +1,11 @@
+# Quantum Merlin - ads.txt
+# Replace PUBLISHER_ID with your actual Google AdSense Publisher ID (format: pub-XXXXXXXXXXXXXXXX)
+# Get this from your AdSense account after approval
+
+google.com, PUBLISHER_ID, DIRECT, f08c47fec0942fa0
+
+# Instructions:
+# 1. Apply for AdSense at https://www.google.com/adsense/
+# 2. Once approved, find your Publisher ID in AdSense dashboard
+# 3. Replace PUBLISHER_ID above with your actual pub-XXXXXXXXXXXXXXXX ID
+# 4. Remove these comment lines

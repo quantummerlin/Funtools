@@ -23,16 +23,66 @@ const CosmicLoader = {
                 background: #0a0a0f;
                 z-index: 10000;
                 display: flex;
+                flex-direction: column;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-start;
+                padding-top: 20px;
                 opacity: 0;
                 visibility: hidden;
                 transition: opacity 0.3s ease;
+                overflow-y: auto;
             }
             
             .cosmic-loader-overlay.active {
                 opacity: 1;
                 visibility: visible;
+            }
+            
+            /* Ad container at top - fully visible */
+            .cosmic-ad-container {
+                width: 100%;
+                max-width: 728px;
+                min-height: 90px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 15px;
+                padding: 10px;
+                background: rgba(15, 15, 25, 0.6);
+                border: 1px solid rgba(191, 90, 242, 0.2);
+                border-radius: 8px;
+                position: relative;
+                z-index: 2;
+            }
+            
+            .cosmic-ad-container::before {
+                content: 'Advertisement';
+                position: absolute;
+                top: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 10px;
+                color: rgba(196, 185, 152, 0.5);
+                background: #0a0a0f;
+                padding: 0 8px;
+                font-family: 'Cormorant Garamond', serif;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+            }
+            
+            /* Placeholder for when AdSense isn't loaded */
+            .cosmic-ad-placeholder {
+                color: rgba(196, 185, 152, 0.3);
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 0.9rem;
+                font-style: italic;
+            }
+            
+            @media (max-width: 768px) {
+                .cosmic-ad-container {
+                    max-width: 320px;
+                    min-height: 50px;
+                }
             }
             
             .cosmic-loader-overlay::before {
@@ -219,6 +269,12 @@ const CosmicLoader = {
         overlay.className = 'cosmic-loader-overlay';
         overlay.id = 'cosmicLoaderOverlay';
         overlay.innerHTML = `
+            <!-- Ad Container - Positioned at top for full visibility -->
+            <div class="cosmic-ad-container" id="cosmicAdContainer">
+                <!-- AdSense code will be inserted here -->
+                <div class="cosmic-ad-placeholder">✨ Mystical sponsors appear here ✨</div>
+            </div>
+            
             <div class="cosmic-loader-container">
                 <div class="cosmic-orb-container">
                     <div class="cosmic-particles">
