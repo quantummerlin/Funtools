@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <title>Life Path Calculator - Simple</title>
+    <script src="auto-fill.js"></script>
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a2e; color: #fff; }
         input, button { padding: 15px; margin: 10px 0; width: 100%; box-sizing: border-box; font-size: 16px; }
@@ -19,10 +20,10 @@
         
         <form id="lifePathForm" onsubmit="return submitForm(event)">
             <label>Your Name:</label>
-            <input type="text" id="nameInput" placeholder="Enter your name" required>
+            <input type="text" id="preferredName" placeholder="Enter your name" required>
             
             <label>Birth Date:</label>
-            <input type="date" id="dateInput" required>
+            <input type="date" id="birthDate" required>
             
             <button type="submit">Calculate Life Path</button>
         </form>
@@ -52,8 +53,8 @@
         function submitForm(e) {
             e.preventDefault();
             
-            var name = document.getElementById('nameInput').value;
-            var date = document.getElementById('dateInput').value;
+            var name = document.getElementById('preferredName').value;
+            var date = document.getElementById('birthDate').value;
             var lifePathNumber = calculateLifePath(date);
             
             var readingData = {
