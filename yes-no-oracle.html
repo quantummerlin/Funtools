@@ -124,6 +124,7 @@
         .share-btn:hover { background: #e0e0e0; }
     </style>
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
 </head>
 <body>
     <div class="container">
@@ -201,7 +202,9 @@
                 
                 document.getElementById('result-title').textContent = `${answer.emoji} ${answer.text}`;
                 document.getElementById('result-text').textContent = "The oracle has spoken. Trust your intuition!";
-                document.getElementById('result').classList.add('show');
+                CosmicLoader.show(() => {
+                    document.getElementById('result').classList.add('show');
+                });
             });
         
     

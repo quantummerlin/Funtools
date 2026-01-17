@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <link rel="stylesheet" href="go-deeper.css">
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
     <script src="tool-tracker.js?v=20260117"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -346,7 +347,7 @@
             `;
             
             document.getElementById('result').innerHTML = resultHTML;
-            document.getElementById('result').style.display = 'block';
+            CosmicLoader.showResult('result');
             document.querySelector('.tool-card').style.display = 'none';
             
             // Render Go Deeper suggestions

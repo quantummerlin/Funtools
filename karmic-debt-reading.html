@@ -275,6 +275,7 @@
     </style>
     <script src="name-resonance.js?v=20260112"></script>
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
 </head>
 <body>
     <div class="container">
@@ -455,8 +456,10 @@
                 // This should not happen as 0 is handled
                 document.getElementById('result-title').textContent = 'No Karmic Debt';
                 document.getElementById('result-content').innerHTML = '<div class="no-karmic"><h3>No Major Karmic Debt Detected</h3><p>Your numerology chart does not show the traditional karmic debt numbers (13, 14, 16, 19). This is fortunate!</p></div>';
-                document.getElementById('result').classList.add('show');
-                document.getElementById('calculator-form').style.display = 'none';
+                CosmicLoader.show(() => {
+                    document.getElementById('result').classList.add('show');
+                    document.getElementById('calculator-form').style.display = 'none';
+                });
         
                 return;
             }
@@ -478,8 +481,10 @@
 
             document.getElementById('result-title').textContent = `Karmic Debt ${number === 0 ? 'Free!' : 'Number ' + number}: ${preferredName}`;
             document.getElementById('result-content').innerHTML = nameResonanceHtml + paragraphs;
-            document.getElementById('result').classList.add('show');
-            document.getElementById('calculator-form').style.display = 'none';
+            CosmicLoader.show(() => {
+                document.getElementById('result').classList.add('show');
+                document.getElementById('calculator-form').style.display = 'none';
+            });
         }
 
         

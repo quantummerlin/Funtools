@@ -231,6 +231,7 @@
         .back-btn:hover { background: rgba(139, 92, 246, 0.3); }
     </style>
     <script src="auto-fill.js?v=20260113"></script>
+    <script src="cosmic-loader.js"></script>
 </head>
 <body>
     <div class="container">
@@ -599,8 +600,7 @@
             }
             
             document.getElementById('resultsContent').innerHTML = html;
-            document.getElementById('result').style.display = 'block';
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+            CosmicLoader.showResult('result');
         }
     </script>
 

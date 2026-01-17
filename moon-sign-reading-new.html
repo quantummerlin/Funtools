@@ -237,6 +237,7 @@
         }
     </style>
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
 </head>
 <body>
     <div class="container">
@@ -381,8 +382,10 @@
 
             document.getElementById('result-title').textContent = `Moon in ${moonSign}: ${name}`;
             document.getElementById('result-content').innerHTML = paragraphs;
-            document.getElementById('result').classList.add('show');
-            document.getElementById('calculator-form').style.display = 'none';
+            CosmicLoader.show(() => {
+                document.getElementById('result').classList.add('show');
+                document.getElementById('calculator-form').style.display = 'none';
+            });
         }
 
         ;

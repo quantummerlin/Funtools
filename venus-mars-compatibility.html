@@ -8,6 +8,7 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
     <style>
         .result-card { background: linear-gradient(135deg, rgba(255, 20, 147, 0.2), rgba(220, 20, 60, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(255, 20, 147, 0.4); }
         .compatibility-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
@@ -219,8 +220,7 @@
             `;
             
             document.getElementById('result').innerHTML = resultHTML;
-            document.getElementById('result').style.display = 'block';
-            document.getElementById('toolForm').style.display = 'none';
+            CosmicLoader.showResult('result', 'toolForm');
         }
 
         function getInterpretation(score) {

@@ -124,6 +124,7 @@
         .share-btn:hover { background: #e0e0e0; }
     </style>
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
 </head>
 <body>
     <div class="container">
@@ -264,7 +265,9 @@
                 
                 document.getElementById('result-title').textContent = `${result.emoji} ${auraColor.charAt(0).toUpperCase() + auraColor.slice(1)} Aura`;
                 document.getElementById('result-text').textContent = result.meaning;
-                document.getElementById('result').classList.add('show');
+                CosmicLoader.show(() => {
+                    document.getElementById('result').classList.add('show');
+                });
             });
         
     

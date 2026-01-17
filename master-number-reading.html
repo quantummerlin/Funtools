@@ -275,6 +275,7 @@
     </style>
     <script src="name-resonance.js?v=20260112"></script>
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
 </head>
 <body>
     <div class="container">
@@ -474,8 +475,10 @@
                 
                 document.getElementById('result-title').textContent = 'No Master Number';
                 document.getElementById('result-content').innerHTML = '<div class="no-karmic"><h3>No Master Number Detected</h3><p>Your core numerology does not contain master numbers 11, 22, or 33. This means you have a different soul curriculum focused on the single-digit numbers. Each path is valuable and meaningful.</p></div>';
-                document.getElementById('result').classList.add('show');
-                document.getElementById('calculator-form').style.display = 'none';
+                CosmicLoader.show(() => {
+                    document.getElementById('result').classList.add('show');
+                    document.getElementById('calculator-form').style.display = 'none';
+                });
         
                 return;
             }
@@ -497,8 +500,10 @@
 
             document.getElementById('result-title').textContent = `Master Number ${number}: ${preferredName}`;
             document.getElementById('result-content').innerHTML = nameResonanceHtml + paragraphs;
-            document.getElementById('result').classList.add('show');
-            document.getElementById('calculator-form').style.display = 'none';
+            CosmicLoader.show(() => {
+                document.getElementById('result').classList.add('show');
+                document.getElementById('calculator-form').style.display = 'none';
+            });
         }
 
         

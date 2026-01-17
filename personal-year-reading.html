@@ -263,6 +263,7 @@
     </style>
     <script src="name-resonance.js?v=20260112"></script>
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
 </head>
 <body>
     <div class="container">
@@ -423,8 +424,10 @@
 
             document.getElementById('result-title').textContent = `Personal Year ${number} (${currentYear}): ${preferredName}`;
             document.getElementById('result-content').innerHTML = nameResonanceHtml + paragraphs;
-            document.getElementById('result').classList.add('show');
-            document.getElementById('calculator-form').style.display = 'none';
+            CosmicLoader.show(() => {
+                document.getElementById('result').classList.add('show');
+                document.getElementById('calculator-form').style.display = 'none';
+            });
         }
 
         

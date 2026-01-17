@@ -119,6 +119,7 @@
         .share-btn:hover { background: #e0e0e0; }
     </style>
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
 </head>
 <body>
     <div class="container">
@@ -214,7 +215,9 @@
                 
                 document.getElementById('result-title').textContent = `🌸 ${flower.flower}`;
                 document.getElementById('result-text').textContent = `${flower.month} | Meaning: ${flower.meaning}`;
-                document.getElementById('result').classList.add('show');
+                CosmicLoader.show(() => {
+                    document.getElementById('result').classList.add('show');
+                });
             });
         
     

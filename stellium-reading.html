@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap&v=20260112083146" rel="stylesheet">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js?v=20260112083146"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -339,11 +340,15 @@
                 // Try sessionStorage first, fallback to URL params for private browsing
                 try {
                     sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
-                    window.location.href = 'stellium-result.html';
+                    CosmicLoader.show(() => {
+                        window.location.href = 'stellium-result.html';
+                    });
                 } catch (e) {
                     // Private browsing mode - pass data via URL
                     const encodedData = encodeURIComponent(JSON.stringify(readingData));
-                    window.location.href = 'stellium-result.html?data=' + encodedData;
+                    CosmicLoader.show(() => {
+                        window.location.href = 'stellium-result.html?data=' + encodedData;
+                    });
                 }
                 
             } catch (error) {

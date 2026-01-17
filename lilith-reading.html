@@ -8,6 +8,7 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
     <style>
         .result-card { background: linear-gradient(135deg, rgba(139, 0, 139, 0.3), rgba(0, 0, 0, 0.5)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(139, 0, 139, 0.6); }
@@ -262,8 +263,7 @@
             `;
             
             document.getElementById('result').innerHTML = resultHTML;
-            document.getElementById('result').style.display = 'block';
-            document.getElementById('toolForm').style.display = 'none';
+            CosmicLoader.showResult('result', 'toolForm');
         }
     </script>
 
