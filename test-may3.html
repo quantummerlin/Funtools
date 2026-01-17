@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+</head>
+<body>
+<script>
+// Test: May 3, 1981, 1:30 PM Abu Dhabi (UTC+4) = 9:30 AM UTC
+const time = Astronomy.MakeTime(1981, 5, 3, 9, 30, 0);
+
+const ZODIAC_SIGNS = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
+                     'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+
+function getZodiacSign(eclipticLongitude) {
+    const signIndex = Math.floor(eclipticLongitude / 30);
+    return ZODIAC_SIGNS[signIndex];
+}
+
+const planets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
+const positions = {};
+
+for (const planet of planets) {
+    if (planet === 'Moon') {
+        const moonPos = Astronomy.EclipticGeoMoon(time);
+        positions[planet] = getZodiacSign(moonPos.lon) + ' (' + moonPos.lon.toFixed(2) + ')';
+    } else if (planet === 'Sun') {
+        const sunPos = Astronomy.SunPosition(time);
+        positions[planet] = getZodiacSign(sunPos.elon) + ' (' + sunPos.elon.toFixed(2) + ')';
+    } else {
+        const geo = Astronomy.GeoVector(planet, time, true);
+        const ecl = Astronomy.Ecliptic(geo);
+        positions[planet] = getZodiacSign(ecl.elon) + ' (' + ecl.elon.toFixed(2) + ')';
+    }
+}
+
+console.log('May 3, 1981, 9:30 UTC planetary positions:');
+console.log(JSON.stringify(positions, null, 2));
+</script>
+</body>
+</html>

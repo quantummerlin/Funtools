@@ -277,10 +277,11 @@
             `;
         }
 
-        function generateNoStelliumReading(positions, name) {
+        function generateNoStelliumReading(positions, name, degrees) {
             let planetDisplay = '<div class="planet-list"><h3 style="color: #fbbf24; margin-bottom: 15px; font-family: Cinzel, serif;">Your Planetary Distribution:</h3>';
             for (const [planet, sign] of Object.entries(positions)) {
-                planetDisplay += `<div class="planet-item"><span class="highlight">${planet}</span> in ${sign}</div>`;
+                const deg = degrees && degrees[planet] ? ` (${degrees[planet]}°)` : '';
+                planetDisplay += `<div class="planet-item"><span class="highlight">${planet}</span> in ${sign}${deg}</div>`;
             }
             planetDisplay += '</div>';
             
@@ -339,7 +340,7 @@
                 // No stellium found
                 const card = document.createElement('div');
                 card.className = 'result-card';
-                card.innerHTML = generateNoStelliumReading(data.allPositions, data.name);
+                card.innerHTML = generateNoStelliumReading(data.allPositions, data.name, data.allDegrees);
                 container.appendChild(card);
             }
         });

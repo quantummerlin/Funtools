@@ -234,17 +234,35 @@
         }
 
         async function geocodeLocation(locationString) {
-            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationString)}`;
-            const response = await fetch(url);
+            // Normalize common location variations
+            let normalized = locationString.trim()
+                .replace(/\s+/g, ' ')  // Multiple spaces to single
+                .replace(/,\s*/g, ', ') // Normalize comma spacing
+                .replace(/\buae\b/gi, 'United Arab Emirates')
+                .replace(/\buk\b/gi, 'United Kingdom')
+                .replace(/\busa\b/gi, 'United States')
+                .replace(/\bus\b/gi, 'United States')
+                .replace(/\bnyc\b/gi, 'New York City')
+                .replace(/\bla\b/gi, 'Los Angeles')
+                .replace(/\bsf\b/gi, 'San Francisco');
+            
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(normalized)}`;
+            const response = await fetch(url, {
+                headers: {
+                    'User-Agent': 'QuantumMerlin/1.0'
+                }
+            });
             const data = await response.json();
             
             if (data && data.length > 0) {
+                console.log('Geocode result for "' + locationString + '":', data[0]);
                 return {
                     lat: parseFloat(data[0].lat),
-                    lon: parseFloat(data[0].lon)
+                    lon: parseFloat(data[0].lon),
+                    name: data[0].display_name
                 };
             }
-            throw new Error('Location not found');
+            throw new Error('Location not found. Please try a more specific format like "Abu Dhabi, United Arab Emirates"');
         }
 
         document.getElementById('stelliumForm').addEventListener('submit', async function(e) {
@@ -297,24 +315,37 @@
                 
                 const time = Astronomy.MakeTime(utcYear, utcMonth, utcDay, Math.floor(totalUtcMinutes/60), totalUtcMinutes%60, 0);
                 
+                console.log('Birth calculation:', {
+                    local: `${year}-${month}-${day} ${hours}:${minutes}`,
+                    timezone: tzOffsetHours,
+                    utc: `${utcYear}-${utcMonth}-${utcDay} ${Math.floor(totalUtcMinutes/60)}:${totalUtcMinutes%60}`
+                });
+                
                 // Calculate all planetary positions
                 const planets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 
                                'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
                 const positions = {};
+                const degrees = {};
                 
                 for (const planet of planets) {
+                    let lon;
                     if (planet === 'Moon') {
                         const moonPos = Astronomy.EclipticGeoMoon(time);
-                        positions[planet] = getZodiacSign(moonPos.lon);
+                        lon = moonPos.lon;
                     } else if (planet === 'Sun') {
                         const sunPos = Astronomy.SunPosition(time);
-                        positions[planet] = getZodiacSign(sunPos.elon);
+                        lon = sunPos.elon;
                     } else {
                         const geo = Astronomy.GeoVector(planet, time, true);
                         const ecl = Astronomy.Ecliptic(geo);
-                        positions[planet] = getZodiacSign(ecl.elon);
+                        lon = ecl.elon;
                     }
+                    positions[planet] = getZodiacSign(lon);
+                    degrees[planet] = lon.toFixed(2);
                 }
+                
+                console.log('Planetary positions:', positions);
+                console.log('Planetary degrees:', degrees);
                 
                 // Find stelliums (3+ planets in same sign)
                 const signCounts = {};
@@ -325,6 +356,9 @@
                     if (!signPlanets[sign]) signPlanets[sign] = [];
                     signPlanets[sign].push(planet);
                 }
+                
+                console.log('Sign counts:', signCounts);
+                console.log('Sign planets:', signPlanets);
                 
                 const stelliums = [];
                 for (const [sign, count] of Object.entries(signCounts)) {
@@ -337,6 +371,8 @@
                     }
                 }
                 
+                console.log('Stelliums found:', stelliums);
+                
                 // Store reading data
                 const readingData = {
                     toolType: 'stellium',
@@ -344,8 +380,16 @@
                     headerSubtitle: 'The concentrated energy pattern of your soul',
                     stelliums: stelliums,
                     allPositions: positions,
+                    allDegrees: degrees,
                     name: preferredName,
-                    sourceUrl: 'stellium-reading.html'
+                    sourceUrl: 'stellium-reading.html',
+                    birthInfo: {
+                        date: birthDate,
+                        time: birthTime,
+                        place: birthPlace,
+                        coords: coords,
+                        timezone: tzOffsetHours
+                    }
                 };
                 
                 // Try sessionStorage first, fallback to URL params for private browsing
