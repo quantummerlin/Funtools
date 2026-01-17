@@ -1,11 +1,10 @@
-// Smooth Auto-Fill System with Auto-Save Profiles for Quantum Merlin Tools
-// Automatically saves and restores form data - profiles created from names
-// v2.0 - Simplified: just fill in data, it saves automatically
+// Streamlined Auto-Fill System for Quantum Merlin Tools
+// Auto-saves as you type - minimal UI, maximum convenience
+// v3.0 - Ultra-streamlined: tiny dropdown, auto-save, nothing else
 
 (function() {
     const PROFILES_KEY = 'quantumMerlinProfiles';
     const ACTIVE_KEY = 'quantumMerlinActiveProfile';
-    const FIELDS = ['preferredName', 'birthName', 'birthDate', 'birthTime', 'birthPlace'];
     
     // Field mappings for different tools
     const FIELD_MAPPINGS = {
@@ -37,45 +36,26 @@
     }
 
     const storageAvailable = isStorageAvailable();
+    if (!storageAvailable) return;
 
-    // Get all profiles
     function getProfiles() {
-        if (!storageAvailable) return {};
         try {
-            const saved = localStorage.getItem(PROFILES_KEY);
-            return saved ? JSON.parse(saved) : {};
-        } catch (e) {
-            return {};
-        }
+            return JSON.parse(localStorage.getItem(PROFILES_KEY) || '{}');
+        } catch (e) { return {}; }
     }
 
-    // Save profiles
     function saveProfiles(profiles) {
-        if (!storageAvailable) return;
-        try {
-            localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles));
-        } catch (e) {}
+        try { localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles)); } catch (e) {}
     }
 
-    // Get active profile name
     function getActiveProfile() {
-        if (!storageAvailable) return '';
-        try {
-            return localStorage.getItem(ACTIVE_KEY) || '';
-        } catch (e) {
-            return '';
-        }
+        try { return localStorage.getItem(ACTIVE_KEY) || ''; } catch (e) { return ''; }
     }
 
-    // Set active profile
     function setActiveProfile(name) {
-        if (!storageAvailable) return;
-        try {
-            localStorage.setItem(ACTIVE_KEY, name);
-        } catch (e) {}
+        try { localStorage.setItem(ACTIVE_KEY, name); } catch (e) {}
     }
     
-    // Find element by trying multiple possible IDs
     function findElement(possibleIds) {
         for (const id of possibleIds) {
             const el = document.getElementById(id);
@@ -84,23 +64,18 @@
         return null;
     }
 
-    // Load data into form fields
     function loadData(profileName, isPerson2 = false) {
         const profiles = getProfiles();
         const data = profiles[profileName];
         if (!data) return;
         
         const mappings = isPerson2 ? PERSON2_MAPPINGS : FIELD_MAPPINGS;
-        
         Object.keys(mappings).forEach(field => {
             const el = findElement(mappings[field]);
-            if (el && data[field]) {
-                el.value = data[field];
-            }
+            if (el && data[field]) el.value = data[field];
         });
     }
 
-    // Get current form data
     function getFormData() {
         const data = {};
         Object.keys(FIELD_MAPPINGS).forEach(field => {
@@ -110,26 +85,20 @@
         return data;
     }
 
-    // Auto-save current form data based on preferredName
     function autoSave() {
         const nameEl = findElement(FIELD_MAPPINGS.preferredName);
         if (!nameEl) return;
         
         const name = nameEl.value.trim();
-        if (!name) return; // Need a name to save as profile
+        if (!name) return;
         
         const profiles = getProfiles();
-        const data = getFormData();
-        
-        profiles[name] = data;
+        profiles[name] = getFormData();
         saveProfiles(profiles);
         setActiveProfile(name);
-        
-        // Update dropdown if it exists
         updateDropdowns();
     }
     
-    // Check if this is a compatibility/dual-person tool
     function isDualPersonTool() {
         return document.getElementById('birthDate2') || 
                document.getElementById('date2') || 
@@ -139,121 +108,87 @@
                document.querySelector('[id*="partner"]');
     }
 
-    let updateDropdowns = () => {}; // Will be set by createProfileSelector
+    let updateDropdowns = () => {};
 
-    // Create the profile selector UI
     function createProfileSelector() {
-        if (!storageAvailable) return;
-        
         const form = document.querySelector('form') || document.querySelector('#toolForm') || document.querySelector('.form-section') || document.querySelector('.tool-card');
-        if (!form) return;
-        
-        if (document.getElementById('profileSelector')) return;
+        if (!form || document.getElementById('profileSelector')) return;
         
         const isDual = isDualPersonTool();
-        
         const container = document.createElement('div');
         container.id = 'profileSelector';
-        container.style.cssText = 'margin-bottom: 20px; padding: 15px; background: rgba(20,20,30,0.6); border: 1px solid rgba(6,182,212,0.3); border-radius: 10px;';
+        container.style.cssText = 'margin-bottom: 15px; padding: 10px 12px; background: rgba(10,10,20,0.4); border: 1px solid rgba(6,182,212,0.2); border-radius: 8px;';
         
         if (isDual) {
             container.innerHTML = `
-                <div style="font-family: Cinzel, serif; color: #06b6d4; font-size: 0.85rem; margin-bottom: 10px; opacity: 0.8;">
-                    💾 Saved Profiles — select to auto-fill, or just start typing to save new
-                </div>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 200px;">
-                        <label style="color: #FFD93D; font-family: Cinzel, serif; font-size: 0.9rem; display: block; margin-bottom: 5px;">👤 Person 1:</label>
-                        <select id="profile1Dropdown" style="width: 100%; padding: 10px 12px; background: rgba(10,10,20,0.8); border: 1px solid rgba(255,217,61,0.4); border-radius: 6px; color: #E8E4D9; font-family: inherit; cursor: pointer;">
-                            <option value="">Load saved profile...</option>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 6px; flex: 1; min-width: 140px;">
+                        <span style="color: #FFD93D; font-size: 0.8rem;">👤</span>
+                        <select id="profile1Dropdown" style="flex: 1; padding: 6px 8px; background: rgba(10,10,20,0.8); border: 1px solid rgba(255,217,61,0.3); border-radius: 5px; color: #E8E4D9; font-size: 0.85rem; cursor: pointer;">
+                            <option value="">Load profile...</option>
                         </select>
                     </div>
-                    <div style="flex: 1; min-width: 200px;">
-                        <label style="color: #FF69B4; font-family: Cinzel, serif; font-size: 0.9rem; display: block; margin-bottom: 5px;">💕 Person 2:</label>
-                        <select id="profile2Dropdown" style="width: 100%; padding: 10px 12px; background: rgba(10,10,20,0.8); border: 1px solid rgba(255,105,180,0.4); border-radius: 6px; color: #E8E4D9; font-family: inherit; cursor: pointer;">
-                            <option value="">Load saved profile...</option>
+                    <div style="display: flex; align-items: center; gap: 6px; flex: 1; min-width: 140px;">
+                        <span style="color: #FF69B4; font-size: 0.8rem;">💕</span>
+                        <select id="profile2Dropdown" style="flex: 1; padding: 6px 8px; background: rgba(10,10,20,0.8); border: 1px solid rgba(255,105,180,0.3); border-radius: 5px; color: #E8E4D9; font-size: 0.85rem; cursor: pointer;">
+                            <option value="">Load profile...</option>
                         </select>
                     </div>
-                </div>
-                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                    <label style="color: #9ca3af; font-family: Cinzel, serif; font-size: 0.85rem;">Delete:</label>
-                    <select id="deleteProfileSelect" style="flex: 1; min-width: 120px; padding: 8px 12px; background: rgba(10,10,20,0.8); border: 1px solid rgba(239,68,68,0.3); border-radius: 6px; color: #E8E4D9; font-family: inherit;">
-                        <option value="">Select profile to delete...</option>
-                    </select>
-                    <button type="button" id="deleteProfileBtn" style="padding: 8px 15px; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.5); border-radius: 6px; color: #ef4444; cursor: pointer; font-family: Cinzel, serif;">🗑️ Delete</button>
+                    <button type="button" id="deleteProfileBtn" title="Delete a profile" style="padding: 4px 8px; background: transparent; border: 1px solid rgba(239,68,68,0.3); border-radius: 4px; color: #ef4444; cursor: pointer; font-size: 0.75rem; opacity: 0.6; transition: opacity 0.2s;">✕</button>
                 </div>
             `;
         } else {
             container.innerHTML = `
-                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                    <label style="color: #C4B998; font-family: Cinzel, serif; font-size: 0.9rem;">💾 Saved:</label>
-                    <select id="profileDropdown" style="flex: 1; min-width: 150px; padding: 10px 12px; background: rgba(10,10,20,0.8); border: 1px solid rgba(6,182,212,0.3); border-radius: 6px; color: #E8E4D9; font-family: inherit; cursor: pointer;">
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <span style="color: #6b7280; font-size: 0.8rem;">💾</span>
+                    <select id="profileDropdown" style="flex: 1; padding: 6px 10px; background: rgba(10,10,20,0.8); border: 1px solid rgba(6,182,212,0.25); border-radius: 5px; color: #E8E4D9; font-size: 0.85rem; cursor: pointer;">
                         <option value="">Load saved profile...</option>
                     </select>
-                    <button type="button" id="deleteProfileBtn" style="padding: 8px 12px; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); border-radius: 6px; color: #ef4444; cursor: pointer; font-family: Cinzel, serif; font-size: 0.85rem;">🗑️</button>
-                </div>
-                <div style="margin-top: 8px; font-size: 0.8rem; color: #6b7280; font-style: italic;">
-                    Enter your name below — data auto-saves as you type
+                    <button type="button" id="deleteProfileBtn" title="Delete selected profile" style="padding: 4px 8px; background: transparent; border: 1px solid rgba(239,68,68,0.3); border-radius: 4px; color: #ef4444; cursor: pointer; font-size: 0.75rem; opacity: 0.6; transition: opacity 0.2s;">✕</button>
                 </div>
             `;
         }
         
         form.insertBefore(container, form.firstChild);
         
-        // Populate dropdowns
+        // Style the delete button hover
+        const delBtn = container.querySelector('#deleteProfileBtn');
+        if (delBtn) {
+            delBtn.addEventListener('mouseenter', () => delBtn.style.opacity = '1');
+            delBtn.addEventListener('mouseleave', () => delBtn.style.opacity = '0.6');
+        }
+        
         updateDropdowns = function() {
             const profiles = getProfiles();
-            const sortedNames = Object.keys(profiles).sort();
+            const names = Object.keys(profiles).sort();
             const active = getActiveProfile();
             
             if (isDual) {
-                const dropdown1 = document.getElementById('profile1Dropdown');
-                const dropdown2 = document.getElementById('profile2Dropdown');
-                const deleteSelect = document.getElementById('deleteProfileSelect');
+                const d1 = document.getElementById('profile1Dropdown');
+                const d2 = document.getElementById('profile2Dropdown');
                 
-                if (dropdown1) {
-                    const current1 = dropdown1.value;
-                    dropdown1.innerHTML = '<option value="">Load saved profile...</option>';
-                    sortedNames.forEach(name => {
+                [d1, d2].forEach((d, i) => {
+                    if (!d) return;
+                    const current = d.value;
+                    d.innerHTML = '<option value="">Load profile...</option>';
+                    names.forEach(n => {
                         const opt = document.createElement('option');
-                        opt.value = name;
-                        opt.textContent = name;
-                        dropdown1.appendChild(opt);
+                        opt.value = n;
+                        opt.textContent = n;
+                        d.appendChild(opt);
                     });
-                    if (current1 && profiles[current1]) dropdown1.value = current1;
-                }
-                
-                if (dropdown2) {
-                    const current2 = dropdown2.value;
-                    dropdown2.innerHTML = '<option value="">Load saved profile...</option>';
-                    sortedNames.forEach(name => {
-                        const opt = document.createElement('option');
-                        opt.value = name;
-                        opt.textContent = name;
-                        dropdown2.appendChild(opt);
-                    });
-                    if (current2 && profiles[current2]) dropdown2.value = current2;
-                }
-                
-                if (deleteSelect) {
-                    deleteSelect.innerHTML = '<option value="">Select profile to delete...</option>';
-                    sortedNames.forEach(name => {
-                        const opt = document.createElement('option');
-                        opt.value = name;
-                        opt.textContent = name;
-                        deleteSelect.appendChild(opt);
-                    });
-                }
+                    if (current && profiles[current]) d.value = current;
+                });
             } else {
-                const dropdown = document.getElementById('profileDropdown');
-                if (dropdown) {
-                    dropdown.innerHTML = '<option value="">Load saved profile...</option>';
-                    sortedNames.forEach(name => {
+                const d = document.getElementById('profileDropdown');
+                if (d) {
+                    d.innerHTML = '<option value="">Load saved profile...</option>';
+                    names.forEach(n => {
                         const opt = document.createElement('option');
-                        opt.value = name;
-                        opt.textContent = name;
-                        if (name === active) opt.selected = true;
-                        dropdown.appendChild(opt);
+                        opt.value = n;
+                        opt.textContent = n;
+                        if (n === active) opt.selected = true;
+                        d.appendChild(opt);
                     });
                 }
             }
@@ -261,82 +196,50 @@
         
         // Event listeners
         if (isDual) {
-            const dropdown1 = document.getElementById('profile1Dropdown');
-            const dropdown2 = document.getElementById('profile2Dropdown');
-            const deleteSelect = document.getElementById('deleteProfileSelect');
-            const deleteBtn = document.getElementById('deleteProfileBtn');
+            const d1 = document.getElementById('profile1Dropdown');
+            const d2 = document.getElementById('profile2Dropdown');
             
-            if (dropdown1) {
-                dropdown1.addEventListener('change', function() {
-                    if (this.value) {
-                        setActiveProfile(this.value);
-                        loadData(this.value, false);
-                    }
-                });
-            }
-            
-            if (dropdown2) {
-                dropdown2.addEventListener('change', function() {
-                    if (this.value) {
-                        loadData(this.value, true);
-                    }
-                });
-            }
-            
-            if (deleteBtn && deleteSelect) {
-                deleteBtn.addEventListener('click', function() {
-                    const name = deleteSelect.value;
-                    if (!name) {
-                        alert('Please select a profile to delete');
-                        return;
-                    }
-                    if (!confirm(`Delete profile "${name}"?`)) return;
-                    
-                    const profiles = getProfiles();
-                    delete profiles[name];
-                    saveProfiles(profiles);
-                    
-                    if (getActiveProfile() === name) setActiveProfile('');
-                    
-                    updateDropdowns();
-                });
-            }
+            if (d1) d1.addEventListener('change', function() {
+                if (this.value) { setActiveProfile(this.value); loadData(this.value, false); }
+            });
+            if (d2) d2.addEventListener('change', function() {
+                if (this.value) loadData(this.value, true);
+            });
         } else {
-            const dropdown = document.getElementById('profileDropdown');
-            const deleteBtn = document.getElementById('deleteProfileBtn');
-            
-            if (dropdown) {
-                dropdown.addEventListener('change', function() {
-                    if (this.value) {
-                        setActiveProfile(this.value);
-                        loadData(this.value);
-                    }
-                });
-            }
-            
-            if (deleteBtn && dropdown) {
-                deleteBtn.addEventListener('click', function() {
-                    const name = dropdown.value;
-                    if (!name) {
-                        alert('Please select a profile to delete first');
-                        return;
-                    }
-                    if (!confirm(`Delete profile "${name}"?`)) return;
-                    
-                    const profiles = getProfiles();
-                    delete profiles[name];
-                    saveProfiles(profiles);
-                    setActiveProfile('');
-                    
-                    updateDropdowns();
-                });
-            }
+            const d = document.getElementById('profileDropdown');
+            if (d) d.addEventListener('change', function() {
+                if (this.value) { setActiveProfile(this.value); loadData(this.value); }
+            });
+        }
+        
+        // Delete button
+        const deleteBtn = document.getElementById('deleteProfileBtn');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', function() {
+                const profiles = getProfiles();
+                const names = Object.keys(profiles).sort();
+                if (names.length === 0) {
+                    alert('No profiles to delete');
+                    return;
+                }
+                
+                const name = prompt('Enter profile name to delete:\n\nSaved: ' + names.join(', '));
+                if (!name) return;
+                if (!profiles[name]) {
+                    alert('Profile not found');
+                    return;
+                }
+                
+                delete profiles[name];
+                saveProfiles(profiles);
+                if (getActiveProfile() === name) setActiveProfile('');
+                updateDropdowns();
+            });
         }
         
         updateDropdowns();
     }
 
-    // Debounce function for auto-save
     function debounce(func, wait) {
         let timeout;
         return function(...args) {
@@ -345,32 +248,24 @@
         };
     }
 
-    // Attach auto-save listeners to all fields
     function setupAutoSave() {
-        const debouncedSave = debounce(autoSave, 500); // Save 500ms after typing stops
+        const debouncedSave = debounce(autoSave, 500);
+        const allIds = [];
+        Object.values(FIELD_MAPPINGS).forEach(ids => allIds.push(...ids));
         
-        const allPossibleIds = [];
-        Object.values(FIELD_MAPPINGS).forEach(ids => allPossibleIds.push(...ids));
-        
-        allPossibleIds.forEach(id => {
+        allIds.forEach(id => {
             const el = document.getElementById(id);
             if (el) {
                 el.addEventListener('input', debouncedSave);
-                el.addEventListener('change', autoSave); // Immediate on dropdown/date change
+                el.addEventListener('change', autoSave);
             }
         });
     }
 
-    // Initialize
     function init() {
         createProfileSelector();
-        
-        // Load active profile if exists
         const active = getActiveProfile();
-        if (active) {
-            loadData(active);
-        }
-        
+        if (active) loadData(active);
         setupAutoSave();
     }
 
