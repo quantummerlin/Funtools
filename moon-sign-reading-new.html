@@ -364,8 +364,12 @@
         }
 
         function calculateMoonPosition(dateStr, timeStr, coords) {
-            // Combine date and time into Date object
-            const datetime = new Date(`${dateStr}T${timeStr}:00`);
+            // Parse date and time components
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            
+            // Create proper UTC date (months are 0-indexed in JS)
+            const datetime = new Date(Date.UTC(year, month - 1, day, hours, minutes, 0));
             
             // Use Astronomy Engine to calculate Moon's ecliptic longitude
             const moonPos = Astronomy.MoonPhase(Astronomy.MakeTime(datetime));
