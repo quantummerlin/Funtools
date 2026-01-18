@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#bf5af2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Quantum Merlin">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <link rel="manifest" href="manifest.json">
+    <title>Cosmic Forecasts | Quantum Merlin</title>
+    <meta name="description" content="Personalized daily, weekly, monthly, yearly and decade forecasts based on your unique cosmic blueprint">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+        .header p {
+            font-size: 1.2em;
+            color: #06b6d4;
+            font-style: italic;
+        }
+        
+        .current-date {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        .current-date h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5em;
+            color: #fbbf24;
+            margin-bottom: 5px;
+        }
+        .current-date p {
+            color: #9ca3af;
+            font-size: 1.1em;
+        }
+        
+        .profile-required {
+            text-align: center;
+            padding: 40px;
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+        .profile-required h3 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        .profile-required p {
+            color: #9ca3af;
+            margin-bottom: 20px;
+        }
+        .profile-required a {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a2e;
+            text-decoration: none;
+            border-radius: 10px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .profile-required a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(251, 191, 36, 0.4);
+        }
+        
+        .forecast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .forecast-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+        .forecast-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #fbbf24, #06b6d4, #ec4899);
+        }
+        .forecast-card:hover {
+            transform: translateY(-5px);
+            border-color: #06b6d4;
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);
+        }
+        .forecast-card.featured {
+            border-color: rgba(251, 191, 36, 0.5);
+            grid-column: span 2;
+        }
+        @media (max-width: 600px) {
+            .forecast-card.featured { grid-column: span 1; }
+        }
+        
+        .forecast-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        .forecast-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
+            color: #fbbf24;
+            margin-bottom: 10px;
+        }
+        .forecast-card p {
+            color: #9ca3af;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+        .forecast-card .energy-preview {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 10px;
+            color: #06b6d4;
+            font-weight: 600;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #06b6d4;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: #fbbf24; }
+        
+        .info-section {
+            background: rgba(20, 20, 30, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .info-section h3 {
+            font-family: 'Cinzel', serif;
+            color: #ec4899;
+            margin-bottom: 15px;
+        }
+        .info-section p {
+            color: #9ca3af;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="tools_index.html" class="back-link">← Back to All Tools</a>
+        
+        <div class="header">
+            <h1>✨ Cosmic Forecasts ✨</h1>
+            <p>Your personalized guidance through time's cosmic currents</p>
+        </div>
+        
+        <div class="current-date">
+            <h2 id="currentDateDisplay"></h2>
+            <p id="universalEnergy"></p>
+        </div>
+        
+        <div id="profileSection"></div>
+        
+        <div id="forecastsContent" style="display: none;">
+            <div class="forecast-grid">
+                <a href="daily-forecast.html" class="forecast-card featured">
+                    <div class="forecast-icon">🌅</div>
+                    <h3>Today's Forecast</h3>
+                    <p>Your personal energy and guidance for today. Updated every day at midnight.</p>
+                    <div class="energy-preview" id="dailyPreview">Loading...</div>
+                </a>
+                
+                <a href="weekly-forecast.html" class="forecast-card">
+                    <div class="forecast-icon">📅</div>
+                    <h3>This Week</h3>
+                    <p>Navigate the week ahead with cosmic clarity</p>
+                    <div class="energy-preview" id="weeklyPreview">Loading...</div>
+                </a>
+                
+                <a href="monthly-forecast.html" class="forecast-card">
+                    <div class="forecast-icon">🌙</div>
+                    <h3>This Month</h3>
+                    <p>Your monthly themes and opportunities</p>
+                    <div class="energy-preview" id="monthlyPreview">Loading...</div>
+                </a>
+                
+                <a href="yearly-forecast.html" class="forecast-card">
+                    <div class="forecast-icon">🌟</div>
+                    <h3>This Year</h3>
+                    <p>Major themes shaping your year</p>
+                    <div class="energy-preview" id="yearlyPreview">Loading...</div>
+                </a>
+                
+                <a href="decade-forecast.html" class="forecast-card">
+                    <div class="forecast-icon">🔮</div>
+                    <h3>This Decade</h3>
+                    <p>Long-term cycles and life phases</p>
+                    <div class="energy-preview" id="decadePreview">Loading...</div>
+                </a>
+            </div>
+            
+            <div class="info-section">
+                <h3>How Forecasts Work</h3>
+                <p>Your forecasts are calculated using your unique numerological cycles derived from your date of birth. 
+                These cycles interact with universal time energies to create your personal forecast. 
+                Unlike generic horoscopes, these readings are mathematically calculated specifically for you, 
+                based on the ancient wisdom of numerology and the natural rhythm of cosmic cycles.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="legal-footer">
+        <div class="legal-links">
+            <a href="terms.html">Terms of Service</a>
+            <span class="separator">|</span>
+            <a href="privacy.html">Privacy Policy</a>
+            <span class="separator">|</span>
+            <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
+    </footer>
+    <style>
+        .legal-footer {
+            margin-top: 50px;
+            padding: 30px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(191, 90, 242, 0.2);
+        }
+        .legal-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .legal-links a {
+            color: #9A8F7A;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+        }
+        .legal-links a:hover { color: #fbbf24; }
+        .separator { color: rgba(191, 90, 242, 0.4); }
+        .copyright { color: #6B6B6B; font-size: 0.85rem; font-style: italic; }
+    </style>
+    
+    <script>
+        // Numerology calculation functions
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function calculateLifePath(dateStr) {
+            const date = new Date(dateStr);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            return reduceToSingle(reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(year));
+        }
+        
+        function calculatePersonalYear(birthDate, targetYear) {
+            const date = new Date(birthDate);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            return reduceToSingle(reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(targetYear));
+        }
+        
+        function calculatePersonalMonth(birthDate, targetYear, targetMonth) {
+            const personalYear = calculatePersonalYear(birthDate, targetYear);
+            return reduceToSingle(personalYear + targetMonth);
+        }
+        
+        function calculatePersonalDay(birthDate, targetDate) {
+            const target = new Date(targetDate);
+            const personalMonth = calculatePersonalMonth(birthDate, target.getFullYear(), target.getMonth() + 1);
+            return reduceToSingle(personalMonth + target.getDate());
+        }
+        
+        function calculateUniversalDay(date) {
+            const d = new Date(date);
+            return reduceToSingle(d.getDate() + (d.getMonth() + 1) + d.getFullYear());
+        }
+        
+        function getWeekNumber(date) {
+            const d = new Date(date);
+            const startOfYear = new Date(d.getFullYear(), 0, 1);
+            const days = Math.floor((d - startOfYear) / (24 * 60 * 60 * 1000));
+            return Math.ceil((days + startOfYear.getDay() + 1) / 7);
+        }
+        
+        function calculatePersonalWeek(birthDate, targetDate) {
+            const target = new Date(targetDate);
+            const weekNum = getWeekNumber(target);
+            const personalYear = calculatePersonalYear(birthDate, target.getFullYear());
+            return reduceToSingle(personalYear + weekNum);
+        }
+        
+        function getDecade(year) {
+            return Math.floor(year / 10) * 10;
+        }
+        
+        function calculateDecadeCycle(birthDate, targetYear) {
+            const date = new Date(birthDate);
+            const birthYear = date.getFullYear();
+            const currentDecade = getDecade(targetYear);
+            const decadesSinceBirth = Math.floor((currentDecade - birthYear) / 10);
+            const lifePath = calculateLifePath(birthDate);
+            return reduceToSingle(lifePath + decadesSinceBirth);
+        }
+        
+        const cycleNames = {
+            1: "New Beginnings",
+            2: "Partnership & Patience",
+            3: "Creative Expression",
+            4: "Building Foundations",
+            5: "Change & Freedom",
+            6: "Love & Responsibility",
+            7: "Reflection & Growth",
+            8: "Power & Achievement",
+            9: "Completion & Release",
+            11: "Spiritual Awakening",
+            22: "Master Building",
+            33: "Master Teaching"
+        };
+        
+        // Display current date
+        const today = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('currentDateDisplay').textContent = today.toLocaleDateString('en-US', options);
+        
+        const universalDay = calculateUniversalDay(today);
+        document.getElementById('universalEnergy').textContent = `Universal Day Energy: ${universalDay} - ${cycleNames[universalDay]}`;
+        
+        // Check for saved profile
+        function loadProfile() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '[]');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            
+            if (profiles.length === 0 || !activeId) {
+                document.getElementById('profileSection').innerHTML = `
+                    <div class="profile-required">
+                        <h3>Create Your Profile First</h3>
+                        <p>To receive personalized forecasts, we need your birth information. 
+                        Create a profile on any reading tool, and your forecasts will be ready!</p>
+                        <a href="life-path-calculator.html">Create Profile →</a>
+                    </div>
+                `;
+                return null;
+            }
+            
+            const profile = profiles.find(p => p.id === activeId);
+            if (!profile || !profile.birthDate) {
+                document.getElementById('profileSection').innerHTML = `
+                    <div class="profile-required">
+                        <h3>Complete Your Profile</h3>
+                        <p>Your profile needs a birth date for accurate forecasts.</p>
+                        <a href="life-path-calculator.html">Update Profile →</a>
+                    </div>
+                `;
+                return null;
+            }
+            
+            document.getElementById('forecastsContent').style.display = 'block';
+            return profile;
+        }
+        
+        function displayPreviews(profile) {
+            if (!profile) return;
+            
+            const birthDate = profile.birthDate;
+            const today = new Date();
+            
+            // Daily
+            const personalDay = calculatePersonalDay(birthDate, today);
+            document.getElementById('dailyPreview').textContent = `Personal Day ${personalDay}: ${cycleNames[personalDay]}`;
+            
+            // Weekly
+            const personalWeek = calculatePersonalWeek(birthDate, today);
+            document.getElementById('weeklyPreview').textContent = `Week Energy: ${personalWeek}`;
+            
+            // Monthly
+            const personalMonth = calculatePersonalMonth(birthDate, today.getFullYear(), today.getMonth() + 1);
+            document.getElementById('monthlyPreview').textContent = `Personal Month ${personalMonth}`;
+            
+            // Yearly
+            const personalYear = calculatePersonalYear(birthDate, today.getFullYear());
+            document.getElementById('yearlyPreview').textContent = `Personal Year ${personalYear}`;
+            
+            // Decade
+            const decadeCycle = calculateDecadeCycle(birthDate, today.getFullYear());
+            document.getElementById('decadePreview').textContent = `Decade Cycle ${decadeCycle}`;
+        }
+        
+        const profile = loadProfile();
+        if (profile) {
+            displayPreviews(profile);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#bf5af2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <link rel="manifest" href="manifest.json">
+    <title>Monthly Forecast | Quantum Merlin</title>
+    <meta name="description" content="Your personalized monthly cosmic forecast">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 30px; padding: 30px; }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .date { font-family: 'Cinzel', serif; font-size: 1.3em; color: #06b6d4; }
+        .header .greeting { font-style: italic; color: #9ca3af; margin-top: 10px; }
+        
+        .month-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .month-card .number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 4em;
+            color: #fbbf24;
+            margin-bottom: 10px;
+        }
+        .month-card .theme {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8em;
+            color: #06b6d4;
+            margin-bottom: 20px;
+        }
+        .month-card .overview {
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .forecast-section {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 25px;
+        }
+        .forecast-section h2 {
+            font-family: 'Cinzel', serif;
+            color: #ec4899;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .forecast-section p { font-size: 1.1em; margin-bottom: 15px; }
+        
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .week-box {
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .week-box .week-num { font-family: 'Cinzel', serif; color: #fbbf24; font-size: 0.9em; }
+        .week-box .energy { font-family: 'Cinzel Decorative', serif; font-size: 2em; color: #06b6d4; }
+        .week-box .label { color: #9ca3af; font-size: 0.9em; margin-top: 5px; }
+        
+        .key-dates {
+            background: rgba(251, 191, 36, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .key-dates h3 { font-family: 'Cinzel', serif; color: #fbbf24; margin-bottom: 15px; }
+        .date-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(251, 191, 36, 0.2); }
+        .date-item:last-child { border-bottom: none; }
+        
+        .nav-links { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .nav-links a { color: #06b6d4; text-decoration: none; font-family: 'Cinzel', serif; }
+        .nav-links a:hover { color: #fbbf24; }
+        
+        .profile-required {
+            text-align: center; padding: 60px 40px;
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.3); border-radius: 20px;
+        }
+        .profile-required h2 { font-family: 'Cinzel', serif; color: #fbbf24; margin-bottom: 20px; }
+        .profile-required a {
+            display: inline-block; margin-top: 20px; padding: 15px 30px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a2e; text-decoration: none; border-radius: 10px;
+            font-family: 'Cinzel', serif; font-weight: 600;
+        }
+        
+        .legal-footer { margin-top: 50px; padding: 30px 20px; text-align: center; border-top: 1px solid rgba(191, 90, 242, 0.2); }
+        .legal-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .legal-links a { color: #9A8F7A; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.9rem; }
+        .separator { color: rgba(191, 90, 242, 0.4); }
+        .copyright { color: #6B6B6B; font-size: 0.85rem; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="forecasts.html">← All Forecasts</a>
+            <a href="tools_index.html">All Tools →</a>
+        </div>
+        
+        <div class="header">
+            <h1>🌙 Monthly Forecast</h1>
+            <div class="date" id="monthDisplay"></div>
+            <div class="greeting" id="greeting"></div>
+        </div>
+        
+        <div id="content"></div>
+    </div>
+    
+    <footer class="legal-footer">
+        <div class="legal-links">
+            <a href="terms.html">Terms</a><span class="separator">|</span>
+            <a href="privacy.html">Privacy</a><span class="separator">|</span>
+            <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
+    </footer>
+    
+    <script>
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function calculatePersonalYear(birthDate, targetYear) {
+            const date = new Date(birthDate);
+            return reduceToSingle(reduceToSingle(date.getDate()) + reduceToSingle(date.getMonth() + 1) + reduceToSingle(targetYear));
+        }
+        
+        function calculatePersonalMonth(birthDate, targetYear, targetMonth) {
+            return reduceToSingle(calculatePersonalYear(birthDate, targetYear) + targetMonth);
+        }
+        
+        function calculatePersonalDay(birthDate, targetDate) {
+            const target = new Date(targetDate);
+            return reduceToSingle(calculatePersonalMonth(birthDate, target.getFullYear(), target.getMonth() + 1) + target.getDate());
+        }
+        
+        const themes = {
+            1: "New Beginnings & Initiative",
+            2: "Partnership & Patience",
+            3: "Creative Expression & Joy",
+            4: "Building & Organization",
+            5: "Change & Adventure",
+            6: "Love & Responsibility",
+            7: "Reflection & Wisdom",
+            8: "Power & Achievement",
+            9: "Completion & Release",
+            11: "Spiritual Illumination",
+            22: "Master Building",
+            33: "Master Teaching"
+        };
+        
+        const monthlyInterpretations = {
+            1: {
+                overview: "A powerful month for new beginnings. The energy supports starting fresh projects, taking leadership roles, and asserting your independence. Trust your pioneering instincts.",
+                career: "Take initiative on new projects. Your original ideas gain traction. Leadership opportunities emerge—step forward confidently.",
+                relationships: "Maintain independence while connecting. New relationships may form. Express your needs clearly.",
+                growth: "Focus on self-development and personal goals. This is YOUR month to shine.",
+                caution: "Avoid being overly aggressive or dismissive of others' input."
+            },
+            2: {
+                overview: "Patience and partnership define this month. Work with others, pay attention to details, and let things develop at their natural pace.",
+                career: "Collaborate rather than compete. Details matter—review contracts carefully. Diplomacy opens doors.",
+                relationships: "Relationships deepen through patience and understanding. Listen more than you speak.",
+                growth: "Develop your intuition and emotional intelligence. Practice patience as a spiritual discipline.",
+                caution: "Avoid rushing or forcing outcomes. Things need time to develop."
+            },
+            3: {
+                overview: "Creativity and self-expression flourish this month. Communicate your ideas, socialize, and let your natural joy inspire others.",
+                career: "Creative projects succeed. Networking brings opportunities. Your communication skills shine.",
+                relationships: "Social connections expand. Express appreciation openly. Romance benefits from playfulness.",
+                growth: "Develop your creative talents. Find joy in everyday moments. Share your gifts freely.",
+                caution: "Avoid scattered energy—focus your creative power for best results."
+            },
+            4: {
+                overview: "A month for practical work and building solid foundations. Organize, plan, and execute with discipline. Hard work pays off now.",
+                career: "Focus on practical tasks and systems. Build structures that will last. Attention to detail is crucial.",
+                relationships: "Show love through reliable actions. Work on the practical aspects of partnerships.",
+                growth: "Develop discipline and organization skills. Create order that supports your goals.",
+                caution: "Don't become so rigid that you miss opportunities. Balance work with rest."
+            },
+            5: {
+                overview: "Expect change, variety, and unexpected opportunities. Stay flexible, embrace new experiences, and don't resist transformation.",
+                career: "Be adaptable. New opportunities may come suddenly. Travel or communication-focused work succeeds.",
+                relationships: "Excitement and variety revitalize connections. Be open to meeting new people.",
+                growth: "Push beyond comfort zones. Try new things. Freedom and adventure feed your soul.",
+                caution: "Avoid overindulgence or scattered attention. Channel restless energy productively."
+            },
+            6: {
+                overview: "Home, family, and love take center stage. Focus on nurturing relationships, creating harmony, and fulfilling responsibilities with grace.",
+                career: "Service-oriented work thrives. Beauty and aesthetics matter. Take responsibility gracefully.",
+                relationships: "Relationships deepen. Family matters require attention. Love flows through acts of service.",
+                growth: "Learn to receive as well as give. Create beauty in your environment. Practice unconditional love.",
+                caution: "Avoid martyrdom. Set boundaries while giving generously."
+            },
+            7: {
+                overview: "A month for introspection, study, and spiritual connection. Seek solitude when needed, trust your intuition, and explore life's deeper meanings.",
+                career: "Research and analysis work succeeds. Work alone when possible. Quality over quantity.",
+                relationships: "Deeper connection through meaningful conversation. Need for solitude may increase.",
+                growth: "Develop your spiritual practice. Study and research. Trust your inner wisdom.",
+                caution: "Don't isolate completely. Balance reflection with connection."
+            },
+            8: {
+                overview: "Power, achievement, and material success are highlighted. Focus on career, finances, and stepping into your authority.",
+                career: "Major achievements possible. Financial decisions favor bold action. Leadership recognized.",
+                relationships: "Show love through providing and protecting. Balance material focus with emotional connection.",
+                growth: "Develop your relationship with power and abundance. Manifest with integrity.",
+                caution: "Avoid letting material concerns overshadow spiritual and emotional needs."
+            },
+            9: {
+                overview: "A month of completion and release. Finish what you've started, let go of what's finished, and practice universal compassion.",
+                career: "Complete projects. Release attachments to outcomes. Humanitarian efforts succeed.",
+                relationships: "Practice forgiveness and release. Old relationships may conclude. Love unconditionally.",
+                growth: "Let go of the past. Prepare for new cycles. Serve the greater good.",
+                caution: "Don't cling to what needs to end. Trust the completion process."
+            },
+            11: {
+                overview: "Heightened intuition and spiritual awareness define this month. Pay attention to signs, synchronicities, and inspired insights.",
+                career: "Intuitive guidance leads to success. Inspiring others is your gift. Visionary projects gain traction.",
+                relationships: "Deep spiritual connections. Intuitive understanding of others' needs.",
+                growth: "Trust your spiritual perceptions completely. Channel inspiration into action.",
+                caution: "Ground your visions in practical reality. Don't let nervous energy overwhelm you."
+            },
+            22: {
+                overview: "The master builder month. You can turn dreams into reality on a large scale. Combine vision with practical action.",
+                career: "Large-scale projects succeed. Your practical vision creates lasting impact. Build for the long term.",
+                relationships: "Build lasting foundations together. Practical expressions of love.",
+                growth: "Develop the discipline to manifest your grandest visions. Think big, act wisely.",
+                caution: "Don't be overwhelmed by the scope of your vision. Take it step by step."
+            },
+            33: {
+                overview: "The master teacher month. Your compassion and wisdom can heal and uplift many. Lead through unconditional love.",
+                career: "Teaching, healing, and service work flourishes. Your presence inspires transformation.",
+                relationships: "Deep healing in relationships. Unconditional love transforms everything.",
+                growth: "Embody your highest self. Teach through example. Love without condition.",
+                caution: "Don't deplete yourself serving others. Self-care enables greater service."
+            }
+        };
+        
+        const today = new Date();
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                           'July', 'August', 'September', 'October', 'November', 'December'];
+        document.getElementById('monthDisplay').textContent = `${monthNames[today.getMonth()]} ${today.getFullYear()}`;
+        
+        function loadForecast() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '[]');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            
+            if (profiles.length === 0 || !activeId) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Create Your Profile First</h2>
+                        <p>To receive your personalized monthly forecast, we need your birth information.</p>
+                        <a href="life-path-calculator.html">Create Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const profile = profiles.find(p => p.id === activeId);
+            if (!profile || !profile.birthDate) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Complete Your Profile</h2>
+                        <p>Your profile needs a birth date for accurate forecasts.</p>
+                        <a href="life-path-calculator.html">Update Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const name = profile.preferredName || profile.name || 'Cosmic Soul';
+            document.getElementById('greeting').textContent = `Personalized for ${name}`;
+            
+            const personalMonth = calculatePersonalMonth(profile.birthDate, today.getFullYear(), today.getMonth() + 1);
+            const interp = monthlyInterpretations[personalMonth];
+            
+            // Calculate week energies
+            const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+            const weeks = [];
+            for (let week = 1; week <= 4; week++) {
+                const dayOfMonth = Math.min(week * 7, daysInMonth);
+                const weekDate = new Date(today.getFullYear(), today.getMonth(), dayOfMonth);
+                weeks.push({
+                    num: week,
+                    energy: calculatePersonalDay(profile.birthDate, weekDate)
+                });
+            }
+            
+            // Find key dates (1, 5, 8, 9 days)
+            const keyDates = [];
+            for (let d = 1; d <= daysInMonth; d++) {
+                const date = new Date(today.getFullYear(), today.getMonth(), d);
+                const pDay = calculatePersonalDay(profile.birthDate, date);
+                if ([1, 8, 11, 22].includes(pDay)) {
+                    keyDates.push({ day: d, energy: pDay, theme: themes[pDay].split(' ')[0] });
+                }
+            }
+            
+            document.getElementById('content').innerHTML = `
+                <div class="month-card">
+                    <div class="number">${personalMonth}</div>
+                    <div class="theme">${themes[personalMonth]}</div>
+                    <div class="overview">${interp.overview}</div>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>💼 Career & Work</h2>
+                    <p>${interp.career}</p>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>💕 Relationships</h2>
+                    <p>${interp.relationships}</p>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>🌱 Personal Growth</h2>
+                    <p>${interp.growth}</p>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>⚡ What to Watch</h2>
+                    <p>${interp.caution}</p>
+                    
+                    <div class="week-grid">
+                        ${weeks.map(w => `
+                            <div class="week-box">
+                                <div class="week-num">Week ${w.num}</div>
+                                <div class="energy">${w.energy}</div>
+                                <div class="label">${themes[w.energy].split('&')[0].trim()}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    ${keyDates.length > 0 ? `
+                        <div class="key-dates">
+                            <h3>✨ Power Days This Month</h3>
+                            ${keyDates.slice(0, 5).map(d => `
+                                <div class="date-item">
+                                    <span>${monthNames[today.getMonth()]} ${d.day}</span>
+                                    <span>Personal Day ${d.energy}: ${d.theme}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        loadForecast();
+    </script>
+</body>
+</html>

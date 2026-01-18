@@ -751,6 +751,17 @@
                 <span class="ad-space-cta">Inquire About This Space →</span>
             </div>
             
+            <!-- Forecasts Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('forecasts')">
+                    <h2>📅 Forecasts <span class="count">(5 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="forecasts-content">
+                    <div class="tools-grid" id="forecasts-grid"></div>
+                </div>
+            </div>
+            
             <!-- Life Cycles Section -->
             <div class="category-section">
                 <div class="category-header" onclick="toggleCategory('life')">
@@ -930,7 +941,14 @@
             // Life Tools
             { title: "Age Calculator", description: "Calculate your exact age and life cycle phase.", category: "life", file: "age-calculator.html" },
             { title: "Birthday Countdown", description: "Count down to your solar return - a new astrological year.", category: "life", file: "birthday-countdown.html" },
-            { title: "Life Progress", description: "See your life phases through numerology and astrology.", category: "life", file: "life-progress.html" }
+            { title: "Life Progress", description: "See your life phases through numerology and astrology.", category: "life", file: "life-progress.html" },
+            
+            // Forecast Tools
+            { title: "Daily Forecast", description: "Your personalized guidance for today based on your birth date.", category: "forecasts", file: "daily-forecast.html" },
+            { title: "Weekly Forecast", description: "Navigate your week with personalized energy insights.", category: "forecasts", file: "weekly-forecast.html" },
+            { title: "Monthly Forecast", description: "Discover the themes and opportunities of your current month.", category: "forecasts", file: "monthly-forecast.html" },
+            { title: "Yearly Forecast", description: "Your personal year overview with month-by-month guidance.", category: "forecasts", file: "yearly-forecast.html" },
+            { title: "Decade Forecast", description: "Long-term life cycles, pinnacles, and decade themes.", category: "forecasts", file: "decade-forecast.html" }
         ];
         
         // Render tools for a specific category
@@ -1058,7 +1076,7 @@ ${formData.message}
         });
         
         // Initialize all category grids
-        ['numerology', 'relationship', 'purpose', 'astrology', 'personality', 'fortune', 'life'].forEach(cat => {
+        ['numerology', 'relationship', 'purpose', 'astrology', 'personality', 'fortune', 'forecasts', 'life'].forEach(cat => {
             renderCategoryTools(cat);
         });
         

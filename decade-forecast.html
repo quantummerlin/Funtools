@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#bf5af2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <link rel="manifest" href="manifest.json">
+    <title>Decade Forecast | Quantum Merlin</title>
+    <meta name="description" content="Your personalized decade forecast - long-term life cycles and pinnacles">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 30px; padding: 30px; }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .decade { font-family: 'Cinzel Decorative', serif; font-size: 2em; color: #fbbf24; }
+        .header .greeting { font-style: italic; color: #9ca3af; margin-top: 10px; }
+        
+        .decade-card {
+            background: linear-gradient(135deg, rgba(20, 20, 30, 0.95), rgba(40, 40, 60, 0.95));
+            border: 3px solid rgba(139, 92, 246, 0.5);
+            border-radius: 25px;
+            padding: 50px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+        .decade-card::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            background: linear-gradient(135deg, #fbbf24, #06b6d4, #ec4899, #8b5cf6);
+            border-radius: 27px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .decade-card .age-range {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2em;
+            color: #06b6d4;
+            margin-bottom: 10px;
+        }
+        .decade-card .pinnacle-label {
+            font-family: 'Cinzel', serif;
+            font-size: 1em;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        .decade-card .number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 5em;
+            color: #fbbf24;
+            text-shadow: 0 0 40px rgba(251, 191, 36, 0.6);
+            margin: 10px 0;
+        }
+        .decade-card .theme {
+            font-family: 'Cinzel', serif;
+            font-size: 2em;
+            color: #ec4899;
+        }
+        
+        .lifecycle-visual {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .lifecycle-visual h2 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .pinnacle-timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            padding: 20px 0;
+        }
+        .pinnacle-timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3), rgba(251, 191, 36, 0.3), rgba(236, 72, 153, 0.3));
+            z-index: 0;
+        }
+        .pinnacle-point {
+            background: rgba(20, 20, 30, 0.95);
+            border: 2px solid rgba(139, 92, 246, 0.5);
+            border-radius: 15px;
+            padding: 15px 20px;
+            text-align: center;
+            z-index: 1;
+            min-width: 100px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .pinnacle-point:hover { transform: scale(1.1); }
+        .pinnacle-point.active {
+            border-color: #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+        }
+        .pinnacle-point .num { font-family: 'Cinzel Decorative', serif; font-size: 1.8em; color: #06b6d4; }
+        .pinnacle-point .ages { font-size: 0.8em; color: #9ca3af; }
+        .pinnacle-point .label { font-size: 0.75em; color: #e0e0e0; margin-top: 5px; }
+        
+        .forecast-section {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 25px;
+        }
+        .forecast-section h2 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .forecast-section p { font-size: 1.15em; margin-bottom: 15px; text-align: justify; }
+        
+        .year-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .year-box {
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 10px;
+            padding: 12px 8px;
+            text-align: center;
+        }
+        .year-box.current { background: rgba(251, 191, 36, 0.2); border: 1px solid rgba(251, 191, 36, 0.5); }
+        .year-box .year { font-family: 'Cinzel', serif; font-size: 0.85em; color: #9ca3af; }
+        .year-box .energy { font-family: 'Cinzel Decorative', serif; font-size: 1.5em; color: #06b6d4; }
+        
+        .nav-links { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .nav-links a { color: #06b6d4; text-decoration: none; font-family: 'Cinzel', serif; }
+        .nav-links a:hover { color: #fbbf24; }
+        
+        .profile-required {
+            text-align: center; padding: 60px 40px;
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.3); border-radius: 20px;
+        }
+        .profile-required h2 { font-family: 'Cinzel', serif; color: #fbbf24; margin-bottom: 20px; }
+        .profile-required a {
+            display: inline-block; margin-top: 20px; padding: 15px 30px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a2e; text-decoration: none; border-radius: 10px;
+            font-family: 'Cinzel', serif; font-weight: 600;
+        }
+        
+        @media (max-width: 600px) {
+            .pinnacle-timeline { flex-wrap: wrap; gap: 15px; justify-content: center; }
+            .pinnacle-timeline::before { display: none; }
+        }
+        
+        .legal-footer { margin-top: 50px; padding: 30px 20px; text-align: center; border-top: 1px solid rgba(191, 90, 242, 0.2); }
+        .legal-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .legal-links a { color: #9A8F7A; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.9rem; }
+        .separator { color: rgba(191, 90, 242, 0.4); }
+        .copyright { color: #6B6B6B; font-size: 0.85rem; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="forecasts.html">← All Forecasts</a>
+            <a href="tools_index.html">All Tools →</a>
+        </div>
+        
+        <div class="header">
+            <h1>🔮 Decade Forecast</h1>
+            <div class="decade" id="decadeDisplay"></div>
+            <div class="greeting" id="greeting"></div>
+        </div>
+        
+        <div id="content"></div>
+    </div>
+    
+    <footer class="legal-footer">
+        <div class="legal-links">
+            <a href="terms.html">Terms</a><span class="separator">|</span>
+            <a href="privacy.html">Privacy</a><span class="separator">|</span>
+            <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
+    </footer>
+    
+    <script>
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function calculateLifePath(birthDate) {
+            const date = new Date(birthDate);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            return reduceToSingle(reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(year));
+        }
+        
+        function calculatePersonalYear(birthDate, targetYear) {
+            const date = new Date(birthDate);
+            return reduceToSingle(reduceToSingle(date.getDate()) + reduceToSingle(date.getMonth() + 1) + reduceToSingle(targetYear));
+        }
+        
+        // Pinnacle calculations
+        function calculatePinnacles(birthDate) {
+            const date = new Date(birthDate);
+            const day = reduceToSingle(date.getDate());
+            const month = reduceToSingle(date.getMonth() + 1);
+            const year = reduceToSingle(date.getFullYear());
+            const lifePath = calculateLifePath(birthDate);
+            
+            // First pinnacle duration = 36 - Life Path
+            const firstEnd = 36 - lifePath;
+            
+            return [
+                { num: reduceToSingle(month + day), start: 0, end: firstEnd, label: 'First Pinnacle' },
+                { num: reduceToSingle(day + year), start: firstEnd + 1, end: firstEnd + 9, label: 'Second Pinnacle' },
+                { num: reduceToSingle(reduceToSingle(month + day) + reduceToSingle(day + year)), start: firstEnd + 10, end: firstEnd + 18, label: 'Third Pinnacle' },
+                { num: reduceToSingle(month + year), start: firstEnd + 19, end: 100, label: 'Fourth Pinnacle' }
+            ];
+        }
+        
+        function getCurrentAge(birthDate) {
+            const today = new Date();
+            const birth = new Date(birthDate);
+            let age = today.getFullYear() - birth.getFullYear();
+            const m = today.getMonth() - birth.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+            return age;
+        }
+        
+        const themes = {
+            1: "Independence & New Beginnings",
+            2: "Cooperation & Patience",
+            3: "Creative Expression",
+            4: "Building & Hard Work",
+            5: "Change & Freedom",
+            6: "Love & Responsibility",
+            7: "Wisdom & Introspection",
+            8: "Power & Achievement",
+            9: "Completion & Service",
+            11: "Spiritual Illumination",
+            22: "Master Building",
+            33: "Master Teaching"
+        };
+        
+        const shortThemes = {
+            1: "New Starts", 2: "Partnership", 3: "Creativity", 4: "Building",
+            5: "Change", 6: "Love", 7: "Wisdom", 8: "Power",
+            9: "Completion", 11: "Awakening", 22: "Mastery", 33: "Teaching"
+        };
+        
+        const pinnacleInterpretations = {
+            1: {
+                theme: "The Pioneer",
+                overview: "This pinnacle demands independence and self-reliance. You're called to develop courage, take initiative, and forge your own path. Leadership opportunities arise, but you must step forward to claim them.",
+                lessons: "Learn to trust yourself, take risks, and stand alone when necessary. Develop your unique identity apart from others' expectations.",
+                opportunities: "New beginnings, leadership roles, entrepreneurship, personal reinvention, pioneering projects."
+            },
+            2: {
+                theme: "The Diplomat",
+                overview: "This pinnacle focuses on relationships, cooperation, and patience. You're learning the art of partnership and developing your emotional intelligence and intuition.",
+                lessons: "Learn patience, diplomacy, and the power of supporting others. Develop your intuition and ability to collaborate.",
+                opportunities: "Partnerships, mediation, counseling, behind-the-scenes support, intuitive development."
+            },
+            3: {
+                theme: "The Creative",
+                overview: "This pinnacle brings creative expansion and self-expression. Joy, communication, and artistic pursuits are highlighted. You're meant to express yourself and inspire others.",
+                lessons: "Learn to express your authentic self, develop your creative gifts, and find joy in daily life.",
+                opportunities: "Creative arts, writing, speaking, entertainment, social connections, joyful expression."
+            },
+            4: {
+                theme: "The Builder",
+                overview: "This pinnacle demands hard work, discipline, and building solid foundations. It may feel limiting, but you're creating structures that will last for years.",
+                lessons: "Learn patience, discipline, and the value of steady effort. Build systems and structures that serve your long-term goals.",
+                opportunities: "Career building, real estate, organizational development, practical achievements."
+            },
+            5: {
+                theme: "The Adventurer",
+                overview: "This pinnacle brings change, freedom, and variety. Life may feel unstable, but you're learning adaptability and the power of embracing transformation.",
+                lessons: "Learn to embrace change, stay flexible, and find freedom within responsibility. Avoid scattering your energy.",
+                opportunities: "Travel, new experiences, communication fields, sales, teaching, writing."
+            },
+            6: {
+                theme: "The Nurturer",
+                overview: "This pinnacle centers on love, family, and responsibility. Home and relationships demand attention. You're learning to balance giving with receiving.",
+                lessons: "Learn unconditional love, responsibility without martyrdom, and creating harmony in relationships.",
+                opportunities: "Family, marriage, healing work, counseling, design, beauty-related fields."
+            },
+            7: {
+                theme: "The Seeker",
+                overview: "This pinnacle demands inner work, study, and spiritual development. You may feel isolated, but solitude is necessary for developing wisdom.",
+                lessons: "Learn to trust your intuition, develop your spiritual practice, and find wisdom through reflection.",
+                opportunities: "Research, analysis, spiritual teaching, writing, specialization, solitary work."
+            },
+            8: {
+                theme: "The Achiever",
+                overview: "This pinnacle brings power, achievement, and material success. You're learning to manifest in the physical world and handle power with integrity.",
+                lessons: "Learn to balance material success with spiritual values. Develop your relationship with power and abundance.",
+                opportunities: "Business leadership, financial success, executive positions, large-scale achievement."
+            },
+            9: {
+                theme: "The Humanitarian",
+                overview: "This pinnacle calls for universal love, completion, and service. Personal desires take a backseat to serving the greater good. Letting go is essential.",
+                lessons: "Learn to love unconditionally, release attachment, and serve humanity. Complete karmic cycles.",
+                opportunities: "Humanitarian work, artistic expression, healing, teaching, global service."
+            },
+            11: {
+                theme: "The Illuminator",
+                overview: "This master pinnacle brings spiritual awakening and the call to inspire others. Your intuition is heightened, and you're meant to channel higher wisdom.",
+                lessons: "Learn to trust your spiritual perceptions and use them to illuminate others' paths.",
+                opportunities: "Spiritual teaching, inspirational leadership, intuitive work, visionary projects."
+            },
+            22: {
+                theme: "The Master Builder",
+                overview: "This master pinnacle combines spiritual vision with practical mastery. You can build lasting institutions or create works that benefit many.",
+                lessons: "Learn to ground your visions in practical action and build for the long term.",
+                opportunities: "Large-scale building, institutional leadership, practical visionary work."
+            },
+            33: {
+                theme: "The Master Teacher",
+                overview: "This rare master pinnacle calls for selfless service through unconditional love. You're meant to teach and heal on a profound level.",
+                lessons: "Learn to serve without depletion, teach through being, and love without condition.",
+                opportunities: "Spiritual teaching, healing work, humanitarian leadership, transformational service."
+            }
+        };
+        
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentDecade = Math.floor(currentYear / 10) * 10;
+        document.getElementById('decadeDisplay').textContent = `The ${currentDecade}s`;
+        
+        function loadForecast() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '[]');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            
+            if (profiles.length === 0 || !activeId) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Create Your Profile First</h2>
+                        <p>To receive your personalized decade forecast, we need your birth information.</p>
+                        <a href="life-path-calculator.html">Create Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const profile = profiles.find(p => p.id === activeId);
+            if (!profile || !profile.birthDate) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Complete Your Profile</h2>
+                        <p>Your profile needs a birth date for accurate forecasts.</p>
+                        <a href="life-path-calculator.html">Update Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const name = profile.preferredName || profile.name || 'Cosmic Soul';
+            document.getElementById('greeting').textContent = `${name}'s Life Journey`;
+            
+            const currentAge = getCurrentAge(profile.birthDate);
+            const pinnacles = calculatePinnacles(profile.birthDate);
+            
+            // Find current pinnacle
+            const currentPinnacle = pinnacles.find(p => currentAge >= p.start && currentAge <= p.end) || pinnacles[3];
+            const pinnacleInterp = pinnacleInterpretations[currentPinnacle.num];
+            
+            // Decade years
+            const decadeYears = [];
+            for (let y = currentDecade; y < currentDecade + 10; y++) {
+                decadeYears.push({
+                    year: y,
+                    energy: calculatePersonalYear(profile.birthDate, y),
+                    isCurrent: y === currentYear
+                });
+            }
+            
+            document.getElementById('content').innerHTML = `
+                <div class="decade-card">
+                    <div class="age-range">Age ${currentAge} | Currently in your ${currentPinnacle.label}</div>
+                    <div class="pinnacle-label">Current Life Pinnacle</div>
+                    <div class="number">${currentPinnacle.num}</div>
+                    <div class="theme">${pinnacleInterp.theme}</div>
+                </div>
+                
+                <div class="lifecycle-visual">
+                    <h2>Your Four Life Pinnacles</h2>
+                    <div class="pinnacle-timeline">
+                        ${pinnacles.map(p => `
+                            <div class="pinnacle-point ${p === currentPinnacle ? 'active' : ''}">
+                                <div class="num">${p.num}</div>
+                                <div class="ages">Ages ${p.start}-${p.end > 90 ? '∞' : p.end}</div>
+                                <div class="label">${shortThemes[p.num]}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>🌟 Your Current Pinnacle</h2>
+                    <p>${pinnacleInterp.overview}</p>
+                    <p><strong>Key Lessons:</strong> ${pinnacleInterp.lessons}</p>
+                    <p><strong>Opportunities:</strong> ${pinnacleInterp.opportunities}</p>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>📅 The ${currentDecade}s: Year by Year</h2>
+                    <p>Each year of this decade carries its own personal energy for you:</p>
+                    <div class="year-grid">
+                        ${decadeYears.map(y => `
+                            <div class="year-box ${y.isCurrent ? 'current' : ''}">
+                                <div class="year">${y.year}</div>
+                                <div class="energy">${y.energy}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>🔮 Understanding Pinnacles</h2>
+                    <p>Pinnacles are the major life cycles that shape your journey. Unlike yearly cycles that change annually, pinnacles last for decades and represent the major themes and lessons of each life phase.</p>
+                    <p>Your First Pinnacle shapes your early life (roughly birth to your early 30s). Your Second and Third Pinnacles each last 9 years and bring concentrated lessons. Your Fourth Pinnacle carries you through your mature years, representing your ultimate life expression.</p>
+                    <p>Understanding your current pinnacle helps you work WITH life's energy rather than against it, recognizing that every phase serves your soul's evolution.</p>
+                </div>
+            `;
+        }
+        
+        loadForecast();
+    </script>
+</body>
+</html>

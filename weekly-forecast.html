@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#bf5af2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <link rel="manifest" href="manifest.json">
+    <title>Weekly Forecast | Quantum Merlin</title>
+    <meta name="description" content="Your personalized weekly cosmic forecast">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .date { font-family: 'Cinzel', serif; font-size: 1.2em; color: #06b6d4; }
+        .header .greeting { font-style: italic; color: #9ca3af; margin-top: 10px; }
+        
+        .week-overview {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .week-overview .number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 3em;
+            color: #fbbf24;
+        }
+        .week-overview .theme {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5em;
+            color: #06b6d4;
+            margin: 10px 0;
+        }
+        .week-overview p { color: #e0e0e0; font-size: 1.1em; }
+        
+        .daily-breakdown {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .daily-breakdown h2 {
+            font-family: 'Cinzel', serif;
+            color: #ec4899;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .day-row {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            transition: background 0.3s;
+        }
+        .day-row:last-child { border-bottom: none; }
+        .day-row:hover { background: rgba(6, 182, 212, 0.1); }
+        .day-row.today { background: rgba(251, 191, 36, 0.1); border-radius: 10px; }
+        .day-name {
+            width: 120px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            color: #fbbf24;
+        }
+        .day-number {
+            width: 50px;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.5em;
+            color: #06b6d4;
+            text-align: center;
+        }
+        .day-theme { flex: 1; color: #e0e0e0; padding-left: 20px; }
+        
+        .guidance-section {
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .guidance-section h3 { font-family: 'Cinzel', serif; color: #06b6d4; margin-bottom: 15px; }
+        .guidance-section p { font-size: 1.1em; }
+        
+        .nav-links { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .nav-links a { color: #06b6d4; text-decoration: none; font-family: 'Cinzel', serif; }
+        .nav-links a:hover { color: #fbbf24; }
+        
+        .profile-required {
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+        }
+        .profile-required h2 { font-family: 'Cinzel', serif; color: #fbbf24; margin-bottom: 20px; }
+        .profile-required a {
+            display: inline-block; margin-top: 20px; padding: 15px 30px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a2e; text-decoration: none; border-radius: 10px;
+            font-family: 'Cinzel', serif; font-weight: 600;
+        }
+        
+        .legal-footer { margin-top: 50px; padding: 30px 20px; text-align: center; border-top: 1px solid rgba(191, 90, 242, 0.2); }
+        .legal-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .legal-links a { color: #9A8F7A; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.9rem; }
+        .separator { color: rgba(191, 90, 242, 0.4); }
+        .copyright { color: #6B6B6B; font-size: 0.85rem; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="forecasts.html">← All Forecasts</a>
+            <a href="tools_index.html">All Tools →</a>
+        </div>
+        
+        <div class="header">
+            <h1>📅 This Week's Forecast</h1>
+            <div class="date" id="weekRange"></div>
+            <div class="greeting" id="greeting"></div>
+        </div>
+        
+        <div id="content"></div>
+    </div>
+    
+    <footer class="legal-footer">
+        <div class="legal-links">
+            <a href="terms.html">Terms</a><span class="separator">|</span>
+            <a href="privacy.html">Privacy</a><span class="separator">|</span>
+            <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
+    </footer>
+    
+    <script>
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function calculatePersonalYear(birthDate, targetYear) {
+            const date = new Date(birthDate);
+            return reduceToSingle(reduceToSingle(date.getDate()) + reduceToSingle(date.getMonth() + 1) + reduceToSingle(targetYear));
+        }
+        
+        function calculatePersonalMonth(birthDate, targetYear, targetMonth) {
+            return reduceToSingle(calculatePersonalYear(birthDate, targetYear) + targetMonth);
+        }
+        
+        function calculatePersonalDay(birthDate, targetDate) {
+            const target = new Date(targetDate);
+            return reduceToSingle(calculatePersonalMonth(birthDate, target.getFullYear(), target.getMonth() + 1) + target.getDate());
+        }
+        
+        function getWeekNumber(date) {
+            const d = new Date(date);
+            const startOfYear = new Date(d.getFullYear(), 0, 1);
+            const days = Math.floor((d - startOfYear) / (24 * 60 * 60 * 1000));
+            return Math.ceil((days + startOfYear.getDay() + 1) / 7);
+        }
+        
+        function calculatePersonalWeek(birthDate, targetDate) {
+            const target = new Date(targetDate);
+            return reduceToSingle(calculatePersonalYear(birthDate, target.getFullYear()) + getWeekNumber(target));
+        }
+        
+        function getWeekDates(date) {
+            const d = new Date(date);
+            const day = d.getDay();
+            const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+            const monday = new Date(d.setDate(diff));
+            const days = [];
+            for (let i = 0; i < 7; i++) {
+                const newDate = new Date(monday);
+                newDate.setDate(monday.getDate() + i);
+                days.push(newDate);
+            }
+            return days;
+        }
+        
+        const themes = {
+            1: "New Beginnings", 2: "Partnership", 3: "Creative Expression", 4: "Building",
+            5: "Change & Freedom", 6: "Love & Home", 7: "Reflection", 8: "Achievement",
+            9: "Completion", 11: "Illumination", 22: "Master Building", 33: "Master Teaching"
+        };
+        
+        const weeklyGuidance = {
+            1: { overview: "This week sparks new initiatives. Take the lead on projects, trust your independent thinking, and don't be afraid to step into uncharted territory.", tips: "Start something new, assert your vision, take independent action." },
+            2: { overview: "Partnership and patience define this week. Focus on collaboration, building relationships, and attending to the details that others might miss.", tips: "Listen actively, cooperate generously, tend to relationships." },
+            3: { overview: "Creative energy flows abundantly. Express yourself freely, socialize, and let your natural charm open doors. Joy is your superpower this week.", tips: "Create, communicate, connect with your playful side." },
+            4: { overview: "Time to build solid foundations. Hard work pays off now—focus on practical tasks, organization, and steady progress toward your goals.", tips: "Organize, plan carefully, do the work that creates lasting results." },
+            5: { overview: "Expect the unexpected! This week brings change, variety, and new possibilities. Stay flexible and embrace adventure.", tips: "Adapt to changes, try new things, communicate with many people." },
+            6: { overview: "Home and family take center stage. Nurture your relationships, create harmony in your environment, and tend to responsibilities with love.", tips: "Care for loved ones, beautify your space, give generously." },
+            7: { overview: "A week for inner work and reflection. Seek solitude when needed, trust your intuition, and explore life's deeper questions.", tips: "Meditate, study, trust your inner knowing." },
+            8: { overview: "Power and achievement energy surges. Focus on career, finances, and stepping into your authority. Manifestation potential is high.", tips: "Take charge, make business decisions, exercise your power wisely." },
+            9: { overview: "A week of completion and release. Let go of what's finished, practice compassion, and serve the greater good.", tips: "Complete projects, forgive freely, think globally." },
+            11: { overview: "Spiritual insight heightens. Pay attention to intuition, synchronicities, and inspired ideas. You may feel called to illuminate others.", tips: "Trust intuition, seek spiritual connection, inspire others." },
+            22: { overview: "Master builder energy supports large-scale manifestation. Your practical vision can create real-world impact this week.", tips: "Think big but act practically, build something meaningful." },
+            33: { overview: "Master teacher energy calls you to serve through love. Your compassionate presence heals and uplifts those around you.", tips: "Teach, heal, embody unconditional love." }
+        };
+        
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        
+        const today = new Date();
+        const weekDates = getWeekDates(today);
+        const startDate = weekDates[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const endDate = weekDates[6].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        document.getElementById('weekRange').textContent = `Week of ${startDate} - ${endDate}`;
+        
+        function loadForecast() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '[]');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            
+            if (profiles.length === 0 || !activeId) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Create Your Profile First</h2>
+                        <p>To receive your personalized weekly forecast, we need your birth information.</p>
+                        <a href="life-path-calculator.html">Create Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const profile = profiles.find(p => p.id === activeId);
+            if (!profile || !profile.birthDate) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Complete Your Profile</h2>
+                        <p>Your profile needs a birth date for accurate forecasts.</p>
+                        <a href="life-path-calculator.html">Update Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const name = profile.preferredName || profile.name || 'Cosmic Soul';
+            document.getElementById('greeting').textContent = `Personalized for ${name}`;
+            
+            const personalWeek = calculatePersonalWeek(profile.birthDate, today);
+            const guidance = weeklyGuidance[personalWeek];
+            
+            let dailyRows = '';
+            weekDates.forEach((date, i) => {
+                const isToday = date.toDateString() === today.toDateString();
+                const personalDay = calculatePersonalDay(profile.birthDate, date);
+                dailyRows += `
+                    <div class="day-row ${isToday ? 'today' : ''}">
+                        <div class="day-name">${dayNames[date.getDay()]}${isToday ? ' ★' : ''}</div>
+                        <div class="day-number">${personalDay}</div>
+                        <div class="day-theme">${themes[personalDay]}</div>
+                    </div>`;
+            });
+            
+            document.getElementById('content').innerHTML = `
+                <div class="week-overview">
+                    <div class="number">Personal Week ${personalWeek}</div>
+                    <div class="theme">${themes[personalWeek]}</div>
+                    <p>${guidance.overview}</p>
+                </div>
+                
+                <div class="daily-breakdown">
+                    <h2>Daily Energy Flow</h2>
+                    ${dailyRows}
+                </div>
+                
+                <div class="guidance-section">
+                    <h3>✨ Weekly Focus</h3>
+                    <p>${guidance.tips}</p>
+                </div>
+            `;
+        }
+        
+        loadForecast();
+    </script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#bf5af2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Quantum Merlin">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <link rel="manifest" href="manifest.json">
+    <title>Today's Forecast | Quantum Merlin</title>
+    <meta name="description" content="Your personalized daily cosmic forecast based on your unique numerological cycles">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .date {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: #06b6d4;
+        }
+        .header .greeting {
+            font-style: italic;
+            color: #9ca3af;
+            margin-top: 10px;
+        }
+        
+        .energy-display {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .energy-box {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 15px;
+            padding: 20px 30px;
+            text-align: center;
+            min-width: 150px;
+        }
+        .energy-box.personal {
+            border-color: rgba(251, 191, 36, 0.5);
+        }
+        .energy-box .number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            color: #fbbf24;
+        }
+        .energy-box .label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9em;
+            color: #9ca3af;
+            margin-top: 5px;
+        }
+        
+        .forecast-content {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        .forecast-content h2 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .forecast-content p {
+            margin-bottom: 20px;
+            font-size: 1.15em;
+            text-align: justify;
+        }
+        
+        .guidance-section {
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .guidance-section h3 {
+            font-family: 'Cinzel', serif;
+            color: #06b6d4;
+            margin-bottom: 15px;
+        }
+        .guidance-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .guidance-section li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        .guidance-section li::before {
+            content: '✧';
+            position: absolute;
+            left: 0;
+            color: #fbbf24;
+        }
+        
+        .affirmation {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 15px;
+            margin-top: 25px;
+        }
+        .affirmation h3 {
+            font-family: 'Cinzel', serif;
+            color: #ec4899;
+            margin-bottom: 15px;
+        }
+        .affirmation p {
+            font-size: 1.3em;
+            font-style: italic;
+            color: #fbbf24;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .nav-links a {
+            color: #06b6d4;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #fbbf24; }
+        
+        .profile-required {
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+        }
+        .profile-required h2 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            margin-bottom: 20px;
+        }
+        .profile-required a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a2e;
+            text-decoration: none;
+            border-radius: 10px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="forecasts.html">← All Forecasts</a>
+            <a href="tools_index.html">All Tools →</a>
+        </div>
+        
+        <div class="header">
+            <h1>🌅 Today's Forecast</h1>
+            <div class="date" id="todayDate"></div>
+            <div class="greeting" id="greeting"></div>
+        </div>
+        
+        <div id="content"></div>
+    </div>
+    
+    <footer class="legal-footer">
+        <div class="legal-links">
+            <a href="terms.html">Terms</a>
+            <span class="separator">|</span>
+            <a href="privacy.html">Privacy</a>
+            <span class="separator">|</span>
+            <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
+    </footer>
+    <style>
+        .legal-footer {
+            margin-top: 50px;
+            padding: 30px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(191, 90, 242, 0.2);
+        }
+        .legal-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .legal-links a { color: #9A8F7A; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.9rem; }
+        .legal-links a:hover { color: #fbbf24; }
+        .separator { color: rgba(191, 90, 242, 0.4); }
+        .copyright { color: #6B6B6B; font-size: 0.85rem; font-style: italic; }
+    </style>
+    
+    <script>
+        // Numerology functions
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function calculatePersonalYear(birthDate, targetYear) {
+            const date = new Date(birthDate);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            return reduceToSingle(reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(targetYear));
+        }
+        
+        function calculatePersonalMonth(birthDate, targetYear, targetMonth) {
+            const personalYear = calculatePersonalYear(birthDate, targetYear);
+            return reduceToSingle(personalYear + targetMonth);
+        }
+        
+        function calculatePersonalDay(birthDate, targetDate) {
+            const target = new Date(targetDate);
+            const personalMonth = calculatePersonalMonth(birthDate, target.getFullYear(), target.getMonth() + 1);
+            return reduceToSingle(personalMonth + target.getDate());
+        }
+        
+        function calculateUniversalDay(date) {
+            const d = new Date(date);
+            return reduceToSingle(d.getDate() + (d.getMonth() + 1) + d.getFullYear());
+        }
+        
+        // Daily interpretations
+        const dailyInterpretations = {
+            1: {
+                theme: "New Beginnings & Initiative",
+                overview: "Today pulses with the energy of fresh starts and bold initiatives. The universe supports your independent action and original thinking. This is a day to step forward, not backward—to lead rather than follow.",
+                focus: ["Start new projects or initiatives", "Take independent action", "Assert yourself confidently", "Make important decisions", "Express your original ideas"],
+                avoid: ["Waiting for others to act first", "Being overly dependent", "Second-guessing yourself", "Procrastinating on important matters"],
+                affirmation: "I am the author of my own story. Today, I write a bold new chapter."
+            },
+            2: {
+                theme: "Partnership & Diplomacy",
+                overview: "Today's energy favors cooperation, patience, and working harmoniously with others. Rather than pushing your agenda, focus on listening, mediating, and building bridges. Relationships take center stage.",
+                focus: ["Collaborate and cooperate", "Listen more than you speak", "Mediate conflicts", "Nurture relationships", "Pay attention to details"],
+                avoid: ["Being aggressive or pushy", "Making major solo decisions", "Ignoring others' feelings", "Impatience"],
+                affirmation: "I create harmony wherever I go. My patience opens doors that force cannot."
+            },
+            3: {
+                theme: "Creative Expression & Joy",
+                overview: "Creativity and self-expression flow freely today. The universe invites you to communicate, create, and connect with your inner joy. Social connections are highlighted—share your ideas and let your personality shine.",
+                focus: ["Express yourself creatively", "Communicate openly", "Socialize and network", "Embrace joy and playfulness", "Share your talents"],
+                avoid: ["Self-criticism or doubt", "Isolation", "Suppressing emotions", "Taking things too seriously"],
+                affirmation: "My creativity flows freely. I express my authentic self with joy and confidence."
+            },
+            4: {
+                theme: "Building & Organization",
+                overview: "Today calls for practical action, organization, and laying solid foundations. It's a day for hard work, attention to detail, and making tangible progress on your goals. Structure serves you well.",
+                focus: ["Organize and plan", "Do practical, productive work", "Build solid foundations", "Handle administrative tasks", "Create order from chaos"],
+                avoid: ["Shortcuts or sloppy work", "Ignoring responsibilities", "Rigid thinking", "Overworking without breaks"],
+                affirmation: "I build my dreams one solid step at a time. My dedication creates lasting success."
+            },
+            5: {
+                theme: "Change & Adventure",
+                overview: "Dynamic energy swirls around you today, bringing unexpected changes and exciting possibilities. Embrace flexibility, seek new experiences, and don't resist the winds of change—they're blowing you toward growth.",
+                focus: ["Embrace change and variety", "Try something new", "Be flexible and adaptable", "Communicate with many people", "Explore new possibilities"],
+                avoid: ["Rigid routines", "Resisting change", "Overindulgence", "Scattered energy without focus"],
+                affirmation: "I welcome change as the doorway to my evolution. Adventure expands my soul."
+            },
+            6: {
+                theme: "Love & Responsibility",
+                overview: "Today's energy centers on home, family, and nurturing connections. Your responsibilities may feel heavier, but so does the love available to you. Focus on creating harmony in your closest relationships.",
+                focus: ["Nurture family and home", "Take responsibility gracefully", "Create beauty and harmony", "Offer service to others", "Express love openly"],
+                avoid: ["Neglecting loved ones", "Perfectionism", "Taking on others' burdens", "Self-sacrifice without boundaries"],
+                affirmation: "Love flows through me in perfect balance. I give and receive with an open heart."
+            },
+            7: {
+                theme: "Reflection & Inner Wisdom",
+                overview: "This is a day for going within. The universe supports contemplation, study, and connecting with your deeper wisdom. Solitude isn't loneliness today—it's sacred space for inner revelation.",
+                focus: ["Meditate and reflect", "Study or research", "Trust your intuition", "Seek quality over quantity", "Connect with nature"],
+                avoid: ["Superficial activities", "Forcing social interaction", "Ignoring your intuition", "Overanalyzing emotions"],
+                affirmation: "In stillness, I find my deepest wisdom. My inner voice guides me true."
+            },
+            8: {
+                theme: "Power & Achievement",
+                overview: "Powerful manifestation energy flows today. Focus on your ambitions, material goals, and stepping into your authority. This is a day for business, leadership, and making things happen in the physical world.",
+                focus: ["Take charge of situations", "Focus on career and finances", "Make important business decisions", "Exercise your authority wisely", "Manifest abundance"],
+                avoid: ["Power struggles", "Materialism without purpose", "Ignoring the emotional realm", "Dominating others"],
+                affirmation: "I wield my power with wisdom and integrity. Abundance flows to me naturally."
+            },
+            9: {
+                theme: "Completion & Compassion",
+                overview: "Today marks endings and completions—a time to release what no longer serves you and embrace universal love. Think globally, act compassionately, and trust that letting go creates space for new blessings.",
+                focus: ["Complete unfinished business", "Let go of the old", "Practice forgiveness", "Serve the greater good", "Think globally and inclusively"],
+                avoid: ["Holding onto the past", "Selfishness or pettiness", "Starting new projects", "Dwelling on losses"],
+                affirmation: "I release with grace and make room for miracles. My compassion heals the world."
+            },
+            11: {
+                theme: "Spiritual Illumination",
+                overview: "Master number 11 brings heightened intuition and spiritual insight. You may receive flashes of inspiration or feel called to a higher purpose. Pay attention to synchronicities—the universe is sending messages.",
+                focus: ["Trust your intuition completely", "Seek spiritual connection", "Inspire others", "Pay attention to dreams and signs", "Channel creative inspiration"],
+                avoid: ["Ignoring spiritual promptings", "Anxiety and nervous tension", "Dismissing your visions", "Ego-driven actions"],
+                affirmation: "I am a channel for divine light. My intuition illuminates my path."
+            },
+            22: {
+                theme: "Master Building",
+                overview: "The master builder energy of 22 combines vision with practical power. Today you can turn dreams into reality on a grand scale. Think big, but ground your vision in practical action.",
+                focus: ["Work on large-scale projects", "Turn visions into plans", "Lead with practical wisdom", "Build something meaningful", "Combine idealism with realism"],
+                avoid: ["Thinking too small", "Impractical dreaming", "Overwhelming yourself", "Ignoring the details"],
+                affirmation: "I build bridges between dreams and reality. My practical vision changes the world."
+            },
+            33: {
+                theme: "Master Teaching & Healing",
+                overview: "The highest master number brings profound healing and teaching energy. You are called to uplift others through unconditional love. Your presence itself is a blessing today.",
+                focus: ["Teach and mentor others", "Practice unconditional love", "Heal through compassion", "Serve without expectation", "Embody your highest self"],
+                avoid: ["Martyrdom", "Neglecting self-care", "Preaching without listening", "Depleting your energy"],
+                affirmation: "I teach through my being. Unconditional love flows through me to all."
+            }
+        };
+        
+        // Display today's date
+        const today = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('todayDate').textContent = today.toLocaleDateString('en-US', options);
+        
+        // Get time-appropriate greeting
+        const hour = today.getHours();
+        let timeGreeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+        
+        // Load profile and generate forecast
+        function loadForecast() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '[]');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            
+            if (profiles.length === 0 || !activeId) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Create Your Profile First</h2>
+                        <p>To receive your personalized daily forecast, we need your birth information.</p>
+                        <a href="life-path-calculator.html">Create Profile →</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            const profile = profiles.find(p => p.id === activeId);
+            if (!profile || !profile.birthDate) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Complete Your Profile</h2>
+                        <p>Your profile needs a birth date for accurate forecasts.</p>
+                        <a href="life-path-calculator.html">Update Profile →</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            const preferredName = profile.preferredName || profile.name || 'Cosmic Soul';
+            document.getElementById('greeting').textContent = `${timeGreeting}, ${preferredName}`;
+            
+            const personalDay = calculatePersonalDay(profile.birthDate, today);
+            const universalDay = calculateUniversalDay(today);
+            const interp = dailyInterpretations[personalDay];
+            
+            document.getElementById('content').innerHTML = `
+                <div class="energy-display">
+                    <div class="energy-box personal">
+                        <div class="number">${personalDay}</div>
+                        <div class="label">Your Personal Day</div>
+                    </div>
+                    <div class="energy-box">
+                        <div class="number">${universalDay}</div>
+                        <div class="label">Universal Day</div>
+                    </div>
+                </div>
+                
+                <div class="forecast-content">
+                    <h2>${interp.theme}</h2>
+                    <p>${interp.overview}</p>
+                    
+                    <div class="guidance-section">
+                        <h3>✨ Focus Your Energy On</h3>
+                        <ul>
+                            ${interp.focus.map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="guidance-section" style="background: rgba(236, 72, 153, 0.1);">
+                        <h3>⚡ Be Mindful Of</h3>
+                        <ul>
+                            ${interp.avoid.map(a => `<li>${a}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="affirmation">
+                        <h3>Today's Affirmation</h3>
+                        <p>"${interp.affirmation}"</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        loadForecast();
+    </script>
+</body>
+</html>

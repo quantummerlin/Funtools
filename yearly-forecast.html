@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#bf5af2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <link rel="manifest" href="manifest.json">
+    <title>Yearly Forecast | Quantum Merlin</title>
+    <meta name="description" content="Your personalized yearly cosmic forecast - major themes and opportunities">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="auto-fill.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 30px; padding: 30px; }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .year { font-family: 'Cinzel Decorative', serif; font-size: 2em; color: #fbbf24; }
+        .header .greeting { font-style: italic; color: #9ca3af; margin-top: 10px; }
+        
+        .year-card {
+            background: linear-gradient(135deg, rgba(20, 20, 30, 0.9), rgba(30, 30, 50, 0.9));
+            border: 3px solid rgba(251, 191, 36, 0.4);
+            border-radius: 25px;
+            padding: 50px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .year-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #fbbf24, #06b6d4, #ec4899, #fbbf24);
+        }
+        .year-card .number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 5em;
+            color: #fbbf24;
+            text-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
+        }
+        .year-card .theme {
+            font-family: 'Cinzel', serif;
+            font-size: 2em;
+            color: #06b6d4;
+            margin: 15px 0;
+        }
+        .year-card .tagline {
+            font-style: italic;
+            font-size: 1.3em;
+            color: #ec4899;
+        }
+        
+        .forecast-section {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 25px;
+        }
+        .forecast-section h2 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .forecast-section p { font-size: 1.15em; margin-bottom: 15px; text-align: justify; }
+        
+        .month-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 25px;
+        }
+        .month-box {
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .month-box:hover { transform: scale(1.05); }
+        .month-box .month-name { font-family: 'Cinzel', serif; color: #9ca3af; font-size: 0.85em; }
+        .month-box .energy { font-family: 'Cinzel Decorative', serif; font-size: 1.8em; color: #06b6d4; }
+        .month-box .label { color: #e0e0e0; font-size: 0.75em; margin-top: 3px; }
+        
+        .quarter-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        .quarter-box {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+        .quarter-box h3 { font-family: 'Cinzel', serif; color: #fbbf24; margin-bottom: 10px; }
+        .quarter-box p { font-size: 0.95em; color: #e0e0e0; }
+        
+        .nav-links { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .nav-links a { color: #06b6d4; text-decoration: none; font-family: 'Cinzel', serif; }
+        .nav-links a:hover { color: #fbbf24; }
+        
+        .profile-required {
+            text-align: center; padding: 60px 40px;
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.3); border-radius: 20px;
+        }
+        .profile-required h2 { font-family: 'Cinzel', serif; color: #fbbf24; margin-bottom: 20px; }
+        .profile-required a {
+            display: inline-block; margin-top: 20px; padding: 15px 30px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a2e; text-decoration: none; border-radius: 10px;
+            font-family: 'Cinzel', serif; font-weight: 600;
+        }
+        
+        .legal-footer { margin-top: 50px; padding: 30px 20px; text-align: center; border-top: 1px solid rgba(191, 90, 242, 0.2); }
+        .legal-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .legal-links a { color: #9A8F7A; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.9rem; }
+        .separator { color: rgba(191, 90, 242, 0.4); }
+        .copyright { color: #6B6B6B; font-size: 0.85rem; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="forecasts.html">← All Forecasts</a>
+            <a href="tools_index.html">All Tools →</a>
+        </div>
+        
+        <div class="header">
+            <h1>🌟 Yearly Forecast</h1>
+            <div class="year" id="yearDisplay"></div>
+            <div class="greeting" id="greeting"></div>
+        </div>
+        
+        <div id="content"></div>
+    </div>
+    
+    <footer class="legal-footer">
+        <div class="legal-links">
+            <a href="terms.html">Terms</a><span class="separator">|</span>
+            <a href="privacy.html">Privacy</a><span class="separator">|</span>
+            <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
+    </footer>
+    
+    <script>
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function calculatePersonalYear(birthDate, targetYear) {
+            const date = new Date(birthDate);
+            return reduceToSingle(reduceToSingle(date.getDate()) + reduceToSingle(date.getMonth() + 1) + reduceToSingle(targetYear));
+        }
+        
+        function calculatePersonalMonth(birthDate, targetYear, targetMonth) {
+            return reduceToSingle(calculatePersonalYear(birthDate, targetYear) + targetMonth);
+        }
+        
+        const themes = {
+            1: "New Beginnings", 2: "Partnership", 3: "Creative Expression", 4: "Building Foundations",
+            5: "Change & Freedom", 6: "Love & Responsibility", 7: "Reflection & Wisdom", 8: "Power & Achievement",
+            9: "Completion", 11: "Spiritual Illumination", 22: "Master Building", 33: "Master Teaching"
+        };
+        
+        const shortThemes = {
+            1: "New Starts", 2: "Partnership", 3: "Creativity", 4: "Building",
+            5: "Change", 6: "Love", 7: "Wisdom", 8: "Achievement",
+            9: "Completion", 11: "Awakening", 22: "Mastery", 33: "Teaching"
+        };
+        
+        const yearlyInterpretations = {
+            1: {
+                tagline: "The Year of Fresh Starts",
+                overview: "This is a powerful year of new beginnings. After the completion energy of the previous 9-year cycle, you're now planting seeds for the next chapter of your life. The universe supports bold action, independent thinking, and stepping into leadership.",
+                themes: "Independence, initiative, courage, originality, self-assertion, new projects, fresh perspectives",
+                career: "This is THE year to start new ventures, launch projects, or completely redirect your career. Your pioneering spirit attracts opportunities. Don't wait for permission—take the lead.",
+                relationships: "New relationships may form. Existing relationships need fresh energy. Assert your needs clearly while remaining open to new connections.",
+                challenges: "Avoid impatience—seeds take time to grow. Don't bulldoze others in your enthusiasm. Balance independence with cooperation.",
+                advice: "Trust your instincts and take action on your dreams. This year sets the tone for the next nine years."
+            },
+            2: {
+                tagline: "The Year of Partnership",
+                overview: "After the initiating energy of last year, this year calls for patience, cooperation, and developing what you've started. Relationships take center stage. Progress comes through partnership rather than solo action.",
+                themes: "Cooperation, patience, diplomacy, relationships, details, intuition, balance",
+                career: "Success comes through collaboration. Pay attention to details and fine print. Diplomatic skills open doors. Let things develop naturally.",
+                relationships: "This is your relationship year. Existing bonds deepen. New partnerships form. Learn to compromise without losing yourself.",
+                challenges: "Impatience will sabotage your progress. Avoid forcing outcomes. Don't lose yourself in others' needs.",
+                advice: "Trust the timing. Work with others. Listen to your intuition. Small steps lead to big destinations."
+            },
+            3: {
+                tagline: "The Year of Creative Expression",
+                overview: "Joy, creativity, and self-expression define this year. The seeds planted in year 1 and nurtured in year 2 now begin to show results. Express yourself freely, socialize, and let your natural gifts shine.",
+                themes: "Creativity, communication, joy, optimism, self-expression, social connections, artistic pursuits",
+                career: "Creative projects flourish. Communication-based work succeeds. Networking expands opportunities. Your personality is your greatest asset.",
+                relationships: "Social life expands. Friendships deepen. Romance benefits from playfulness and honest communication.",
+                challenges: "Scattered energy may prevent completion. Avoid superficiality. Don't let optimism blind you to practical matters.",
+                advice: "Express your authentic self. Create something beautiful. Spread joy wherever you go. Let your light shine."
+            },
+            4: {
+                tagline: "The Year of Building Foundations",
+                overview: "After the expansive creativity of last year, this year grounds you in practical reality. It's time to build lasting structures, work diligently, and create order. Hard work invested now pays dividends for years to come.",
+                themes: "Work, discipline, organization, foundations, structure, practical achievement, responsibility",
+                career: "Focus on building systems and structures. Hard work brings tangible results. Attention to detail is crucial. Establish solid foundations.",
+                relationships: "Relationships require practical commitment. Show love through reliable action. Build stable foundations together.",
+                challenges: "Rigidity blocks opportunities. Don't become a workaholic. Balance structure with flexibility.",
+                advice: "Do the work. Build something lasting. Trust that your efforts create permanent value."
+            },
+            5: {
+                tagline: "The Year of Change & Freedom",
+                overview: "After the structured work of last year, this year brings change, freedom, and unexpected opportunities. Embrace variety, stay flexible, and don't resist the transformations calling to you.",
+                themes: "Change, freedom, adventure, versatility, new experiences, transformation, flexibility",
+                career: "Expect the unexpected. New opportunities appear suddenly. Travel and communication-focused work thrive. Adaptability is key.",
+                relationships: "Relationships need excitement and freedom. New connections form unexpectedly. Variety revitalizes partnerships.",
+                challenges: "Restlessness may cause instability. Avoid impulsive decisions without reflection. Don't scatter your energy.",
+                advice: "Embrace change as evolution. Try new things. Travel if possible. Freedom and adventure feed your soul this year."
+            },
+            6: {
+                tagline: "The Year of Love & Responsibility",
+                overview: "Home, family, and love take center stage this year. After the freedom of last year, you're called to focus on responsibilities, nurturing relationships, and creating harmony in your personal life.",
+                themes: "Love, family, responsibility, home, service, nurturing, harmony, beauty",
+                career: "Service-oriented work flourishes. Beauty and aesthetics matter. Take responsibility for team dynamics. Work-life balance is essential.",
+                relationships: "This is your love year. Relationships deepen significantly. Family matters require attention. Marriage or commitment may occur.",
+                challenges: "Don't become a martyr. Set boundaries while giving generously. Avoid perfectionism.",
+                advice: "Love generously but wisely. Create beauty in your world. Nurture what matters most."
+            },
+            7: {
+                tagline: "The Year of Wisdom & Reflection",
+                overview: "After the relationship focus of last year, this year turns inward. It's time for reflection, spiritual growth, and developing your inner wisdom. Solitude is sacred, not lonely.",
+                themes: "Reflection, spirituality, wisdom, analysis, solitude, inner growth, mystical awareness",
+                career: "Research, analysis, and specialized work succeed. Quality over quantity. Work alone when possible.",
+                relationships: "Relationships require depth and meaning. Superficial connections fade. Soul connections deepen.",
+                challenges: "Don't isolate completely. Avoid excessive analysis paralysis. Balance inner work with outer connection.",
+                advice: "Go within. Trust your intuition. Develop your spiritual practice. Seek wisdom in stillness."
+            },
+            8: {
+                tagline: "The Year of Power & Achievement",
+                overview: "After the inner work of last year, this year calls you to manifest in the material world. Focus on career, finances, and stepping into your power. Achievement is within reach.",
+                themes: "Power, achievement, success, abundance, authority, manifestation, recognition",
+                career: "Major achievements possible. Financial gains likely. Leadership opportunities abound. Your authority is recognized.",
+                relationships: "Show love through providing and protecting. Balance material success with emotional presence.",
+                challenges: "Don't sacrifice relationships for success. Avoid power struggles. Use power with integrity.",
+                advice: "Step into your power. Manifest abundance. Lead with wisdom. This is your year to achieve."
+            },
+            9: {
+                tagline: "The Year of Completion",
+                overview: "The final year of your 9-year cycle. This year is about completion, release, and preparation for the new cycle ahead. Let go of what no longer serves you to make room for new blessings.",
+                themes: "Completion, endings, release, transformation, universal love, humanitarian service, letting go",
+                career: "Complete long-term projects. Release what's finished. Prepare for new directions. Humanitarian work succeeds.",
+                relationships: "Some relationships may conclude. Practice forgiveness. Love unconditionally without attachment.",
+                challenges: "Don't cling to the past. Avoid starting major new projects. Trust the completion process.",
+                advice: "Release with grace. Complete unfinished business. Prepare for the fresh start coming next year."
+            },
+            11: {
+                tagline: "The Year of Illumination",
+                overview: "A master number year bringing heightened spiritual awareness and intuitive abilities. You're called to inspire others and channel higher wisdom. Pay attention to signs and synchronicities.",
+                themes: "Spiritual illumination, intuition, inspiration, visionary thinking, higher consciousness",
+                career: "Visionary projects succeed. Inspire and lead through spiritual wisdom. Intuitive guidance is powerful.",
+                relationships: "Deep spiritual connections. You attract spiritually-minded people. Relationships serve your higher purpose.",
+                challenges: "Ground your visions in reality. Don't let nervous energy overwhelm you. Balance inspiration with action.",
+                advice: "Trust your spiritual perceptions. Inspire others with your vision. You are a channel for higher wisdom."
+            },
+            22: {
+                tagline: "The Year of Master Building",
+                overview: "The most powerful master number year for manifestation. You can build something of lasting significance that serves many. Combine visionary thinking with practical mastery.",
+                themes: "Master building, practical idealism, large-scale manifestation, lasting legacy, visionary leadership",
+                career: "Major projects can be built to completion. Your practical vision creates real-world impact. Think big and act strategically.",
+                relationships: "Build lasting foundations together. Partner with those who share your vision.",
+                challenges: "Don't be overwhelmed by the scope of your vision. Take it step by step. Balance ambition with self-care.",
+                advice: "Build your legacy. Turn dreams into reality. Your practical vision can change the world."
+            },
+            33: {
+                tagline: "The Year of Master Teaching",
+                overview: "The highest master number year, calling you to serve through unconditional love and spiritual teaching. Your presence heals and uplifts. Lead through compassion.",
+                themes: "Master teaching, unconditional love, healing, spiritual service, compassionate leadership",
+                career: "Teaching, healing, and service work reaches its highest expression. Your work transforms lives.",
+                relationships: "You become a source of healing for others. Relationships are vehicles for spiritual growth.",
+                challenges: "Avoid martyrdom. Self-care is essential. Don't take on others' karma.",
+                advice: "Teach through your being. Love without condition. Your compassion heals the world."
+            }
+        };
+        
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const today = new Date();
+        document.getElementById('yearDisplay').textContent = today.getFullYear();
+        
+        function loadForecast() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '[]');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            
+            if (profiles.length === 0 || !activeId) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Create Your Profile First</h2>
+                        <p>To receive your personalized yearly forecast, we need your birth information.</p>
+                        <a href="life-path-calculator.html">Create Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const profile = profiles.find(p => p.id === activeId);
+            if (!profile || !profile.birthDate) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Complete Your Profile</h2>
+                        <p>Your profile needs a birth date for accurate forecasts.</p>
+                        <a href="life-path-calculator.html">Update Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const name = profile.preferredName || profile.name || 'Cosmic Soul';
+            document.getElementById('greeting').textContent = `${name}'s Personal Year`;
+            
+            const currentYear = today.getFullYear();
+            const personalYear = calculatePersonalYear(profile.birthDate, currentYear);
+            const interp = yearlyInterpretations[personalYear];
+            
+            // Calculate monthly energies
+            const months = [];
+            for (let m = 1; m <= 12; m++) {
+                months.push({
+                    name: monthNames[m - 1],
+                    energy: calculatePersonalMonth(profile.birthDate, currentYear, m)
+                });
+            }
+            
+            // Quarter summaries
+            const quarters = [
+                { name: 'Q1: Jan-Mar', months: [1, 2, 3] },
+                { name: 'Q2: Apr-Jun', months: [4, 5, 6] },
+                { name: 'Q3: Jul-Sep', months: [7, 8, 9] },
+                { name: 'Q4: Oct-Dec', months: [10, 11, 12] }
+            ];
+            
+            document.getElementById('content').innerHTML = `
+                <div class="year-card">
+                    <div class="number">${personalYear}</div>
+                    <div class="theme">${themes[personalYear]}</div>
+                    <div class="tagline">${interp.tagline}</div>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>📜 Year Overview</h2>
+                    <p>${interp.overview}</p>
+                    <p><strong>Key Themes:</strong> ${interp.themes}</p>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>💼 Career & Purpose</h2>
+                    <p>${interp.career}</p>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>💕 Love & Relationships</h2>
+                    <p>${interp.relationships}</p>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>⚡ Challenges to Navigate</h2>
+                    <p>${interp.challenges}</p>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>✨ Wisdom for the Year</h2>
+                    <p>${interp.advice}</p>
+                </div>
+                
+                <div class="forecast-section">
+                    <h2>📅 Monthly Energy Map</h2>
+                    <p>Each month carries its own personal energy, layered on top of your yearly theme:</p>
+                    <div class="month-grid">
+                        ${months.map(m => `
+                            <div class="month-box">
+                                <div class="month-name">${m.name}</div>
+                                <div class="energy">${m.energy}</div>
+                                <div class="label">${shortThemes[m.energy]}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        loadForecast();
+    </script>
+</body>
+</html>
