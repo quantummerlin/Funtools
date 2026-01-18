@@ -402,6 +402,15 @@
                 console.log('Parsed hours:', hours);
                 console.log('Parsed minutes:', minutes);
                 
+                // Validate year is reasonable
+                if (year < 1900 || year > 2030) {
+                    alert('Year seems incorrect: ' + year + '. Please check your date format.');
+                    return;
+                }
+                
+                // Show user what was parsed
+                console.log(`✓ Calculating for: ${day}/${month}/${year} at ${hours}:${minutes.toString().padStart(2,'0')}`);
+                
                 // Geocode location
                 const coords = await geocodeLocation(birthPlace);
                 
@@ -508,11 +517,14 @@
                     name: preferredName,
                     sourceUrl: 'stellium-reading.html',
                     birthInfo: {
-                        date: birthDate,
-                        time: birthTime,
+                        date: `${day}/${month}/${year}`,
+                        time: `${hours}:${minutes.toString().padStart(2,'0')}`,
                         place: birthPlace,
                         coords: coords,
-                        timezone: tzOffsetHours
+                        timezone: tzOffsetHours,
+                        parsedYear: year,
+                        parsedMonth: month,
+                        parsedDay: day
                     }
                 };
                 

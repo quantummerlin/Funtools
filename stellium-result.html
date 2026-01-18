@@ -328,6 +328,14 @@
 
             const container = document.getElementById('resultContainer');
             
+            // Show birth info for debugging
+            if (data.birthInfo) {
+                const infoDiv = document.createElement('div');
+                infoDiv.style.cssText = 'background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center;';
+                infoDiv.innerHTML = `<p style="color: #fbbf24; margin: 0;">📅 Calculated for: <strong>${data.birthInfo.date}</strong> at <strong>${data.birthInfo.time}</strong> in ${data.birthInfo.place}</p>`;
+                container.appendChild(infoDiv);
+            }
+            
             if (data.stelliums.length > 0) {
                 // Display each stellium
                 data.stelliums.forEach(stellium => {
