@@ -23,9 +23,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap&v=20260112083146" rel="stylesheet">
-    <link rel="stylesheet" href="quantum-merlin-styles.css?v=20260119b">
-    <script src="auto-fill.js?v=20260119b"></script>
-    <script src="cosmic-loader.js?v=20260119b"></script>
+    <link rel="stylesheet" href="quantum-merlin-styles.css?v=20260119c">
+    <script src="auto-fill.js?v=20260119c"></script>
+    <script src="cosmic-loader.js?v=20260119c"></script>
     <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
     <script>
         // Force clear any old cached data on page load
@@ -460,15 +460,18 @@
                     if (utcDay > dim) { utcDay = 1; utcMonth++; if (utcMonth > 12) { utcMonth = 1; utcYear++; } }
                 }
                 
-                // IMPORTANT: Astronomy.MakeTime uses 1-indexed months (January = 1)
-                // Our month variable is already 1-indexed, so pass it directly
-                const time = Astronomy.MakeTime(new Date(utcYear, utcMonth - 1, utcDay, Math.floor(totalUtcMinutes/60), totalUtcMinutes%60, 0));
+                // Create UTC date using Date.UTC (months are 0-indexed in JS)
+                const utcHours = Math.floor(totalUtcMinutes/60);
+                const utcMins = totalUtcMinutes % 60;
+                const utcTimestamp = Date.UTC(utcYear, utcMonth - 1, utcDay, utcHours, utcMins, 0);
+                const time = Astronomy.MakeTime(new Date(utcTimestamp));
                 
                 console.log('Birth calculation:', {
                     local: `${year}-${month}-${day} ${hours}:${minutes}`,
                     timezone: tzOffsetHours,
-                    utc: `${utcYear}-${utcMonth}-${utcDay} ${Math.floor(totalUtcMinutes/60)}:${totalUtcMinutes%60}`,
-                    astronomyTime: time.toString()
+                    utc: `${utcYear}-${utcMonth}-${utcDay} ${utcHours}:${utcMins}`,
+                    astronomyTime: time.toString(),
+                    dateCheck: new Date(utcTimestamp).toISOString()
                 });
                 
                 // Calculate all planetary positions

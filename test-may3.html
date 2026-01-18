@@ -6,8 +6,12 @@
 <body>
 <script>
 // Test: May 3, 1981, 1:30 PM Abu Dhabi (UTC+4) = 9:30 AM UTC
-// Month is 0-indexed in JavaScript Date (May = 4)
-const time = Astronomy.MakeTime(new Date(1981, 4, 3, 9, 30, 0));
+// Use Date.UTC to ensure the time is interpreted as UTC, not local time
+const utcTimestamp = Date.UTC(1981, 4, 3, 9, 30, 0);  // May = month 4 (0-indexed)
+const time = Astronomy.MakeTime(new Date(utcTimestamp));
+
+console.log('Testing May 3, 1981 9:30 UTC');
+console.log('Date check:', new Date(utcTimestamp).toISOString());
 
 const ZODIAC_SIGNS = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
                      'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];

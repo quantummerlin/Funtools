@@ -337,8 +337,9 @@
                 const utcHours = Math.floor(totalUtcMinutes / 60);
                 const utcMins = totalUtcMinutes % 60;
                 
-                // Use Date object (months are 0-indexed in JavaScript Date)
-                const time = Astronomy.MakeTime(new Date(utcYear, utcMonth - 1, utcDay, utcHours, utcMins, 0));
+                // Create UTC date using Date.UTC (months are 0-indexed in JS)
+                const utcTimestamp = Date.UTC(utcYear, utcMonth - 1, utcDay, utcHours, utcMins, 0);
+                const time = Astronomy.MakeTime(new Date(utcTimestamp));
                 
                 // Calculate houses (simplified - MC is approximately 90 degrees from Ascendant)
                 const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
