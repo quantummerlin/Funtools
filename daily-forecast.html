@@ -199,7 +199,7 @@
         </div>
         
         <div class="header">
-            <h1>🌅 Today's Forecast</h1>
+            <h1>Today's Forecast</h1>
             <div class="date" id="todayDate"></div>
             <div class="greeting" id="greeting"></div>
         </div>
@@ -412,14 +412,14 @@
                     <p>${interp.overview}</p>
                     
                     <div class="guidance-section">
-                        <h3>✨ Focus Your Energy On</h3>
+                        <h3>Focus Your Energy On</h3>
                         <ul>
                             ${interp.focus.map(f => `<li>${f}</li>`).join('')}
                         </ul>
                     </div>
                     
                     <div class="guidance-section" style="background: rgba(236, 72, 153, 0.1);">
-                        <h3>⚡ Be Mindful Of</h3>
+                        <h3 style="color: #ec4899;">Be Mindful Of</h3>
                         <ul>
                             ${interp.avoid.map(a => `<li>${a}</li>`).join('')}
                         </ul>

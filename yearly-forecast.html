@@ -91,6 +91,23 @@
             font-size: 1.5em;
         }
         .forecast-section p { font-size: 1.15em; margin-bottom: 15px; text-align: justify; }
+        .forecast-section.focus-section { background: rgba(6, 182, 212, 0.1); }
+        .forecast-section.focus-section h2 { color: #06b6d4; }
+        .forecast-section.avoid-section { background: rgba(236, 72, 153, 0.1); }
+        .forecast-section.avoid-section h2 { color: #ec4899; }
+        .guidance-list { list-style: none; padding: 0; }
+        .guidance-list li { padding: 10px 0; padding-left: 30px; position: relative; font-size: 1.15em; }
+        .guidance-list li::before { content: '✧'; position: absolute; left: 0; color: #fbbf24; }
+        
+        .affirmation {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 20px;
+            margin-top: 25px;
+        }
+        .affirmation h3 { font-family: 'Cinzel', serif; color: #ec4899; margin-bottom: 15px; font-size: 1.3em; }
+        .affirmation p { font-size: 1.4em; font-style: italic; color: #fbbf24; }
         
         .month-grid {
             display: grid;
@@ -157,7 +174,7 @@
         </div>
         
         <div class="header">
-            <h1>🌟 Yearly Forecast</h1>
+            <h1>Yearly Forecast</h1>
             <div class="year" id="yearDisplay"></div>
             <div class="greeting" id="greeting"></div>
         </div>
@@ -206,111 +223,123 @@
         const yearlyInterpretations = {
             1: {
                 tagline: "The Year of Fresh Starts",
-                overview: "This is a powerful year of new beginnings. After the completion energy of the previous 9-year cycle, you're now planting seeds for the next chapter of your life. The universe supports bold action, independent thinking, and stepping into leadership.",
+                overview: "This is a powerful year of new beginnings. After the completion energy of the previous 9-year cycle, you're now planting seeds for the next chapter of your life. The universe supports bold action, independent thinking, and stepping into leadership. What you initiate this year sets the tone for the next nine years—choose wisely and act courageously.",
                 themes: "Independence, initiative, courage, originality, self-assertion, new projects, fresh perspectives",
-                career: "This is THE year to start new ventures, launch projects, or completely redirect your career. Your pioneering spirit attracts opportunities. Don't wait for permission—take the lead.",
-                relationships: "New relationships may form. Existing relationships need fresh energy. Assert your needs clearly while remaining open to new connections.",
-                challenges: "Avoid impatience—seeds take time to grow. Don't bulldoze others in your enthusiasm. Balance independence with cooperation.",
-                advice: "Trust your instincts and take action on your dreams. This year sets the tone for the next nine years."
+                career: "This is THE year to start new ventures, launch projects, or completely redirect your career. Your pioneering spirit attracts opportunities. Don't wait for permission—take the lead. Job changes, promotions through initiative, and entrepreneurial ventures are all favored.",
+                relationships: "New relationships may form that will be significant for years to come. Existing relationships need fresh energy and honest communication about what you want. Assert your needs clearly while remaining open to new connections.",
+                focus: ["Start new projects you've been dreaming about", "Take leadership roles when offered", "Assert your independence", "Trust your original ideas", "Set the direction for the next 9 years"],
+                avoid: ["Waiting for the 'perfect' moment", "Being aggressive instead of assertive", "Impatience with natural timing", "Bulldozing others in enthusiasm"],
+                affirmation: "I am the pioneer of my life. This year, I boldly begin my next great chapter."
             },
             2: {
                 tagline: "The Year of Partnership",
-                overview: "After the initiating energy of last year, this year calls for patience, cooperation, and developing what you've started. Relationships take center stage. Progress comes through partnership rather than solo action.",
+                overview: "After the initiating energy of last year, this year calls for patience, cooperation, and nurturing what you've started. Relationships take center stage in all areas of life. Progress comes through partnership rather than solo action. The seeds you planted last year need tending—don't abandon them for new projects.",
                 themes: "Cooperation, patience, diplomacy, relationships, details, intuition, balance",
-                career: "Success comes through collaboration. Pay attention to details and fine print. Diplomatic skills open doors. Let things develop naturally.",
-                relationships: "This is your relationship year. Existing bonds deepen. New partnerships form. Learn to compromise without losing yourself.",
-                challenges: "Impatience will sabotage your progress. Avoid forcing outcomes. Don't lose yourself in others' needs.",
-                advice: "Trust the timing. Work with others. Listen to your intuition. Small steps lead to big destinations."
+                career: "Success comes through collaboration and diplomacy. Pay attention to details and fine print in all agreements. Your intuition about people is heightened—trust it. Let things develop at their natural pace.",
+                relationships: "This is your primary relationship year. Existing bonds deepen significantly. New partnerships form that may be long-lasting. Learn to compromise without losing yourself. Listen more than you speak.",
+                focus: ["Build partnerships and collaborations", "Practice patience with timing", "Pay attention to important details", "Develop your intuition", "Nurture what you started last year"],
+                avoid: ["Forcing outcomes", "Making unilateral decisions", "Impatience with slow progress", "Losing yourself in others' needs"],
+                affirmation: "Patience is my power this year. Through cooperation, I create lasting success."
             },
             3: {
                 tagline: "The Year of Creative Expression",
-                overview: "Joy, creativity, and self-expression define this year. The seeds planted in year 1 and nurtured in year 2 now begin to show results. Express yourself freely, socialize, and let your natural gifts shine.",
+                overview: "Joy, creativity, and self-expression define this year. The seeds planted in year 1 and nurtured in year 2 now begin to show visible results. Express yourself freely, socialize widely, and let your natural gifts shine. Your personality and communication abilities are your greatest assets now.",
                 themes: "Creativity, communication, joy, optimism, self-expression, social connections, artistic pursuits",
-                career: "Creative projects flourish. Communication-based work succeeds. Networking expands opportunities. Your personality is your greatest asset.",
-                relationships: "Social life expands. Friendships deepen. Romance benefits from playfulness and honest communication.",
-                challenges: "Scattered energy may prevent completion. Avoid superficiality. Don't let optimism blind you to practical matters.",
-                advice: "Express your authentic self. Create something beautiful. Spread joy wherever you go. Let your light shine."
+                career: "Creative projects flourish. Communication-based work succeeds brilliantly. Networking expands opportunities in unexpected ways. Your personality opens doors. Write, speak, present, perform—express yourself.",
+                relationships: "Social life expands significantly. Friendships deepen and multiply. Romance benefits from playfulness, honest communication, and shared joy. You attract people through your natural warmth.",
+                focus: ["Express yourself creatively", "Socialize and network broadly", "Communicate your ideas", "Embrace joy in daily life", "Share your talents generously"],
+                avoid: ["Scattering energy across too many projects", "Superficiality in relationships", "Optimism that ignores practicality", "Self-criticism that blocks expression"],
+                affirmation: "My creativity flows freely. This year, I express my authentic self with joy."
             },
             4: {
                 tagline: "The Year of Building Foundations",
-                overview: "After the expansive creativity of last year, this year grounds you in practical reality. It's time to build lasting structures, work diligently, and create order. Hard work invested now pays dividends for years to come.",
+                overview: "After the expansive creativity of last year, this year grounds you in practical reality. It's time to build lasting structures, work diligently, and create order from inspiration. Hard work invested now pays dividends for years—possibly decades—to come. This is the year to get serious.",
                 themes: "Work, discipline, organization, foundations, structure, practical achievement, responsibility",
-                career: "Focus on building systems and structures. Hard work brings tangible results. Attention to detail is crucial. Establish solid foundations.",
-                relationships: "Relationships require practical commitment. Show love through reliable action. Build stable foundations together.",
-                challenges: "Rigidity blocks opportunities. Don't become a workaholic. Balance structure with flexibility.",
-                advice: "Do the work. Build something lasting. Trust that your efforts create permanent value."
+                career: "Focus on building systems, processes, and structures that will last. Hard work brings tangible, lasting results. Attention to detail is crucial. Establish the solid foundations your future success requires.",
+                relationships: "Relationships require practical commitment and reliability. Show love through consistent action. Build stable foundations together. This may be a year of formalization—moving in, engagement, commitment.",
+                focus: ["Build lasting systems and structures", "Work diligently and consistently", "Organize your life and space", "Attend to important details", "Create order that supports your goals"],
+                avoid: ["Shortcuts that undermine quality", "Becoming a workaholic", "Rigidity that blocks opportunities", "Neglecting rest and relationships"],
+                affirmation: "I am building my future with every disciplined step. My foundations are strong."
             },
             5: {
                 tagline: "The Year of Change & Freedom",
-                overview: "After the structured work of last year, this year brings change, freedom, and unexpected opportunities. Embrace variety, stay flexible, and don't resist the transformations calling to you.",
+                overview: "After the structured work of last year, this year brings change, freedom, and unexpected opportunities. Embrace variety, stay flexible, and don't resist the transformations calling to you. Life may feel unstable at times, but you're breaking free of limitations that no longer serve you.",
                 themes: "Change, freedom, adventure, versatility, new experiences, transformation, flexibility",
-                career: "Expect the unexpected. New opportunities appear suddenly. Travel and communication-focused work thrive. Adaptability is key.",
-                relationships: "Relationships need excitement and freedom. New connections form unexpectedly. Variety revitalizes partnerships.",
-                challenges: "Restlessness may cause instability. Avoid impulsive decisions without reflection. Don't scatter your energy.",
-                advice: "Embrace change as evolution. Try new things. Travel if possible. Freedom and adventure feed your soul this year."
+                career: "Expect the unexpected. New opportunities appear suddenly—stay ready. Travel and communication-focused work thrive. Adaptability is your key skill. Multiple income streams may develop.",
+                relationships: "Relationships need excitement, variety, and freedom to breathe. New connections form unexpectedly and may be unconventional. Existing relationships either evolve or release.",
+                focus: ["Embrace change as evolution", "Try new things deliberately", "Stay flexible with plans", "Travel if possible", "Communicate with many people"],
+                avoid: ["Clinging to rigid routines", "Resisting necessary changes", "Impulsive decisions without thought", "Scattering energy unproductively"],
+                affirmation: "I flow with change fearlessly. Freedom expands me into my greatest self."
             },
             6: {
                 tagline: "The Year of Love & Responsibility",
-                overview: "Home, family, and love take center stage this year. After the freedom of last year, you're called to focus on responsibilities, nurturing relationships, and creating harmony in your personal life.",
+                overview: "Home, family, and love take center stage this year. After the freedom of last year, you're called to focus on responsibilities, nurturing relationships, and creating harmony in your personal world. Domestic matters demand attention. Love asks for commitment.",
                 themes: "Love, family, responsibility, home, service, nurturing, harmony, beauty",
-                career: "Service-oriented work flourishes. Beauty and aesthetics matter. Take responsibility for team dynamics. Work-life balance is essential.",
-                relationships: "This is your love year. Relationships deepen significantly. Family matters require attention. Marriage or commitment may occur.",
-                challenges: "Don't become a martyr. Set boundaries while giving generously. Avoid perfectionism.",
-                advice: "Love generously but wisely. Create beauty in your world. Nurture what matters most."
+                career: "Service-oriented work flourishes. Beauty and aesthetics matter in your work. Take responsibility for team harmony. Work-life balance isn't optional—it's essential this year.",
+                relationships: "This is your primary love year. Relationships deepen significantly. Family matters require your attention and care. Marriage, commitment, or deepening of bonds is likely. Love through service.",
+                focus: ["Nurture family and close relationships", "Create harmony in your home", "Fulfill responsibilities with grace", "Balance giving and receiving", "Create beauty in your environment"],
+                avoid: ["Martyrdom and self-sacrifice", "Perfectionism that creates stress", "Neglecting your own needs", "Taking on others' problems"],
+                affirmation: "Love flows through me in perfect balance. I nurture and am nurtured."
             },
             7: {
                 tagline: "The Year of Wisdom & Reflection",
-                overview: "After the relationship focus of last year, this year turns inward. It's time for reflection, spiritual growth, and developing your inner wisdom. Solitude is sacred, not lonely.",
+                overview: "After the relationship focus of last year, this year turns inward. It's time for reflection, spiritual growth, and developing your inner wisdom. You may crave more solitude than usual—honor that need. This is a year of inner development that prepares you for the achievement ahead.",
                 themes: "Reflection, spirituality, wisdom, analysis, solitude, inner growth, mystical awareness",
-                career: "Research, analysis, and specialized work succeed. Quality over quantity. Work alone when possible.",
-                relationships: "Relationships require depth and meaning. Superficial connections fade. Soul connections deepen.",
-                challenges: "Don't isolate completely. Avoid excessive analysis paralysis. Balance inner work with outer connection.",
-                advice: "Go within. Trust your intuition. Develop your spiritual practice. Seek wisdom in stillness."
+                career: "Research, analysis, and specialized work succeed. Quality trumps quantity. Work alone when possible. Develop expertise in your field. Study and learning are favored.",
+                relationships: "Relationships require depth, meaning, and space. Superficial connections naturally fade. Soul-level connections deepen. You need more alone time—communicate this kindly.",
+                focus: ["Create space for reflection", "Develop your spiritual practice", "Study and learn deeply", "Trust your intuition", "Seek quality over quantity"],
+                avoid: ["Filling every moment with activity", "Complete isolation from others", "Dismissing intuitive insights", "Overanalyzing emotions"],
+                affirmation: "In stillness, I find wisdom. This year, I go within to grow."
             },
             8: {
                 tagline: "The Year of Power & Achievement",
-                overview: "After the inner work of last year, this year calls you to manifest in the material world. Focus on career, finances, and stepping into your power. Achievement is within reach.",
+                overview: "After the inner work of last year, this year calls you to manifest in the material world. Focus on career, finances, and stepping into your authority. The wisdom you developed last year now serves your achievement. This is your year for tangible success.",
                 themes: "Power, achievement, success, abundance, authority, manifestation, recognition",
-                career: "Major achievements possible. Financial gains likely. Leadership opportunities abound. Your authority is recognized.",
-                relationships: "Show love through providing and protecting. Balance material success with emotional presence.",
-                challenges: "Don't sacrifice relationships for success. Avoid power struggles. Use power with integrity.",
-                advice: "Step into your power. Manifest abundance. Lead with wisdom. This is your year to achieve."
+                career: "Major achievements are possible. Financial gains are likely with effort. Leadership opportunities abound. Your authority is recognized by others. This is a peak career year.",
+                relationships: "Show love through providing, protecting, and practical support. Balance material focus with emotional presence. Shared financial goals strengthen bonds.",
+                focus: ["Focus on career advancement", "Make important financial decisions", "Step into leadership roles", "Manifest your goals tangibly", "Exercise authority wisely"],
+                avoid: ["Sacrificing relationships for success", "Power struggles with others", "Materialism without meaning", "Using power to dominate"],
+                affirmation: "I step into my power with wisdom and integrity. Abundance flows to me."
             },
             9: {
                 tagline: "The Year of Completion",
-                overview: "The final year of your 9-year cycle. This year is about completion, release, and preparation for the new cycle ahead. Let go of what no longer serves you to make room for new blessings.",
+                overview: "The final year of your 9-year cycle. This year is about completion, release, and preparation for the new cycle ahead. Let go of what no longer serves you to make room for new blessings. Some things must end—trust the process of completion.",
                 themes: "Completion, endings, release, transformation, universal love, humanitarian service, letting go",
-                career: "Complete long-term projects. Release what's finished. Prepare for new directions. Humanitarian work succeeds.",
-                relationships: "Some relationships may conclude. Practice forgiveness. Love unconditionally without attachment.",
-                challenges: "Don't cling to the past. Avoid starting major new projects. Trust the completion process.",
-                advice: "Release with grace. Complete unfinished business. Prepare for the fresh start coming next year."
+                career: "Complete long-term projects that have been in progress. Release what's finished. Prepare for new directions coming next year. Humanitarian and creative work succeeds.",
+                relationships: "Some relationships may naturally conclude. Practice forgiveness generously—of others and yourself. Love unconditionally without attachment to outcomes.",
+                focus: ["Complete unfinished business", "Release what's ended", "Practice forgiveness", "Serve the greater good", "Prepare for new beginnings"],
+                avoid: ["Clinging to the past", "Starting major new projects", "Selfishness and small thinking", "Resisting necessary endings"],
+                affirmation: "I release with grace. The space I create invites new blessings into my life."
             },
             11: {
                 tagline: "The Year of Illumination",
-                overview: "A master number year bringing heightened spiritual awareness and intuitive abilities. You're called to inspire others and channel higher wisdom. Pay attention to signs and synchronicities.",
+                overview: "A master number year bringing heightened spiritual awareness and intuitive abilities. You're called to inspire others and channel higher wisdom. Pay attention to signs, dreams, and synchronicities—the universe is communicating directly with you.",
                 themes: "Spiritual illumination, intuition, inspiration, visionary thinking, higher consciousness",
-                career: "Visionary projects succeed. Inspire and lead through spiritual wisdom. Intuitive guidance is powerful.",
-                relationships: "Deep spiritual connections. You attract spiritually-minded people. Relationships serve your higher purpose.",
-                challenges: "Ground your visions in reality. Don't let nervous energy overwhelm you. Balance inspiration with action.",
-                advice: "Trust your spiritual perceptions. Inspire others with your vision. You are a channel for higher wisdom."
+                career: "Visionary projects succeed. You inspire and lead through spiritual wisdom. Intuitive guidance is powerful in decisions. Creative and spiritual work flourishes.",
+                relationships: "Deep spiritual connections form or intensify. You attract spiritually-minded people naturally. Relationships serve your higher purpose and growth.",
+                focus: ["Trust your intuition completely", "Pay attention to signs and synchronicities", "Inspire others naturally", "Follow spiritual guidance", "Channel your visions into action"],
+                avoid: ["Dismissing spiritual insights", "Anxiety and nervous tension", "Ego-driven action", "All inspiration, no grounding"],
+                affirmation: "I am a channel for divine light. My intuition illuminates my path clearly."
             },
             22: {
                 tagline: "The Year of Master Building",
-                overview: "The most powerful master number year for manifestation. You can build something of lasting significance that serves many. Combine visionary thinking with practical mastery.",
+                overview: "The most powerful master number year for manifestation. You can build something of lasting significance that serves many people. This rare energy supports turning your grandest visions into practical reality. Think bigger than you ever have—then work systematically.",
                 themes: "Master building, practical idealism, large-scale manifestation, lasting legacy, visionary leadership",
-                career: "Major projects can be built to completion. Your practical vision creates real-world impact. Think big and act strategically.",
-                relationships: "Build lasting foundations together. Partner with those who share your vision.",
-                challenges: "Don't be overwhelmed by the scope of your vision. Take it step by step. Balance ambition with self-care.",
-                advice: "Build your legacy. Turn dreams into reality. Your practical vision can change the world."
+                career: "Major projects can be built to completion. Your practical vision creates real-world impact. Think big and act strategically. You are building your legacy this year.",
+                relationships: "Build lasting foundations with partners. Collaborate with those who share your vision. Practical expressions of love and commitment are favored.",
+                focus: ["Work on large-scale projects", "Combine grand vision with practical steps", "Build something that serves many", "Lead with wisdom and humility", "Create your legacy"],
+                avoid: ["Thinking too small", "All vision, no practical action", "Overwhelming yourself", "Neglecting details while dreaming big"],
+                affirmation: "I am a master builder. My practical vision creates lasting change in the world."
             },
             33: {
                 tagline: "The Year of Master Teaching",
-                overview: "The highest master number year, calling you to serve through unconditional love and spiritual teaching. Your presence heals and uplifts. Lead through compassion.",
+                overview: "The highest master number year, calling you to serve through unconditional love and spiritual teaching. Your presence heals and uplifts everyone you encounter. Lead through compassion, teach through being, love without condition or expectation.",
                 themes: "Master teaching, unconditional love, healing, spiritual service, compassionate leadership",
-                career: "Teaching, healing, and service work reaches its highest expression. Your work transforms lives.",
-                relationships: "You become a source of healing for others. Relationships are vehicles for spiritual growth.",
-                challenges: "Avoid martyrdom. Self-care is essential. Don't take on others' karma.",
-                advice: "Teach through your being. Love without condition. Your compassion heals the world."
+                career: "Teaching, healing, and service work reaches its highest expression. Your work transforms lives. Lead through compassion rather than authority.",
+                relationships: "You become a source of healing for others naturally. Relationships are vehicles for mutual spiritual growth. Unconditional love transforms everything.",
+                focus: ["Teach through your presence", "Love unconditionally", "Heal through compassion", "Serve without expectation", "Embody your highest self"],
+                avoid: ["Martyrdom and self-depletion", "Preaching without practicing", "Taking on others' karma", "Neglecting self-care"],
+                affirmation: "I teach through my being. Unconditional love flows through me to heal the world."
             }
         };
         
@@ -375,33 +404,37 @@
                 </div>
                 
                 <div class="forecast-section">
-                    <h2>📜 Year Overview</h2>
+                    <h2>Year Overview</h2>
                     <p>${interp.overview}</p>
                     <p><strong>Key Themes:</strong> ${interp.themes}</p>
                 </div>
                 
                 <div class="forecast-section">
-                    <h2>💼 Career & Purpose</h2>
+                    <h2>Career & Purpose</h2>
                     <p>${interp.career}</p>
                 </div>
                 
                 <div class="forecast-section">
-                    <h2>💕 Love & Relationships</h2>
+                    <h2>Love & Relationships</h2>
                     <p>${interp.relationships}</p>
                 </div>
                 
-                <div class="forecast-section">
-                    <h2>⚡ Challenges to Navigate</h2>
-                    <p>${interp.challenges}</p>
+                <div class="forecast-section focus-section">
+                    <h2>This Year, Focus On</h2>
+                    <ul class="guidance-list">
+                        ${interp.focus.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="forecast-section avoid-section">
+                    <h2>This Year, Avoid</h2>
+                    <ul class="guidance-list">
+                        ${interp.avoid.map(a => `<li>${a}</li>`).join('')}
+                    </ul>
                 </div>
                 
                 <div class="forecast-section">
-                    <h2>✨ Wisdom for the Year</h2>
-                    <p>${interp.advice}</p>
-                </div>
-                
-                <div class="forecast-section">
-                    <h2>📅 Monthly Energy Map</h2>
+                    <h2>Monthly Energy Map</h2>
                     <p>Each month carries its own personal energy, layered on top of your yearly theme:</p>
                     <div class="month-grid">
                         ${months.map(m => `
@@ -412,6 +445,11 @@
                             </div>
                         `).join('')}
                     </div>
+                </div>
+                
+                <div class="affirmation">
+                    <h3>Yearly Affirmation</h3>
+                    <p>"${interp.affirmation}"</p>
                 </div>
             `;
         }

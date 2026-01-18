@@ -84,6 +84,23 @@
             gap: 10px;
         }
         .forecast-section p { font-size: 1.1em; margin-bottom: 15px; }
+        .forecast-section.focus-section { background: rgba(6, 182, 212, 0.1); }
+        .forecast-section.focus-section h2 { color: #06b6d4; }
+        .forecast-section.avoid-section { background: rgba(236, 72, 153, 0.1); }
+        .forecast-section.avoid-section h2 { color: #ec4899; }
+        .guidance-list { list-style: none; padding: 0; }
+        .guidance-list li { padding: 10px 0; padding-left: 30px; position: relative; font-size: 1.1em; }
+        .guidance-list li::before { content: '✧'; position: absolute; left: 0; color: #fbbf24; }
+        
+        .affirmation {
+            text-align: center;
+            padding: 35px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 15px;
+            margin-top: 25px;
+        }
+        .affirmation h3 { font-family: 'Cinzel', serif; color: #ec4899; margin-bottom: 15px; }
+        .affirmation p { font-size: 1.3em; font-style: italic; color: #fbbf24; }
         
         .week-grid {
             display: grid;
@@ -143,7 +160,7 @@
         </div>
         
         <div class="header">
-            <h1>🌙 Monthly Forecast</h1>
+            <h1>Monthly Forecast</h1>
             <div class="date" id="monthDisplay"></div>
             <div class="greeting" id="greeting"></div>
         </div>
@@ -199,88 +216,112 @@
         
         const monthlyInterpretations = {
             1: {
-                overview: "A powerful month for new beginnings. The energy supports starting fresh projects, taking leadership roles, and asserting your independence. Trust your pioneering instincts.",
-                career: "Take initiative on new projects. Your original ideas gain traction. Leadership opportunities emerge—step forward confidently.",
-                relationships: "Maintain independence while connecting. New relationships may form. Express your needs clearly.",
-                growth: "Focus on self-development and personal goals. This is YOUR month to shine.",
-                caution: "Avoid being overly aggressive or dismissive of others' input."
+                overview: "A powerful month for new beginnings. The cosmic energy supports launching fresh projects, stepping into leadership, and asserting your unique path. Seeds planted now grow throughout the next eight months. Trust your pioneering instincts—this is your time to initiate, not wait.",
+                career: "Take initiative on new projects you've been considering. Your original ideas gain traction now. Leadership opportunities emerge—step forward confidently rather than waiting to be chosen. This is the month to pitch, propose, and begin.",
+                relationships: "New connections may form naturally. In existing relationships, bring fresh energy and clear communication about what you want. Assert your needs without apology. Independence within connection is the key.",
+                growth: "Focus intensely on self-development. Set new personal goals. This is YOUR month to shine—prioritize your own evolution over pleasing others.",
+                focus: ["Launch new projects or ideas", "Take leadership initiatives", "Make independent decisions", "Set clear personal goals", "Assert your boundaries"],
+                avoid: ["Waiting for permission", "Excessive aggression", "Ignoring others' perspectives", "Impatience with natural timing"],
+                affirmation: "I am the author of my life. This month, I begin bold new chapters."
             },
             2: {
-                overview: "Patience and partnership define this month. Work with others, pay attention to details, and let things develop at their natural pace.",
-                career: "Collaborate rather than compete. Details matter—review contracts carefully. Diplomacy opens doors.",
-                relationships: "Relationships deepen through patience and understanding. Listen more than you speak.",
-                growth: "Develop your intuition and emotional intelligence. Practice patience as a spiritual discipline.",
-                caution: "Avoid rushing or forcing outcomes. Things need time to develop."
+                overview: "Patience and partnership define this month. The universe asks you to slow down, collaborate, and attend to the details that matter. Progress comes through cooperation rather than solo action. Your emotional intelligence and diplomatic skills are your greatest assets now.",
+                career: "Collaborate rather than compete. Negotiate carefully—details in contracts matter. Diplomacy opens doors that force cannot. Support others and build alliances that serve everyone.",
+                relationships: "Relationships deepen through patience and genuine understanding. Listen more than you speak. Small acts of consideration strengthen bonds more than grand gestures.",
+                growth: "Develop your intuition and emotional intelligence. Practice patience as a spiritual discipline. Learn to sense what isn't being said.",
+                focus: ["Build partnerships and alliances", "Practice active listening", "Attend to important details", "Develop patience", "Trust your intuition"],
+                avoid: ["Forcing outcomes", "Making unilateral decisions", "Impatience", "Ignoring subtle cues"],
+                affirmation: "Patience is my power. I create through cooperation and trust."
             },
             3: {
-                overview: "Creativity and self-expression flourish this month. Communicate your ideas, socialize, and let your natural joy inspire others.",
-                career: "Creative projects succeed. Networking brings opportunities. Your communication skills shine.",
-                relationships: "Social connections expand. Express appreciation openly. Romance benefits from playfulness.",
-                growth: "Develop your creative talents. Find joy in everyday moments. Share your gifts freely.",
-                caution: "Avoid scattered energy—focus your creative power for best results."
+                overview: "Creativity and self-expression flourish this month. The universe wants you to communicate, create, and connect with your inner joy. Your personality is your greatest asset. Social connections expand naturally. Express yourself freely and watch doors open.",
+                career: "Creative projects succeed brilliantly. Networking brings unexpected opportunities. Your communication skills shine—write, speak, present. Let your personality lead.",
+                relationships: "Social connections expand. Express appreciation openly and often. Romance benefits from playfulness and honest communication. New friendships form easily.",
+                growth: "Develop your creative talents boldly. Find joy in everyday moments. Share your gifts freely without waiting until they're 'perfect.'",
+                focus: ["Express yourself creatively", "Socialize and network", "Communicate openly", "Embrace joy", "Share your talents"],
+                avoid: ["Self-criticism", "Isolation", "Taking things too seriously", "Scattered energy"],
+                affirmation: "My creativity flows freely. Joy is my compass and my gift."
             },
             4: {
-                overview: "A month for practical work and building solid foundations. Organize, plan, and execute with discipline. Hard work pays off now.",
-                career: "Focus on practical tasks and systems. Build structures that will last. Attention to detail is crucial.",
-                relationships: "Show love through reliable actions. Work on the practical aspects of partnerships.",
-                growth: "Develop discipline and organization skills. Create order that supports your goals.",
-                caution: "Don't become so rigid that you miss opportunities. Balance work with rest."
+                overview: "A month for practical work and building solid foundations. The universe supports disciplined effort, organization, and steady progress. It's not glamorous, but the structures you create now will support your dreams for years to come. Do the work.",
+                career: "Focus on practical tasks and systems that create lasting value. Build structures and processes. Attention to detail is crucial—quality matters more than speed.",
+                relationships: "Show love through reliable actions. Work on the practical aspects of shared life. Small consistent efforts build unshakeable foundations.",
+                growth: "Develop discipline and organization skills. Create physical order in your space. Establish routines that support your highest goals.",
+                focus: ["Build lasting systems", "Organize your environment", "Work diligently", "Attend to details", "Create practical structures"],
+                avoid: ["Shortcuts and sloppy work", "Rigid thinking", "Overworking", "Ignoring rest"],
+                affirmation: "I build my dreams with patience and precision. Every effort counts."
             },
             5: {
-                overview: "Expect change, variety, and unexpected opportunities. Stay flexible, embrace new experiences, and don't resist transformation.",
-                career: "Be adaptable. New opportunities may come suddenly. Travel or communication-focused work succeeds.",
-                relationships: "Excitement and variety revitalize connections. Be open to meeting new people.",
-                growth: "Push beyond comfort zones. Try new things. Freedom and adventure feed your soul.",
-                caution: "Avoid overindulgence or scattered attention. Channel restless energy productively."
+                overview: "Expect change, variety, and unexpected opportunities. The universe may rearrange your plans—embrace it. Flexibility is your superpower this month. Adventure calls, whether through travel, new experiences, or simply a willingness to try something different.",
+                career: "Be adaptable—rigid plans will frustrate you. New opportunities may come suddenly. Travel and communication-focused work thrive. Network widely.",
+                relationships: "Excitement and variety revitalize connections. Be open to meeting many new people. Existing relationships need fresh energy and freedom.",
+                growth: "Push beyond comfort zones deliberately. Try something you've never done. Freedom and adventure feed your soul this month.",
+                focus: ["Embrace change", "Try new experiences", "Stay flexible", "Communicate broadly", "Seek adventure"],
+                avoid: ["Rigid attachment to plans", "Resisting change", "Overindulgence", "Scattered energy"],
+                affirmation: "I flow with change. Every transformation moves me toward my highest good."
             },
             6: {
-                overview: "Home, family, and love take center stage. Focus on nurturing relationships, creating harmony, and fulfilling responsibilities with grace.",
-                career: "Service-oriented work thrives. Beauty and aesthetics matter. Take responsibility gracefully.",
-                relationships: "Relationships deepen. Family matters require attention. Love flows through acts of service.",
-                growth: "Learn to receive as well as give. Create beauty in your environment. Practice unconditional love.",
-                caution: "Avoid martyrdom. Set boundaries while giving generously."
+                overview: "Home, family, and love take center stage. The universe asks you to nurture what matters most—your closest relationships, your living space, your sense of belonging. Responsibilities may feel heavier, but so does the love available. Create beauty and harmony.",
+                career: "Service-oriented work thrives. Beauty and aesthetics matter in all you do. Take responsibility gracefully. Team harmony is your concern.",
+                relationships: "Relationships deepen significantly. Family matters require your attention. Love flows through acts of service. This may be a month of commitment.",
+                growth: "Learn to receive as generously as you give. Create beauty in your environment. Practice unconditional love starting with yourself.",
+                focus: ["Nurture relationships", "Create harmony at home", "Beautify your space", "Fulfill responsibilities", "Give and receive love"],
+                avoid: ["Martyrdom", "Perfectionism", "Neglecting self-care", "Taking on others' problems"],
+                affirmation: "Love flows through me in perfect balance. I nurture and am nurtured."
             },
             7: {
-                overview: "A month for introspection, study, and spiritual connection. Seek solitude when needed, trust your intuition, and explore life's deeper meanings.",
-                career: "Research and analysis work succeeds. Work alone when possible. Quality over quantity.",
-                relationships: "Deeper connection through meaningful conversation. Need for solitude may increase.",
-                growth: "Develop your spiritual practice. Study and research. Trust your inner wisdom.",
-                caution: "Don't isolate completely. Balance reflection with connection."
+                overview: "A month for introspection, study, and spiritual connection. The universe supports going within. You may crave more solitude than usual—honor that need. Trust your intuition, explore life's deeper questions, and remember that stillness is where wisdom speaks loudest.",
+                career: "Research and analysis work succeeds. Work alone when possible. Quality over quantity is essential. Specialize and go deep rather than broad.",
+                relationships: "Deeper connection comes through meaningful conversation, not small talk. Your need for solitude may increase—communicate this kindly to others.",
+                growth: "Develop your spiritual practice. Study something that fascinates you. Trust your inner wisdom. Connect with nature.",
+                focus: ["Seek stillness and reflection", "Study and research", "Trust your intuition", "Connect spiritually", "Pursue quality over quantity"],
+                avoid: ["Constant noise and activity", "Dismissing intuition", "Overanalyzing", "Complete isolation"],
+                affirmation: "In silence, I hear my soul. This month, I trust my inner knowing."
             },
             8: {
-                overview: "Power, achievement, and material success are highlighted. Focus on career, finances, and stepping into your authority.",
-                career: "Major achievements possible. Financial decisions favor bold action. Leadership recognized.",
-                relationships: "Show love through providing and protecting. Balance material focus with emotional connection.",
-                growth: "Develop your relationship with power and abundance. Manifest with integrity.",
-                caution: "Avoid letting material concerns overshadow spiritual and emotional needs."
+                overview: "Power, achievement, and material success are highlighted. The universe supports your ambitions, your financial goals, your desire to make things happen in the physical world. Step into your authority. Lead. Manifest. This is a month of tangible results.",
+                career: "Major achievements are possible. Financial decisions favor bold, informed action. Your leadership is recognized. Step into authority positions confidently.",
+                relationships: "Show love through providing and protecting. Balance material focus with emotional presence. Shared goals strengthen bonds.",
+                growth: "Develop your relationship with power and abundance. Learn to manifest with integrity. Embrace your authority.",
+                focus: ["Focus on career advancement", "Make financial decisions", "Step into leadership", "Manifest goals", "Exercise authority wisely"],
+                avoid: ["Power struggles", "Materialism without meaning", "Neglecting emotions", "Using power to dominate"],
+                affirmation: "I step into my power with wisdom. Abundance flows to me naturally."
             },
             9: {
-                overview: "A month of completion and release. Finish what you've started, let go of what's finished, and practice universal compassion.",
-                career: "Complete projects. Release attachments to outcomes. Humanitarian efforts succeed.",
-                relationships: "Practice forgiveness and release. Old relationships may conclude. Love unconditionally.",
-                growth: "Let go of the past. Prepare for new cycles. Serve the greater good.",
-                caution: "Don't cling to what needs to end. Trust the completion process."
+                overview: "A month of completion and release. The universe is helping you finish what you've started and let go of what no longer serves you. Some things need to end—let them. Practice compassion and forgiveness. Clear the way for new blessings.",
+                career: "Complete long-standing projects. Release attachments to specific outcomes. Humanitarian and artistic efforts succeed. Prepare for transitions.",
+                relationships: "Practice forgiveness generously—of others and yourself. Some relationships may conclude naturally. Love unconditionally without clinging.",
+                growth: "Let go of the past consciously. Prepare for new cycles ahead. Serve the greater good in some way. Complete unfinished emotional business.",
+                focus: ["Complete unfinished projects", "Release what's ended", "Practice forgiveness", "Serve others", "Prepare for new cycles"],
+                avoid: ["Clinging to the past", "Starting major new projects", "Selfishness", "Resisting endings"],
+                affirmation: "I release with grace. Space I create invites new blessings into my life."
             },
             11: {
-                overview: "Heightened intuition and spiritual awareness define this month. Pay attention to signs, synchronicities, and inspired insights.",
-                career: "Intuitive guidance leads to success. Inspiring others is your gift. Visionary projects gain traction.",
-                relationships: "Deep spiritual connections. Intuitive understanding of others' needs.",
-                growth: "Trust your spiritual perceptions completely. Channel inspiration into action.",
-                caution: "Ground your visions in practical reality. Don't let nervous energy overwhelm you."
+                overview: "Heightened intuition and spiritual awareness define this month. Master number 11 illuminates your path with flashes of insight, powerful dreams, and connection to something greater. Pay attention to synchronicities—the universe is speaking directly to you.",
+                career: "Intuitive guidance leads to success. You naturally inspire others. Visionary projects gain traction. Trust those flashes of knowing.",
+                relationships: "Deep spiritual connections form or deepen. You intuitively understand others' needs. Attract spiritually-minded souls.",
+                growth: "Trust your spiritual perceptions completely. Channel inspiration into concrete action. Develop your intuitive gifts consciously.",
+                focus: ["Trust your intuition", "Pay attention to signs", "Inspire others", "Follow spiritual guidance", "Channel inspiration"],
+                avoid: ["Dismissing insights", "Anxiety and nervous energy", "Ego-driven action", "Forcing spiritual experiences"],
+                affirmation: "I am illuminated from within. Divine guidance flows through me."
             },
             22: {
-                overview: "The master builder month. You can turn dreams into reality on a large scale. Combine vision with practical action.",
-                career: "Large-scale projects succeed. Your practical vision creates lasting impact. Build for the long term.",
-                relationships: "Build lasting foundations together. Practical expressions of love.",
-                growth: "Develop the discipline to manifest your grandest visions. Think big, act wisely.",
-                caution: "Don't be overwhelmed by the scope of your vision. Take it step by step."
+                overview: "The master builder month. You can turn dreams into reality on a scale larger than you've imagined. This rare energy supports manifesting something of lasting significance that serves many. Combine your highest vision with practical, step-by-step action.",
+                career: "Large-scale projects succeed. Your practical vision creates lasting impact. Build for the long term. Lead with both wisdom and humility.",
+                relationships: "Build lasting foundations together with important partners. Practical expressions of love matter. Shared visions strengthen bonds.",
+                growth: "Develop the discipline to manifest your grandest visions. Think big while acting wisely. You are building your legacy.",
+                focus: ["Work on large-scale projects", "Combine vision with action", "Build lasting structures", "Lead with humility", "Serve the greater good"],
+                avoid: ["Thinking too small", "All vision, no action", "Overwhelm", "Neglecting practical details"],
+                affirmation: "I am a master builder. My practical vision creates lasting change."
             },
             33: {
-                overview: "The master teacher month. Your compassion and wisdom can heal and uplift many. Lead through unconditional love.",
-                career: "Teaching, healing, and service work flourishes. Your presence inspires transformation.",
-                relationships: "Deep healing in relationships. Unconditional love transforms everything.",
-                growth: "Embody your highest self. Teach through example. Love without condition.",
-                caution: "Don't deplete yourself serving others. Self-care enables greater service."
+                overview: "The master teacher month. Your compassion and wisdom can heal and uplift many. The highest master number calls you to serve through unconditional love—not through doing more, but through being more. Your presence itself is medicine for others.",
+                career: "Teaching, healing, and service work flourishes. Your presence inspires transformation in others. Lead through compassion, not authority.",
+                relationships: "Deep healing in relationships becomes possible. Unconditional love transforms everything it touches. Be present fully.",
+                growth: "Embody your highest self in every interaction. Teach through example more than words. Love without condition or expectation.",
+                focus: ["Serve through presence", "Teach by example", "Love unconditionally", "Heal through compassion", "Embody your highest self"],
+                avoid: ["Martyrdom", "Self-depletion", "Preaching without listening", "Taking on others' pain"],
+                affirmation: "I teach through my being. Unconditional love flows through me to all."
             }
         };
         
@@ -350,24 +391,36 @@
                 </div>
                 
                 <div class="forecast-section">
-                    <h2>💼 Career & Work</h2>
+                    <h2>Career & Work</h2>
                     <p>${interp.career}</p>
                 </div>
                 
                 <div class="forecast-section">
-                    <h2>💕 Relationships</h2>
+                    <h2>Relationships</h2>
                     <p>${interp.relationships}</p>
                 </div>
                 
                 <div class="forecast-section">
-                    <h2>🌱 Personal Growth</h2>
+                    <h2>Personal Growth</h2>
                     <p>${interp.growth}</p>
                 </div>
                 
+                <div class="forecast-section focus-section">
+                    <h2>This Month, Focus On</h2>
+                    <ul class="guidance-list">
+                        ${interp.focus.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="forecast-section avoid-section">
+                    <h2>This Month, Avoid</h2>
+                    <ul class="guidance-list">
+                        ${interp.avoid.map(a => `<li>${a}</li>`).join('')}
+                    </ul>
+                </div>
+                
                 <div class="forecast-section">
-                    <h2>⚡ What to Watch</h2>
-                    <p>${interp.caution}</p>
-                    
+                    <h2>Week by Week Energy</h2>
                     <div class="week-grid">
                         ${weeks.map(w => `
                             <div class="week-box">
@@ -380,7 +433,7 @@
                     
                     ${keyDates.length > 0 ? `
                         <div class="key-dates">
-                            <h3>✨ Power Days This Month</h3>
+                            <h3>Power Days This Month</h3>
                             ${keyDates.slice(0, 5).map(d => `
                                 <div class="date-item">
                                     <span>${monthNames[today.getMonth()]} ${d.day}</span>
@@ -389,6 +442,11 @@
                             `).join('')}
                         </div>
                     ` : ''}
+                </div>
+                
+                <div class="affirmation">
+                    <h3>Monthly Affirmation</h3>
+                    <p>"${interp.affirmation}"</p>
                 </div>
             `;
         }
