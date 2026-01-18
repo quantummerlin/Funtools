@@ -6,7 +6,8 @@
 <body>
 <script>
 // Test: May 3, 1981, 1:30 PM Abu Dhabi (UTC+4) = 9:30 AM UTC
-const time = Astronomy.MakeTime(1981, 5, 3, 9, 30, 0);
+// Month is 0-indexed in JavaScript Date (May = 4)
+const time = Astronomy.MakeTime(new Date(1981, 4, 3, 9, 30, 0));
 
 const ZODIAC_SIGNS = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
                      'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];

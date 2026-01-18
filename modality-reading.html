@@ -339,7 +339,8 @@
                     if (utcDay > dim) { utcDay = 1; utcMonth++; if (utcMonth > 12) { utcMonth = 1; utcYear++; } }
                 }
                 
-                const time = Astronomy.MakeTime(utcYear, utcMonth, utcDay, Math.floor(totalUtcMinutes/60), totalUtcMinutes%60, 0);
+                // Use Date object (months are 0-indexed in JavaScript Date)
+                const time = Astronomy.MakeTime(new Date(utcYear, utcMonth - 1, utcDay, Math.floor(totalUtcMinutes/60), totalUtcMinutes%60, 0));
                 const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
                 
                 // Calculate all planetary positions + Rising
