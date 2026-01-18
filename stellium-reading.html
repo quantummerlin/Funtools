@@ -273,6 +273,12 @@
             const birthTime = document.getElementById('birthTime').value;
             const birthPlace = document.getElementById('birthPlace').value;
             
+            // Debug: Log raw input values
+            console.log('=== RAW INPUT VALUES ===');
+            console.log('birthDate raw value:', birthDate);
+            console.log('birthTime raw value:', birthTime);
+            console.log('birthPlace raw value:', birthPlace);
+            
             try {
                 // Geocode location
                 const coords = await geocodeLocation(birthPlace);
@@ -280,6 +286,14 @@
                 // Parse date and time
                 const [year, month, day] = birthDate.split('-').map(Number);
                 const [hours, minutes] = birthTime.split(':').map(Number);
+                
+                // Debug: Log parsed values
+                console.log('=== PARSED DATE VALUES ===');
+                console.log('Parsed year:', year);
+                console.log('Parsed month:', month);
+                console.log('Parsed day:', day);
+                console.log('Parsed hours:', hours);
+                console.log('Parsed minutes:', minutes);
                 
                 // Better timezone estimation
                 let tzOffsetHours = coords.lon / 15;
