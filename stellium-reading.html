@@ -202,13 +202,12 @@
                     <div class="section-title">Birth Information</div>
                     <div class="input-group">
                         <label for="birthDate">Date of Birth</label>
-                        <input type="text" id="birthDate" placeholder="e.g. 3 May 1981 or 03/05/1981" required>
-                        <div class="helper-text">Any format: 3 May 1981, 03/05/1981, May 3 1981, 1981-05-03</div>
+                        <input type="date" id="birthDate" required>
                     </div>
                     <div class="input-group">
                         <label for="birthTime">Time of Birth</label>
-                        <input type="text" id="birthTime" placeholder="e.g. 1:30pm or 13:30" required>
-                        <div class="helper-text">Any format: 1:30pm, 1:30 PM, 13:30, 1.30pm</div>
+                        <input type="time" id="birthTime" required>
+                        <div class="helper-text">Required for accurate planetary positions</div>
                     </div>
                     <div class="input-group">
                         <label for="birthPlace">Place of Birth</label>
@@ -362,6 +361,9 @@
             throw new Error('Location not found. Please try a more specific format like "Abu Dhabi, United Arab Emirates"');
         }
 
+        // Clear old session data when page loads
+        try { sessionStorage.removeItem('quantumMerlinReading'); } catch(e) {}
+        
         document.getElementById('stelliumForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -506,7 +508,7 @@
                 
                 console.log('Stelliums found:', stelliums);
                 
-                // Store reading data
+                // Store reading data with timestamp to prevent caching
                 const readingData = {
                     toolType: 'stellium',
                     headerTitle: 'Your Stellium Reading',
@@ -516,6 +518,7 @@
                     allDegrees: degrees,
                     name: preferredName,
                     sourceUrl: 'stellium-reading.html',
+                    timestamp: Date.now(),
                     birthInfo: {
                         date: `${day}/${month}/${year}`,
                         time: `${hours}:${minutes.toString().padStart(2,'0')}`,
@@ -524,7 +527,8 @@
                         timezone: tzOffsetHours,
                         parsedYear: year,
                         parsedMonth: month,
-                        parsedDay: day
+                        parsedDay: day,
+                        utcUsed: `${utcYear}-${utcMonth}-${utcDay} ${Math.floor(totalUtcMinutes/60)}:${totalUtcMinutes%60}`
                     }
                 };
                 

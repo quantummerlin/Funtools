@@ -332,7 +332,8 @@
             if (data.birthInfo) {
                 const infoDiv = document.createElement('div');
                 infoDiv.style.cssText = 'background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center;';
-                infoDiv.innerHTML = `<p style="color: #fbbf24; margin: 0;">📅 Calculated for: <strong>${data.birthInfo.date}</strong> at <strong>${data.birthInfo.time}</strong> in ${data.birthInfo.place}</p>`;
+                const utcInfo = data.birthInfo.utcUsed ? `<br><small style="color: #9ca3af;">UTC used: ${data.birthInfo.utcUsed}</small>` : '';
+                infoDiv.innerHTML = `<p style="color: #fbbf24; margin: 0;">📅 Calculated for: <strong>${data.birthInfo.date}</strong> at <strong>${data.birthInfo.time}</strong> in ${data.birthInfo.place}${utcInfo}</p>`;
                 container.appendChild(infoDiv);
             }
             
