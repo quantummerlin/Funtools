@@ -388,6 +388,29 @@
         const universalDay = calculateUniversalDay(today);
         document.getElementById('universalEnergy').textContent = `Universal Day Energy: ${universalDay} - ${cycleNames[universalDay]}`;
         
+        // Build profile selector dropdown
+        function buildProfileSelector() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '{}');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            const names = Object.keys(profiles).sort();
+            
+            if (names.length <= 1) return; // Don't show selector if only one or no profiles
+            
+            document.getElementById('profileSection').innerHTML = `
+                <div style="background: rgba(20, 20, 30, 0.6); border: 1px solid rgba(6, 182, 212, 0.25); border-radius: 10px; padding: 12px 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    <label style="font-family: 'Cinzel', serif; color: #9ca3af; font-size: 0.9em;">Viewing forecasts for:</label>
+                    <select id="profileDropdown" style="flex: 1; min-width: 150px; padding: 8px 12px; background: rgba(10, 10, 20, 0.8); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 6px; color: #E8E4D9; font-family: 'Cormorant Garamond', serif; font-size: 1em; cursor: pointer;">
+                        ${names.map(n => `<option value="${n}" ${n === activeId ? 'selected' : ''}>${n}</option>`).join('')}
+                    </select>
+                </div>
+            `;
+            
+            document.getElementById('profileDropdown').addEventListener('change', function() {
+                localStorage.setItem('quantumMerlinActiveProfile', this.value);
+                location.reload();
+            });
+        }
+        
         // Check for saved profile
         function loadProfile() {
             const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '{}');
@@ -417,6 +440,7 @@
                 return null;
             }
             
+            buildProfileSelector();
             document.getElementById('forecastsContent').style.display = 'block';
             return profile;
         }
