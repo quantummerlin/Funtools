@@ -370,10 +370,10 @@
         document.getElementById('decadeDisplay').textContent = `The ${currentDecade}s`;
         
         function loadForecast() {
-            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '[]');
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '{}');
             const activeId = localStorage.getItem('quantumMerlinActiveProfile');
             
-            if (profiles.length === 0 || !activeId) {
+            if (Object.keys(profiles).length === 0 || !activeId) {
                 document.getElementById('content').innerHTML = `
                     <div class="profile-required">
                         <h2>Create Your Profile First</h2>

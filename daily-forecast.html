@@ -362,10 +362,10 @@
         
         // Load profile and generate forecast
         function loadForecast() {
-            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '[]');
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '{}');
             const activeId = localStorage.getItem('quantumMerlinActiveProfile');
             
-            if (profiles.length === 0 || !activeId) {
+            if (Object.keys(profiles).length === 0 || !activeId) {
                 document.getElementById('content').innerHTML = `
                     <div class="profile-required">
                         <h2>Create Your Profile First</h2>
@@ -376,7 +376,7 @@
                 return;
             }
             
-            const profile = profiles.find(p => p.id === activeId);
+            const profile = profiles[activeId];
             if (!profile || !profile.birthDate) {
                 document.getElementById('content').innerHTML = `
                     <div class="profile-required">
