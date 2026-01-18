@@ -519,15 +519,6 @@
             const personalizedReading = interpretation.replace(/{preferredName}/g, name);
             const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
 
-            // Generate birth name resonance analysis if birth name provided
-            let nameResonanceHtml = '';
-            if (birthName && birthName.trim() !== '' && typeof NameResonance !== 'undefined') {
-                const resonance = NameResonance.generateAnalysis(birthName, name);
-                if (resonance) {
-                    nameResonanceHtml = resonance.html;
-                }
-            }
-
             // Store reading for the multi-page results flow
             const readingData = {
                 toolType: 'moon',
@@ -536,7 +527,7 @@
                 number: moonSign,
                 title: `Moon in ${moonSign}`,
                 subtitle: `${name}, discover your emotional depths`,
-                content: nameResonanceHtml + paragraphs,
+                content: paragraphs,
                 sourceUrl: 'moon-sign-reading.html'
             };
             // Try sessionStorage first, fallback to URL params for private browsing

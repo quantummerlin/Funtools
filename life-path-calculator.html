@@ -589,19 +589,9 @@
             
             const interpretation = interpretations[lifePathNumber];
             
-            // Generate birth name resonance analysis if birth name provided
-            let nameResonanceHtml = '';
-            if (birthName && birthName.trim() !== '' && typeof NameResonance !== 'undefined') {
-                const resonance = NameResonance.generateAnalysis(birthName, preferredName);
-                if (resonance) {
-                    nameResonanceHtml = resonance.html;
-                }
-            }
-            
             const resultContent = `
                 <p><span class="highlight">Core Traits:</span> ${interpretation.traits}</p>
                 <p>${interpretation.description}</p>
-                ${nameResonanceHtml}
                 <p><strong>Your Core Nature:</strong> ${interpretation.core}</p>
                 <p><strong>Your Life Challenges:</strong> ${interpretation.challenges}</p>
                 <p><strong>Your Relationship Path:</strong> ${interpretation.relationships}</p>
