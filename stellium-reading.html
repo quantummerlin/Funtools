@@ -23,10 +23,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap&v=20260112083146" rel="stylesheet">
-    <link rel="stylesheet" href="quantum-merlin-styles.css">
-    <script src="auto-fill.js"></script>
-    <script src="cosmic-loader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js?v=20260112083146"></script>
+    <link rel="stylesheet" href="quantum-merlin-styles.css?v=20260119">
+    <script src="auto-fill.js?v=20260119"></script>
+    <script src="cosmic-loader.js?v=20260119"></script>
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js?v=20260119"></script>
+    <script>
+        // Force clear any old cached data on page load
+        try {
+            sessionStorage.removeItem('quantumMerlinReading');
+            console.log('Cleared old session data');
+        } catch(e) {}
+    </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -184,6 +191,11 @@
         </div>
 
         <div class="tool-card">
+            <!-- Debug: Clear all cached data button -->
+            <div style="text-align: right; margin-bottom: 10px;">
+                <button type="button" onclick="if(confirm('Clear all saved profile data?')){localStorage.clear();sessionStorage.clear();location.reload();}" style="background: rgba(236,72,153,0.1); border: 1px solid rgba(236,72,153,0.3); color: #ec4899; padding: 5px 10px; font-size: 0.75em; border-radius: 5px; cursor: pointer;">🗑️ Clear Saved Data</button>
+            </div>
+            
             <div class="info-box">
                 <h3>What is a Stellium?</h3>
                 <p>A stellium occurs when 3 or more planets gather in the same zodiac sign or house, creating an intense concentration of energy. This cosmic cluster becomes a dominant theme in your life, amplifying the qualities of that sign and creating a powerful focal point for your soul's journey.</p>
