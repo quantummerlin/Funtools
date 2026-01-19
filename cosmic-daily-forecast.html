@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#bf5af2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Quantum Merlin">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <link rel="manifest" href="manifest.json">
+    <title>Cosmic Daily Forecast | Quantum Merlin</title>
+    <meta name="description" content="Your complete daily cosmic forecast combining numerology, moon phases, planetary alignments, and zodiac energies">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 40%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+        .container { max-width: 950px; margin: 0 auto; }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+        }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fbbf24 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .date {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            color: #06b6d4;
+        }
+        .header .greeting {
+            font-style: italic;
+            color: #9ca3af;
+            margin-top: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .nav-links a {
+            color: #06b6d4;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #fbbf24; }
+        
+        .profile-selector {
+            background: rgba(20, 20, 30, 0.6);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .profile-selector label { font-family: 'Cinzel', serif; color: #9ca3af; font-size: 0.9em; }
+        .profile-selector select {
+            flex: 1; min-width: 150px; padding: 8px 12px;
+            background: rgba(10, 10, 20, 0.8);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 6px; color: #E8E4D9;
+            font-family: 'Cormorant Garamond', serif; font-size: 1em; cursor: pointer;
+        }
+        .profile-selector select:focus { outline: none; border-color: #fbbf24; }
+        
+        /* Cosmic Overview Grid */
+        .cosmic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .cosmic-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+        .cosmic-card .icon { font-size: 2em; margin-bottom: 10px; }
+        .cosmic-card .value {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.4em;
+            color: #fbbf24;
+            margin-bottom: 5px;
+        }
+        .cosmic-card .label {
+            font-size: 0.85em;
+            color: #9ca3af;
+        }
+        .cosmic-card.moon { border-color: rgba(147, 112, 219, 0.5); }
+        .cosmic-card.sun { border-color: rgba(251, 191, 36, 0.5); }
+        .cosmic-card.mercury { border-color: rgba(6, 182, 212, 0.5); }
+        .cosmic-card.alert { border-color: rgba(239, 68, 68, 0.5); background: rgba(239, 68, 68, 0.1); }
+        .cosmic-card.good { border-color: rgba(34, 197, 94, 0.5); background: rgba(34, 197, 94, 0.1); }
+        
+        /* Forecast Sections */
+        .forecast-section {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+        .forecast-section h2 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .forecast-section p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .section-lunar { border-color: rgba(147, 112, 219, 0.4); }
+        .section-lunar h2 { color: #9775fa; }
+        
+        .section-planetary { border-color: rgba(6, 182, 212, 0.4); }
+        .section-planetary h2 { color: #06b6d4; }
+        
+        .section-numerology { border-color: rgba(251, 191, 36, 0.4); }
+        .section-numerology h2 { color: #fbbf24; }
+        
+        .section-synthesis { 
+            border-color: rgba(236, 72, 153, 0.4);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(236, 72, 153, 0.1));
+        }
+        .section-synthesis h2 { color: #ec4899; }
+        
+        /* Guidance Lists */
+        .guidance-list {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        .guidance-list li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+        }
+        .guidance-list li::before {
+            content: '✧';
+            position: absolute;
+            left: 0;
+            color: #fbbf24;
+        }
+        
+        .focus-section {
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .focus-section h3 {
+            font-family: 'Cinzel', serif;
+            color: #06b6d4;
+            margin-bottom: 10px;
+        }
+        
+        .caution-section {
+            background: rgba(236, 72, 153, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .caution-section h3 {
+            font-family: 'Cinzel', serif;
+            color: #ec4899;
+            margin-bottom: 10px;
+        }
+        
+        .affirmation {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.15));
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        .affirmation h3 {
+            font-family: 'Cinzel', serif;
+            color: #ec4899;
+            margin-bottom: 12px;
+        }
+        .affirmation p {
+            font-size: 1.25em;
+            font-style: italic;
+            color: #fbbf24;
+        }
+        
+        .profile-required {
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+        }
+        .profile-required h2 { font-family: 'Cinzel', serif; color: #fbbf24; margin-bottom: 20px; }
+        .profile-required a {
+            display: inline-block; margin-top: 20px; padding: 15px 30px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1a1a2e; text-decoration: none; border-radius: 10px;
+            font-family: 'Cinzel', serif; font-weight: 600;
+        }
+        
+        .zodiac-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #a78bfa;
+            margin-left: 10px;
+        }
+        
+        .legal-footer { margin-top: 50px; padding: 30px 20px; text-align: center; border-top: 1px solid rgba(191, 90, 242, 0.2); }
+        .legal-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .legal-links a { color: #9A8F7A; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.9rem; }
+        .legal-links a:hover { color: #fbbf24; }
+        .separator { color: rgba(191, 90, 242, 0.4); }
+        .copyright { color: #6B6B6B; font-size: 0.85rem; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="forecasts.html">← All Forecasts</a>
+            <a href="tools_index.html">All Tools →</a>
+        </div>
+        
+        <div class="profile-selector" id="profileSelector"></div>
+        
+        <div class="header">
+            <h1>Cosmic Daily Forecast</h1>
+            <div class="date" id="todayDate"></div>
+            <div class="greeting" id="greeting"></div>
+        </div>
+        
+        <div id="content"></div>
+    </div>
+    
+    <footer class="legal-footer">
+        <div class="legal-links">
+            <a href="terms.html">Terms</a><span class="separator">|</span>
+            <a href="privacy.html">Privacy</a><span class="separator">|</span>
+            <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
+    </footer>
+    
+    <script>
+        // ===== ZODIAC DATA =====
+        const zodiacSigns = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+        const zodiacSymbols = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
+        const zodiacElements = { Aries: 'Fire', Taurus: 'Earth', Gemini: 'Air', Cancer: 'Water', Leo: 'Fire', Virgo: 'Earth', Libra: 'Air', Scorpio: 'Water', Sagittarius: 'Fire', Capricorn: 'Earth', Aquarius: 'Air', Pisces: 'Water' };
+        
+        // ===== MOON PHASE NAMES =====
+        const moonPhaseNames = [
+            'New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous',
+            'Full Moon', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'
+        ];
+        const moonPhaseEmojis = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+        
+        // ===== MERCURY RETROGRADE PERIODS =====
+        const retrogradePeriods = [
+            { start: new Date('2025-03-15'), end: new Date('2025-04-07'), sign: 'Aries' },
+            { start: new Date('2025-07-18'), end: new Date('2025-08-11'), sign: 'Leo' },
+            { start: new Date('2025-11-09'), end: new Date('2025-11-29'), sign: 'Sagittarius' },
+            { start: new Date('2026-02-26'), end: new Date('2026-03-20'), sign: 'Pisces' },
+            { start: new Date('2026-06-29'), end: new Date('2026-07-23'), sign: 'Cancer' },
+            { start: new Date('2026-10-24'), end: new Date('2026-11-13'), sign: 'Scorpio' }
+        ];
+        
+        // ===== NUMEROLOGY FUNCTIONS =====
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function calculatePersonalYear(birthDate, targetYear) {
+            const date = new Date(birthDate);
+            return reduceToSingle(reduceToSingle(date.getDate()) + reduceToSingle(date.getMonth() + 1) + reduceToSingle(targetYear));
+        }
+        
+        function calculatePersonalMonth(birthDate, year, month) {
+            return reduceToSingle(calculatePersonalYear(birthDate, year) + month);
+        }
+        
+        function calculatePersonalDay(birthDate, targetDate) {
+            const target = new Date(targetDate);
+            const personalMonth = calculatePersonalMonth(birthDate, target.getFullYear(), target.getMonth() + 1);
+            return reduceToSingle(personalMonth + target.getDate());
+        }
+        
+        function calculateUniversalDay(date) {
+            const d = new Date(date);
+            return reduceToSingle(d.getDate() + (d.getMonth() + 1) + d.getFullYear());
+        }
+        
+        // ===== ASTRONOMICAL FUNCTIONS =====
+        function getMoonPhase(date) {
+            const moonIllum = SunCalc.getMoonIllumination(date);
+            const phase = moonIllum.phase;
+            // phase: 0 = new, 0.25 = first quarter, 0.5 = full, 0.75 = last quarter
+            const phaseIndex = Math.round(phase * 8) % 8;
+            return {
+                name: moonPhaseNames[phaseIndex],
+                emoji: moonPhaseEmojis[phaseIndex],
+                illumination: Math.round(moonIllum.fraction * 100),
+                angle: moonIllum.angle
+            };
+        }
+        
+        function getMoonSign(date) {
+            try {
+                const moonPos = Astronomy.EclipticGeoMoon(new Astronomy.AstroTime(date));
+                const signIndex = Math.floor(moonPos.lon / 30);
+                return {
+                    name: zodiacSigns[signIndex],
+                    symbol: zodiacSymbols[signIndex],
+                    degrees: (moonPos.lon % 30).toFixed(1),
+                    element: zodiacElements[zodiacSigns[signIndex]]
+                };
+            } catch(e) {
+                return { name: 'Unknown', symbol: '?', degrees: 0, element: 'Unknown' };
+            }
+        }
+        
+        function getSunSign(date) {
+            try {
+                const sunPos = Astronomy.Ecliptic(Astronomy.GeoVector(Astronomy.Body.Sun, new Astronomy.AstroTime(date), false));
+                const signIndex = Math.floor(sunPos.elon / 30);
+                return {
+                    name: zodiacSigns[signIndex],
+                    symbol: zodiacSymbols[signIndex],
+                    degrees: (sunPos.elon % 30).toFixed(1)
+                };
+            } catch(e) {
+                // Fallback to date-based calculation
+                return getSunSignByDate(date);
+            }
+        }
+        
+        function getSunSignByDate(date) {
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const signs = [
+                { name: 'Capricorn', symbol: '♑', start: [1,1], end: [1,19] },
+                { name: 'Aquarius', symbol: '♒', start: [1,20], end: [2,18] },
+                { name: 'Pisces', symbol: '♓', start: [2,19], end: [3,20] },
+                { name: 'Aries', symbol: '♈', start: [3,21], end: [4,19] },
+                { name: 'Taurus', symbol: '♉', start: [4,20], end: [5,20] },
+                { name: 'Gemini', symbol: '♊', start: [5,21], end: [6,20] },
+                { name: 'Cancer', symbol: '♋', start: [6,21], end: [7,22] },
+                { name: 'Leo', symbol: '♌', start: [7,23], end: [8,22] },
+                { name: 'Virgo', symbol: '♍', start: [8,23], end: [9,22] },
+                { name: 'Libra', symbol: '♎', start: [9,23], end: [10,22] },
+                { name: 'Scorpio', symbol: '♏', start: [10,23], end: [11,21] },
+                { name: 'Sagittarius', symbol: '♐', start: [11,22], end: [12,21] },
+                { name: 'Capricorn', symbol: '♑', start: [12,22], end: [12,31] }
+            ];
+            for (let sign of signs) {
+                const [sm, sd] = sign.start;
+                const [em, ed] = sign.end;
+                if ((month === sm && day >= sd) || (month === em && day <= ed)) {
+                    return { name: sign.name, symbol: sign.symbol, degrees: '~' };
+                }
+            }
+            return { name: 'Capricorn', symbol: '♑', degrees: '~' };
+        }
+        
+        function isMercuryRetrograde(date) {
+            for (let period of retrogradePeriods) {
+                if (date >= period.start && date <= period.end) {
+                    return { retrograde: true, sign: period.sign, endDate: period.end };
+                }
+            }
+            // Find next retrograde
+            for (let period of retrogradePeriods) {
+                if (period.start > date) {
+                    return { retrograde: false, nextStart: period.start, nextSign: period.sign };
+                }
+            }
+            return { retrograde: false };
+        }
+        
+        function isVoidOfCourseMoon(moonSign) {
+            // Simplified: VOC when moon is in late degrees (27+)
+            return parseFloat(moonSign.degrees) >= 27;
+        }
+        
+        // ===== INTERPRETATIONS =====
+        const numerologyInterpretations = {
+            1: { theme: "New Beginnings", energy: "Initiative, independence, leadership", focus: ["Start new projects", "Take bold action", "Assert yourself"], avoid: ["Waiting for others", "Self-doubt"] },
+            2: { theme: "Partnership", energy: "Cooperation, diplomacy, patience", focus: ["Collaborate with others", "Listen deeply", "Build bridges"], avoid: ["Being aggressive", "Making solo decisions"] },
+            3: { theme: "Expression", energy: "Creativity, communication, joy", focus: ["Express yourself", "Socialize", "Create something"], avoid: ["Self-criticism", "Isolation"] },
+            4: { theme: "Foundation", energy: "Organization, hard work, stability", focus: ["Build structure", "Handle practical matters", "Create order"], avoid: ["Shortcuts", "Rigidity"] },
+            5: { theme: "Change", energy: "Freedom, adventure, flexibility", focus: ["Embrace change", "Try new things", "Be adaptable"], avoid: ["Rigid routines", "Overindulgence"] },
+            6: { theme: "Harmony", energy: "Love, responsibility, nurturing", focus: ["Care for others", "Beautify your space", "Heal relationships"], avoid: ["Perfectionism", "Martyrdom"] },
+            7: { theme: "Reflection", energy: "Introspection, wisdom, spirituality", focus: ["Meditate", "Study", "Trust intuition"], avoid: ["Isolation", "Overthinking"] },
+            8: { theme: "Power", energy: "Achievement, authority, abundance", focus: ["Take charge", "Make business moves", "Manifest goals"], avoid: ["Greed", "Workaholism"] },
+            9: { theme: "Completion", energy: "Release, compassion, humanitarianism", focus: ["Let go", "Help others", "Complete projects"], avoid: ["Attachment", "Bitterness"] },
+            11: { theme: "Illumination", energy: "Inspiration, intuition, spiritual insight", focus: ["Trust visions", "Inspire others", "Channel creativity"], avoid: ["Anxiety", "Impracticality"] },
+            22: { theme: "Master Builder", energy: "Manifestation, large-scale vision", focus: ["Build something lasting", "Think big", "Lead projects"], avoid: ["Overwhelm", "Neglecting details"] },
+            33: { theme: "Master Teacher", energy: "Healing, uplifting humanity", focus: ["Teach and heal", "Serve with love", "Embody compassion"], avoid: ["Self-sacrifice", "Burnout"] }
+        };
+        
+        const moonPhaseGuidance = {
+            'New Moon': { energy: "Fresh starts, intention setting", best: "Begin new projects, plant seeds of intention", avoid: "Major launches (energy still building)" },
+            'Waxing Crescent': { energy: "Building momentum", best: "Take first steps, gather resources", avoid: "Giving up too soon" },
+            'First Quarter': { energy: "Challenge and commitment", best: "Push through obstacles, make decisions", avoid: "Avoiding necessary action" },
+            'Waxing Gibbous': { energy: "Refinement and adjustment", best: "Fine-tune plans, prepare for culmination", avoid: "Perfectionism that delays progress" },
+            'Full Moon': { energy: "Culmination and illumination", best: "Celebrate achievements, release what's complete", avoid: "Starting brand new ventures" },
+            'Waning Gibbous': { energy: "Gratitude and sharing", best: "Share wisdom, give back, teach", avoid: "Hoarding knowledge or resources" },
+            'Last Quarter': { energy: "Release and forgiveness", best: "Let go, clear clutter, forgive", avoid: "Holding onto what's finished" },
+            'Waning Crescent': { energy: "Rest and surrender", best: "Rest, reflect, dream, plan quietly", avoid: "Forcing new beginnings" }
+        };
+        
+        const moonSignEnergy = {
+            Aries: "Bold, impulsive, action-oriented emotions",
+            Taurus: "Steady, sensual, comfort-seeking feelings",
+            Gemini: "Curious, chatty, mentally restless mood",
+            Cancer: "Nurturing, sensitive, home-focused energy",
+            Leo: "Dramatic, warm, attention-seeking emotions",
+            Virgo: "Analytical, helpful, detail-oriented feelings",
+            Libra: "Harmonious, social, relationship-focused mood",
+            Scorpio: "Intense, transformative, deep emotions",
+            Sagittarius: "Adventurous, optimistic, freedom-seeking energy",
+            Capricorn: "Practical, ambitious, disciplined feelings",
+            Aquarius: "Detached, humanitarian, unconventional mood",
+            Pisces: "Dreamy, intuitive, spiritually open energy"
+        };
+        
+        // ===== DISPLAY FUNCTIONS =====
+        const today = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('todayDate').textContent = today.toLocaleDateString('en-US', options);
+        
+        const hour = today.getHours();
+        let timeGreeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+        
+        function buildProfileSelector() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '{}');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            const names = Object.keys(profiles).sort();
+            
+            if (names.length === 0) {
+                document.getElementById('profileSelector').style.display = 'none';
+                return;
+            }
+            
+            document.getElementById('profileSelector').innerHTML = `
+                <label>Viewing forecast for:</label>
+                <select id="profileDropdown">
+                    ${names.map(n => `<option value="${n}" ${n === activeId ? 'selected' : ''}>${n}</option>`).join('')}
+                </select>
+            `;
+            
+            document.getElementById('profileDropdown').addEventListener('change', function() {
+                localStorage.setItem('quantumMerlinActiveProfile', this.value);
+                loadForecast();
+            });
+        }
+        
+        function loadForecast() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '{}');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            
+            if (Object.keys(profiles).length === 0 || !activeId) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Create Your Profile First</h2>
+                        <p>To receive your personalized cosmic forecast, we need your birth information.</p>
+                        <a href="life-path-calculator.html">Create Profile →</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            const profile = profiles[activeId];
+            if (!profile || !profile.birthDate) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Complete Your Profile</h2>
+                        <p>Your profile needs a birth date for accurate forecasts.</p>
+                        <a href="life-path-calculator.html">Update Profile →</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            const preferredName = profile.preferredName || profile.name || 'Cosmic Soul';
+            document.getElementById('greeting').textContent = `${timeGreeting}, ${preferredName}`;
+            
+            // Calculate all cosmic data
+            const personalDay = calculatePersonalDay(profile.birthDate, today);
+            const universalDay = calculateUniversalDay(today);
+            const moonPhase = getMoonPhase(today);
+            const moonSign = getMoonSign(today);
+            const sunSign = getSunSign(today);
+            const mercury = isMercuryRetrograde(today);
+            const vocMoon = isVoidOfCourseMoon(moonSign);
+            
+            const numInterp = numerologyInterpretations[personalDay];
+            const phaseGuide = moonPhaseGuidance[moonPhase.name];
+            
+            // Build the cosmic overview grid
+            let cosmicGrid = `
+                <div class="cosmic-grid">
+                    <div class="cosmic-card">
+                        <div class="icon">✨</div>
+                        <div class="value">${personalDay}</div>
+                        <div class="label">Personal Day</div>
+                    </div>
+                    <div class="cosmic-card sun">
+                        <div class="icon">${sunSign.symbol}</div>
+                        <div class="value">${sunSign.name}</div>
+                        <div class="label">Sun Sign</div>
+                    </div>
+                    <div class="cosmic-card moon">
+                        <div class="icon">${moonPhase.emoji}</div>
+                        <div class="value">${moonPhase.name}</div>
+                        <div class="label">${moonPhase.illumination}% lit</div>
+                    </div>
+                    <div class="cosmic-card moon">
+                        <div class="icon">${moonSign.symbol}</div>
+                        <div class="value">${moonSign.name}</div>
+                        <div class="label">Moon Sign</div>
+                    </div>
+                    <div class="cosmic-card ${mercury.retrograde ? 'alert' : 'good'}">
+                        <div class="icon">☿</div>
+                        <div class="value">${mercury.retrograde ? 'Retrograde' : 'Direct'}</div>
+                        <div class="label">Mercury</div>
+                    </div>
+                    ${vocMoon ? `
+                    <div class="cosmic-card alert">
+                        <div class="icon">⚠️</div>
+                        <div class="value">VOC Moon</div>
+                        <div class="label">Void of Course</div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            // Build sections
+            let content = cosmicGrid;
+            
+            // Numerology Section
+            content += `
+                <div class="forecast-section section-numerology">
+                    <h2>✨ Numerology: ${numInterp.theme} Day</h2>
+                    <p>Your personal day number is <strong>${personalDay}</strong>, bringing the energy of ${numInterp.energy.toLowerCase()}. The universal day is ${universalDay}, creating a ${personalDay === universalDay ? 'harmonious alignment with collective energy' : 'unique blend of personal and collective vibrations'}.</p>
+                    
+                    <div class="focus-section">
+                        <h3>Focus Your Energy On</h3>
+                        <ul class="guidance-list">
+                            ${numInterp.focus.map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="caution-section">
+                        <h3>Be Mindful Of</h3>
+                        <ul class="guidance-list">
+                            ${numInterp.avoid.map(a => `<li>${a}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            // Lunar Section
+            content += `
+                <div class="forecast-section section-lunar">
+                    <h2>${moonPhase.emoji} Lunar Energy: ${moonPhase.name} in ${moonSign.name}</h2>
+                    <p>The Moon is ${moonPhase.illumination}% illuminated in ${moonSign.name}, bringing <strong>${moonSignEnergy[moonSign.name].toLowerCase()}</strong>.</p>
+                    <p><strong>Phase Energy:</strong> ${phaseGuide.energy}</p>
+                    
+                    <div class="focus-section">
+                        <h3>Lunar Guidance</h3>
+                        <p><strong>Best for:</strong> ${phaseGuide.best}</p>
+                        <p><strong>Avoid:</strong> ${phaseGuide.avoid}</p>
+                    </div>
+                    
+                    ${vocMoon ? `
+                    <div class="caution-section">
+                        <h3>⚠️ Void of Course Moon Active</h3>
+                        <p>The Moon is in late degrees of ${moonSign.name} (${moonSign.degrees}°), suggesting a void-of-course period. Avoid starting important new ventures, signing contracts, or making major purchases during this time. Focus on routine tasks, rest, and reflection instead.</p>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            // Planetary Section
+            content += `
+                <div class="forecast-section section-planetary">
+                    <h2>☿ Planetary Influences</h2>
+                    <p>The Sun is transiting through ${sunSign.name}, highlighting themes of ${zodiacElements[sunSign.name].toLowerCase()} energy for the collective.</p>
+                    
+                    ${mercury.retrograde ? `
+                    <div class="caution-section">
+                        <h3>☿ Mercury Retrograde in ${mercury.sign}</h3>
+                        <p>Mercury is currently retrograde until ${mercury.endDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}. This is a time for:</p>
+                        <ul class="guidance-list">
+                            <li>Reviewing and revising plans, not starting new ones</li>
+                            <li>Double-checking all communications and travel plans</li>
+                            <li>Reconnecting with old friends or revisiting past projects</li>
+                            <li>Backing up important data and allowing extra time</li>
+                        </ul>
+                        <p>Avoid signing contracts, making major purchases, or launching new ventures if possible.</p>
+                    </div>
+                    ` : `
+                    <div class="focus-section">
+                        <h3>☿ Mercury Direct</h3>
+                        <p>Mercury is moving direct, supporting clear communication, travel, and new agreements. ${mercury.nextStart ? `The next retrograde begins ${mercury.nextStart.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} in ${mercury.nextSign}.` : ''}</p>
+                    </div>
+                    `}
+                </div>
+            `;
+            
+            // Synthesis Section
+            const synthesisAffirmations = {
+                1: "I am the pioneering force of my own destiny.",
+                2: "I create harmony and connection wherever I go.",
+                3: "My creativity flows freely and touches all I do.",
+                4: "I build lasting foundations with patience and purpose.",
+                5: "I embrace change as the doorway to growth.",
+                6: "I nurture with love and receive love in return.",
+                7: "I trust the wisdom that arises from stillness.",
+                8: "I claim my power and use it wisely.",
+                9: "I release with grace and embrace completion.",
+                11: "I am a channel for divine inspiration.",
+                22: "I manifest visions into reality.",
+                33: "I serve the highest good with unconditional love."
+            };
+            
+            content += `
+                <div class="forecast-section section-synthesis">
+                    <h2>🔮 Today's Cosmic Synthesis</h2>
+                    <p>With a Personal Day ${personalDay} (${numInterp.theme}), ${moonPhase.name} in ${moonSign.name}, and ${mercury.retrograde ? 'Mercury retrograde' : 'Mercury direct'}, today's energy blends:</p>
+                    <ul class="guidance-list">
+                        <li><strong>Numerology:</strong> ${numInterp.energy}</li>
+                        <li><strong>Lunar:</strong> ${moonSignEnergy[moonSign.name]}</li>
+                        <li><strong>Phase:</strong> ${phaseGuide.energy}</li>
+                        <li><strong>Mercury:</strong> ${mercury.retrograde ? 'Review and revision mode' : 'Clear forward movement'}</li>
+                    </ul>
+                    
+                    <div class="affirmation">
+                        <h3>Today's Cosmic Affirmation</h3>
+                        <p>"${synthesisAffirmations[personalDay]}"</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('content').innerHTML = content;
+        }
+        
+        buildProfileSelector();
+        loadForecast();
+    </script>
+</body>
+</html>
