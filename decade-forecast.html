@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -203,6 +204,20 @@
         }
         .profile-selector select:focus { outline: none; border-color: #fbbf24; }
         
+        .share-section {
+            text-align: center; margin-top: 30px; padding: 20px;
+            background: rgba(20, 20, 30, 0.6); border-radius: 15px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        .share-section h3 { font-family: 'Cinzel', serif; color: #9ca3af; font-size: 1em; margin-bottom: 15px; }
+        .share-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .share-btn { 
+            background: rgba(139, 92, 246, 0.2); color: #e0e0e0; padding: 10px 20px; 
+            border-radius: 8px; cursor: pointer; transition: all 0.3s; text-decoration: none;
+            font-family: 'Cormorant Garamond', serif; border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        .share-btn:hover { background: rgba(139, 92, 246, 0.4); color: #fbbf24; }
+        
         @media (max-width: 600px) {
             .pinnacle-timeline { flex-wrap: wrap; gap: 15px; justify-content: center; }
             .pinnacle-timeline::before { display: none; }
@@ -231,6 +246,15 @@
         </div>
         
         <div id="content"></div>
+        
+        <div class="share-section">
+            <h3>Share Your Forecast</h3>
+            <div class="share-buttons">
+                <a href="#" class="share-btn" onclick="shareOnTwitter(); return false;">🐦 Twitter</a>
+                <a href="#" class="share-btn" onclick="shareOnFacebook(); return false;">📘 Facebook</a>
+                <a href="#" class="share-btn" onclick="copyLink(); return false;">📋 Copy Link</a>
+            </div>
+        </div>
     </div>
     
     <footer class="legal-footer">
@@ -509,6 +533,21 @@
                     <p>Understanding your current pinnacle helps you work WITH life's energy rather than against it, recognizing that every phase serves your soul's evolution.</p>
                 </div>
             `;
+        }
+        
+        // Share functions
+        function shareOnTwitter() {
+            const text = encodeURIComponent("Check out my Decade Forecast at Quantum Merlin! ✨🔮");
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard! 📋');
         }
         
         buildProfileSelector();
