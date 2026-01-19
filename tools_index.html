@@ -693,24 +693,6 @@
                 </div>
             </div>
             
-            <!-- Fortune & Divination Section -->
-            <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('fortune')">
-                    <h2>🔮 Fortune & Divination <span class="count">(5 tools)</span></h2>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="category-content" id="fortune-content">
-                    <div class="tools-grid" id="fortune-grid"></div>
-                </div>
-            </div>
-            
-            <!-- Ad Space after Fortune -->
-            <div class="ad-space" onclick="openAdInquiry('fortune', 'After Fortune Section')">
-                <div class="ad-space-title">📢 Advertise Here</div>
-                <div class="ad-space-text">Engage users seeking guidance & daily fortunes</div>
-                <span class="ad-space-cta">Inquire About This Space →</span>
-            </div>
-            
             <!-- Life Cycles Section -->
             <div class="category-section">
                 <div class="category-header" onclick="toggleCategory('life')">
@@ -915,13 +897,6 @@
             { title: "Birthstone Finder", description: "Find your birthstone based on your birth month.", category: "astrology", file: "birthstone-finder.html" },
             { title: "Birth Flower Finder", description: "Discover your birth flower and its symbolism.", category: "astrology", file: "birth-flower-finder.html" },
             
-            // Fortune & Divination Tools
-            { title: "Daily Fortune", description: "Get your daily fortune and lucky numbers.", category: "fortune", file: "daily-fortune.html" },
-            { title: "Crystal Ball", description: "Ask the crystal ball a yes/no question.", category: "fortune", file: "crystal-ball.html" },
-            { title: "Fortune Cookie", description: "Break a virtual fortune cookie for ancient wisdom.", category: "fortune", file: "fortune-cookie.html" },
-            { title: "Yes No Oracle", description: "Get instant yes/no answers from the divine.", category: "fortune", file: "yes-no-oracle.html" },
-            { title: "Lucky Number Generator", description: "Generate your personal lucky numbers.", category: "fortune", file: "lucky-numbers.html" },
-            
             // Life Tools
             { title: "Age Calculator", description: "Calculate your exact age and life cycle phase.", category: "life", file: "age-calculator.html" },
             { title: "Birthday Countdown", description: "Count down to your solar return - a new astrological year.", category: "life", file: "birthday-countdown.html" },
@@ -1064,7 +1039,7 @@ ${formData.message}
         });
         
         // Initialize all category grids (alphabetical order)
-        ['astrology', 'forecasts', 'fortune', 'life', 'purpose', 'numerology', 'relationship'].forEach(cat => {
+        ['astrology', 'forecasts', 'life', 'purpose', 'numerology', 'relationship'].forEach(cat => {
             renderCategoryTools(cat);
         });
         
