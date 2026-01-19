@@ -201,6 +201,20 @@
         .separator { color: rgba(191, 90, 242, 0.4); }
         .copyright { color: #6B6B6B; font-size: 0.85rem; font-style: italic; }
     </style>
+<!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://funtools.quantummerlin.com/yearly-forecast.html">
+    <meta property="og:title" content="Yearly Numerology Forecast | Quantum Merlin">
+    <meta property="og:description" content="Explore your Personal Year Number and discover what the year holds for you.">
+    <meta property="og:image" content="https://funtools.quantummerlin.com/RetroMerlin.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://funtools.quantummerlin.com/yearly-forecast.html">
+    <meta name="twitter:title" content="Yearly Numerology Forecast | Quantum Merlin">
+    <meta name="twitter:description" content="Explore your Personal Year Number and discover what the year holds for you.">
+    <meta name="twitter:image" content="https://funtools.quantummerlin.com/RetroMerlin.jpg">
+    <script src="share-utils.js"></script>
 </head>
 <body>
     <div class="container">
@@ -222,9 +236,12 @@
         <div class="share-section">
             <h3>Share Your Forecast</h3>
             <div class="share-buttons">
-                <a href="#" class="share-btn" onclick="shareOnTwitter(); return false;">🐦 Twitter</a>
-                <a href="#" class="share-btn" onclick="shareOnFacebook(); return false;">📘 Facebook</a>
-                <a href="#" class="share-btn" onclick="copyLink(); return false;">📋 Copy Link</a>
+                <button class="share-btn" onclick="QMShare.twitter()" title="Share on Twitter/X">𝕏</button>
+                <button class="share-btn" onclick="QMShare.facebook()" title="Share on Facebook">📘</button>
+                <button class="share-btn" onclick="QMShare.whatsapp()" title="Share on WhatsApp">💬</button>
+                <button class="share-btn" onclick="QMShare.email()" title="Share via Email">✉️</button>
+                <button class="share-btn" onclick="QMShare.sms()" title="Share via SMS">📱</button>
+                <button class="share-btn" onclick="QMShare.copyLink()" title="Copy Link">📋</button>
             </div>
         </div>
     </div>
