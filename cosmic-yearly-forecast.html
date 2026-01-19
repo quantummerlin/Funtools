@@ -667,7 +667,7 @@
             const yearAnimal = chineseZodiac.getAnimal(year);
             const yearElement = chineseZodiac.getElement(year);
             const compatibility = chineseZodiac.getCompatibility(userAnimal.name, yearAnimal.name);
-            const interp = yearlyInterpretations[personalYear];
+            const interp = yearlyInterpretations[personalYear] || yearlyInterpretations[1];
             const retrogrades = mercuryRetrogrades[year] || mercuryRetrogrades[2026];
             
             // Month energies
@@ -770,7 +770,7 @@
             `;
             
             // Chinese Zodiac Section
-            const zodiacGuidance = chineseYearlyGuidance[userAnimal.name];
+            const zodiacGuidance = chineseYearlyGuidance[userAnimal.name] || { strengths: 'Your natural wisdom and adaptability serve you well this year.', challenges: 'Stay flexible and open to unexpected opportunities for growth.' };
             content += `
                 <div class="forecast-section section-chinese">
                     <h2>🐲 Your ${userAnimal.name} in ${year}</h2>

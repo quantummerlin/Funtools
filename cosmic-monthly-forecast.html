@@ -687,8 +687,8 @@
             const mercury = getMercuryStatus(today);
             const retroInMonth = getRetrogradeInMonth(year, month);
             const moonEvents = findMoonEvents(year, month);
-            const interp = monthlyInterpretations[personalMonth];
-            const themeData = monthlyThemes[personalMonth];
+            const interp = monthlyInterpretations[personalMonth] || monthlyInterpretations[1];
+            const themeData = monthlyThemes[personalMonth] || monthlyThemes[1];
             
             // Build week data
             const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -829,7 +829,7 @@
             `;
             
             // Chinese Zodiac
-            const zodiacGuidance = chineseMonthlyGuidance[userAnimal.name];
+            const zodiacGuidance = chineseMonthlyGuidance[userAnimal.name] || { focus: 'Trust your natural instincts and stay adaptable this month.', caution: 'Avoid overextending yourself. Balance is key.' };
             const compatMessage = compatibility === 'excellent' ? '✨ Excellent year alignment!' : 
                                   compatibility === 'challenging' ? '⚡ Growth through challenges' : '☯️ Balanced year energy';
             

@@ -592,8 +592,8 @@
             const mercury = isMercuryRetrograde(today);
             const vocMoon = isVoidOfCourseMoon(moonSign);
             
-            const numInterp = numerologyInterpretations[personalDay];
-            const phaseGuide = moonPhaseGuidance[moonPhase.name];
+            const numInterp = numerologyInterpretations[personalDay] || numerologyInterpretations[1];
+            const phaseGuide = moonPhaseGuidance[moonPhase.name] || moonPhaseGuidance['New Moon'];
             
             // Build the cosmic overview grid
             let cosmicGrid = `
@@ -662,7 +662,7 @@
             content += `
                 <div class="forecast-section section-lunar">
                     <h2>${moonPhase.emoji} Lunar Energy: ${moonPhase.name} in ${moonSign.name}</h2>
-                    <p>The Moon is ${moonPhase.illumination}% illuminated in ${moonSign.name}, bringing <strong>${moonSignEnergy[moonSign.name].toLowerCase()}</strong>.</p>
+                    <p>The Moon is ${moonPhase.illumination}% illuminated in ${moonSign.name}, bringing <strong>${(moonSignEnergy[moonSign.name] || 'mystical and intuitive energy').toLowerCase()}</strong>.</p>
                     <p><strong>Phase Energy:</strong> ${phaseGuide.energy}</p>
                     
                     <div class="focus-section">
@@ -729,7 +729,7 @@
                     <p>With a Personal Day ${personalDay} (${numInterp.theme}), ${moonPhase.name} in ${moonSign.name}, and ${mercury.retrograde ? 'Mercury retrograde' : 'Mercury direct'}, today's energy blends:</p>
                     <ul class="guidance-list">
                         <li><strong>Numerology:</strong> ${numInterp.energy}</li>
-                        <li><strong>Lunar:</strong> ${moonSignEnergy[moonSign.name]}</li>
+                        <li><strong>Lunar:</strong> ${moonSignEnergy[moonSign.name] || 'Mystical and intuitive energy'}</li>
                         <li><strong>Phase:</strong> ${phaseGuide.energy}</li>
                         <li><strong>Mercury:</strong> ${mercury.retrograde ? 'Review and revision mode' : 'Clear forward movement'}</li>
                     </ul>
