@@ -751,24 +751,6 @@
                 </div>
             </div>
             
-            <!-- Personality Section -->
-            <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('personality')">
-                    <h2>🎭 Personality <span class="count">(3 tools)</span></h2>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="category-content" id="personality-content">
-                    <div class="tools-grid" id="personality-grid"></div>
-                </div>
-            </div>
-            
-            <!-- Ad Space after Personality -->
-            <div class="ad-space" onclick="openAdInquiry('personality', 'After Personality Section')">
-                <div class="ad-space-title">📢 Advertise Here</div>
-                <div class="ad-space-text">Connect with users discovering their personality traits</div>
-                <span class="ad-space-cta">Inquire About This Space →</span>
-            </div>
-            
             <!-- Relationship Section -->
             <div class="category-section">
                 <div class="category-header" onclick="toggleCategory('relationship')">
@@ -933,11 +915,6 @@
             { title: "Birthstone Finder", description: "Find your birthstone based on your birth month.", category: "astrology", file: "birthstone-finder.html" },
             { title: "Birth Flower Finder", description: "Discover your birth flower and its symbolism.", category: "astrology", file: "birth-flower-finder.html" },
             
-            // Personality Tools
-            { title: "Color Personality Test", description: "What does your favorite color say about you?", category: "personality", file: "color-personality-test.html" },
-            { title: "Brain Type Test", description: "Find out if you're left-brained or right-brained.", category: "personality", file: "brain-type-test.html" },
-            { title: "Aura Color Test", description: "What color is your aura? Take this fun quiz!", category: "personality", file: "aura-color-test.html" },
-            
             // Fortune & Divination Tools
             { title: "Daily Fortune", description: "Get your daily fortune and lucky numbers.", category: "fortune", file: "daily-fortune.html" },
             { title: "Crystal Ball", description: "Ask the crystal ball a yes/no question.", category: "fortune", file: "crystal-ball.html" },
@@ -1087,7 +1064,7 @@ ${formData.message}
         });
         
         // Initialize all category grids (alphabetical order)
-        ['astrology', 'forecasts', 'fortune', 'life', 'purpose', 'numerology', 'personality', 'relationship'].forEach(cat => {
+        ['astrology', 'forecasts', 'fortune', 'life', 'purpose', 'numerology', 'relationship'].forEach(cat => {
             renderCategoryTools(cat);
         });
         
