@@ -662,48 +662,8 @@
             <div class="tools-grid" id="searchResultsGrid"></div>
         </div>
         
-        <!-- Categories (collapsible) -->
+        <!-- Categories (collapsible) - Alphabetical Order -->
         <div class="categories-container" id="categoriesContainer">
-            <!-- Numerology Section -->
-            <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('numerology')">
-                    <h2>🔢 Numerology <span class="count">(16 tools)</span></h2>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="category-content" id="numerology-content">
-                    <div class="tools-grid" id="numerology-grid"></div>
-                </div>
-            </div>
-            
-            <!-- Ad Space after Numerology -->
-            <div class="ad-space" onclick="openAdInquiry('numerology', 'After Numerology Section')">
-                <div class="ad-space-title">📢 Advertise Here</div>
-                <div class="ad-space-text">Reach users exploring numerology & life paths</div>
-                <span class="ad-space-cta">Inquire About This Space →</span>
-            </div>
-            
-            <!-- Relationship Section -->
-            <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('relationship')">
-                    <h2>💕 Relationship <span class="count">(7 tools)</span></h2>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="category-content" id="relationship-content">
-                    <div class="tools-grid" id="relationship-grid"></div>
-                </div>
-            </div>
-            
-            <!-- Life Purpose Section -->
-            <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('purpose')">
-                    <h2>🎯 Life Purpose <span class="count">(6 tools)</span></h2>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="category-content" id="purpose-content">
-                    <div class="tools-grid" id="purpose-grid"></div>
-                </div>
-            </div>
-            
             <!-- Astrology Section -->
             <div class="category-section">
                 <div class="category-header" onclick="toggleCategory('astrology')">
@@ -722,14 +682,14 @@
                 <span class="ad-space-cta">Inquire About This Space →</span>
             </div>
             
-            <!-- Personality Section -->
+            <!-- Forecasts Section -->
             <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('personality')">
-                    <h2>🎭 Personality <span class="count">(3 tools)</span></h2>
+                <div class="category-header" onclick="toggleCategory('forecasts')">
+                    <h2>📅 Forecasts <span class="count">(9 tools)</span></h2>
                     <span class="toggle-icon">▼</span>
                 </div>
-                <div class="category-content" id="personality-content">
-                    <div class="tools-grid" id="personality-grid"></div>
+                <div class="category-content" id="forecasts-content">
+                    <div class="tools-grid" id="forecasts-grid"></div>
                 </div>
             </div>
             
@@ -751,17 +711,6 @@
                 <span class="ad-space-cta">Inquire About This Space →</span>
             </div>
             
-            <!-- Forecasts Section -->
-            <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('forecasts')">
-                    <h2>📅 Forecasts <span class="count">(5 tools)</span></h2>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="category-content" id="forecasts-content">
-                    <div class="tools-grid" id="forecasts-grid"></div>
-                </div>
-            </div>
-            
             <!-- Life Cycles Section -->
             <div class="category-section">
                 <div class="category-header" onclick="toggleCategory('life')">
@@ -770,6 +719,64 @@
                 </div>
                 <div class="category-content" id="life-content">
                     <div class="tools-grid" id="life-grid"></div>
+                </div>
+            </div>
+            
+            <!-- Life Purpose Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('purpose')">
+                    <h2>🎯 Life Purpose <span class="count">(6 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="purpose-content">
+                    <div class="tools-grid" id="purpose-grid"></div>
+                </div>
+            </div>
+            
+            <!-- Ad Space after Life Purpose -->
+            <div class="ad-space" onclick="openAdInquiry('purpose', 'After Life Purpose Section')">
+                <div class="ad-space-title">📢 Advertise Here</div>
+                <div class="ad-space-text">Reach users exploring their life purpose & calling</div>
+                <span class="ad-space-cta">Inquire About This Space →</span>
+            </div>
+            
+            <!-- Numerology Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('numerology')">
+                    <h2>🔢 Numerology <span class="count">(16 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="numerology-content">
+                    <div class="tools-grid" id="numerology-grid"></div>
+                </div>
+            </div>
+            
+            <!-- Personality Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('personality')">
+                    <h2>🎭 Personality <span class="count">(3 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="personality-content">
+                    <div class="tools-grid" id="personality-grid"></div>
+                </div>
+            </div>
+            
+            <!-- Ad Space after Personality -->
+            <div class="ad-space" onclick="openAdInquiry('personality', 'After Personality Section')">
+                <div class="ad-space-title">📢 Advertise Here</div>
+                <div class="ad-space-text">Connect with users discovering their personality traits</div>
+                <span class="ad-space-cta">Inquire About This Space →</span>
+            </div>
+            
+            <!-- Relationship Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('relationship')">
+                    <h2>💕 Relationship <span class="count">(7 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="relationship-content">
+                    <div class="tools-grid" id="relationship-grid"></div>
                 </div>
             </div>
         </div>
@@ -1079,8 +1086,8 @@ ${formData.message}
             if (e.target === this) closeAdModal();
         });
         
-        // Initialize all category grids
-        ['numerology', 'relationship', 'purpose', 'astrology', 'personality', 'fortune', 'forecasts', 'life'].forEach(cat => {
+        // Initialize all category grids (alphabetical order)
+        ['astrology', 'forecasts', 'fortune', 'life', 'purpose', 'numerology', 'personality', 'relationship'].forEach(cat => {
             renderCategoryTools(cat);
         });
         
