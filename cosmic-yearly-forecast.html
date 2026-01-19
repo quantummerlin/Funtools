@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#bf5af2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <link rel="manifest" href="manifest.json">
+    <title>Cosmic Yearly Forecast | Quantum Merlin</title>
+    <meta name="description" content="Your complete cosmic yearly forecast combining numerology, Chinese zodiac year energy, and major planetary transits.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(251, 191, 36, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 60%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .nav-links {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .nav-links a {
+            color: #06b6d4;
+            text-decoration: none;
+            margin: 0 15px;
+            font-family: 'Cinzel', serif;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #fbbf24; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.2em;
+            background: linear-gradient(135deg, #fbbf24 0%, #ec4899 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .date { color: #9ca3af; font-size: 1.2em; margin-bottom: 8px; }
+        .greeting { color: #fbbf24; font-size: 1.2em; font-style: italic; }
+        
+        #profileSelector {
+            background: rgba(17, 24, 39, 0.6);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        #profileSelector label { font-family: 'Cinzel', serif; color: #9ca3af; margin-right: 10px; }
+        #profileSelector select {
+            background: rgba(17, 24, 39, 0.9);
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            color: #e0e0e0;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1em;
+        }
+        
+        .profile-required {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2));
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .profile-required h2 { color: #fbbf24; margin-bottom: 15px; }
+        .profile-required a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        /* Year Overview Hero */
+        .year-hero {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(251, 191, 36, 0.15), rgba(236, 72, 153, 0.15));
+            border-radius: 25px;
+            padding: 45px;
+            text-align: center;
+            margin-bottom: 35px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        .year-hero .year-number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 5em;
+            color: #fbbf24;
+            text-shadow: 0 0 40px rgba(251, 191, 36, 0.5);
+            margin-bottom: 5px;
+        }
+        .year-hero .personal-year {
+            font-size: 1.2em;
+            color: #9ca3af;
+            margin-bottom: 10px;
+        }
+        .year-hero .theme {
+            font-family: 'Cinzel', serif;
+            font-size: 2em;
+            color: #e0e0e0;
+            margin: 15px 0;
+        }
+        .year-hero .overview { line-height: 1.8; font-size: 1.15em; max-width: 700px; margin: 0 auto; }
+        
+        /* Dual Animals */
+        .zodiac-duo {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin: 30px 0;
+        }
+        .zodiac-card {
+            background: rgba(17, 24, 39, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(236, 72, 153, 0.3);
+        }
+        .zodiac-card .animal { font-size: 4em; margin-bottom: 10px; }
+        .zodiac-card .name { font-family: 'Cinzel', serif; font-size: 1.4em; color: #ec4899; }
+        .zodiac-card .element { color: #fbbf24; margin-top: 5px; }
+        .zodiac-card .label { font-size: 0.9em; color: #9ca3af; margin-top: 10px; }
+        .zodiac-connector {
+            font-size: 2em;
+            color: #8b5cf6;
+        }
+        
+        /* Compatibility Badge */
+        .compatibility-badge {
+            text-align: center;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        .compatibility-badge .status {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1em;
+        }
+        .compatibility-badge .status.excellent { background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.4); }
+        .compatibility-badge .status.neutral { background: rgba(6, 182, 212, 0.2); color: #06b6d4; border: 1px solid rgba(6, 182, 212, 0.4); }
+        .compatibility-badge .status.challenging { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .compatibility-description { margin-top: 15px; line-height: 1.7; }
+        
+        /* Sections */
+        .forecast-section {
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-left: 4px solid #8b5cf6;
+        }
+        .forecast-section h2 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            margin-bottom: 18px;
+            font-size: 1.5em;
+        }
+        .forecast-section h3 {
+            font-family: 'Cinzel', serif;
+            color: #06b6d4;
+            margin: 22px 0 12px;
+            font-size: 1.15em;
+        }
+        .forecast-section p { line-height: 1.8; margin-bottom: 12px; }
+        
+        .section-numerology { border-left-color: #8b5cf6; }
+        .section-chinese { border-left-color: #ec4899; }
+        .section-planetary { border-left-color: #fbbf24; }
+        .section-synthesis { 
+            border-left-color: transparent;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(251, 191, 36, 0.08));
+        }
+        
+        .guidance-list {
+            list-style: none;
+            padding: 0;
+        }
+        .guidance-list li {
+            padding: 10px 0 10px 28px;
+            position: relative;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        }
+        .guidance-list li:before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #8b5cf6;
+        }
+        
+        .focus-section { background: rgba(34, 197, 94, 0.05); border-radius: 12px; padding: 18px; margin: 18px 0; }
+        .focus-section h3 { color: #22c55e !important; }
+        .caution-section { background: rgba(239, 68, 68, 0.05); border-radius: 12px; padding: 18px; margin: 18px 0; }
+        .caution-section h3 { color: #ef4444 !important; }
+        
+        /* Month Grid */
+        .month-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 25px 0;
+        }
+        .month-card {
+            background: rgba(17, 24, 39, 0.8);
+            border-radius: 12px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s;
+        }
+        .month-card:hover { border-color: #8b5cf6; }
+        .month-card.current { border-color: #fbbf24; background: rgba(251, 191, 36, 0.1); }
+        .month-card .month-name { font-size: 0.85em; color: #9ca3af; margin-bottom: 5px; }
+        .month-card .energy { font-family: 'Cinzel', serif; font-size: 1.8em; color: #8b5cf6; }
+        .month-card .theme { font-size: 0.8em; color: #e0e0e0; margin-top: 5px; }
+        
+        /* Retrograde Timeline */
+        .retrograde-timeline {
+            margin: 25px 0;
+        }
+        .retrograde-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(239, 68, 68, 0.08);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 3px solid #ef4444;
+        }
+        .retrograde-item .icon { font-size: 1.8em; margin-right: 15px; }
+        .retrograde-item .details { flex: 1; }
+        .retrograde-item .dates { font-weight: 600; color: #e0e0e0; }
+        .retrograde-item .sign { color: #9ca3af; font-size: 0.9em; }
+        .retrograde-item .advice { font-size: 0.85em; color: #ef4444; margin-top: 5px; }
+        
+        /* Life Areas */
+        .life-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .life-area {
+            background: rgba(17, 24, 39, 0.5);
+            border-radius: 15px;
+            padding: 22px;
+        }
+        .life-area h4 { color: #fbbf24; margin-bottom: 12px; font-family: 'Cinzel', serif; font-size: 1.1em; }
+        .life-area p { line-height: 1.7; }
+        
+        /* How to Use */
+        .how-to-use {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 15px;
+            padding: 28px;
+            margin-bottom: 30px;
+            border: 1px dashed rgba(139, 92, 246, 0.3);
+        }
+        .how-to-use h3 { color: #8b5cf6; margin-bottom: 15px; font-family: 'Cinzel', serif; }
+        .how-to-use p { margin-bottom: 12px; line-height: 1.7; }
+        .how-to-use ul { margin-left: 22px; margin-top: 12px; }
+        .how-to-use li { margin-bottom: 10px; }
+        
+        .affirmation {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(139, 92, 246, 0.2));
+            border-radius: 15px;
+            padding: 28px;
+            text-align: center;
+            margin-top: 25px;
+        }
+        .affirmation h3 { color: #fbbf24; margin-bottom: 12px; }
+        .affirmation p { font-size: 1.35em; font-style: italic; color: #e0e0e0; }
+        
+        /* Share Section */
+        .share-section {
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 35px;
+            text-align: center;
+        }
+        .share-section h3 { color: #9ca3af; margin-bottom: 15px; font-family: 'Cinzel', serif; }
+        .share-buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .share-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            background: rgba(139, 92, 246, 0.2);
+            color: #e0e0e0;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s;
+        }
+        .share-btn:hover { background: rgba(139, 92, 246, 0.4); }
+        
+        @media (max-width: 700px) {
+            .zodiac-duo { grid-template-columns: 1fr; }
+            .zodiac-connector { display: none; }
+            .year-hero .year-number { font-size: 3.5em; }
+            .month-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        
+        .legal-footer {
+            margin-top: 45px;
+            padding: 28px;
+            text-align: center;
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        .legal-links { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 12px; }
+        .legal-links a { color: #9A8F7A; text-decoration: none; font-size: 0.9em; }
+        .legal-links a:hover { color: #fbbf24; }
+        .legal-links .separator { color: rgba(139, 92, 246, 0.4); }
+        .copyright { color: #6B6B6B; font-size: 0.85em; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="forecasts.html">All Forecasts</a>
+            <a href="cosmic-monthly-forecast.html">Cosmic Monthly</a>
+        </div>
+        
+        <div class="header">
+            <h1>🌟 Cosmic Yearly Forecast</h1>
+            <div class="date" id="yearDisplay"></div>
+            <div class="greeting" id="greeting"></div>
+        </div>
+        
+        <div id="profileSelector"></div>
+        
+        <div class="how-to-use">
+            <h3>📖 Understanding Your Yearly Forecast</h3>
+            <p>Your Cosmic Yearly Forecast provides a <strong>bird's-eye view</strong> of the year ahead, weaving together multiple wisdom traditions:</p>
+            <ul>
+                <li><strong>Personal Year Number:</strong> Your numerological theme for the entire year—the lessons, opportunities, and energy you're navigating.</li>
+                <li><strong>Chinese Zodiac Year:</strong> The animal and element ruling this year, and how it interacts with your birth animal.</li>
+                <li><strong>Mercury Retrogrades:</strong> All retrograde periods for the year, so you can plan major decisions wisely.</li>
+                <li><strong>Month by Month Overview:</strong> Your personal month number for each month, revealing energy shifts throughout the year.</li>
+            </ul>
+            <p><em>Use this forecast for long-range planning. Return monthly to check the energy shifts. Remember: you are the author of your story—these cosmic insights inform but never dictate.</em></p>
+        </div>
+        
+        <div id="content"></div>
+        
+        <div class="share-section">
+            <h3>Share Your Forecast</h3>
+            <div class="share-buttons">
+                <a href="#" class="share-btn" onclick="shareOnTwitter(); return false;">🐦 Twitter</a>
+                <a href="#" class="share-btn" onclick="shareOnFacebook(); return false;">📘 Facebook</a>
+                <a href="#" class="share-btn" onclick="copyLink(); return false;">📋 Copy Link</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="legal-footer">
+        <div class="legal-links">
+            <a href="terms.html">Terms</a><span class="separator">|</span>
+            <a href="privacy.html">Privacy</a><span class="separator">|</span>
+            <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
+    </footer>
+    
+    <script>
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                           'July', 'August', 'September', 'October', 'November', 'December'];
+        
+        // ===== NUMEROLOGY =====
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function calculatePersonalYear(birthDate, targetYear) {
+            const date = new Date(birthDate);
+            return reduceToSingle(reduceToSingle(date.getDate()) + reduceToSingle(date.getMonth() + 1) + reduceToSingle(targetYear));
+        }
+        
+        function calculatePersonalMonth(birthDate, targetYear, targetMonth) {
+            return reduceToSingle(calculatePersonalYear(birthDate, targetYear) + targetMonth);
+        }
+        
+        // ===== CHINESE ZODIAC =====
+        const chineseZodiac = {
+            animals: [
+                { name: 'Rat', emoji: '🐀', element: 'Water', traits: 'Quick-witted, resourceful, adaptable, charming', lucky: ['2', '3'], colors: ['Blue', 'Gold', 'Green'] },
+                { name: 'Ox', emoji: '🐂', element: 'Earth', traits: 'Diligent, reliable, strong, determined, honest', lucky: ['1', '4'], colors: ['White', 'Yellow', 'Green'] },
+                { name: 'Tiger', emoji: '🐅', element: 'Wood', traits: 'Brave, competitive, confident, unpredictable, charming', lucky: ['1', '3', '4'], colors: ['Blue', 'Gray', 'Orange'] },
+                { name: 'Rabbit', emoji: '🐇', element: 'Wood', traits: 'Quiet, elegant, kind, responsible, patient', lucky: ['3', '4', '6'], colors: ['Red', 'Pink', 'Purple'] },
+                { name: 'Dragon', emoji: '🐉', element: 'Earth', traits: 'Confident, intelligent, enthusiastic, ambitious, lucky', lucky: ['1', '6', '7'], colors: ['Gold', 'Silver', 'Gray'] },
+                { name: 'Snake', emoji: '🐍', element: 'Fire', traits: 'Enigmatic, intelligent, wise, intuitive, graceful', lucky: ['2', '8', '9'], colors: ['Black', 'Red', 'Yellow'] },
+                { name: 'Horse', emoji: '🐎', element: 'Fire', traits: 'Animated, active, energetic, free-spirited, warm', lucky: ['2', '3', '7'], colors: ['Yellow', 'Green'] },
+                { name: 'Goat', emoji: '🐐', element: 'Earth', traits: 'Calm, gentle, sympathetic, creative, persevering', lucky: ['2', '7'], colors: ['Brown', 'Red', 'Purple'] },
+                { name: 'Monkey', emoji: '🐵', element: 'Metal', traits: 'Sharp, smart, curious, mischievous, witty', lucky: ['4', '9'], colors: ['White', 'Blue', 'Gold'] },
+                { name: 'Rooster', emoji: '🐓', element: 'Metal', traits: 'Observant, hardworking, courageous, confident, honest', lucky: ['5', '7', '8'], colors: ['Gold', 'Brown', 'Yellow'] },
+                { name: 'Dog', emoji: '🐕', element: 'Earth', traits: 'Loyal, honest, prudent, faithful, responsible', lucky: ['3', '4', '9'], colors: ['Red', 'Green', 'Purple'] },
+                { name: 'Pig', emoji: '🐖', element: 'Water', traits: 'Compassionate, generous, diligent, trusting, sincere', lucky: ['2', '5', '8'], colors: ['Yellow', 'Gray', 'Brown'] }
+            ],
+            elements: ['Wood', 'Fire', 'Earth', 'Metal', 'Water'],
+            getAnimal: function(year) { return this.animals[(year - 1900) % 12]; },
+            getElement: function(year) { return this.elements[Math.floor((year - 4) / 2) % 5]; },
+            getCompatibility: function(a1, a2) {
+                const groups = [['Rat','Dragon','Monkey'],['Ox','Snake','Rooster'],['Tiger','Horse','Dog'],['Rabbit','Goat','Pig']];
+                for (let g of groups) { if (g.includes(a1) && g.includes(a2)) return 'excellent'; }
+                const clashes = [['Rat','Horse'],['Ox','Goat'],['Tiger','Monkey'],['Rabbit','Rooster'],['Dragon','Dog'],['Snake','Pig']];
+                for (let c of clashes) { if (c.includes(a1) && c.includes(a2)) return 'challenging'; }
+                return 'neutral';
+            }
+        };
+        
+        // ===== RETROGRADES =====
+        const mercuryRetrogrades = {
+            2025: [
+                { start: 'March 14', end: 'April 7', sign: 'Aries', advice: 'Review bold new initiatives. Avoid impulsive decisions.' },
+                { start: 'July 18', end: 'August 11', sign: 'Leo', advice: 'Revisit creative projects. Mind ego in communications.' },
+                { start: 'November 9', end: 'November 29', sign: 'Sagittarius', advice: 'Rethink travel and learning plans. Expand horizons carefully.' }
+            ],
+            2026: [
+                { start: 'March 2', end: 'March 25', sign: 'Pisces', advice: 'Review spiritual practices. Trust intuition over logic.' },
+                { start: 'July 2', end: 'July 26', sign: 'Cancer', advice: 'Revisit home and family matters. Emotional clarity takes time.' },
+                { start: 'October 26', end: 'November 16', sign: 'Scorpio', advice: 'Review deep transformations. Avoid power struggles.' }
+            ],
+            2027: [
+                { start: 'February 13', end: 'March 8', sign: 'Aquarius', advice: 'Rethink innovative projects. Technology needs extra care.' },
+                { start: 'June 14', end: 'July 9', sign: 'Gemini', advice: 'Review communications and short trips. Mind your words.' },
+                { start: 'October 10', end: 'October 31', sign: 'Libra', advice: 'Revisit partnerships and agreements. Seek fairness.' }
+            ]
+        };
+        
+        // ===== INTERPRETATIONS =====
+        const yearlyThemes = {
+            1: 'New Beginnings', 2: 'Partnership', 3: 'Expression', 4: 'Foundation',
+            5: 'Change', 6: 'Harmony', 7: 'Reflection', 8: 'Power',
+            9: 'Completion', 11: 'Illumination', 22: 'Master Building', 33: 'Master Teaching'
+        };
+        
+        const yearlyInterpretations = {
+            1: { 
+                overview: 'This is your Year ONE—a powerful new beginning in your 9-year cycle. Everything starts fresh. Seeds planted this year determine the harvest for years to come. This is the time to be bold, take initiative, and trust your original ideas. The universe supports your independence and pioneering spirit.',
+                career: 'Launch new ventures and career directions. Take leadership roles. Your original ideas have power now. Don\'t wait for permission—be the initiator.',
+                relationships: 'New relationships may enter your life. In existing partnerships, bring fresh energy. Assert your needs clearly. Balance independence with connection.',
+                growth: 'Focus intently on self-development. Who do you want to become? Set clear intentions for the cycle ahead. Your personal evolution is the priority.',
+                focus: ['Start significant new projects', 'Assert your independence', 'Set intentions for the 9-year cycle', 'Take bold action', 'Trust your instincts'],
+                avoid: ['Waiting for others\' approval', 'Second-guessing your path', 'Excessive aggression', 'Ignoring others completely'],
+                affirmation: 'I am the author of my story. This year, I write bold new chapters.'
+            },
+            2: { 
+                overview: 'Year TWO is about patience, partnership, and the details others miss. After the bold start of Year 1, now you nurture what you\'ve begun. Progress may seem slower—that\'s by design. Relationships and cooperation are your greatest assets. Listen more than you speak.',
+                career: 'Collaborate and build alliances. Pay attention to contracts and agreements. Progress comes through teamwork. Your diplomatic skills shine.',
+                relationships: 'Relationships deepen significantly. Practice patience and deep listening. Small gestures matter more than grand ones.',
+                growth: 'Develop your intuition and emotional intelligence. Learn to receive as well as give. Patience is a spiritual practice.',
+                focus: ['Build meaningful partnerships', 'Practice patience', 'Attend to important details', 'Trust your intuition', 'Support others'],
+                avoid: ['Forcing outcomes', 'Impatience with slow progress', 'Going solo when collaboration serves', 'Missing subtle cues'],
+                affirmation: 'Patience is my power. I create lasting bonds and beautiful details.'
+            },
+            3: { 
+                overview: 'Year THREE sparks with creativity, self-expression, and joy. After the patient work of Year 2, now you emerge and share your gifts. Communication flows easily. Social connections expand. Your natural warmth and creativity open doors. This is a year to express, not suppress.',
+                career: 'Creative projects flourish. Networking brings opportunities. Public speaking, writing, and artistic expression succeed. Let your personality lead.',
+                relationships: 'Social life expands beautifully. New friendships form easily. Romance benefits from playfulness. Express appreciation openly.',
+                growth: 'Develop creative talents boldly. Find joy in everyday moments. Share your gifts without waiting until they\'re "perfect."',
+                focus: ['Express yourself creatively', 'Socialize and network', 'Communicate openly', 'Embrace joy', 'Share your talents'],
+                avoid: ['Self-criticism', 'Isolation', 'Taking everything too seriously', 'Scattering energy'],
+                affirmation: 'My creativity flows freely. Joy is my compass and my gift.'
+            },
+            4: { 
+                overview: 'Year FOUR grounds the creative expansion of Year 3 into solid form. This is the building year—practical, disciplined, sometimes demanding. The structures you create now support everything ahead. It\'s not glamorous work, but it\'s essential. Do the work with patience.',
+                career: 'Focus on systems, organization, and lasting structures. Quality matters more than speed. Build something that endures.',
+                relationships: 'Show love through reliable actions. Work on the practical foundations of shared life. Consistency builds trust.',
+                growth: 'Develop discipline and organization. Create order in your physical environment. Establish routines that support your highest goals.',
+                focus: ['Build lasting structures', 'Organize your life', 'Work with discipline', 'Focus on health', 'Create order'],
+                avoid: ['Shortcuts and sloppy work', 'Rigidity and stubbornness', 'Overworking without rest', 'Resisting necessary structure'],
+                affirmation: 'I build my dreams with patience and precision. Every effort counts.'
+            },
+            5: { 
+                overview: 'Year FIVE shakes things up! After the solid building of Year 4, now life adds variety, change, and new possibilities. The universe may rearrange your plans—embrace it. This is a pivotal year requiring flexibility and openness to the unexpected. Adventure calls.',
+                career: 'Expect change and opportunity. Be adaptable—rigid plans frustrate. Travel and communication thrive. Network widely.',
+                relationships: 'Relationships need freedom and variety. New people enter your life. Balance adventure with commitment.',
+                growth: 'Push beyond comfort zones. Try things you\'ve never done. Personal freedom is essential this year.',
+                focus: ['Embrace change', 'Seek new experiences', 'Stay flexible', 'Travel if possible', 'Communicate broadly'],
+                avoid: ['Rigid attachment to plans', 'Resisting change', 'Overindulgence', 'Scattering energy without focus'],
+                affirmation: 'I flow with change. Every transformation moves me toward my highest good.'
+            },
+            6: { 
+                overview: 'Year SIX centers on love, home, family, and responsibility. After the changes of Year 5, now you tend to what matters most. Relationships deepen. Home becomes a priority. Responsibilities may feel heavier, but so does the love available. Create beauty and harmony.',
+                career: 'Service-oriented work thrives. Beauty and aesthetics matter. Take responsibility gracefully. Team harmony matters.',
+                relationships: 'This may be a year of commitment. Family matters require attention. Love flows through acts of service.',
+                growth: 'Learn to receive as generously as you give. Create beauty everywhere. Practice unconditional love starting with yourself.',
+                focus: ['Nurture key relationships', 'Create a beautiful home', 'Fulfill responsibilities', 'Balance giving and receiving', 'Care for family'],
+                avoid: ['Martyrdom', 'Perfectionism', 'Neglecting self-care', 'Taking on everyone else\'s problems'],
+                affirmation: 'Love flows through me in perfect balance. I nurture and am nurtured.'
+            },
+            7: { 
+                overview: 'Year SEVEN invites you inward. After the outward focus of Year 6, now soul work calls. This is a year for introspection, study, and spiritual deepening. You may crave more solitude—honor that need. Trust your intuition. Wisdom speaks in stillness.',
+                career: 'Research and specialized work succeed. Quality over quantity. Work alone when possible. Go deep, not broad.',
+                relationships: 'Deeper connection through meaningful conversation. Your need for solitude increases—communicate this kindly.',
+                growth: 'Develop your spiritual practice. Study subjects that fascinate you. Trust your inner wisdom. Connect with nature.',
+                focus: ['Seek stillness and reflection', 'Study and learn', 'Trust your intuition', 'Develop spiritually', 'Embrace solitude'],
+                avoid: ['Constant noise and activity', 'Dismissing intuitive guidance', 'Overanalyzing', 'Complete isolation from humanity'],
+                affirmation: 'In silence, I hear my soul. This year, I trust my inner knowing.'
+            },
+            8: { 
+                overview: 'Year EIGHT brings power, achievement, and material manifestation. After the inner work of Year 7, now you bring wisdom into the world. Business, finances, and career advancement are highlighted. Step into your authority. This is a year of tangible results.',
+                career: 'Major achievements are possible. Financial decisions favor bold, informed action. Step into leadership. Your authority is recognized.',
+                relationships: 'Show love through providing and protecting. Balance material focus with emotional presence.',
+                growth: 'Develop your relationship with power and abundance. Learn to manifest with integrity. Embrace your authority.',
+                focus: ['Advance your career', 'Make major financial moves', 'Step into leadership', 'Manifest goals', 'Exercise power wisely'],
+                avoid: ['Power struggles', 'Materialism without meaning', 'Neglecting relationships', 'Using power to dominate'],
+                affirmation: 'I step into my power with wisdom. Abundance flows to me naturally.'
+            },
+            9: { 
+                overview: 'Year NINE completes your 9-year cycle. It\'s time to finish what you\'ve started, release what\'s over, and prepare for new beginnings ahead. Some things need to end—let them with grace. Practice compassion and forgiveness. Clear the way for fresh blessings.',
+                career: 'Complete long-standing projects. Tie up loose ends. Avoid starting major new ventures—wait for Year 1. Humanitarian work succeeds.',
+                relationships: 'Practice forgiveness generously. Some relationships may conclude naturally. Love without attachment.',
+                growth: 'Let go of the past consciously. Prepare for the new cycle ahead. Serve something larger than yourself.',
+                focus: ['Complete unfinished business', 'Release what\'s ending', 'Practice forgiveness', 'Serve the greater good', 'Prepare for renewal'],
+                avoid: ['Clinging to the past', 'Starting major new ventures', 'Selfishness', 'Resisting necessary endings'],
+                affirmation: 'I release with grace. The space I create invites new blessings.'
+            },
+            11: { 
+                overview: 'Year ELEVEN (a master number year) heightens intuition and spiritual awareness. You\'re called to inspire and illuminate. Pay attention to dreams, synchronicities, and inner guidance. This is a year of spiritual acceleration and heightened sensitivity.',
+                career: 'Intuitive guidance leads to success. You naturally inspire others. Visionary work gains traction.',
+                relationships: 'Deep spiritual connections form or deepen. You understand others intuitively.',
+                growth: 'Trust your spiritual perceptions completely. Channel inspiration into action. Develop intuitive gifts.',
+                focus: ['Trust your intuition', 'Follow synchronicities', 'Inspire others', 'Develop spiritual gifts', 'Channel higher guidance'],
+                avoid: ['Dismissing intuitive insights', 'Anxiety and nervous energy', 'Ego-driven spirituality', 'Impractical idealism'],
+                affirmation: 'I am illuminated from within. Divine guidance flows through me.'
+            },
+            22: { 
+                overview: 'Year TWENTY-TWO is the Master Builder year—rare and powerful. You can manifest dreams into reality on a scale larger than imagined. Combine your highest vision with practical, step-by-step action. Build something that serves many.',
+                career: 'Large-scale projects succeed. Your practical vision creates lasting impact. Build for the long term.',
+                relationships: 'Build lasting foundations with partners. Shared visions strengthen bonds.',
+                growth: 'Develop discipline to manifest grand visions. You are building your legacy.',
+                focus: ['Work on significant projects', 'Combine vision with action', 'Build for lasting impact', 'Serve many', 'Lead with humility'],
+                avoid: ['Thinking too small', 'All vision, no action', 'Overwhelm', 'Neglecting practical details'],
+                affirmation: 'I am a master builder. My practical vision creates lasting change.'
+            },
+            33: { 
+                overview: 'Year THIRTY-THREE carries Master Teacher energy—the highest vibration. Your compassion and wisdom can heal and uplift many. This is not about doing more, but being more. Your presence itself is medicine for others.',
+                career: 'Teaching, healing, and service work flourish. Your presence transforms others.',
+                relationships: 'Deep healing becomes possible. Unconditional love transforms all it touches.',
+                growth: 'Embody your highest self in every interaction. Teach through example.',
+                focus: ['Serve through presence', 'Teach by example', 'Love unconditionally', 'Heal with compassion', 'Embody mastery'],
+                avoid: ['Martyrdom', 'Self-depletion', 'Taking on others\' pain', 'Preaching without embodying'],
+                affirmation: 'I teach through my being. Unconditional love flows through me to all.'
+            }
+        };
+        
+        const chineseYearlyGuidance = {
+            Rat: { strengths: 'Your resourcefulness and adaptability serve you well. Quick thinking leads to opportunities. Trust your ability to navigate any situation.', challenges: 'Avoid spreading too thin. Focus on quality over quantity in relationships and projects.' },
+            Ox: { strengths: 'Your determination and reliability build lasting success. Steady progress wins the race. Others depend on your strength.', challenges: 'Practice flexibility. Sometimes the scenic route reveals unexpected treasures.' },
+            Tiger: { strengths: 'Your courage and confidence inspire others. Take bold leaps toward your goals. Your charisma opens doors.', challenges: 'Channel impulsiveness into strategic action. Pride can isolate—stay humble.' },
+            Rabbit: { strengths: 'Your diplomatic grace creates harmony everywhere. Intuition guides you true. Elegance and kindness are your superpowers.', challenges: 'Assert your needs. Avoiding conflict entirely can lead to resentment.' },
+            Dragon: { strengths: 'Natural charisma and vision draw success. You were born to inspire. This year amplifies your already potent energy.', challenges: 'Temper ambition with humility. Listen to counsel from trusted advisors.' },
+            Snake: { strengths: 'Your intuition and wisdom cut through confusion. Strategic thinking leads to victory. Mystery is your ally.', challenges: 'Share your insights more openly. Too much secrecy breeds suspicion.' },
+            Horse: { strengths: 'Your energy and enthusiasm are contagious. Movement brings success. Your independent spirit thrives this year.', challenges: 'Patience is required for lasting success. Don\'t bolt at the first sign of difficulty.' },
+            Goat: { strengths: 'Your gentle creativity flourishes. Art and beauty bring joy and prosperity. Your calm presence heals others.', challenges: 'Don\'t let worry consume creative energy. Trust that you are supported.' },
+            Monkey: { strengths: 'Your cleverness and problem-solving shine. Innovation leads to breakthroughs. Wit and charm open every door.', challenges: 'Use mischief wisely. Too many tricks can undermine trust.' },
+            Rooster: { strengths: 'Your keen observation reveals what others miss. Hard work pays dividends. Honesty earns lasting respect.', challenges: 'Soften criticism with compassion. Lead with praise before correction.' },
+            Dog: { strengths: 'Your loyal heart attracts trustworthy allies. Stand firm for justice. Your honesty is rare and valued.', challenges: 'Don\'t let worry about fairness consume joy. Trust that balance unfolds.' },
+            Pig: { strengths: 'Your generous spirit attracts abundance. Sincerity and kindness create lasting bonds. Enjoy life\'s pleasures guiltlessly.', challenges: 'Maintain healthy boundaries. Not everyone deserves your unlimited trust.' }
+        };
+        
+        const compatibilityDescriptions = {
+            excellent: 'Your energy harmonizes beautifully with this year\'s ruling animal! Expect doors to open more easily, synchronicities to multiply, and your efforts to be well-received. The cosmic winds are at your back. Take advantage of this favorable alignment.',
+            neutral: 'You\'re in balanced territory this year. Neither particularly favored nor challenged by the year\'s energy, you have the freedom to chart your own course. Success depends on your own initiative and choices.',
+            challenging: 'This year\'s energy may create some friction with your nature. Challenges are opportunities for growth. The universe is asking you to develop flexibility, patience, and new approaches. Meet resistance with wisdom, not force.'
+        };
+        
+        // ===== DISPLAY =====
+        const today = new Date();
+        const year = today.getFullYear();
+        document.getElementById('yearDisplay').textContent = year;
+        
+        function buildProfileSelector() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '{}');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            const names = Object.keys(profiles).sort();
+            if (names.length === 0) {
+                document.getElementById('profileSelector').style.display = 'none';
+                return;
+            }
+            document.getElementById('profileSelector').innerHTML = `
+                <label>Viewing forecast for:</label>
+                <select id="profileDropdown">
+                    ${names.map(n => `<option value="${n}" ${n === activeId ? 'selected' : ''}>${n}</option>`).join('')}
+                </select>
+            `;
+            document.getElementById('profileDropdown').addEventListener('change', function() {
+                localStorage.setItem('quantumMerlinActiveProfile', this.value);
+                loadForecast();
+            });
+        }
+        
+        function loadForecast() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '{}');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            
+            if (Object.keys(profiles).length === 0 || !activeId) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Create Your Profile First</h2>
+                        <p>To receive your personalized cosmic yearly forecast, we need your birth information.</p>
+                        <a href="life-path-calculator.html">Create Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const profile = profiles[activeId];
+            if (!profile || !profile.birthDate) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Complete Your Profile</h2>
+                        <p>Your profile needs a birth date for accurate forecasts.</p>
+                        <a href="life-path-calculator.html">Update Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const preferredName = profile.preferredName || profile.name || 'Cosmic Soul';
+            document.getElementById('greeting').textContent = `Personalized for ${preferredName}`;
+            
+            const birthYear = new Date(profile.birthDate).getFullYear();
+            const personalYear = calculatePersonalYear(profile.birthDate, year);
+            const userAnimal = chineseZodiac.getAnimal(birthYear);
+            const userElement = chineseZodiac.getElement(birthYear);
+            const yearAnimal = chineseZodiac.getAnimal(year);
+            const yearElement = chineseZodiac.getElement(year);
+            const compatibility = chineseZodiac.getCompatibility(userAnimal.name, yearAnimal.name);
+            const interp = yearlyInterpretations[personalYear];
+            const retrogrades = mercuryRetrogrades[year] || mercuryRetrogrades[2026];
+            
+            // Month energies
+            const months = [];
+            for (let m = 1; m <= 12; m++) {
+                months.push({
+                    name: monthNames[m - 1],
+                    energy: calculatePersonalMonth(profile.birthDate, year, m)
+                });
+            }
+            
+            // Build content
+            let content = '';
+            
+            // Year Hero
+            content += `
+                <div class="year-hero">
+                    <div class="year-number">${year}</div>
+                    <div class="personal-year">Personal Year ${personalYear}</div>
+                    <div class="theme">${yearlyThemes[personalYear]} Year</div>
+                    <div class="overview">${interp.overview}</div>
+                </div>
+            `;
+            
+            // Chinese Zodiac Duo
+            content += `
+                <div class="zodiac-duo">
+                    <div class="zodiac-card">
+                        <div class="animal">${userAnimal.emoji}</div>
+                        <div class="name">${userElement} ${userAnimal.name}</div>
+                        <div class="element">${userAnimal.traits}</div>
+                        <div class="label">Your Birth Sign</div>
+                    </div>
+                    <div class="zodiac-connector">⟷</div>
+                    <div class="zodiac-card">
+                        <div class="animal">${yearAnimal.emoji}</div>
+                        <div class="name">${yearElement} ${yearAnimal.name}</div>
+                        <div class="element">${yearAnimal.traits}</div>
+                        <div class="label">Year of the ${yearAnimal.name}</div>
+                    </div>
+                </div>
+                
+                <div class="compatibility-badge">
+                    <div class="status ${compatibility}">${compatibility === 'excellent' ? '✨ Excellent Year Alignment' : compatibility === 'challenging' ? '⚡ Growth Through Challenge' : '☯️ Balanced Year Energy'}</div>
+                    <p class="compatibility-description">${compatibilityDescriptions[compatibility]}</p>
+                </div>
+            `;
+            
+            // Life Areas
+            content += `
+                <div class="forecast-section section-numerology">
+                    <h2>✨ Your Year in Life Areas</h2>
+                    <div class="life-areas">
+                        <div class="life-area">
+                            <h4>💼 Career & Work</h4>
+                            <p>${interp.career}</p>
+                        </div>
+                        <div class="life-area">
+                            <h4>❤️ Relationships</h4>
+                            <p>${interp.relationships}</p>
+                        </div>
+                        <div class="life-area">
+                            <h4>🌱 Personal Growth</h4>
+                            <p>${interp.growth}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="focus-section">
+                        <h3>Focus Your Energy On</h3>
+                        <ul class="guidance-list">
+                            ${interp.focus.map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="caution-section">
+                        <h3>Be Mindful Of</h3>
+                        <ul class="guidance-list">
+                            ${interp.avoid.map(a => `<li>${a}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            // Month by Month
+            content += `
+                <div class="forecast-section section-numerology">
+                    <h2>📅 Month by Month Energy</h2>
+                    <p>Each month carries its own numerological vibration within your Personal Year ${personalYear}. Use this overview for timing major activities:</p>
+                    <div class="month-grid">
+                        ${months.map((m, i) => `
+                            <div class="month-card ${i === today.getMonth() ? 'current' : ''}">
+                                <div class="month-name">${m.name.substring(0, 3)}</div>
+                                <div class="energy">${m.energy}</div>
+                                <div class="theme">${yearlyThemes[m.energy]}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <p style="font-size: 0.9em; color: #9ca3af; margin-top: 15px;">Yellow border = Current month. Click through to <a href="cosmic-monthly-forecast.html" style="color: #06b6d4;">Cosmic Monthly</a> for detailed monthly guidance.</p>
+                </div>
+            `;
+            
+            // Chinese Zodiac Section
+            const zodiacGuidance = chineseYearlyGuidance[userAnimal.name];
+            content += `
+                <div class="forecast-section section-chinese">
+                    <h2>🐲 Your ${userAnimal.name} in ${year}</h2>
+                    
+                    <div class="focus-section">
+                        <h3>Your Zodiac Strengths This Year</h3>
+                        <p>${zodiacGuidance.strengths}</p>
+                    </div>
+                    
+                    <div class="caution-section">
+                        <h3>Growth Edges to Mind</h3>
+                        <p>${zodiacGuidance.challenges}</p>
+                    </div>
+                    
+                    <h3>Lucky Numbers & Colors</h3>
+                    <p>Your ${userAnimal.name} lucky numbers: <strong>${userAnimal.lucky.join(', ')}</strong></p>
+                    <p>Favorable colors: <strong>${userAnimal.colors.join(', ')}</strong></p>
+                    
+                    <h3>Element Interaction: ${userElement} meets ${yearElement}</h3>
+                    <p>${getElementInteraction(userElement, yearElement)}</p>
+                </div>
+            `;
+            
+            // Mercury Retrogrades
+            content += `
+                <div class="forecast-section section-planetary">
+                    <h2>☿ Mercury Retrograde Schedule</h2>
+                    <p>Mercury retrograde periods affect communication, technology, travel, and contracts. Plan major decisions around these dates:</p>
+                    <div class="retrograde-timeline">
+                        ${retrogrades.map(r => `
+                            <div class="retrograde-item">
+                                <div class="icon">☿</div>
+                                <div class="details">
+                                    <div class="dates">${r.start} – ${r.end}</div>
+                                    <div class="sign">in ${r.sign}</div>
+                                    <div class="advice">${r.advice}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <p><strong>General Retrograde Guidance:</strong> Review, revise, reconnect—but avoid launching new ventures, signing important contracts, or making major purchases if possible. Back up data, allow extra travel time, and double-check communications.</p>
+                </div>
+            `;
+            
+            // Synthesis
+            content += `
+                <div class="forecast-section section-synthesis">
+                    <h2>🔮 Your Cosmic Year Synthesis</h2>
+                    <p>${year} brings together powerful energies for your journey:</p>
+                    <ul class="guidance-list">
+                        <li><strong>Personal Year ${personalYear}:</strong> ${yearlyThemes[personalYear]} energy—${interp.focus[0].toLowerCase()}</li>
+                        <li><strong>Chinese Zodiac:</strong> ${userAnimal.name} in Year of the ${yearAnimal.name}—${compatibility} alignment</li>
+                        <li><strong>Mercury Retrogrades:</strong> ${retrogrades.length} periods requiring review and patience</li>
+                    </ul>
+                    
+                    <h3>Your Year in One Paragraph</h3>
+                    <p>${getYearlySynthesis(personalYear, userAnimal.name, yearAnimal.name, compatibility)}</p>
+                    
+                    <div class="affirmation">
+                        <h3>Your Yearly Affirmation</h3>
+                        <p>"${interp.affirmation}"</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('content').innerHTML = content;
+        }
+        
+        function getElementInteraction(userEl, yearEl) {
+            const cycle = {
+                'Wood': { generates: 'Fire', controls: 'Earth', weakened: 'Metal', supported: 'Water' },
+                'Fire': { generates: 'Earth', controls: 'Metal', weakened: 'Water', supported: 'Wood' },
+                'Earth': { generates: 'Metal', controls: 'Water', weakened: 'Wood', supported: 'Fire' },
+                'Metal': { generates: 'Water', controls: 'Wood', weakened: 'Fire', supported: 'Earth' },
+                'Water': { generates: 'Wood', controls: 'Fire', weakened: 'Earth', supported: 'Metal' }
+            };
+            
+            if (userEl === yearEl) {
+                return `${userEl} meeting ${yearEl} doubles this elemental energy. Your natural tendencies are amplified—both strengths and challenges. Embrace your element\'s gifts while staying aware of its shadows.`;
+            }
+            if (cycle[userEl].generates === yearEl) {
+                return `Your ${userEl} generates ${yearEl}—you fuel this year\'s energy naturally. Your contributions are magnified. Give generously but pace yourself to avoid depletion.`;
+            }
+            if (cycle[userEl].supported === yearEl) {
+                return `${yearEl} supports your ${userEl} nature. The year\'s energy nourishes you. Expect to feel more resourced and capable than usual.`;
+            }
+            if (cycle[userEl].controls === yearEl) {
+                return `Your ${userEl} has some control over ${yearEl}. You may find this year's energy easier to direct and channel. Use this influence wisely and compassionately.`;
+            }
+            if (cycle[userEl].weakened === yearEl) {
+                return `${yearEl} can challenge your ${userEl} nature. This creates growth through creative tension. Adapt and integrate rather than resist.`;
+            }
+            return `${userEl} and ${yearEl} create an interesting dynamic. Watch for both harmony and creative friction as these energies interact.`;
+        }
+        
+        function getYearlySynthesis(yearNum, userAnimal, yearAnimal, compatibility) {
+            const themes = {
+                1: 'new beginnings and bold initiative',
+                2: 'partnership and patient cooperation',
+                3: 'creative expression and joyful communication',
+                4: 'building solid foundations',
+                5: 'embracing change and freedom',
+                6: 'nurturing love and home',
+                7: 'spiritual reflection and inner wisdom',
+                8: 'stepping into power and achievement',
+                9: 'completion and compassionate release',
+                11: 'spiritual illumination and inspiration',
+                22: 'master building and large-scale manifestation',
+                33: 'compassionate teaching and healing presence'
+            };
+            
+            let synthesis = `This year centers on ${themes[yearNum]}. As a ${userAnimal}, `;
+            
+            if (compatibility === 'excellent') {
+                synthesis += `you're beautifully aligned with the Year of the ${yearAnimal}. Expect smoother progress, fortunate timing, and opportunities that seem to find you. `;
+            } else if (compatibility === 'challenging') {
+                synthesis += `you may encounter some friction with the ${yearAnimal} year energy. These challenges are invitations to grow, adapt, and develop new strengths. `;
+            } else {
+                synthesis += `you have balanced energy with the Year of the ${yearAnimal}. Success depends on your initiative and choices rather than cosmic tailwinds or headwinds. `;
+            }
+            
+            synthesis += `Trust your ${userAnimal} instincts while remaining open to the year's lessons. Navigate Mercury retrogrades with patience, use your monthly energies for timing, and return to your yearly affirmation whenever you need centering.`;
+            
+            return synthesis;
+        }
+        
+        // Share functions
+        function shareOnTwitter() {
+            const text = encodeURIComponent(`My ${year} Cosmic Yearly Forecast from Quantum Merlin! ✨🐲🌟`);
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard! 📋');
+        }
+        
+        buildProfileSelector();
+        loadForecast();
+    </script>
+</body>
+</html>

@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#bf5af2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="RetroMerlin.jpg">
+    <link rel="manifest" href="manifest.json">
+    <title>Cosmic Weekly Forecast | Quantum Merlin</title>
+    <meta name="description" content="Your complete cosmic weekly forecast combining numerology, lunar cycles, planetary alignments, and Chinese zodiac wisdom.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="auto-fill.js"></script>
+    <script src="cosmic-loader.js"></script>
+    <!-- Astronomy Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 60%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        .nav-links {
+            text-align: center;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .nav-links a {
+            color: #06b6d4;
+            text-decoration: none;
+            margin: 0 15px;
+            font-family: 'Cinzel', serif;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #fbbf24; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.2em;
+            background: linear-gradient(135deg, #fbbf24 0%, #8b5cf6 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .date { color: #9ca3af; font-size: 1.1em; margin-bottom: 8px; }
+        .greeting { color: #fbbf24; font-size: 1.2em; font-style: italic; }
+        
+        #profileSelector {
+            background: rgba(17, 24, 39, 0.6);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        #profileSelector label {
+            font-family: 'Cinzel', serif;
+            color: #9ca3af;
+            margin-right: 10px;
+        }
+        #profileSelector select {
+            background: rgba(17, 24, 39, 0.9);
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            color: #e0e0e0;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1em;
+        }
+        
+        .profile-required {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2));
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .profile-required h2 { color: #fbbf24; margin-bottom: 15px; }
+        .profile-required a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        /* Cosmic Overview Grid */
+        .cosmic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .cosmic-card {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 15px;
+            padding: 18px 12px;
+            text-align: center;
+        }
+        .cosmic-card .icon { font-size: 1.8em; margin-bottom: 5px; }
+        .cosmic-card .value { font-family: 'Cinzel', serif; font-weight: 600; color: #fbbf24; font-size: 1.1em; }
+        .cosmic-card .label { font-size: 0.85em; color: #9ca3af; margin-top: 3px; }
+        .cosmic-card.moon { border-color: rgba(6, 182, 212, 0.4); }
+        .cosmic-card.chinese { border-color: rgba(236, 72, 153, 0.4); }
+        .cosmic-card.chinese .value { color: #ec4899; }
+        .cosmic-card.alert { border-color: rgba(239, 68, 68, 0.5); background: rgba(239, 68, 68, 0.1); }
+        .cosmic-card.good { border-color: rgba(34, 197, 94, 0.4); }
+        
+        /* Sections */
+        .forecast-section {
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            border-left: 4px solid #8b5cf6;
+        }
+        .forecast-section h2 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        .forecast-section h3 {
+            font-family: 'Cinzel', serif;
+            color: #06b6d4;
+            margin: 20px 0 10px;
+            font-size: 1.1em;
+        }
+        .forecast-section p { line-height: 1.7; margin-bottom: 10px; }
+        
+        .section-numerology { border-left-color: #8b5cf6; }
+        .section-lunar { border-left-color: #06b6d4; }
+        .section-planetary { border-left-color: #fbbf24; }
+        .section-chinese { border-left-color: #ec4899; }
+        .section-synthesis { 
+            border-left-color: transparent;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
+        }
+        
+        .guidance-list {
+            list-style: none;
+            padding: 0;
+        }
+        .guidance-list li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        }
+        .guidance-list li:before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #8b5cf6;
+        }
+        
+        .focus-section { background: rgba(34, 197, 94, 0.05); border-radius: 12px; padding: 15px; margin: 15px 0; }
+        .focus-section h3 { color: #22c55e !important; }
+        .caution-section { background: rgba(239, 68, 68, 0.05); border-radius: 12px; padding: 15px; margin: 15px 0; }
+        .caution-section h3 { color: #ef4444 !important; }
+        
+        /* Daily Grid */
+        .daily-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin: 20px 0;
+        }
+        .day-card {
+            background: rgba(17, 24, 39, 0.8);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        .day-card.today {
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+        }
+        .day-card .day-name { font-size: 0.75em; color: #9ca3af; margin-bottom: 5px; }
+        .day-card .day-date { font-weight: 600; color: #e0e0e0; margin-bottom: 5px; }
+        .day-card .day-num { color: #8b5cf6; font-family: 'Cinzel', serif; font-size: 1.3em; }
+        .day-card .moon-phase { font-size: 1.2em; margin-top: 5px; }
+        
+        /* Moon Calendar */
+        .moon-calendar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .moon-day {
+            flex: 1;
+            min-width: 80px;
+            background: rgba(6, 182, 212, 0.1);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+        .moon-day .date { font-size: 0.8em; color: #9ca3af; }
+        .moon-day .emoji { font-size: 1.5em; margin: 5px 0; }
+        .moon-day .phase { font-size: 0.75em; color: #06b6d4; }
+        
+        /* Chinese Zodiac */
+        .chinese-zodiac-box {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(251, 191, 36, 0.1));
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .chinese-zodiac-box .animal { font-size: 3em; margin-bottom: 10px; }
+        .chinese-zodiac-box .name { font-family: 'Cinzel', serif; font-size: 1.4em; color: #ec4899; }
+        .chinese-zodiac-box .element { color: #fbbf24; margin-top: 5px; }
+        
+        .affirmation {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(139, 92, 246, 0.2));
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .affirmation h3 { color: #fbbf24; margin-bottom: 10px; }
+        .affirmation p { font-size: 1.3em; font-style: italic; color: #e0e0e0; }
+        
+        /* How to Use Section */
+        .how-to-use {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px dashed rgba(139, 92, 246, 0.3);
+        }
+        .how-to-use h3 { color: #8b5cf6; margin-bottom: 15px; font-family: 'Cinzel', serif; }
+        .how-to-use p { margin-bottom: 10px; line-height: 1.7; }
+        .how-to-use ul { margin-left: 20px; margin-top: 10px; }
+        .how-to-use li { margin-bottom: 8px; }
+        
+        /* Share Section */
+        .share-section {
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .share-section h3 { color: #9ca3af; margin-bottom: 15px; font-family: 'Cinzel', serif; }
+        .share-buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .share-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            background: rgba(139, 92, 246, 0.2);
+            color: #e0e0e0;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s;
+        }
+        .share-btn:hover { background: rgba(139, 92, 246, 0.4); }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .daily-grid { grid-template-columns: repeat(4, 1fr); }
+            .day-card { padding: 8px 4px; }
+            .day-card .day-name { font-size: 0.65em; }
+            .cosmic-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        /* Footer */
+        .legal-footer {
+            margin-top: 40px;
+            padding: 25px;
+            text-align: center;
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        .legal-links { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 10px; }
+        .legal-links a { color: #9A8F7A; text-decoration: none; font-size: 0.9em; }
+        .legal-links a:hover { color: #fbbf24; }
+        .legal-links .separator { color: rgba(139, 92, 246, 0.4); }
+        .copyright { color: #6B6B6B; font-size: 0.85em; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="forecasts.html">All Forecasts</a>
+            <a href="cosmic-daily-forecast.html">Cosmic Daily</a>
+        </div>
+        
+        <div class="header">
+            <h1>🌌 Cosmic Weekly Forecast</h1>
+            <div class="date" id="weekRange"></div>
+            <div class="greeting" id="greeting"></div>
+        </div>
+        
+        <div id="profileSelector"></div>
+        
+        <div class="how-to-use">
+            <h3>📖 How to Use This Forecast</h3>
+            <p>Your Cosmic Weekly Forecast blends <strong>four ancient wisdom systems</strong> to give you a complete picture of the week ahead:</p>
+            <ul>
+                <li><strong>Numerology:</strong> Your Personal Week number reveals the overarching theme and energy you're navigating.</li>
+                <li><strong>Lunar Cycles:</strong> The Moon's phase and sign influence your emotions, intuition, and timing for action.</li>
+                <li><strong>Planetary Transits:</strong> Mercury's motion affects communication, travel, and technology.</li>
+                <li><strong>Chinese Zodiac:</strong> Your birth year animal interacts with the current year's energy, revealing hidden opportunities and challenges.</li>
+            </ul>
+            <p><em>Review each section, then read the Synthesis for your unified cosmic guidance. Let these insights inform—but not dictate—your choices.</em></p>
+        </div>
+        
+        <div id="content"></div>
+        
+        <div class="share-section">
+            <h3>Share Your Forecast</h3>
+            <div class="share-buttons">
+                <a href="#" class="share-btn" onclick="shareOnTwitter(); return false;">🐦 Twitter</a>
+                <a href="#" class="share-btn" onclick="shareOnFacebook(); return false;">📘 Facebook</a>
+                <a href="#" class="share-btn" onclick="copyLink(); return false;">📋 Copy Link</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="legal-footer">
+        <div class="legal-links">
+            <a href="terms.html">Terms</a><span class="separator">|</span>
+            <a href="privacy.html">Privacy</a><span class="separator">|</span>
+            <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
+    </footer>
+    
+    <script>
+        // ===== NUMEROLOGY FUNCTIONS =====
+        function reduceToSingle(num) {
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+            }
+            return num;
+        }
+        
+        function calculatePersonalYear(birthDate, targetYear) {
+            const date = new Date(birthDate);
+            return reduceToSingle(reduceToSingle(date.getDate()) + reduceToSingle(date.getMonth() + 1) + reduceToSingle(targetYear));
+        }
+        
+        function calculatePersonalMonth(birthDate, targetYear, targetMonth) {
+            return reduceToSingle(calculatePersonalYear(birthDate, targetYear) + targetMonth);
+        }
+        
+        function calculatePersonalDay(birthDate, targetDate) {
+            const target = new Date(targetDate);
+            return reduceToSingle(calculatePersonalMonth(birthDate, target.getFullYear(), target.getMonth() + 1) + target.getDate());
+        }
+        
+        function getWeekNumber(date) {
+            const d = new Date(date);
+            const startOfYear = new Date(d.getFullYear(), 0, 1);
+            const days = Math.floor((d - startOfYear) / (24 * 60 * 60 * 1000));
+            return Math.ceil((days + startOfYear.getDay() + 1) / 7);
+        }
+        
+        function calculatePersonalWeek(birthDate, targetDate) {
+            const target = new Date(targetDate);
+            return reduceToSingle(calculatePersonalYear(birthDate, target.getFullYear()) + getWeekNumber(target));
+        }
+        
+        function getWeekDates(date) {
+            const d = new Date(date);
+            const day = d.getDay();
+            const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+            const monday = new Date(d.setDate(diff));
+            const days = [];
+            for (let i = 0; i < 7; i++) {
+                const newDate = new Date(monday);
+                newDate.setDate(monday.getDate() + i);
+                days.push(newDate);
+            }
+            return days;
+        }
+        
+        // ===== LUNAR FUNCTIONS =====
+        function getMoonPhase(date) {
+            const illumination = SunCalc.getMoonIllumination(date);
+            const phase = illumination.phase;
+            const phases = [
+                { name: 'New Moon', emoji: '🌑', min: 0, max: 0.0625 },
+                { name: 'Waxing Crescent', emoji: '🌒', min: 0.0625, max: 0.1875 },
+                { name: 'First Quarter', emoji: '🌓', min: 0.1875, max: 0.3125 },
+                { name: 'Waxing Gibbous', emoji: '🌔', min: 0.3125, max: 0.4375 },
+                { name: 'Full Moon', emoji: '🌕', min: 0.4375, max: 0.5625 },
+                { name: 'Waning Gibbous', emoji: '🌖', min: 0.5625, max: 0.6875 },
+                { name: 'Last Quarter', emoji: '🌗', min: 0.6875, max: 0.8125 },
+                { name: 'Waning Crescent', emoji: '🌘', min: 0.8125, max: 1.0 }
+            ];
+            for (let p of phases) {
+                if (phase >= p.min && phase < p.max) {
+                    return { name: p.name, emoji: p.emoji, illumination: Math.round(illumination.fraction * 100) };
+                }
+            }
+            return { name: 'New Moon', emoji: '🌑', illumination: Math.round(illumination.fraction * 100) };
+        }
+        
+        function getMoonSign(date) {
+            const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+            const symbols = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
+            try {
+                const moon = Astronomy.EclipticGeoMoon(date);
+                const signIndex = Math.floor(moon.elon / 30) % 12;
+                return { name: signs[signIndex], symbol: symbols[signIndex], degrees: (moon.elon % 30).toFixed(1) };
+            } catch(e) {
+                return { name: 'Pisces', symbol: '♓', degrees: '~' };
+            }
+        }
+        
+        // ===== PLANETARY FUNCTIONS =====
+        const retrogradePeriods = [
+            { start: new Date(2025, 2, 14), end: new Date(2025, 3, 7), sign: 'Aries' },
+            { start: new Date(2025, 6, 18), end: new Date(2025, 7, 11), sign: 'Leo' },
+            { start: new Date(2025, 10, 9), end: new Date(2025, 10, 29), sign: 'Sagittarius' },
+            { start: new Date(2026, 2, 2), end: new Date(2026, 2, 25), sign: 'Pisces' },
+            { start: new Date(2026, 6, 2), end: new Date(2026, 6, 26), sign: 'Cancer' }
+        ];
+        
+        function isMercuryRetrograde(date) {
+            for (let period of retrogradePeriods) {
+                if (date >= period.start && date <= period.end) {
+                    return { retrograde: true, sign: period.sign, endDate: period.end };
+                }
+            }
+            for (let period of retrogradePeriods) {
+                if (period.start > date) {
+                    return { retrograde: false, nextStart: period.start, nextSign: period.sign };
+                }
+            }
+            return { retrograde: false };
+        }
+        
+        // ===== CHINESE ZODIAC =====
+        const chineseZodiac = {
+            animals: [
+                { name: 'Rat', emoji: '🐀', element: 'Water', traits: 'Quick-witted, resourceful, adaptable', yin: true },
+                { name: 'Ox', emoji: '🐂', element: 'Earth', traits: 'Diligent, reliable, strong, determined', yin: false },
+                { name: 'Tiger', emoji: '🐅', element: 'Wood', traits: 'Brave, competitive, confident, unpredictable', yin: false },
+                { name: 'Rabbit', emoji: '🐇', element: 'Wood', traits: 'Quiet, elegant, kind, responsible', yin: true },
+                { name: 'Dragon', emoji: '🐉', element: 'Earth', traits: 'Confident, intelligent, enthusiastic, ambitious', yin: false },
+                { name: 'Snake', emoji: '🐍', element: 'Fire', traits: 'Enigmatic, intelligent, wise, intuitive', yin: true },
+                { name: 'Horse', emoji: '🐎', element: 'Fire', traits: 'Animated, active, energetic, free-spirited', yin: false },
+                { name: 'Goat', emoji: '🐐', element: 'Earth', traits: 'Calm, gentle, sympathetic, creative', yin: true },
+                { name: 'Monkey', emoji: '🐵', element: 'Metal', traits: 'Sharp, smart, curious, mischievous', yin: false },
+                { name: 'Rooster', emoji: '🐓', element: 'Metal', traits: 'Observant, hardworking, courageous, confident', yin: true },
+                { name: 'Dog', emoji: '🐕', element: 'Earth', traits: 'Loyal, honest, prudent, faithful', yin: false },
+                { name: 'Pig', emoji: '🐖', element: 'Water', traits: 'Compassionate, generous, diligent, trusting', yin: true }
+            ],
+            elements: ['Wood', 'Fire', 'Earth', 'Metal', 'Water'],
+            getAnimal: function(year) {
+                const index = (year - 1900) % 12;
+                return this.animals[index];
+            },
+            getElement: function(year) {
+                const index = Math.floor((year - 4) / 2) % 5;
+                return this.elements[index];
+            },
+            getCompatibility: function(animal1, animal2) {
+                const compatGroups = [
+                    ['Rat', 'Dragon', 'Monkey'],
+                    ['Ox', 'Snake', 'Rooster'],
+                    ['Tiger', 'Horse', 'Dog'],
+                    ['Rabbit', 'Goat', 'Pig']
+                ];
+                for (let group of compatGroups) {
+                    if (group.includes(animal1) && group.includes(animal2)) {
+                        return 'excellent';
+                    }
+                }
+                // Check clashes
+                const clashes = [
+                    ['Rat', 'Horse'], ['Ox', 'Goat'], ['Tiger', 'Monkey'],
+                    ['Rabbit', 'Rooster'], ['Dragon', 'Dog'], ['Snake', 'Pig']
+                ];
+                for (let clash of clashes) {
+                    if (clash.includes(animal1) && clash.includes(animal2)) {
+                        return 'challenging';
+                    }
+                }
+                return 'neutral';
+            }
+        };
+        
+        const currentYearAnimal = chineseZodiac.getAnimal(new Date().getFullYear());
+        
+        // ===== INTERPRETATIONS =====
+        const weeklyInterpretations = {
+            1: { theme: 'New Beginnings', energy: 'Initiative, independence, leadership', overview: 'This week pulses with pioneering energy. The cosmos supports starting fresh, speaking up, and taking bold action. Lead with confidence.',
+                 focus: ['Launch new projects', 'Assert your needs clearly', 'Make independent decisions', 'Trust your original ideas', 'Step into leadership'],
+                 avoid: ['Waiting for permission', 'Excessive aggression', 'Second-guessing yourself'],
+                 behave: 'Be the initiator. Start conversations, propose ideas, make the first move. Your courage inspires others.',
+                 affirmation: 'I am the pioneer of my own path. This week, I step boldly into new territory.' },
+            2: { theme: 'Partnership', energy: 'Cooperation, diplomacy, patience', overview: 'Patience and partnership weave through this week. Progress comes through cooperation, not force. Listen deeply and build bridges.',
+                 focus: ['Collaborate on projects', 'Practice active listening', 'Mediate conflicts', 'Attend to details', 'Nurture relationships'],
+                 avoid: ['Forcing outcomes', 'Going solo unnecessarily', 'Impatience'],
+                 behave: 'Be the diplomat. Seek win-win solutions. Let others speak first. Your patience opens unexpected doors.',
+                 affirmation: 'I create harmony through patience. My willingness to cooperate opens unexpected doors.' },
+            3: { theme: 'Expression', energy: 'Creativity, communication, joy', overview: 'Creative energy flows abundantly. Express yourself through words, art, or simply the joy of being alive. Your natural warmth opens doors.',
+                 focus: ['Express yourself creatively', 'Communicate openly', 'Socialize and network', 'Embrace playfulness', 'Share your talents'],
+                 avoid: ['Self-criticism', 'Isolation', 'Taking things too seriously'],
+                 behave: 'Be expressive and joyful. Let your personality shine. Say yes to social invitations. Create something, anything.',
+                 affirmation: 'My creativity is a gift I share freely. This week, joy is my compass.' },
+            4: { theme: 'Foundation', energy: 'Organization, discipline, stability', overview: 'This week grounds you in practical reality. The cosmos supports steady effort and building lasting foundations. Do the work.',
+                 focus: ['Organize your space', 'Create systems', 'Handle practical matters', 'Build something tangible', 'Attend to health'],
+                 avoid: ['Shortcuts', 'Rigid thinking', 'Overworking'],
+                 behave: 'Be methodical and patient. Show up consistently. Quality matters more than speed this week.',
+                 affirmation: 'I am the architect of my future. Every disciplined step builds my dreams.' },
+            5: { theme: 'Change', energy: 'Freedom, adventure, flexibility', overview: 'Expect the unexpected! The cosmos may rearrange your plans—embrace it. Flexibility is your superpower. Adventure calls.',
+                 focus: ['Embrace change', 'Try new experiences', 'Stay flexible', 'Communicate broadly', 'Seek variety'],
+                 avoid: ['Rigid routines', 'Resisting change', 'Scattered energy'],
+                 behave: 'Be adaptable and curious. Say yes to the unexpected. Break your routine. Explore.',
+                 affirmation: 'I am fluid and adaptable. This week, change is my teacher and ally.' },
+            6: { theme: 'Harmony', energy: 'Love, responsibility, nurturing', overview: 'Home, family, and love take center stage. Nurture what matters most. Create beauty and harmony in your space.',
+                 focus: ['Nurture relationships', 'Beautify your space', 'Fulfill responsibilities', 'Give and receive love', 'Care for family'],
+                 avoid: ['Martyrdom', 'Perfectionism', 'Neglecting self-care'],
+                 behave: 'Be nurturing but balanced. Give generously, receive gracefully. Create beauty wherever you are.',
+                 affirmation: 'Love flows through me in perfect balance. I nurture and am nurtured.' },
+            7: { theme: 'Reflection', energy: 'Introspection, wisdom, spirituality', overview: 'This week invites you inward. The cosmos supports reflection, study, and connecting with deeper wisdom. Honor your need for solitude.',
+                 focus: ['Meditate and reflect', 'Study something meaningful', 'Trust your intuition', 'Seek quality over quantity', 'Connect with nature'],
+                 avoid: ['Constant noise', 'Dismissing intuition', 'Complete isolation'],
+                 behave: 'Be contemplative. Slow down. Listen to your inner wisdom. Seek depth, not breadth.',
+                 affirmation: 'In silence, I hear my soul\'s wisdom. This week, I go within to grow.' },
+            8: { theme: 'Power', energy: 'Achievement, authority, abundance', overview: 'Power and achievement energy surge through this week. Step into your authority. Make things happen in the material world.',
+                 focus: ['Take leadership roles', 'Make financial decisions', 'Step into authority', 'Manifest goals', 'Exercise power wisely'],
+                 avoid: ['Power struggles', 'Materialism', 'Neglecting emotions'],
+                 behave: 'Be authoritative but fair. Make bold decisions. Own your power and use it with integrity.',
+                 affirmation: 'I step into my power with wisdom and integrity. Abundance flows to me.' },
+            9: { theme: 'Completion', energy: 'Release, compassion, humanitarianism', overview: 'Completion energy infuses this week. Release what\'s finished, forgive the past, and create space for new blessings.',
+                 focus: ['Complete projects', 'Release what\'s done', 'Practice forgiveness', 'Serve others', 'Think globally'],
+                 avoid: ['Starting major new things', 'Clinging to the past', 'Selfishness'],
+                 behave: 'Be generous and forgiving. Tie up loose ends. Give back to your community.',
+                 affirmation: 'I release with grace and gratitude. Space I create invites new blessings.' },
+            11: { theme: 'Illumination', energy: 'Inspiration, intuition, spiritual insight', overview: 'Master number 11 illuminates with heightened intuition. Pay attention to dreams, signs, and synchronicities. You\'re called to inspire.',
+                  focus: ['Trust intuition completely', 'Pay attention to signs', 'Channel inspiration', 'Share insights', 'Connect spiritually'],
+                  avoid: ['Dismissing insights', 'Anxiety', 'Ego-driven action'],
+                  behave: 'Be open to divine guidance. Trust your visions. Let inspiration flow through you to others.',
+                  affirmation: 'I am a channel for divine light. My intuition illuminates my path.' },
+            22: { theme: 'Master Builder', energy: 'Manifestation, large-scale vision', overview: 'The master builder energy of 22 gives extraordinary manifestation power. Turn dreams into reality through practical action.',
+                  focus: ['Work on lasting projects', 'Combine vision with action', 'Build for others', 'Lead with humility', 'Think big'],
+                  avoid: ['Thinking too small', 'All vision no action', 'Overwhelm'],
+                  behave: 'Be visionary AND practical. Take concrete steps toward big dreams. Build something that serves many.',
+                  affirmation: 'I am a master builder. My practical vision creates lasting change.' },
+            33: { theme: 'Master Teacher', energy: 'Healing, uplifting humanity', overview: 'The highest master number brings profound healing energy. Serve through unconditional love. Your presence itself is healing.',
+                  focus: ['Serve through presence', 'Teach by example', 'Love unconditionally', 'Heal through compassion', 'Embody your highest self'],
+                  avoid: ['Martyrdom', 'Self-depletion', 'Taking on others\' pain'],
+                  behave: 'Be the embodiment of compassion. Lead by example, not words. Your being is your teaching.',
+                  affirmation: 'I teach through my being. Unconditional love flows through me to all.' }
+        };
+        
+        const moonSignEnergy = {
+            Aries: { energy: 'Bold, impulsive, action-oriented', advice: 'Channel emotional fire into physical activity. Start things. Be direct.' },
+            Taurus: { energy: 'Steady, sensual, comfort-seeking', advice: 'Slow down and savor. Focus on material comfort and beauty.' },
+            Gemini: { energy: 'Curious, chatty, mentally restless', advice: 'Communicate, learn, connect. Variety satisfies restless feelings.' },
+            Cancer: { energy: 'Nurturing, sensitive, home-focused', advice: 'Honor emotional needs. Tend to home and family. Self-care matters.' },
+            Leo: { energy: 'Dramatic, warm, attention-seeking', advice: 'Express yourself boldly. Creativity and playfulness feed your soul.' },
+            Virgo: { energy: 'Analytical, helpful, detail-oriented', advice: 'Channel feelings into practical service. Organize and improve.' },
+            Libra: { energy: 'Harmonious, social, relationship-focused', advice: 'Seek balance and beauty. Relationships need attention.' },
+            Scorpio: { energy: 'Intense, transformative, deep', advice: 'Allow deep feelings. Transformation is possible. Privacy matters.' },
+            Sagittarius: { energy: 'Adventurous, optimistic, freedom-seeking', advice: 'Explore, learn, expand horizons. Adventure feeds your spirit.' },
+            Capricorn: { energy: 'Practical, ambitious, disciplined', advice: 'Focus on goals. Work toward long-term objectives. Structure helps.' },
+            Aquarius: { energy: 'Detached, humanitarian, unconventional', advice: 'Think about the collective. Innovation and uniqueness are valued.' },
+            Pisces: { energy: 'Dreamy, intuitive, spiritually open', advice: 'Honor your sensitivity. Dreams and intuition guide you.' }
+        };
+        
+        const chineseZodiacWeekly = {
+            Rat: { with: { Snake: 'Trust your instincts in financial matters this week. A hidden opportunity emerges.', Horse: 'Tension may arise—focus on common ground. Avoid power struggles.', Dragon: 'Excellent week for collaboration. Your combined energy creates magic.', Monkey: 'Playful energy abounds. Creative projects flourish.', default: 'Your resourcefulness serves you well this week. Stay adaptable.' } },
+            Ox: { with: { Goat: 'Different approaches may clash. Practice patience and find middle ground.', Snake: 'Intuitive alignment supports steady progress. Trust the process.', Rooster: 'Productive week ahead. Your diligence is recognized and rewarded.', default: 'Steady effort pays off. Build on solid foundations this week.' } },
+            Tiger: { with: { Monkey: 'Competing energies require awareness. Channel rivalry into creativity.', Horse: 'Dynamic week of action and adventure. Bold moves succeed.', Dog: 'Loyal alliances strengthen. Trust your inner circle.', default: 'Your courage is your compass this week. Take calculated risks.' } },
+            Rabbit: { with: { Rooster: 'Communication styles differ. Listen carefully and speak thoughtfully.', Goat: 'Harmonious energy supports creative and domestic pursuits.', Pig: 'Gentle week of peace and contentment. Nurture close bonds.', default: 'Diplomatic approach wins. Seek harmony in all interactions.' } },
+            Dragon: { with: { Dog: 'Conflicting energies require grounding. Stay humble and service-oriented.', Rat: 'Powerful week for manifestation. Your vision gains momentum.', Monkey: 'Creative brilliance shines. Take bold action on ideas.', default: 'Your natural charisma is heightened. Lead with heart.' } },
+            Snake: { with: { Pig: 'Opposing energies may create tension. Seek understanding over conflict.', Ox: 'Supportive energy for long-term planning. Wisdom guides decisions.', Rooster: 'Intellectual connection strengthens. Strategic thinking succeeds.', default: 'Your intuition is especially sharp. Trust your deeper knowing.' } },
+            Horse: { with: { Rat: 'Conflicting styles require patience. Focus on shared goals.', Tiger: 'Exciting week of movement and progress. Adventure beckons.', Dog: 'Loyal connections deepen. Friendship brings unexpected gifts.', default: 'Freedom and movement energize you. Explore new territories.' } },
+            Goat: { with: { Ox: 'Different approaches may cause friction. Seek creative compromises.', Rabbit: 'Peaceful, artistic energy flows. Beauty and creativity flourish.', Pig: 'Nurturing connections bring joy. Home life is especially sweet.', default: 'Your gentle strength serves you well. Create beauty around you.' } },
+            Monkey: { with: { Tiger: 'Competitive energy requires channeling. Transform rivalry into innovation.', Rat: 'Clever connections form. Problem-solving abilities shine.', Dragon: 'Brilliant week for ideas and action. Think big.', default: 'Your quick wit is an asset. Adapt and innovate freely.' } },
+            Rooster: { with: { Rabbit: 'Communication requires extra care. Listen before speaking.', Ox: 'Productive partnerships form. Hard work yields visible results.', Snake: 'Intellectual connection deepens. Strategic planning succeeds.', default: 'Your observant nature reveals opportunities others miss.' } },
+            Dog: { with: { Dragon: 'Ego clashes possible. Ground yourself in humility and service.', Tiger: 'Protective alliances strengthen. Stand up for what\'s right.', Horse: 'Loyal friendship brings unexpected support and joy.', default: 'Your faithful nature attracts trustworthy connections.' } },
+            Pig: { with: { Snake: 'Underlying tension may surface. Seek understanding and compassion.', Rabbit: 'Sweet week of comfort and connection. Enjoy simple pleasures.', Goat: 'Nurturing energy flows freely. Domestic bliss awaits.', default: 'Your generous spirit attracts abundance. Give and receive freely.' } }
+        };
+        
+        // ===== DISPLAY =====
+        const today = new Date();
+        const weekDates = getWeekDates(today);
+        const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const startDate = weekDates[0].toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const endDate = weekDates[6].toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        document.getElementById('weekRange').textContent = `Week of ${startDate} - ${endDate}`;
+        
+        function buildProfileSelector() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '{}');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            const names = Object.keys(profiles).sort();
+            if (names.length === 0) {
+                document.getElementById('profileSelector').style.display = 'none';
+                return;
+            }
+            document.getElementById('profileSelector').innerHTML = `
+                <label>Viewing forecast for:</label>
+                <select id="profileDropdown">
+                    ${names.map(n => `<option value="${n}" ${n === activeId ? 'selected' : ''}>${n}</option>`).join('')}
+                </select>
+            `;
+            document.getElementById('profileDropdown').addEventListener('change', function() {
+                localStorage.setItem('quantumMerlinActiveProfile', this.value);
+                loadForecast();
+            });
+        }
+        
+        function loadForecast() {
+            const profiles = JSON.parse(localStorage.getItem('quantumMerlinProfiles') || '{}');
+            const activeId = localStorage.getItem('quantumMerlinActiveProfile');
+            
+            if (Object.keys(profiles).length === 0 || !activeId) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Create Your Profile First</h2>
+                        <p>To receive your personalized cosmic forecast, we need your birth information.</p>
+                        <a href="life-path-calculator.html">Create Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const profile = profiles[activeId];
+            if (!profile || !profile.birthDate) {
+                document.getElementById('content').innerHTML = `
+                    <div class="profile-required">
+                        <h2>Complete Your Profile</h2>
+                        <p>Your profile needs a birth date for accurate forecasts.</p>
+                        <a href="life-path-calculator.html">Update Profile →</a>
+                    </div>`;
+                return;
+            }
+            
+            const preferredName = profile.preferredName || profile.name || 'Cosmic Soul';
+            document.getElementById('greeting').textContent = `Personalized for ${preferredName}`;
+            
+            // Calculate all data
+            const birthYear = new Date(profile.birthDate).getFullYear();
+            const personalWeek = calculatePersonalWeek(profile.birthDate, today);
+            const userAnimal = chineseZodiac.getAnimal(birthYear);
+            const userElement = chineseZodiac.getElement(birthYear);
+            const yearAnimal = chineseZodiac.getAnimal(today.getFullYear());
+            const compatibility = chineseZodiac.getCompatibility(userAnimal.name, yearAnimal.name);
+            const mercury = isMercuryRetrograde(today);
+            const interp = weeklyInterpretations[personalWeek];
+            
+            // Moon data for each day
+            const moonData = weekDates.map(d => ({
+                date: d,
+                phase: getMoonPhase(d),
+                sign: getMoonSign(d)
+            }));
+            
+            // Find key moon events
+            const keyMoonEvents = [];
+            const phasesSeen = new Set();
+            moonData.forEach((m, i) => {
+                if (!phasesSeen.has(m.phase.name) && ['New Moon', 'Full Moon', 'First Quarter', 'Last Quarter'].includes(m.phase.name)) {
+                    keyMoonEvents.push({ day: dayNames[m.date.getDay()], phase: m.phase });
+                    phasesSeen.add(m.phase.name);
+                }
+            });
+            
+            // Build cosmic grid
+            let content = `
+                <div class="cosmic-grid">
+                    <div class="cosmic-card">
+                        <div class="icon">✨</div>
+                        <div class="value">${personalWeek}</div>
+                        <div class="label">Personal Week</div>
+                    </div>
+                    <div class="cosmic-card moon">
+                        <div class="icon">${moonData[0].phase.emoji}</div>
+                        <div class="value">${moonData[0].phase.name}</div>
+                        <div class="label">Week Start</div>
+                    </div>
+                    <div class="cosmic-card moon">
+                        <div class="icon">${moonData[0].sign.symbol}</div>
+                        <div class="value">${moonData[0].sign.name}</div>
+                        <div class="label">Moon Sign Today</div>
+                    </div>
+                    <div class="cosmic-card chinese">
+                        <div class="icon">${userAnimal.emoji}</div>
+                        <div class="value">${userAnimal.name}</div>
+                        <div class="label">Your Animal</div>
+                    </div>
+                    <div class="cosmic-card ${mercury.retrograde ? 'alert' : 'good'}">
+                        <div class="icon">☿</div>
+                        <div class="value">${mercury.retrograde ? 'Retrograde' : 'Direct'}</div>
+                        <div class="label">Mercury</div>
+                    </div>
+                </div>
+            `;
+            
+            // Daily breakdown with numerology + moon
+            content += `
+                <div class="forecast-section section-numerology">
+                    <h2>📅 Your Week at a Glance</h2>
+                    <div class="daily-grid">
+                        ${weekDates.map((d, i) => {
+                            const isToday = d.toDateString() === today.toDateString();
+                            const pDay = calculatePersonalDay(profile.birthDate, d);
+                            return `
+                                <div class="day-card ${isToday ? 'today' : ''}">
+                                    <div class="day-name">${dayNames[d.getDay()]}</div>
+                                    <div class="day-date">${d.getDate()}</div>
+                                    <div class="day-num">${pDay}</div>
+                                    <div class="moon-phase">${moonData[i].phase.emoji}</div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Numerology section
+            content += `
+                <div class="forecast-section section-numerology">
+                    <h2>✨ Numerology: ${interp.theme} Week (${personalWeek})</h2>
+                    <p>${interp.overview}</p>
+                    
+                    <div class="focus-section">
+                        <h3>Focus Your Energy On</h3>
+                        <ul class="guidance-list">
+                            ${interp.focus.map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="caution-section">
+                        <h3>Be Mindful Of</h3>
+                        <ul class="guidance-list">
+                            ${interp.avoid.map(a => `<li>${a}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <h3>How to BE This Week</h3>
+                    <p><em>${interp.behave}</em></p>
+                </div>
+            `;
+            
+            // Lunar section
+            const dominantMoonSign = moonData[Math.floor(moonData.length / 2)].sign;
+            const moonEnergy = moonSignEnergy[dominantMoonSign.name];
+            content += `
+                <div class="forecast-section section-lunar">
+                    <h2>🌙 Lunar Rhythms</h2>
+                    <p>This week's dominant Moon energy flows through <strong>${dominantMoonSign.name} ${dominantMoonSign.symbol}</strong>: ${moonEnergy.energy}.</p>
+                    <p><strong>Lunar Advice:</strong> ${moonEnergy.advice}</p>
+                    
+                    ${keyMoonEvents.length > 0 ? `
+                    <h3>Key Moon Events</h3>
+                    <ul class="guidance-list">
+                        ${keyMoonEvents.map(e => `<li><strong>${e.day}:</strong> ${e.phase.emoji} ${e.phase.name}</li>`).join('')}
+                    </ul>
+                    ` : ''}
+                    
+                    <div class="moon-calendar">
+                        ${moonData.map(m => `
+                            <div class="moon-day">
+                                <div class="date">${dayNames[m.date.getDay()]}</div>
+                                <div class="emoji">${m.phase.emoji}</div>
+                                <div class="phase">${m.sign.symbol} ${m.sign.name}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Chinese Zodiac section
+            const zodiacAdvice = chineseZodiacWeekly[userAnimal.name];
+            const yearInteraction = zodiacAdvice.with[yearAnimal.name] || zodiacAdvice.with.default;
+            const compatMessage = compatibility === 'excellent' ? '✨ Excellent year alignment!' : 
+                                  compatibility === 'challenging' ? '⚡ Growth through challenges' : '☯️ Balanced year energy';
+            
+            content += `
+                <div class="forecast-section section-chinese">
+                    <h2>🐲 Chinese Zodiac Influence</h2>
+                    <div class="chinese-zodiac-box">
+                        <div class="animal">${userAnimal.emoji}</div>
+                        <div class="name">Year of the ${userAnimal.name}</div>
+                        <div class="element">${userElement} ${userAnimal.name} • ${compatMessage}</div>
+                    </div>
+                    
+                    <p><strong>Your ${userAnimal.name} in ${yearAnimal.name} Year:</strong> ${yearInteraction}</p>
+                    
+                    <h3>Your Zodiac Strengths This Week</h3>
+                    <p>As a <strong>${userAnimal.name}</strong>, your natural traits of being <em>${userAnimal.traits.toLowerCase()}</em> serve you especially well during ${interp.theme.toLowerCase()} energy.</p>
+                    
+                    <h3>Element Wisdom: ${userElement}</h3>
+                    <p>${getElementAdvice(userElement, personalWeek)}</p>
+                </div>
+            `;
+            
+            // Planetary section
+            content += `
+                <div class="forecast-section section-planetary">
+                    <h2>☿ Planetary Influences</h2>
+                    ${mercury.retrograde ? `
+                    <div class="caution-section">
+                        <h3>☿ Mercury Retrograde in ${mercury.sign}</h3>
+                        <p>Mercury retrograde until ${mercury.endDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} affects communication, travel, and technology.</p>
+                        <ul class="guidance-list">
+                            <li>Review and revise rather than start new</li>
+                            <li>Double-check all communications</li>
+                            <li>Allow extra travel time</li>
+                            <li>Reconnect with old friends or past projects</li>
+                        </ul>
+                    </div>
+                    ` : `
+                    <div class="focus-section">
+                        <h3>☿ Mercury Direct</h3>
+                        <p>Clear cosmic channels support communication, travel, and new agreements. Move forward with confidence.</p>
+                        ${mercury.nextStart ? `<p><em>Next retrograde begins ${mercury.nextStart.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} in ${mercury.nextSign}.</em></p>` : ''}
+                    </div>
+                    `}
+                </div>
+            `;
+            
+            // Synthesis section
+            content += `
+                <div class="forecast-section section-synthesis">
+                    <h2>🔮 Weekly Cosmic Synthesis</h2>
+                    <p>This week brings together:</p>
+                    <ul class="guidance-list">
+                        <li><strong>Numerology ${personalWeek}:</strong> ${interp.energy}</li>
+                        <li><strong>Moon in ${dominantMoonSign.name}:</strong> ${moonEnergy.energy}</li>
+                        <li><strong>${userAnimal.name} Energy:</strong> ${userAnimal.traits}</li>
+                        <li><strong>Mercury:</strong> ${mercury.retrograde ? 'Retrograde (review mode)' : 'Direct (green light)'}</li>
+                    </ul>
+                    
+                    <h3>Your Unified Guidance</h3>
+                    <p>${getSynthesis(personalWeek, dominantMoonSign.name, userAnimal.name, mercury.retrograde)}</p>
+                    
+                    <div class="affirmation">
+                        <h3>Weekly Affirmation</h3>
+                        <p>"${interp.affirmation}"</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('content').innerHTML = content;
+        }
+        
+        function getElementAdvice(element, weekNum) {
+            const advice = {
+                Wood: { 1: 'Your natural growth energy amplifies new beginnings. Plant seeds of intention.', 2: 'Flexibility in partnerships serves you well. Bend but don\'t break.', 3: 'Creative expression blooms naturally. Let your ideas branch out.', 4: 'Build with patience like a growing tree. Strong roots first.', 5: 'Change is natural to Wood energy. Embrace transformation.', 6: 'Nurture with the giving spirit of Wood. Shelter others.', 7: 'Draw wisdom from deep roots. Quiet contemplation strengthens you.', 8: 'Wood generates Fire—use your growth energy for achievement.', 9: 'Release like autumn leaves. Make room for new growth.', 11: 'Your intuition grows like a forest. Trust its quiet wisdom.', 22: 'Build lasting structures that grow organically over time.', 33: 'Teach through your example of steady, generous growth.' },
+                Fire: { 1: 'Your natural passion ignites new beginnings brilliantly.', 2: 'Warm others with your light without burning too bright.', 3: 'Creative fire burns brilliantly. Express with joy.', 4: 'Channel fire energy into sustained, focused effort.', 5: 'Fire loves change and movement. Transform and transmute.', 6: 'Warm the hearth of home. Your love radiates outward.', 7: 'Let the fire become candlelight for contemplation.', 8: 'Achievement is natural to Fire. Burn toward your goals.', 9: 'Release attachments to the fire\'s transforming power.', 11: 'Illumination is your gift. Light the way for others.', 22: 'Forge lasting creations in your transformative fire.', 33: 'Warm all you meet with your radiant compassion.' },
+                Earth: { 1: 'Ground new beginnings in practical reality.', 2: 'Your stable nature supports lasting partnerships.', 3: 'Express creativity through tangible, beautiful forms.', 4: 'Building comes naturally. Create solid foundations.', 5: 'Earth can feel challenged by change—stay flexible.', 6: 'Nurturing is your gift. Create a sanctuary for loved ones.', 7: 'Deep reflection connects you to ancient wisdom.', 8: 'Material achievement flows to steady Earth energy.', 9: 'Release with the patience of erosion. Gentle but complete.', 11: 'Ground spiritual insights into practical wisdom.', 22: 'Master builder energy aligns perfectly with Earth.', 33: 'Your steady presence teaches more than words ever could.' },
+                Metal: { 1: 'Cut through obstacles with Metal\'s clarity and begin fresh.', 2: 'Refine partnerships through clear communication.', 3: 'Polish your creative gifts until they shine.', 4: 'Metal supports structure and precision. Build with care.', 5: 'Metal can resist change—practice flexibility this week.', 6: 'Protect loved ones with Metal\'s discerning strength.', 7: 'Sharp insight cuts through confusion. Trust your analysis.', 8: 'Achievement flows to Metal\'s determination and focus.', 9: 'Let go with Metal\'s clean, decisive energy.', 11: 'Intuition is refined to razor sharpness.', 22: 'Forge lasting structures with precision and vision.', 33: 'Your clear wisdom guides others toward truth.' },
+                Water: { 1: 'Flow into new channels. Water finds its own path.', 2: 'Merge harmoniously with partners. Adapt and blend.', 3: 'Creative expression flows like a river. Don\'t dam it up.', 4: 'Water erodes stone with patience. Steady effort succeeds.', 5: 'Water loves change and movement. Flow with circumstances.', 6: 'Nurture like rain nourishes the earth. Gentle and giving.', 7: 'Deep waters hold ancient wisdom. Dive within.', 8: 'Water can carve canyons. Persistent effort achieves greatly.', 9: 'Release flows naturally to Water. Let go with grace.', 11: 'Intuition is your ocean. Trust its depths.', 22: 'Channel powerful vision into practical manifestation.', 33: 'Your compassion flows like water—touching all without force.' }
+            };
+            return advice[element]?.[weekNum] || `Your ${element} nature supports this week\'s energy beautifully.`;
+        }
+        
+        function getSynthesis(weekNum, moonSign, animal, isRetrograde) {
+            const themes = {
+                1: 'initiation and new beginnings',
+                2: 'partnership and patience',
+                3: 'creative expression and joy',
+                4: 'building and organization',
+                5: 'change and adventure',
+                6: 'love and nurturing',
+                7: 'reflection and inner wisdom',
+                8: 'achievement and power',
+                9: 'completion and release',
+                11: 'spiritual illumination',
+                22: 'master building',
+                33: 'compassionate teaching'
+            };
+            
+            let synthesis = `With ${themes[weekNum]} as your numerological theme, the Moon moving through ${moonSign} adds emotional depth to your experience. `;
+            synthesis += `Your ${animal} nature provides unique strengths—`;
+            
+            const animalAdvice = {
+                Rat: 'use your resourcefulness and quick thinking to navigate opportunities.',
+                Ox: 'apply your steady determination and reliability to make lasting progress.',
+                Tiger: 'channel your courage and competitive spirit toward worthy goals.',
+                Rabbit: 'bring your diplomatic grace and intuitive kindness to every interaction.',
+                Dragon: 'let your natural charisma and vision inspire those around you.',
+                Snake: 'trust your deep intuition and strategic wisdom to guide decisions.',
+                Horse: 'express your energetic, free-spirited nature through movement and action.',
+                Goat: 'create beauty and harmony with your gentle, artistic sensibilities.',
+                Monkey: 'apply your clever problem-solving and adaptability to any challenge.',
+                Rooster: 'use your keen observation and honest nature to see what others miss.',
+                Dog: 'lead with your loyal heart and unwavering sense of justice.',
+                Pig: 'share your generous spirit and bring joy to those around you.'
+            };
+            
+            synthesis += animalAdvice[animal] + ' ';
+            synthesis += isRetrograde 
+                ? 'With Mercury retrograde, focus on reviewing and refining rather than launching new ventures. Patience is your ally.'
+                : 'Mercury direct supports forward movement and clear communication. Take action on your insights.';
+            
+            return synthesis;
+        }
+        
+        // Share functions
+        function shareOnTwitter() {
+            const text = encodeURIComponent("Check out my Cosmic Weekly Forecast at Quantum Merlin! ✨🌙🐲");
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard! 📋');
+        }
+        
+        buildProfileSelector();
+        loadForecast();
+    </script>
+</body>
+</html>
