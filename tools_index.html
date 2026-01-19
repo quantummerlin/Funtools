@@ -1105,7 +1105,179 @@ ${formData.message}
         updateJourneyProgress();
         
         // All categories start collapsed - user can expand as needed
+        
+        // Welcome Modal for First-Time Visitors
+        function showWelcomeModal() {
+            if (localStorage.getItem('quantumMerlinWelcomed')) return;
+            document.getElementById('welcomeModal').classList.add('show');
+        }
+        
+        function closeWelcomeModal() {
+            document.getElementById('welcomeModal').classList.remove('show');
+            localStorage.setItem('quantumMerlinWelcomed', 'true');
+        }
+        
+        // Show welcome modal on page load for first-time visitors
+        setTimeout(showWelcomeModal, 500);
+        
+        // Close welcome modal on overlay click
+        document.getElementById('welcomeModal').addEventListener('click', function(e) {
+            if (e.target === this) closeWelcomeModal();
+        });
     </script>
+    
+    <!-- Welcome Modal for First-Time Visitors -->
+    <div class="modal-overlay" id="welcomeModal">
+        <div class="welcome-modal-content">
+            <button class="modal-close" onclick="closeWelcomeModal()">&times;</button>
+            <div class="welcome-icon">✨🔮✨</div>
+            <h2 class="welcome-title">Welcome to Quantum Merlin</h2>
+            <p class="welcome-subtitle">Ancient Wisdom, Zero Barriers</p>
+            
+            <div class="welcome-features">
+                <div class="welcome-feature">
+                    <span class="feature-icon">🚫</span>
+                    <span class="feature-text"><strong>No Sign-Up Required</strong> – Just dive in</span>
+                </div>
+                <div class="welcome-feature">
+                    <span class="feature-icon">💫</span>
+                    <span class="feature-text"><strong>100% Free</strong> – No subscriptions, ever</span>
+                </div>
+                <div class="welcome-feature">
+                    <span class="feature-icon">🔒</span>
+                    <span class="feature-text"><strong>No Data Collection</strong> – Your info stays on your device</span>
+                </div>
+                <div class="welcome-feature">
+                    <span class="feature-icon">🌙</span>
+                    <span class="feature-text"><strong>70+ Mystical Tools</strong> – Numerology, astrology & more</span>
+                </div>
+            </div>
+            
+            <p class="welcome-message">Your cosmic journey begins now. Explore readings, discover your numbers, and unlock ancient insights — all with complete privacy and no strings attached.</p>
+            
+            <button class="welcome-btn" onclick="closeWelcomeModal()">Begin Your Journey ✨</button>
+        </div>
+    </div>
+    
+    <style>
+        .welcome-modal-content {
+            background: linear-gradient(180deg, #1a1025 0%, #0f0a15 100%);
+            border: 2px solid rgba(191, 90, 242, 0.5);
+            border-radius: 25px;
+            padding: 40px 30px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 
+                0 0 40px rgba(191, 90, 242, 0.3),
+                0 0 80px rgba(6, 182, 212, 0.2),
+                inset 0 0 60px rgba(139, 92, 246, 0.1);
+        }
+        
+        .welcome-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            animation: welcomePulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes welcomePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .welcome-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #ff00ff 0%, #00ffff 50%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        
+        .welcome-subtitle {
+            font-family: 'Cinzel', serif;
+            color: #06b6d4;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+        
+        .welcome-features {
+            text-align: left;
+            margin: 25px 0;
+        }
+        
+        .welcome-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 12px;
+            border-left: 3px solid #bf5af2;
+        }
+        
+        .feature-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        
+        .feature-text {
+            color: #E8E4D9;
+            font-size: 1rem;
+        }
+        
+        .feature-text strong {
+            color: #fbbf24;
+        }
+        
+        .welcome-message {
+            color: #9A8F7A;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 20px 0 25px;
+            font-style: italic;
+        }
+        
+        .welcome-btn {
+            width: 100%;
+            padding: 16px 30px;
+            background: linear-gradient(135deg, #bf5af2 0%, #06b6d4 100%);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(191, 90, 242, 0.4);
+        }
+        
+        .welcome-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(191, 90, 242, 0.6);
+        }
+        
+        @media (max-width: 480px) {
+            .welcome-modal-content {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+            .welcome-feature {
+                padding: 10px 12px;
+            }
+            .feature-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 
     <!-- Legal Footer -->
     <footer class="legal-footer">

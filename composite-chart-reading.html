@@ -347,8 +347,23 @@
                 </div>
             `;
             
-            document.getElementById('result').innerHTML = resultHTML;
-            CosmicLoader.showResult('result', 'toolForm');
+            // Store reading for the multi-page results flow
+            const readingData = {
+                toolType: 'composite',
+                headerTitle: 'Composite Chart Reading',
+                headerSubtitle: 'The unique entity of your union',
+                content: resultHTML,
+                sourceUrl: 'composite-chart-reading.html'
+            };
+            // Try sessionStorage first, fallback to URL params for private browsing
+            try {
+                sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+                window.location.href = 'reading-loading.html';
+            } catch (e) {
+                // Private browsing mode - pass data via URL
+                const encodedData = encodeURIComponent(JSON.stringify(readingData));
+                window.location.href = 'reading-loading.html?data=' + encodedData;
+            }
         }
     </script>
 

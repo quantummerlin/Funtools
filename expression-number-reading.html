@@ -291,8 +291,23 @@
                 </div>
             `;
             
-            document.getElementById('result').innerHTML = resultHTML;
-            CosmicLoader.showResult('result', 'toolForm');
+            // Store reading for the multi-page results flow
+            const readingData = {
+                toolType: 'expression',
+                headerTitle: 'Expression Number Reading',
+                headerSubtitle: 'Your natural talents and abilities',
+                content: resultHTML,
+                sourceUrl: 'expression-number-reading.html'
+            };
+            // Try sessionStorage first, fallback to URL params for private browsing
+            try {
+                sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
+                window.location.href = 'reading-loading.html';
+            } catch (e) {
+                // Private browsing mode - pass data via URL
+                const encodedData = encodeURIComponent(JSON.stringify(readingData));
+                window.location.href = 'reading-loading.html?data=' + encodedData;
+            }
         }
     </script>
 
