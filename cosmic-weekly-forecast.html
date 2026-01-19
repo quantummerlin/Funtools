@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#bf5af2">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="apple-touch-icon" href="RetroMerlin.jpg">
     <link rel="manifest" href="manifest.json">
@@ -678,7 +679,8 @@
             const yearAnimal = chineseZodiac.getAnimal(today.getFullYear());
             const compatibility = chineseZodiac.getCompatibility(userAnimal.name, yearAnimal.name);
             const mercury = isMercuryRetrograde(today);
-            const interp = weeklyInterpretations[personalWeek];
+            // Fallback to 1 if personalWeek not found (shouldn't happen, but defensive)
+            const interp = weeklyInterpretations[personalWeek] || weeklyInterpretations[1];
             
             // Moon data for each day
             const moonData = weekDates.map(d => ({
@@ -776,7 +778,7 @@
             
             // Lunar section
             const dominantMoonSign = moonData[Math.floor(moonData.length / 2)].sign;
-            const moonEnergy = moonSignEnergy[dominantMoonSign.name];
+            const moonEnergy = moonSignEnergy[dominantMoonSign.name] || { energy: 'Mystical and intuitive', advice: 'Trust your inner wisdom and flow with the cosmic currents.' };
             content += `
                 <div class="forecast-section section-lunar">
                     <h2>🌙 Lunar Rhythms</h2>
