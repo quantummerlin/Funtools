@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
         <link rel="canonical" href="https://funtools.quantummerlin.com/moon-sign-reading-new.html">
@@ -296,14 +296,14 @@
 
         <div class="tool-card">
             <div class="profile-controls">
-                <button type="button" class="profile-btn" onclick="showSaveProfileDialog()">💾 Save Profile</button>
-                <button type="button" class="profile-btn" onclick="showDeleteProfileDialog()">🗑️ Delete Profile</button>
-                <button type="button" class="profile-btn clear-btn" onclick="clearSavedData()">✨ Clear Form</button>
+                <button type="button" class="profile-btn" onclick="showSaveProfileDialog()">?? Save Profile</button>
+                <button type="button" class="profile-btn" onclick="showDeleteProfileDialog()">??? Delete Profile</button>
+                <button type="button" class="profile-btn clear-btn" onclick="clearSavedData()">? Clear Form</button>
             </div>
 
             <form id="calculator-form" onsubmit="calculateMoonSign(event)">
                 <div class="input-section">
-                    <div class="section-title">✨ Personal Information</div>
+                    <div class="section-title">? Personal Information</div>
                     
                     <div class="input-group">
                         <label for="preferredName">Preferred Name</label>
@@ -331,13 +331,13 @@
                     </div>
                 </div>
 
-                <button type="submit">🔮 Calculate My Moon Sign & Reading</button>
+                <button type="submit">?? Calculate My Moon Sign & Reading</button>
             </form>
 
             <div id="result" class="result">
                 <h2 id="result-title"></h2>
                 <div id="result-content" class="result-content"></div>
-                <button type="button" class="back-button" onclick="window.location.href='tools_index.html'">← Back to Quantum Merlin Hub</button>
+                <button type="button" class="back-button" onclick="window.location.href='tools_index.html'">? Back to Quantum Merlin Hub</button>
             </div>
         </div>
     </div>
@@ -359,7 +359,7 @@
 
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
-            submitBtn.textContent = '🔮 Calculating astronomical positions...';
+            submitBtn.textContent = '?? Calculating astronomical positions...';
             submitBtn.disabled = true;
 
             try {
@@ -463,7 +463,7 @@
             localStorage.setItem('quantumMerlinActiveProfile', profileName);
             
             updateProfileDropdown();
-            alert(`Profile "${profileName}" saved! ✨`);
+            alert(`Profile "${profileName}" saved! ?`);
         }
 
         if (profileData.birthDate && document.getElementById('birthDate')) {
@@ -559,8 +559,8 @@
     <!-- Legal Footer -->
     <footer class="legal-footer">
         <div class="feedback-section">
-            <p class="feedback-text">🛠️ Found an issue or have a suggestion?</p>
-            <a href="mailto:fixit@quantummerlin.com?subject=Quantum%20Merlin%20Feedback" class="footer-feedback-btn">📧 fixit@quantummerlin.com</a>
+            <p class="feedback-text">??? Found an issue or have a suggestion?</p>
+            <a href="mailto:fixit@quantummerlin.com?subject=Quantum%20Merlin%20Feedback" class="footer-feedback-btn">?? fixit@quantummerlin.com</a>
         </div>
         <div class="legal-links">
             <a href="terms.html">Terms of Service</a>
@@ -571,7 +571,7 @@
         </div>
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">? Buy Us a Coffee</a>
         </div>
     </footer>
     <style>

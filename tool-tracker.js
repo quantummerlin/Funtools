@@ -57,22 +57,37 @@ const ToolTracker = (function() {
         'venus-mars-compatibility.html': ['synastry-reading.html', 'venus-sign-reading.html', 'mars-sign-reading.html'],
         'relationship-karma-reading.html': ['soul-contract-reading.html', 'synastry-reading.html', 'south-node-reading.html'],
         'soul-contract-reading.html': ['relationship-karma-reading.html', 'north-node-reading.html', 'life-mission-reading.html'],
+        'love-compatibility-reading.html': ['venus-mars-compatibility.html', 'synastry-reading.html', 'soul-mate-analysis.html'],
+        'soul-mate-analysis.html': ['love-compatibility-reading.html', 'synastry-reading.html', 'relationship-karma-reading.html'],
+        'relationship-life-path.html': ['love-compatibility-reading.html', 'life-path-calculator.html', 'soul-contract-reading.html'],
         
         // Life Purpose connections
         'dharma-number-reading.html': ['life-mission-reading.html', 'north-node-reading.html', 'destiny-number-calculator.html'],
         'life-mission-reading.html': ['dharma-number-reading.html', 'north-node-reading.html', 'vocation-reading.html'],
         'vocation-reading.html': ['midheaven-reading.html', 'life-mission-reading.html', 'saturn-sign-reading.html'],
         
-        // Personality/Other
-        'element-calculator.html': ['modality-reading.html', 'chinese-zodiac-calculator.html'],
-        'aura-color-test.html': ['color-personality-test.html', 'element-calculator.html'],
-        'color-personality-test.html': ['aura-color-test.html', 'brain-type-test.html'],
-        'brain-type-test.html': ['color-personality-test.html', 'mercury-sign-reading.html']
+        // Astrology extras
+        'element-calculator.html': ['modality-reading.html', 'chinese-zodiac-reading.html'],
+        'moon-phase-calculator.html': ['moon-sign-reading.html', 'void-of-course-moon.html'],
+        'birthstone-finder.html': ['birth-flower-finder.html', 'element-calculator.html'],
+        'birth-flower-finder.html': ['birthstone-finder.html', 'element-calculator.html'],
+        
+        // Forecasts
+        'cosmic-daily-forecast.html': ['cosmic-weekly-forecast.html', 'personal-day-number.html'],
+        'cosmic-weekly-forecast.html': ['cosmic-daily-forecast.html', 'cosmic-monthly-forecast.html'],
+        'cosmic-monthly-forecast.html': ['cosmic-weekly-forecast.html', 'cosmic-yearly-forecast.html'],
+        'cosmic-yearly-forecast.html': ['cosmic-monthly-forecast.html', 'decade-forecast.html'],
+        'decade-forecast.html': ['cosmic-yearly-forecast.html', 'pinnacle-numbers-reading.html'],
+        
+        // Life Cycles
+        'age-calculator.html': ['birthday-countdown.html', 'life-progress.html'],
+        'birthday-countdown.html': ['age-calculator.html', 'personal-year-reading.html'],
+        'life-progress.html': ['age-calculator.html', 'decade-forecast.html']
     };
     
     // All available tools with categories
     const allTools = {
-        // Numerology
+        // Numerology (16 tools)
         'life-path-calculator.html': { title: 'Life Path Number', category: 'numerology', icon: '🔢', desc: 'Discover your soul\'s purpose' },
         'destiny-number-calculator.html': { title: 'Destiny Number', category: 'numerology', icon: '✨', desc: 'Your life mission revealed' },
         'soul-urge-calculator.html': { title: 'Soul Urge Number', category: 'numerology', icon: '💫', desc: 'Your heart\'s deepest desires' },
@@ -87,15 +102,32 @@ const ToolTracker = (function() {
         'personal-day-number.html': { title: 'Personal Day', category: 'numerology', icon: '☀️', desc: 'Today\'s guidance' },
         'expression-number-reading.html': { title: 'Expression Number', category: 'numerology', icon: '🎯', desc: 'Your natural talents' },
         'hidden-passion-number.html': { title: 'Hidden Passion', category: 'numerology', icon: '🔥', desc: 'Your secret drive' },
-        'pinnacle-numbers-reading.html': { title: 'Pinnacle Numbers', category: 'numerology', icon: '🏔️', desc: 'Life cycles revealed' },
+        'pinnacle-numbers-reading.html': { title: 'Pinnacle Numbers', category: 'numerology', icon: '🏔️', desc: 'Life phases revealed' },
         'challenge-numbers-reading.html': { title: 'Challenge Numbers', category: 'numerology', icon: '💪', desc: 'Obstacles to overcome' },
         
-        // Astrology - Signs
-        'moon-sign-reading.html': { title: 'Moon Sign', category: 'astrology', icon: '🌙', desc: 'Your emotional nature' },
+        // Compatibility (7 tools) - renamed from Relationship
+        'love-compatibility-reading.html': { title: 'Deep Love Compatibility', category: 'compatibility', icon: '💕', desc: 'Complete love analysis' },
+        'venus-mars-compatibility.html': { title: 'Venus-Mars', category: 'compatibility', icon: '❤️‍🔥', desc: 'Romantic chemistry' },
+        'soul-mate-analysis.html': { title: 'Soul Mate Connection', category: 'compatibility', icon: '💫', desc: 'True soul mate signs' },
+        'relationship-life-path.html': { title: 'Relationship Life Path', category: 'compatibility', icon: '🛤️', desc: 'Life paths in love' },
+        'synastry-reading.html': { title: 'Synastry', category: 'compatibility', icon: '💑', desc: 'Planetary connections' },
+        'composite-chart-reading.html': { title: 'Composite Chart', category: 'compatibility', icon: '💞', desc: 'Your relationship\'s chart' },
+        'relationship-karma-reading.html': { title: 'Relationship Karma', category: 'compatibility', icon: '🔄', desc: 'Past life connections' },
+        
+        // Life Purpose (6 tools)
+        'north-node-reading.html': { title: 'North Node', category: 'purpose', icon: '🧭', desc: 'Your soul\'s direction' },
+        'south-node-reading.html': { title: 'South Node', category: 'purpose', icon: '🔮', desc: 'Your past life gifts' },
+        'life-mission-reading.html': { title: 'Life Mission', category: 'purpose', icon: '🎯', desc: 'Why you\'re here' },
+        'dharma-number-reading.html': { title: 'Dharma Number', category: 'purpose', icon: '🕉️', desc: 'Your sacred duty' },
+        'vocation-reading.html': { title: 'Vocation', category: 'purpose', icon: '💼', desc: 'Your ideal career' },
+        'soul-contract-reading.html': { title: 'Soul Contract', category: 'purpose', icon: '📜', desc: 'Your soul agreement' },
+        
+        // Astrology (24 tools) - Ordered: Rising → Moon → Personal → Social → Outer → Points → Patterns → Extras
         'rising-sign-reading.html': { title: 'Rising Sign', category: 'astrology', icon: '🌅', desc: 'Your outer personality' },
+        'moon-sign-reading.html': { title: 'Moon Sign', category: 'astrology', icon: '🌙', desc: 'Your emotional nature' },
+        'mercury-sign-reading.html': { title: 'Mercury Sign', category: 'astrology', icon: '💭', desc: 'How you think' },
         'venus-sign-reading.html': { title: 'Venus Sign', category: 'astrology', icon: '💕', desc: 'Your love language' },
         'mars-sign-reading.html': { title: 'Mars Sign', category: 'astrology', icon: '🔥', desc: 'Your drive & passion' },
-        'mercury-sign-reading.html': { title: 'Mercury Sign', category: 'astrology', icon: '💭', desc: 'How you think & communicate' },
         'jupiter-sign-reading.html': { title: 'Jupiter Sign', category: 'astrology', icon: '🍀', desc: 'Your path to luck' },
         'saturn-sign-reading.html': { title: 'Saturn Sign', category: 'astrology', icon: '⏳', desc: 'Your karmic lessons' },
         'uranus-sign-reading.html': { title: 'Uranus Sign', category: 'astrology', icon: '⚡', desc: 'Your unique genius' },
@@ -103,35 +135,30 @@ const ToolTracker = (function() {
         'pluto-sign-reading.html': { title: 'Pluto Sign', category: 'astrology', icon: '🦋', desc: 'Your transformation power' },
         'chiron-reading.html': { title: 'Chiron', category: 'astrology', icon: '💔', desc: 'Your deepest wound & gift' },
         'lilith-reading.html': { title: 'Lilith', category: 'astrology', icon: '🌑', desc: 'Your shadow power' },
-        'north-node-reading.html': { title: 'North Node', category: 'astrology', icon: '🧭', desc: 'Your soul\'s direction' },
-        'south-node-reading.html': { title: 'South Node', category: 'astrology', icon: '🔮', desc: 'Your past life gifts' },
         'midheaven-reading.html': { title: 'Midheaven', category: 'astrology', icon: '🏆', desc: 'Your career calling' },
         'descendant-reading.html': { title: 'Descendant', category: 'astrology', icon: '👥', desc: 'Who you attract' },
         'part-of-fortune-reading.html': { title: 'Part of Fortune', category: 'astrology', icon: '🎰', desc: 'Where luck finds you' },
-        
-        // Relationship
-        'synastry-reading.html': { title: 'Synastry', category: 'relationship', icon: '💑', desc: 'Planetary connections' },
-        'composite-chart-reading.html': { title: 'Composite Chart', category: 'relationship', icon: '💞', desc: 'Your relationship\'s chart' },
-        'venus-mars-compatibility.html': { title: 'Venus-Mars', category: 'relationship', icon: '❤️‍🔥', desc: 'Romantic chemistry' },
-        'relationship-karma-reading.html': { title: 'Relationship Karma', category: 'relationship', icon: '🔄', desc: 'Past life connections' },
-        'soul-contract-reading.html': { title: 'Soul Contract', category: 'relationship', icon: '📜', desc: 'Your soul agreement' },
-        
-        // Life Purpose
-        'dharma-number-reading.html': { title: 'Dharma Number', category: 'purpose', icon: '🕉️', desc: 'Your sacred duty' },
-        'life-mission-reading.html': { title: 'Life Mission', category: 'purpose', icon: '🎯', desc: 'Why you\'re here' },
-        'vocation-reading.html': { title: 'Vocation', category: 'purpose', icon: '💼', desc: 'Your ideal career' },
-        
-        // Other
-        'chinese-zodiac-calculator.html': { title: 'Chinese Zodiac', category: 'astrology', icon: '🐉', desc: 'Your Chinese animal sign' },
-        'chinese-zodiac-reading.html': { title: 'Chinese Reading', category: 'astrology', icon: '🎋', desc: 'Deep Chinese astrology' },
-        'element-calculator.html': { title: 'Element', category: 'personality', icon: '🌍', desc: 'Your elemental nature' },
-        'aura-color-test.html': { title: 'Aura Color', category: 'personality', icon: '🌈', desc: 'Your energy color' },
-        'color-personality-test.html': { title: 'Color Personality', category: 'personality', icon: '🎨', desc: 'Colors reveal you' },
-        'brain-type-test.html': { title: 'Brain Type', category: 'personality', icon: '🧠', desc: 'How you think' },
         'stellium-reading.html': { title: 'Stellium', category: 'astrology', icon: '⭐', desc: 'Your concentrated power' },
         'modality-reading.html': { title: 'Modality', category: 'astrology', icon: '🔄', desc: 'Cardinal, Fixed, or Mutable' },
+        'moon-phase-calculator.html': { title: 'Moon Phase', category: 'astrology', icon: '🌓', desc: 'Your birth moon phase' },
         'void-of-course-moon.html': { title: 'Void Moon', category: 'astrology', icon: '🌑', desc: 'Timing your actions' },
-        'mercury-retrograde-checker.html': { title: 'Mercury Retrograde', category: 'astrology', icon: '⚠️', desc: 'Communication chaos' }
+        'mercury-retrograde-checker.html': { title: 'Mercury Retrograde', category: 'astrology', icon: '⚠️', desc: 'Communication chaos' },
+        'chinese-zodiac-reading.html': { title: 'Chinese Zodiac', category: 'astrology', icon: '🐉', desc: 'Your animal sign' },
+        'element-calculator.html': { title: 'Element', category: 'astrology', icon: '🌍', desc: 'Your elemental nature' },
+        'birthstone-finder.html': { title: 'Birthstone', category: 'astrology', icon: '💎', desc: 'Your gemstone energy' },
+        'birth-flower-finder.html': { title: 'Birth Flower', category: 'astrology', icon: '🌸', desc: 'Your floral symbol' },
+        
+        // Forecasts (5 cosmic tools - removed numerology forecasts)
+        'cosmic-daily-forecast.html': { title: 'Cosmic Daily', category: 'forecasts', icon: '✨', desc: 'Complete daily guidance' },
+        'cosmic-weekly-forecast.html': { title: 'Cosmic Weekly', category: 'forecasts', icon: '🌟', desc: 'Your week ahead' },
+        'cosmic-monthly-forecast.html': { title: 'Cosmic Monthly', category: 'forecasts', icon: '🌙', desc: 'Monthly cosmic guide' },
+        'cosmic-yearly-forecast.html': { title: 'Cosmic Yearly', category: 'forecasts', icon: '🎆', desc: 'Year-long forecast' },
+        'decade-forecast.html': { title: 'Decade Forecast', category: 'forecasts', icon: '📊', desc: 'Long-term life cycles' },
+        
+        // Life Cycles (3 tools)
+        'age-calculator.html': { title: 'Cosmic Age', category: 'life', icon: '⏰', desc: 'Your cosmic timeline' },
+        'birthday-countdown.html': { title: 'Solar Return', category: 'life', icon: '🎂', desc: 'Countdown to rebirth' },
+        'life-progress.html': { title: 'Life Journey', category: 'life', icon: '📈', desc: 'Your progress through time' }
     };
     
     // Check if localStorage is available
@@ -238,15 +265,14 @@ const ToolTracker = (function() {
     }
     
     // Priority categories for maximum impact (in order of priority)
-    const PRIORITY_CATEGORIES = ['numerology', 'astrology', 'purpose', 'relationship'];
+    const PRIORITY_CATEGORIES = ['numerology', 'astrology', 'purpose', 'compatibility', 'forecasts', 'life'];
     
     // Category display names
     const CATEGORY_NAMES = {
         'numerology': 'Numerology',
         'astrology': 'Astrology',
         'purpose': 'Life Purpose',
-        'relationship': 'Relationship',
-        'personality': 'Personality',
+        'compatibility': 'Compatibility',
         'forecasts': 'Forecasts',
         'life': 'Life Cycles'
     };

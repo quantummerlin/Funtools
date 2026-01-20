@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
         <link rel="canonical" href="https://funtools.quantummerlin.com/north-node-reading.html">
@@ -165,7 +165,7 @@
             position: relative;
         }
         .result-card li::before {
-            content: '☊';
+            content: '?';
             position: absolute;
             left: 0;
             color: #bf5af2;
@@ -224,7 +224,7 @@
                     <label for="birthDate">Birth Date</label>
                     <input type="date" id="birthDate" required>
                 </div>
-                <button type="submit">☊ Reveal Your North Node</button>
+                <button type="submit">? Reveal Your North Node</button>
             </form>
 
             <div id="result" style="display: none;"></div>
@@ -237,7 +237,7 @@
     <script>
         const interpretations = {
             "Aries": {
-                symbol: "♈",
+                symbol: "?",
                 southNode: "Libra",
                 title: "North Node in Aries",
                 theme: "From Dependency to Self-Reliance",
@@ -248,7 +248,7 @@
                 career: "Leadership roles, entrepreneurship, athletics, pioneering fields, military, emergency services"
             },
             "Taurus": {
-                symbol: "♉",
+                symbol: "?",
                 southNode: "Scorpio",
                 title: "North Node in Taurus",
                 theme: "From Crisis to Stability",
@@ -259,7 +259,7 @@
                 career: "Finance, agriculture, arts, music, luxury goods, real estate, banking, culinary arts"
             },
             "Gemini": {
-                symbol: "♊",
+                symbol: "?",
                 southNode: "Sagittarius",
                 title: "North Node in Gemini",
                 theme: "From Preaching to Listening",
@@ -270,7 +270,7 @@
                 career: "Writing, journalism, teaching, sales, social media, communications, translation, local business"
             },
             "Cancer": {
-                symbol: "♋",
+                symbol: "?",
                 southNode: "Capricorn",
                 title: "North Node in Cancer",
                 theme: "From Achievement to Nurturing",
@@ -281,7 +281,7 @@
                 career: "Healthcare, counseling, childcare, real estate, hospitality, food service, family business"
             },
             "Leo": {
-                symbol: "♌",
+                symbol: "?",
                 southNode: "Aquarius",
                 title: "North Node in Leo",
                 theme: "From the Group to the Self",
@@ -292,7 +292,7 @@
                 career: "Entertainment, arts, leadership, children's work, creativity industries, performance, royalty/luxury"
             },
             "Virgo": {
-                symbol: "♍",
+                symbol: "?",
                 southNode: "Pisces",
                 title: "North Node in Virgo",
                 theme: "From Escape to Service",
@@ -303,7 +303,7 @@
                 career: "Healthcare, nutrition, analysis, editing, veterinary, organizing, craftsmanship, quality control"
             },
             "Libra": {
-                symbol: "♎",
+                symbol: "?",
                 southNode: "Aries",
                 title: "North Node in Libra",
                 theme: "From Self to Partnership",
@@ -314,7 +314,7 @@
                 career: "Law, diplomacy, counseling, design, art, fashion, mediation, public relations, partnerships"
             },
             "Scorpio": {
-                symbol: "♏",
+                symbol: "?",
                 southNode: "Taurus",
                 title: "North Node in Scorpio",
                 theme: "From Comfort to Transformation",
@@ -325,7 +325,7 @@
                 career: "Psychology, research, investigation, finance, healing, hospice, surgery, crisis management"
             },
             "Sagittarius": {
-                symbol: "♐",
+                symbol: "?",
                 southNode: "Gemini",
                 title: "North Node in Sagittarius",
                 theme: "From Facts to Meaning",
@@ -336,7 +336,7 @@
                 career: "Higher education, publishing, travel, law, religion/spirituality, foreign affairs, philosophy"
             },
             "Capricorn": {
-                symbol: "♑",
+                symbol: "?",
                 southNode: "Cancer",
                 title: "North Node in Capricorn",
                 theme: "From Nurturing to Mastery",
@@ -347,7 +347,7 @@
                 career: "Executive leadership, government, management, architecture, business ownership, elder care"
             },
             "Aquarius": {
-                symbol: "♒",
+                symbol: "?",
                 southNode: "Leo",
                 title: "North Node in Aquarius",
                 theme: "From Personal to Universal",
@@ -358,7 +358,7 @@
                 career: "Technology, science, humanitarian work, social reform, networking, invention, astrology, aviation"
             },
             "Pisces": {
-                symbol: "♓",
+                symbol: "?",
                 southNode: "Virgo",
                 title: "North Node in Pisces",
                 theme: "From Control to Surrender",
@@ -474,7 +474,7 @@
 
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
-            submitBtn.textContent = '☊ Calculating...';
+            submitBtn.textContent = '? Calculating...';
             submitBtn.disabled = true;
 
             try {
@@ -505,7 +505,7 @@
             
             const resultHTML = `
                 <div class="result-card">
-                    <div class="node-symbol">${data.symbol} ☊</div>
+                    <div class="node-symbol">${data.symbol} ?</div>
                     <h2>${data.title}</h2>
                     <h3 style="text-align: center; color: var(--accent-color);">${data.theme}</h3>
                     
@@ -542,8 +542,10 @@
             // Store reading for the multi-page results flow
             const readingData = {
                 toolType: 'north-node',
+                title: `North Node in ${northNodeSign}`,
                 headerTitle: 'North Node Reading',
-                headerSubtitle: 'Your soul's evolutionary path',
+                headerSubtitle: `Your soul's evolutionary path`,
+                subtitle: data.theme,
                 content: resultHTML,
                 sourceUrl: 'north-node-reading.html'
             };
@@ -569,8 +571,8 @@
     <!-- Legal Footer -->
     <footer class="legal-footer">
         <div class="feedback-section">
-            <p class="feedback-text">🛠️ Found an issue or have a suggestion?</p>
-            <a href="mailto:fixit@quantummerlin.com?subject=Quantum%20Merlin%20Feedback" class="footer-feedback-btn">📧 fixit@quantummerlin.com</a>
+            <p class="feedback-text">??? Found an issue or have a suggestion?</p>
+            <a href="mailto:fixit@quantummerlin.com?subject=Quantum%20Merlin%20Feedback" class="footer-feedback-btn">?? fixit@quantummerlin.com</a>
         </div>
         <div class="legal-links">
             <a href="terms.html">Terms of Service</a>
@@ -581,7 +583,7 @@
         </div>
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">? Buy Us a Coffee</a>
         </div>
     </footer>
     <style>

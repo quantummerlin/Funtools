@@ -389,7 +389,7 @@
         </div>
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
         </div>
     </footer>
     
@@ -402,18 +402,42 @@
             return num;
         }
         
+        // Personal Year starts on birthday, not January 1st
+        function getPersonalYearForDate(birthDate, targetDate) {
+            const birth = new Date(birthDate);
+            const target = new Date(targetDate);
+            const birthMonth = birth.getMonth();
+            const birthDay = birth.getDate();
+            const targetYear = target.getFullYear();
+            const targetMonth = target.getMonth();
+            const targetDay = target.getDate();
+            
+            // Check if we've passed the birthday this year
+            const hadBirthdayThisYear = (targetMonth > birthMonth) || 
+                                        (targetMonth === birthMonth && targetDay >= birthDay);
+            
+            // Use current year if past birthday, otherwise use previous year
+            const cycleYear = hadBirthdayThisYear ? targetYear : targetYear - 1;
+            
+            return reduceToSingle(reduceToSingle(birthDay) + reduceToSingle(birthMonth + 1) + reduceToSingle(cycleYear));
+        }
+        
         function calculatePersonalYear(birthDate, targetYear) {
+            // Legacy function - uses calendar year (for backward compatibility)
             const date = new Date(birthDate);
             return reduceToSingle(reduceToSingle(date.getDate()) + reduceToSingle(date.getMonth() + 1) + reduceToSingle(targetYear));
         }
         
-        function calculatePersonalMonth(birthDate, targetYear, targetMonth) {
-            return reduceToSingle(calculatePersonalYear(birthDate, targetYear) + targetMonth);
+        function calculatePersonalMonth(birthDate, targetDate) {
+            const target = new Date(targetDate);
+            const personalYear = getPersonalYearForDate(birthDate, target);
+            return reduceToSingle(personalYear + (target.getMonth() + 1));
         }
         
         function calculatePersonalDay(birthDate, targetDate) {
             const target = new Date(targetDate);
-            return reduceToSingle(calculatePersonalMonth(birthDate, target.getFullYear(), target.getMonth() + 1) + target.getDate());
+            const personalMonth = calculatePersonalMonth(birthDate, target);
+            return reduceToSingle(personalMonth + target.getDate());
         }
         
         function getWeekNumber(date) {
@@ -425,7 +449,8 @@
         
         function calculatePersonalWeek(birthDate, targetDate) {
             const target = new Date(targetDate);
-            return reduceToSingle(calculatePersonalYear(birthDate, target.getFullYear()) + getWeekNumber(target));
+            const personalYear = getPersonalYearForDate(birthDate, target);
+            return reduceToSingle(personalYear + getWeekNumber(target));
         }
         
         function getWeekDates(date) {

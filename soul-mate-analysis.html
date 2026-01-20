@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
         <link rel="canonical" href="https://funtools.quantummerlin.com/soul-mate-analysis.html">
@@ -289,7 +289,7 @@
         <div class="tool-card">
             <div id="toolForm">
                 <div class="person-section">
-                    <div class="person-title">✨ Soul 1 (You)</div>
+                    <div class="person-title">? Soul 1 (You)</div>
                     <div class="input-group">
                         <label for="name1">Full Birth Name</label>
                         <input type="text" id="name1" placeholder="Enter your full birth name" required>
@@ -302,7 +302,7 @@
                 </div>
                 
                 <div class="person-section">
-                    <div class="person-title">💫 Soul 2 (Potential Soul Mate)</div>
+                    <div class="person-title">?? Soul 2 (Potential Soul Mate)</div>
                     <div class="input-group">
                         <label for="name2">Full Birth Name</label>
                         <input type="text" id="name2" placeholder="Enter their full birth name" required>
@@ -326,7 +326,7 @@
             </div>
         </div>
         
-        <a href="tools_index.html" class="back-btn">← Back to All Tools</a>
+        <a href="tools_index.html" class="back-btn">? Back to All Tools</a>
     </div>
     
     <script>
@@ -547,14 +547,14 @@
             // Star indicator
             let stars = '';
             for (let i = 1; i <= 5; i++) {
-                stars += `<span class="soul-star ${i <= connection.level ? 'active' : ''}">⭐</span>`;
+                stars += `<span class="soul-star ${i <= connection.level ? 'active' : ''}">?</span>`;
             }
             document.getElementById('soulIndicator').innerHTML = stars;
             
             // Build results HTML
             let html = `
                 <div class="connection-section">
-                    <div class="section-header">🌟 Soul Connection Analysis</div>
+                    <div class="section-header">?? Soul Connection Analysis</div>
                     <div class="section-content">${connection.desc}</div>
                 </div>
                 
@@ -588,11 +588,11 @@
             
             if (indicators.length > 0) {
                 html += `<div class="connection-section">
-                    <div class="section-header">🔗 Soul Mate Indicators Found</div>
+                    <div class="section-header">?? Soul Mate Indicators Found</div>
                     <div class="section-content">
                         <ul style="list-style: none; padding: 0;">
                             ${indicators.map(i => `<li style="padding: 8px 0; border-bottom: 1px solid rgba(139,92,246,0.2);">
-                                ${'⭐'.repeat(i.strength)} ${i.desc}
+                                ${'?'.repeat(i.strength)} ${i.desc}
                             </li>`).join('')}
                         </ul>
                     </div>
@@ -615,7 +615,7 @@
                 };
                 
                 html += `<div class="connection-section">
-                    <div class="section-header">📚 Shared Karmic Lessons</div>
+                    <div class="section-header">?? Shared Karmic Lessons</div>
                     <div class="section-content">
                         <p>You are both learning these lessons in this lifetime:</p>
                         <ul style="margin-top: 10px;">
@@ -636,7 +636,7 @@
                 };
                 
                 html += `<div class="connection-section">
-                    <div class="section-header">⚖️ Karmic Debt in This Connection</div>
+                    <div class="section-header">?? Karmic Debt in This Connection</div>
                     <div class="section-content">
                         ${p1.karmicDebt ? `<p><strong>${name1.split(' ')[0]}:</strong> Karmic Debt ${p1.karmicDebt} - ${debtMeanings[p1.karmicDebt]}</p>` : ''}
                         ${p2.karmicDebt ? `<p><strong>${name2.split(' ')[0]}:</strong> Karmic Debt ${p2.karmicDebt} - ${debtMeanings[p2.karmicDebt]}</p>` : ''}
@@ -653,8 +653,8 @@
     <!-- Legal Footer -->
     <footer class="legal-footer">
         <div class="feedback-section">
-            <p class="feedback-text">🛠️ Found an issue or have a suggestion?</p>
-            <a href="mailto:fixit@quantummerlin.com?subject=Quantum%20Merlin%20Feedback" class="footer-feedback-btn">📧 fixit@quantummerlin.com</a>
+            <p class="feedback-text">??? Found an issue or have a suggestion?</p>
+            <a href="mailto:fixit@quantummerlin.com?subject=Quantum%20Merlin%20Feedback" class="footer-feedback-btn">?? fixit@quantummerlin.com</a>
         </div>
         <div class="legal-links">
             <a href="terms.html">Terms of Service</a>
@@ -665,7 +665,7 @@
         </div>
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">? Buy Us a Coffee</a>
         </div>
     </footer>
     <style>

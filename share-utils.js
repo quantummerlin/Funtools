@@ -314,6 +314,96 @@ const QMShare = {
     },
     
     /**
+     * Share reading as image (requires html2canvas CDN to be loaded)
+     * @param {string} elementSelector - CSS selector for the element to capture
+     * @param {string} filename - Optional filename for download
+     */
+    async shareAsImage(elementSelector = '.result, #result, .reading-result', filename = 'quantum-merlin-reading.png') {
+        const element = document.querySelector(elementSelector);
+        
+        if (!element) {
+            this.showCopyFeedback('❌ No reading to share');
+            return;
+        }
+        
+        // Load html2canvas if not already loaded
+        if (typeof html2canvas === 'undefined') {
+            await this.loadHtml2Canvas();
+        }
+        
+        try {
+            this.showCopyFeedback('📸 Creating image...');
+            
+            // Create canvas from element
+            const canvas = await html2canvas(element, {
+                backgroundColor: '#0a0a0f',
+                scale: 2, // Higher quality
+                logging: false,
+                useCORS: true,
+                allowTaint: true
+            });
+            
+            // Add watermark
+            const ctx = canvas.getContext('2d');
+            ctx.font = '16px Cinzel, serif';
+            ctx.fillStyle = 'rgba(251, 191, 36, 0.6)';
+            ctx.textAlign = 'right';
+            ctx.fillText('quantummerlin.com', canvas.width - 20, canvas.height - 15);
+            
+            // Convert to blob
+            canvas.toBlob(async (blob) => {
+                // Try native share if available (mobile)
+                if (navigator.canShare && navigator.canShare({ files: [new File([blob], filename, { type: 'image/png' })] })) {
+                    try {
+                        await navigator.share({
+                            files: [new File([blob], filename, { type: 'image/png' })],
+                            title: 'My Quantum Merlin Reading',
+                            text: 'Check out my reading from Quantum Merlin!'
+                        });
+                        return;
+                    } catch (e) {
+                        // Fall through to download
+                    }
+                }
+                
+                // Fallback: download image
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                this.showCopyFeedback('✓ Image downloaded!');
+            }, 'image/png');
+            
+        } catch (error) {
+            console.error('Error creating image:', error);
+            this.showCopyFeedback('❌ Could not create image');
+        }
+    },
+    
+    /**
+     * Load html2canvas library dynamically
+     */
+    loadHtml2Canvas() {
+        return new Promise((resolve, reject) => {
+            if (typeof html2canvas !== 'undefined') {
+                resolve();
+                return;
+            }
+            
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    },
+    
+    /**
      * Initialize share buttons on page
      */
     init() {

@@ -20,8 +20,8 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="apple-touch-icon" href="RetroMerlin.jpg">
     <link rel="manifest" href="manifest.json">
-    <title>Life Progress Calculator | Free Online Tool</title>
-    <meta name="description" content="See how much of your life you've lived.">
+    <title>Life Journey Visualization | Quantum Merlin</title>
+    <meta name="description" content="Map your complete life journey with numerological pinnacle periods, seasonal life phases, and a visual progress tracker. Discover where you are in life's grand cycles.">
 <meta name="keywords" content="numerology, astrology, horoscope, zodiac, spiritual tools, cosmic insights, free calculator">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -245,29 +245,120 @@
                 }
                 
                 const today = new Date();
-                const age = today.getFullYear() - birthDate.getFullYear();
-                const percentage = ((age / lifeExpectancy) * 100).toFixed(1);
-                const yearsRemaining = lifeExpectancy - age;
+                const ageExact = (today - birthDate) / (1000 * 60 * 60 * 24 * 365.25);
+                const age = Math.floor(ageExact);
+                const percentage = ((ageExact / lifeExpectancy) * 100).toFixed(1);
+                const yearsRemaining = (lifeExpectancy - ageExact).toFixed(1);
+                const daysRemaining = Math.floor((lifeExpectancy - ageExact) * 365.25);
+                const weeksRemaining = Math.floor(daysRemaining / 7);
+                const monthsRemaining = Math.floor((lifeExpectancy - ageExact) * 12);
                 
-                let message;
-                if (percentage < 25) {
-                    message = "You're just getting started! The world is yours.";
-                } else if (percentage < 50) {
-                    message = "You're in your prime. Make the most of it!";
-                } else if (percentage < 75) {
-                    message = "You have valuable experience. Share your wisdom.";
-                } else {
-                    message = "Every day is a gift. Live fully!";
+                // Calculate Numerological Life Periods (based on Life Path)
+                const birthMonth = birthDate.getMonth() + 1;
+                const birthDay = birthDate.getDate();
+                const birthYear = birthDate.getFullYear();
+                
+                // Calculate Life Path Number
+                let lifePath = birthMonth + birthDay + birthYear.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+                while (lifePath > 9 && lifePath !== 11 && lifePath !== 22 && lifePath !== 33) {
+                    lifePath = lifePath.toString().split('').reduce((a, b) => a + parseInt(b), 0);
                 }
                 
-                document.getElementById('result-title').textContent = `📊 Life Progress: ${percentage}%`;
-                document.getElementById('result-text').textContent = `${age} years lived, ${yearsRemaining} years remaining\n\n${message}`;
+                // First Pinnacle ends at 36 - Life Path
+                const firstPinnacleEnd = 36 - lifePath;
+                const secondPinnacleEnd = firstPinnacleEnd + 9;
+                const thirdPinnacleEnd = secondPinnacleEnd + 9;
+                
+                // Determine current period
+                let currentPeriod = '';
+                let periodInsight = '';
+                
+                if (age < firstPinnacleEnd) {
+                    currentPeriod = `1st Pinnacle (Birth to age ${firstPinnacleEnd})`;
+                    periodInsight = 'You are learning the foundational lessons of your life path. This is a time of formation and discovery.';
+                } else if (age < secondPinnacleEnd) {
+                    currentPeriod = `2nd Pinnacle (Age ${firstPinnacleEnd} to ${secondPinnacleEnd})`;
+                    periodInsight = 'You are in a period of development and responsibility. Your actions now shape your future.';
+                } else if (age < thirdPinnacleEnd) {
+                    currentPeriod = `3rd Pinnacle (Age ${secondPinnacleEnd} to ${thirdPinnacleEnd})`;
+                    periodInsight = 'You are in the middle bridge of life, synthesizing past lessons with future vision.';
+                } else {
+                    currentPeriod = `4th Pinnacle (Age ${thirdPinnacleEnd}+)`;
+                    periodInsight = 'You are in the culmination period of life, embodying wisdom and leaving your legacy.';
+                }
+                
+                // Life stage visuals
+                let stageEmoji = '';
+                let stageLabel = '';
+                let stageInsight = '';
+                
+                if (percentage < 15) {
+                    stageEmoji = '🌱';
+                    stageLabel = 'Spring of Life';
+                    stageInsight = 'Like spring, you are full of potential and new growth. Every experience plants seeds for the future.';
+                } else if (percentage < 35) {
+                    stageEmoji = '🌻';
+                    stageLabel = 'Early Summer';
+                    stageInsight = 'You are blooming into your full expression. Energy is high and possibilities abound.';
+                } else if (percentage < 55) {
+                    stageEmoji = '☀️';
+                    stageLabel = 'High Summer';
+                    stageInsight = 'You are at the peak of your powers. Harvest the fruits of earlier efforts and shine brightly.';
+                } else if (percentage < 75) {
+                    stageEmoji = '🍂';
+                    stageLabel = 'Autumn';
+                    stageInsight = 'A time of wisdom and harvest. Share what you have learned and prepare for the next phase.';
+                } else {
+                    stageEmoji = '❄️';
+                    stageLabel = 'Winter';
+                    stageInsight = 'A time of rest, reflection, and deep wisdom. Every moment is precious and profound.';
+                }
+                
+                // Create visual progress bar
+                const progressBar = `
+<div style="background: rgba(255,255,255,0.1); border-radius: 10px; height: 30px; margin: 15px 0; overflow: hidden; position: relative;">
+    <div style="background: linear-gradient(90deg, #10b981, #06b6d4, #8b5cf6, #ec4899); height: 100%; width: ${percentage}%; transition: width 0.5s;"></div>
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">${percentage}%</div>
+</div>`;
+                
+                document.getElementById('result-title').textContent = `${stageEmoji} Your Life Journey Map`;
+                document.getElementById('result-text').innerHTML = `
+${progressBar}
+
+<strong style="font-size: 1.3em; color: #fbbf24;">${stageLabel}</strong>
+${stageInsight}
+
+<strong style="color: #06b6d4;">Time Lived</strong>
+• <strong>${age}</strong> years on this Earth
+• Life Path Number: <strong>${lifePath}</strong>
+
+<strong style="color: #ec4899;">Time Ahead (Based on ${lifeExpectancy} Year Expectancy)</strong>
+• Approximately <strong>${yearsRemaining}</strong> years remaining
+• That's about <strong>${monthsRemaining.toLocaleString()}</strong> months
+• Or <strong>${weeksRemaining.toLocaleString()}</strong> weeks
+• Or <strong>${daysRemaining.toLocaleString()}</strong> sunrises
+
+<strong style="color: #8b5cf6;">Numerological Period</strong>
+<strong style="color: #fbbf24;">${currentPeriod}</strong>
+${periodInsight}
+
+<em style="color: #9ca3af;">Remember: These numbers are guides, not limits. How you live each day matters more than how many days you live.</em>
+`;
                 document.getElementById('result').classList.add('show');
             });
         
     
         // Load saved data from localStorage
-        ;
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const fieldMappings = {
+                    'birthDate': 'birthDate',
+                    'birthdate': 'birthDate',
+                    'date': 'birthDate',
+                    'dob': 'birthDate'
+                };
                 
                 Object.keys(fieldMappings).forEach(fieldId => {
                     const field = document.getElementById(fieldId);
@@ -365,7 +456,7 @@
         </div>
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
         </div>
     </footer>
     <style>

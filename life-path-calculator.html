@@ -383,6 +383,33 @@
         <input type="text" id="birthPlace" placeholder="City, Country">
         <div class="helper-text">Helps calculate accurate astrological positions</div>
     </div>
+    <div class="input-group">
+        <label for="timezone">Time Zone</label>
+        <select id="timezone">
+            <option value="">Auto-detect from browser</option>
+            <option value="Pacific/Honolulu">Hawaii (HST)</option>
+            <option value="America/Anchorage">Alaska (AKST)</option>
+            <option value="America/Los_Angeles">Pacific (PST/PDT)</option>
+            <option value="America/Denver">Mountain (MST/MDT)</option>
+            <option value="America/Chicago">Central (CST/CDT)</option>
+            <option value="America/New_York">Eastern (EST/EDT)</option>
+            <option value="America/Sao_Paulo">Brazil (BRT)</option>
+            <option value="Europe/London">UK/Ireland (GMT/BST)</option>
+            <option value="Europe/Paris">Central Europe (CET/CEST)</option>
+            <option value="Europe/Helsinki">Eastern Europe (EET/EEST)</option>
+            <option value="Africa/Johannesburg">South Africa (SAST)</option>
+            <option value="Asia/Dubai">Dubai (GST)</option>
+            <option value="Asia/Kolkata">India (IST)</option>
+            <option value="Asia/Bangkok">Thailand (ICT)</option>
+            <option value="Asia/Singapore">Singapore (SGT)</option>
+            <option value="Asia/Hong_Kong">Hong Kong (HKT)</option>
+            <option value="Asia/Tokyo">Japan (JST)</option>
+            <option value="Australia/Sydney">Sydney (AEST/AEDT)</option>
+            <option value="Australia/Perth">Perth (AWST)</option>
+            <option value="Pacific/Auckland">New Zealand (NZST/NZDT)</option>
+        </select>
+        <div class="helper-text">Used for accurate moon phase & planetary calculations</div>
+    </div>
 </div>
 
                 <button type="button" onclick="handleFormSubmit()">Reveal My Life Path</button>
@@ -674,7 +701,7 @@
         </div>
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
         </div>
     </footer>
     <style>

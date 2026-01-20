@@ -20,8 +20,8 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="apple-touch-icon" href="RetroMerlin.jpg">
     <link rel="manifest" href="manifest.json">
-    <title>Age Calculator | Quantum Merlin</title>
-    <meta name="description" content="Calculate your exact age in years, months, days.">
+    <title>Cosmic Age Calculator | Quantum Merlin</title>
+    <meta name="description" content="Discover your cosmic age - how many orbits around the Sun, moon cycles, heartbeats, and your current life phase according to planetary cycles.">
 <meta name="keywords" content="numerology, astrology, horoscope, zodiac, spiritual tools, cosmic insights, free calculator">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -253,17 +253,104 @@
                     months += 12;
                 }
                 
-                // Calculate total days
+                // Calculate total days, hours, minutes
                 const totalDays = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
+                const totalHours = Math.floor((today - birthDate) / (1000 * 60 * 60));
+                const totalMinutes = Math.floor((today - birthDate) / (1000 * 60));
+                const totalWeeks = Math.floor(totalDays / 7);
                 
-                document.getElementById('result-title').textContent = `📅 You are ${years} years old`;
-                document.getElementById('result-text').textContent = `${years} years, ${months} months, ${days} days\n\nTotal days alive: ${totalDays.toLocaleString()}`;
+                // Calculate heartbeats (avg 72 bpm)
+                const heartbeats = totalMinutes * 72;
+                
+                // Calculate breaths (avg 16 per minute)
+                const breaths = totalMinutes * 16;
+                
+                // Calculate trips around the sun
+                const orbits = (totalDays / 365.25).toFixed(2);
+                
+                // Calculate moon cycles (29.5 days per cycle)
+                const moonCycles = Math.floor(totalDays / 29.5);
+                
+                // Calculate distance traveled in space (Earth moves ~107,000 km/h around sun)
+                const distanceKm = totalHours * 107000;
+                const distanceAU = (distanceKm / 149597870.7).toFixed(1); // in Astronomical Units
+                
+                // Life phase wisdom
+                let lifePhase = '';
+                let cosmicInsight = '';
+                
+                if (years < 7) {
+                    lifePhase = '🌱 The Awakening Phase';
+                    cosmicInsight = 'You are in the first Saturn square, absorbing the world through wonder and pure experience.';
+                } else if (years < 14) {
+                    lifePhase = '🌿 The Learning Phase';
+                    cosmicInsight = 'Jupiter has completed its first cycle. Your mind is expanding and forming core beliefs.';
+                } else if (years < 21) {
+                    lifePhase = '🔥 The Identity Phase';
+                    cosmicInsight = 'Your first nodal return approaches. You are discovering who you truly are.';
+                } else if (years < 28) {
+                    lifePhase = '⭐ The Achievement Phase';
+                    cosmicInsight = 'Saturn is preparing for its first return. You are building the foundation of your adult life.';
+                } else if (years < 30) {
+                    lifePhase = '🔮 The Saturn Return';
+                    cosmicInsight = 'Saturn returns to its natal position. Major life restructuring and maturity awaits.';
+                } else if (years < 42) {
+                    lifePhase = '🌊 The Integration Phase';
+                    cosmicInsight = 'You are between Saturn returns, integrating lessons and mastering your craft.';
+                } else if (years < 44) {
+                    lifePhase = '🌙 The Uranus Opposition';
+                    cosmicInsight = 'Uranus opposes its natal position. A time of awakening and authentic self-expression.';
+                } else if (years < 50) {
+                    lifePhase = '👑 The Wisdom Phase';
+                    cosmicInsight = 'Chiron has returned. Your wounds become wisdom to share with others.';
+                } else if (years < 59) {
+                    lifePhase = '🌟 The Mastery Phase';
+                    cosmicInsight = 'Between major transits, you embody the wisdom of your journey.';
+                } else if (years < 60) {
+                    lifePhase = '🔄 The Second Saturn Return';
+                    cosmicInsight = 'Saturn returns again. A time to assess your legacy and life\'s true purpose.';
+                } else {
+                    lifePhase = '✨ The Elder Phase';
+                    cosmicInsight = 'You have completed multiple cosmic cycles. You are a keeper of wisdom.';
+                }
+                
+                document.getElementById('result-title').textContent = `🌌 Your Cosmic Age Profile`;
+                document.getElementById('result-text').innerHTML = `
+<strong style="font-size: 1.4em; color: #fbbf24;">📅 ${years} years, ${months} months, ${days} days</strong>
+
+<strong style="color: #06b6d4;">Cosmic Statistics</strong>
+• Total days alive: <strong>${totalDays.toLocaleString()}</strong>
+• Total hours: <strong>${totalHours.toLocaleString()}</strong>
+• Weeks lived: <strong>${totalWeeks.toLocaleString()}</strong>
+
+<strong style="color: #ec4899;">Your Body's Journey</strong>
+• Heart has beaten ~<strong>${(heartbeats / 1000000000).toFixed(2)} billion</strong> times
+• You've taken ~<strong>${(breaths / 1000000).toFixed(1)} million</strong> breaths
+
+<strong style="color: #8b5cf6;">Your Cosmic Journey</strong>
+• Orbits around the Sun: <strong>${orbits}</strong>
+• Moon cycles witnessed: <strong>${moonCycles.toLocaleString()}</strong>
+• Distance traveled through space: <strong>${distanceAU} AU</strong>
+  (That's ${(distanceKm / 1000000000).toFixed(1)} billion km!)
+
+<strong style="color: #10b981;">${lifePhase}</strong>
+${cosmicInsight}
+`;
                 document.getElementById('result').classList.add('show');
             });
         
     
         // Load saved data from localStorage
-        ;
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const fieldMappings = {
+                    'birthDate': 'birthDate',
+                    'birthdate': 'birthDate',
+                    'date': 'birthDate',
+                    'dob': 'birthDate'
+                };
                 
                 Object.keys(fieldMappings).forEach(fieldId => {
                     const field = document.getElementById(fieldId);
@@ -361,7 +448,7 @@
         </div>
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
         </div>
     </footer>
     <style>

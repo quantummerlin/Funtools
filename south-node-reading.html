@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
         <link rel="canonical" href="https://funtools.quantummerlin.com/south-node-reading.html">
@@ -205,7 +205,7 @@
                     <label for="birthDate">Birth Date</label>
                     <input type="date" id="birthDate" required>
                 </div>
-                <button type="submit">☋ Reveal Your South Node</button>
+                <button type="submit">? Reveal Your South Node</button>
             </form>
         </div>
 
@@ -217,7 +217,7 @@
     <script>
         const interpretations = {
             "Aries": {
-                symbol: "♈",
+                symbol: "?",
                 northNode: "Libra",
                 title: "South Node in Aries",
                 pastLife: "Warrior, Pioneer, Independent Leader",
@@ -228,7 +228,7 @@
                 wisdom: "Your past lives gave you tremendous courage and self-reliance. You know how to fight, lead, and survive alone. Now your soul asks you to learn the dance of partnership, to consider others, and to find strength in cooperation rather than competition."
             },
             "Taurus": {
-                symbol: "♉",
+                symbol: "?",
                 northNode: "Scorpio",
                 title: "South Node in Taurus",
                 pastLife: "Wealthy Landowner, Artisan, Hedonist",
@@ -239,7 +239,7 @@
                 wisdom: "Your past lives gave you mastery over the material world. You know how to build, accumulate, and enjoy earthly pleasures. Now your soul asks you to explore depths, embrace transformation, and discover that true security comes from within."
             },
             "Gemini": {
-                symbol: "♊",
+                symbol: "?",
                 northNode: "Sagittarius",
                 title: "South Node in Gemini",
                 pastLife: "Merchant, Messenger, Storyteller, Scholar",
@@ -250,7 +250,7 @@
                 wisdom: "Your past lives gave you brilliant communication skills and insatiable curiosity. You know how to gather and share information. Now your soul asks you to seek meaning, develop wisdom, and focus on the bigger picture rather than endless details."
             },
             "Cancer": {
-                symbol: "♋",
+                symbol: "?",
                 northNode: "Capricorn",
                 title: "South Node in Cancer",
                 pastLife: "Caretaker, Mother, Homemaker, Tribal Member",
@@ -261,7 +261,7 @@
                 wisdom: "Your past lives gave you profound emotional gifts and nurturing abilities. You know how to care for others and create emotional security. Now your soul asks you to step into the world, build your legacy, and develop professional mastery."
             },
             "Leo": {
-                symbol: "♌",
+                symbol: "?",
                 northNode: "Aquarius",
                 title: "South Node in Leo",
                 pastLife: "Royalty, Performer, Creator, Celebrity",
@@ -272,7 +272,7 @@
                 wisdom: "Your past lives gave you confidence, creativity, and star power. You know how to shine and lead from the heart. Now your soul asks you to contribute to humanity, value friendship over fame, and use your gifts for the collective good."
             },
             "Virgo": {
-                symbol: "♍",
+                symbol: "?",
                 northNode: "Pisces",
                 title: "South Node in Virgo",
                 pastLife: "Healer, Servant, Craftsperson, Analyst",
@@ -283,7 +283,7 @@
                 wisdom: "Your past lives gave you practical skills, analytical minds, and devotion to service. You know how to improve and perfect. Now your soul asks you to embrace imperfection, develop faith, and connect with the mystical dimensions of existence."
             },
             "Libra": {
-                symbol: "♎",
+                symbol: "?",
                 northNode: "Aries",
                 title: "South Node in Libra",
                 pastLife: "Diplomat, Artist, Partner, Mediator",
@@ -294,7 +294,7 @@
                 wisdom: "Your past lives gave you grace, diplomacy, and relationship mastery. You know how to create harmony and please others. Now your soul asks you to discover who YOU are, assert your own needs, and develop the courage to stand alone."
             },
             "Scorpio": {
-                symbol: "♏",
+                symbol: "?",
                 northNode: "Taurus",
                 title: "South Node in Scorpio",
                 pastLife: "Shaman, Spy, Occultist, Power Broker",
@@ -305,7 +305,7 @@
                 wisdom: "Your past lives gave you power, depth, and mastery over hidden forces. You know the secrets of transformation and the depths of the psyche. Now your soul asks you to embrace simplicity, build stability, and find peace in the ordinary."
             },
             "Sagittarius": {
-                symbol: "♐",
+                symbol: "?",
                 northNode: "Gemini",
                 title: "South Node in Sagittarius",
                 pastLife: "Philosopher, Priest, Explorer, Teacher",
@@ -316,7 +316,7 @@
                 wisdom: "Your past lives gave you wisdom, faith, and expansive vision. You know how to inspire and teach. Now your soul asks you to become a student again, listen more than you preach, and pay attention to the details right in front of you."
             },
             "Capricorn": {
-                symbol: "♑",
+                symbol: "?",
                 northNode: "Cancer",
                 title: "South Node in Capricorn",
                 pastLife: "Authority Figure, CEO, Elder, Builder",
@@ -327,7 +327,7 @@
                 wisdom: "Your past lives gave you authority, achievement, and worldly success. You know how to build empires and command respect. Now your soul asks you to open your heart, nurture others, and create emotional rather than material security."
             },
             "Aquarius": {
-                symbol: "♒",
+                symbol: "?",
                 northNode: "Leo",
                 title: "South Node in Aquarius",
                 pastLife: "Revolutionary, Scientist, Humanitarian, Outsider",
@@ -338,7 +338,7 @@
                 wisdom: "Your past lives gave you progressive vision and group consciousness. You know how to serve humanity and think outside the box. Now your soul asks you to step into the spotlight, follow your heart, and express your unique creative self."
             },
             "Pisces": {
-                symbol: "♓",
+                symbol: "?",
                 northNode: "Virgo",
                 title: "South Node in Pisces",
                 pastLife: "Mystic, Martyr, Artist, Recluse",
@@ -474,7 +474,7 @@
 
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
-            submitBtn.textContent = '☋ Calculating...';
+            submitBtn.textContent = '? Calculating...';
             submitBtn.disabled = true;
 
             try {
@@ -496,13 +496,13 @@
             
             const resultHTML = `
                 <div class="result-card">
-                    <div class="node-symbol">☋ ${data.symbol}</div>
+                    <div class="node-symbol">? ${data.symbol}</div>
                     <h2>${data.title}</h2>
                     <h3 style="text-align: center; color: var(--accent-color);">${data.theme}</h3>
                     
                     <div class="past-life">
                         <p><strong>Past Life Archetype:</strong> ${data.pastLife}</p>
-                        <p><strong>Your Nodal Axis:</strong> South Node in ${southNodeSign} → North Node in ${data.northNode}</p>
+                        <p><strong>Your Nodal Axis:</strong> South Node in ${southNodeSign} ? North Node in ${data.northNode}</p>
                     </div>
                     
                     <h3>Your Past Life Gifts</h3>
@@ -550,8 +550,8 @@
     <!-- Legal Footer -->
     <footer class="legal-footer">
         <div class="feedback-section">
-            <p class="feedback-text">🛠️ Found an issue or have a suggestion?</p>
-            <a href="mailto:fixit@quantummerlin.com?subject=Quantum%20Merlin%20Feedback" class="footer-feedback-btn">📧 fixit@quantummerlin.com</a>
+            <p class="feedback-text">??? Found an issue or have a suggestion?</p>
+            <a href="mailto:fixit@quantummerlin.com?subject=Quantum%20Merlin%20Feedback" class="footer-feedback-btn">?? fixit@quantummerlin.com</a>
         </div>
         <div class="legal-links">
             <a href="terms.html">Terms of Service</a>
@@ -562,7 +562,7 @@
         </div>
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">? Buy Us a Coffee</a>
         </div>
     </footer>
     <style>

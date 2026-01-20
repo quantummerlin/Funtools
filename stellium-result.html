@@ -318,6 +318,119 @@
             `;
         }
 
+        // Multi-stellium element and modality mappings
+        const SIGN_ELEMENTS = {
+            'Aries': 'Fire', 'Leo': 'Fire', 'Sagittarius': 'Fire',
+            'Taurus': 'Earth', 'Virgo': 'Earth', 'Capricorn': 'Earth',
+            'Gemini': 'Air', 'Libra': 'Air', 'Aquarius': 'Air',
+            'Cancer': 'Water', 'Scorpio': 'Water', 'Pisces': 'Water'
+        };
+        
+        const SIGN_MODALITIES = {
+            'Aries': 'Cardinal', 'Cancer': 'Cardinal', 'Libra': 'Cardinal', 'Capricorn': 'Cardinal',
+            'Taurus': 'Fixed', 'Leo': 'Fixed', 'Scorpio': 'Fixed', 'Aquarius': 'Fixed',
+            'Gemini': 'Mutable', 'Virgo': 'Mutable', 'Sagittarius': 'Mutable', 'Pisces': 'Mutable'
+        };
+
+        // Generate bonus reading when user has multiple stelliums
+        function generateMultiStelliumBonus(stelliums, name) {
+            const signs = stelliums.map(s => s.sign);
+            const elements = signs.map(s => SIGN_ELEMENTS[s]);
+            const modalities = signs.map(s => SIGN_MODALITIES[s]);
+            const totalPlanets = stelliums.reduce((sum, s) => sum + s.count, 0);
+            
+            // Determine element harmony
+            const uniqueElements = [...new Set(elements)];
+            let elementHarmony = '';
+            let elementInsight = '';
+            
+            if (uniqueElements.length === 1) {
+                const elem = uniqueElements[0];
+                elementHarmony = `Pure ${elem} Dominance`;
+                const elementDescriptions = {
+                    'Fire': 'You are a blazing force of inspiration, creativity, and action. With both stelliums in Fire signs, you possess extraordinary drive, courage, and enthusiasm. Your life purpose is to ignite passion in yourself and others. The challenge is to avoid burnout—even the brightest flames need fuel.',
+                    'Earth': 'You are a master builder with both feet planted firmly on the ground. With both stelliums in Earth signs, you have extraordinary practical wisdom, patience, and ability to manifest in the physical world. Your purpose is to create lasting structures and tangible results. The challenge is to remain flexible and open to change.',
+                    'Air': 'You are a messenger of ideas and connection. With both stelliums in Air signs, you possess exceptional intellectual gifts, communication skills, and social intelligence. Your purpose is to spread knowledge, facilitate understanding, and connect people. The challenge is to ground your ideas into action.',
+                    'Water': 'You are a deep ocean of emotion and intuition. With both stelliums in Water signs, you possess profound emotional intelligence, psychic sensitivity, and healing abilities. Your purpose is to feel deeply, nurture others, and channel the invisible realms. The challenge is to maintain healthy emotional boundaries.'
+                };
+                elementInsight = elementDescriptions[elem];
+            } else {
+                const elemCombo = uniqueElements.sort().join(' + ');
+                const combos = {
+                    'Air + Fire': { name: 'Visionary Catalyst', insight: 'Fire provides passion and inspiration while Air provides ideas and communication. Together, you can both dream big AND spread your vision far and wide. You inspire through words and ignite movements.' },
+                    'Fire + Air': { name: 'Visionary Catalyst', insight: 'Fire provides passion and inspiration while Air provides ideas and communication. Together, you can both dream big AND spread your vision far and wide. You inspire through words and ignite movements.' },
+                    'Earth + Water': { name: 'Nurturing Creator', insight: 'Earth provides structure and manifestation while Water provides intuition and emotion. Together, you can both feel deeply AND build something lasting from those feelings. You create art, homes, and healing spaces.' },
+                    'Water + Earth': { name: 'Nurturing Creator', insight: 'Earth provides structure and manifestation while Water provides intuition and emotion. Together, you can both feel deeply AND build something lasting from those feelings. You create art, homes, and healing spaces.' },
+                    'Air + Earth': { name: 'Practical Thinker', insight: 'Air provides ideas and analysis while Earth provides practical application. Together, you can both conceive brilliant plans AND execute them effectively. You build systems that work.' },
+                    'Earth + Air': { name: 'Practical Thinker', insight: 'Air provides ideas and analysis while Earth provides practical application. Together, you can both conceive brilliant plans AND execute them effectively. You build systems that work.' },
+                    'Fire + Water': { name: 'Passionate Healer', insight: 'Fire provides action and courage while Water provides empathy and depth. Together, you can both feel the pain AND take bold action to heal it. You are a fierce protector and transformational force.' },
+                    'Water + Fire': { name: 'Passionate Healer', insight: 'Fire provides action and courage while Water provides empathy and depth. Together, you can both feel the pain AND take bold action to heal it. You are a fierce protector and transformational force.' },
+                    'Air + Water': { name: 'Intuitive Communicator', insight: 'Air provides articulation and logic while Water provides emotional depth and intuition. Together, you can both feel truths AND express them clearly. You are a poet, counselor, or artistic messenger.' },
+                    'Water + Air': { name: 'Intuitive Communicator', insight: 'Air provides articulation and logic while Water provides emotional depth and intuition. Together, you can both feel truths AND express them clearly. You are a poet, counselor, or artistic messenger.' },
+                    'Earth + Fire': { name: 'Ambitious Achiever', insight: 'Fire provides vision and drive while Earth provides discipline and endurance. Together, you can both dream big AND work tirelessly to achieve those dreams. You are destined for significant accomplishments.' },
+                    'Fire + Earth': { name: 'Ambitious Achiever', insight: 'Fire provides vision and drive while Earth provides discipline and endurance. Together, you can both dream big AND work tirelessly to achieve those dreams. You are destined for significant accomplishments.' }
+                };
+                const combo = combos[elemCombo] || { name: 'Elemental Bridge', insight: 'Your dual stelliums bridge different elements, giving you access to diverse energies that most people cannot integrate. This is a rare gift of versatility.' };
+                elementHarmony = combo.name;
+                elementInsight = combo.insight;
+            }
+            
+            // Determine modality pattern
+            const uniqueModalities = [...new Set(modalities)];
+            let modalityPattern = '';
+            let modalityInsight = '';
+            
+            if (uniqueModalities.length === 1) {
+                const mod = uniqueModalities[0];
+                modalityPattern = `Double ${mod} Power`;
+                const modalityDescriptions = {
+                    'Cardinal': 'Both stelliums are in initiating signs. You are a born leader and starter of new things. Your life is marked by constant new beginnings and pioneering ventures. You thrive when leading the charge.',
+                    'Fixed': 'Both stelliums are in sustaining signs. You are a force of determination and staying power. Once you commit to something, you see it through with unwavering persistence. Your word is your bond.',
+                    'Mutable': 'Both stelliums are in adapting signs. You are supremely flexible and versatile. You can shift shapes, reinvent yourself, and flow with any situation. Change is your natural state.'
+                };
+                modalityInsight = modalityDescriptions[mod];
+            } else {
+                modalityPattern = 'Dynamic Balance';
+                modalityInsight = 'Your stelliums operate in different modes—one may initiate or sustain while the other adapts. This gives you a complete cycle of action within yourself: you can start, persist, and evolve.';
+            }
+
+            return `
+                <div class="stellium-header" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(139, 92, 246, 0.1)); padding: 30px; border-radius: 15px; margin-bottom: 20px;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">⭐ BONUS: Multi-Stellium Reading ⭐</div>
+                    <div class="stellium-sign" style="font-size: 1.8em;">The ${signs.join(' + ')} Combination</div>
+                    <div class="stellium-count" style="color: #06b6d4;">${stelliums.length} Stelliums • ${totalPlanets} Planets Concentrated</div>
+                </div>
+                <div class="reading-content">
+                    <p style="font-size: 1.2em; color: #fbbf24; text-align: center; margin-bottom: 25px;">
+                        <strong>${name}, you are extraordinarily rare.</strong> Most people have zero or one stellium. You have ${stelliums.length}!
+                    </p>
+                    
+                    <p><strong>What This Means:</strong> Having multiple stelliums means your cosmic energy is not only concentrated—it's concentrated in MULTIPLE powerful nodes. Think of it like having two or more supercomputers instead of scattered circuits. Each stellium is a center of immense gravitational pull in your psyche and life path.</p>
+                    
+                    <div style="background: rgba(139, 92, 246, 0.1); border-left: 4px solid #8b5cf6; padding: 20px; margin: 25px 0; border-radius: 8px;">
+                        <p style="margin: 0;"><strong style="color: #8b5cf6;">Elemental Signature: ${elementHarmony}</strong></p>
+                        <p style="margin-top: 10px; margin-bottom: 0;">${elementInsight}</p>
+                    </div>
+                    
+                    <div style="background: rgba(6, 182, 212, 0.1); border-left: 4px solid #06b6d4; padding: 20px; margin: 25px 0; border-radius: 8px;">
+                        <p style="margin: 0;"><strong style="color: #06b6d4;">Modality Pattern: ${modalityPattern}</strong></p>
+                        <p style="margin-top: 10px; margin-bottom: 0;">${modalityInsight}</p>
+                    </div>
+                    
+                    <p><strong>How They Work Together:</strong> Your ${signs[0]} stellium and ${signs[1]} stellium ${stelliums.length > 2 ? '(along with your other stelliums) ' : ''}don't operate in isolation. They constantly dialogue with each other. Sometimes they harmonize, creating moments of extraordinary flow and power. Sometimes they create tension, pulling you in different directions. This tension is not a flaw—it's the engine of your growth and creativity.</p>
+                    
+                    <p><strong>Your Unique Life Theme:</strong> While others may focus on mastering one area of life, you are here to be a Renaissance soul—achieving depth in MULTIPLE domains. Your ${signs.join(' and ')} energies weave together to create a life tapestry that is uniquely yours. No one else has this exact combination operating at this intensity.</p>
+                    
+                    <p><strong>Your Challenge:</strong> With so much concentrated energy in ${stelliums.length} different signs, you may sometimes feel pulled in multiple directions or struggle to prioritize. The key is not to choose between your stelliums—it's to find the synthesis, the higher purpose that honors ALL of your concentrated gifts.</p>
+                    
+                    <p style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(236, 72, 153, 0.15)); border-radius: 12px; text-align: center;">
+                        <strong style="font-size: 1.1em; color: #fbbf24;">${name}, embrace your multi-stellium nature.</strong><br><br>
+                        You are not meant to be one thing. You are a symphony of concentrated cosmic forces, each playing its powerful note in the grand composition of your life. Let them all sing.
+                    </p>
+                </div>
+            `;
+        }
+
         // Get reading data from sessionStorage or URL params (for private browsing)
         function getReadingData() {
             try {
@@ -358,6 +471,15 @@
                     card.innerHTML = generateStelliumReading(stellium, data.name);
                     container.appendChild(card);
                 });
+                
+                // Add bonus multi-stellium reading if user has 2+ stelliums
+                if (data.stelliums.length >= 2) {
+                    const bonusCard = document.createElement('div');
+                    bonusCard.className = 'result-card';
+                    bonusCard.style.cssText = 'border: 2px solid rgba(251, 191, 36, 0.5); box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);';
+                    bonusCard.innerHTML = generateMultiStelliumBonus(data.stelliums, data.name);
+                    container.appendChild(bonusCard);
+                }
             } else {
                 // No stellium found
                 const card = document.createElement('div');
@@ -383,7 +505,7 @@
         </div>
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
         </div>
     </footer>
     <style>

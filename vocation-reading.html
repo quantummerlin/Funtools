@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
         <link rel="canonical" href="https://funtools.quantummerlin.com/vocation-reading.html">
@@ -209,7 +209,7 @@
                     <label for="birthDate">Birth Date</label>
                     <input type="date" id="birthDate" required>
                 </div>
-                <button type="submit">💼 Discover Your Vocation</button>
+                <button type="submit">?? Discover Your Vocation</button>
             </form>
         </div>
 
@@ -376,7 +376,7 @@
 
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
-            submitBtn.textContent = '💼 Calculating...';
+            submitBtn.textContent = '?? Calculating...';
             submitBtn.disabled = true;
 
             try {
@@ -402,7 +402,7 @@
             
             const resultHTML = `
                 <div class="result-card">
-                    <div class="vocation-symbol">💼✨</div>
+                    <div class="vocation-symbol">???</div>
                     <h2>Your Vocational Blueprint</h2>
                     
                     <div class="career-card" style="background: linear-gradient(135deg, rgba(70,130,180,0.2), rgba(138,43,226,0.2));">
@@ -418,13 +418,13 @@
                     <h3>Ideal Career Paths</h3>
                     <p>Based on your Expression Number ${expressionNum}:</p>
                     <div class="career-grid">
-                        ${expData.careers.map(c => `<div class="career-card">• ${c}</div>`).join('')}
+                        ${expData.careers.map(c => `<div class="career-card">� ${c}</div>`).join('')}
                     </div>
                     
                     <h3>${sunSign} Sun Career Affinity</h3>
                     <p>Your ${sunSign} energy draws you toward:</p>
                     <div class="career-grid">
-                        ${sunCareers.map(c => `<div class="career-card">• ${c}</div>`).join('')}
+                        ${sunCareers.map(c => `<div class="career-card">� ${c}</div>`).join('')}
                     </div>
                     
                     <h3>Environments to Avoid</h3>
@@ -470,8 +470,8 @@
     <!-- Legal Footer -->
     <footer class="legal-footer">
         <div class="feedback-section">
-            <p class="feedback-text">🛠️ Found an issue or have a suggestion?</p>
-            <a href="mailto:fixit@quantummerlin.com?subject=Quantum%20Merlin%20Feedback" class="footer-feedback-btn">📧 fixit@quantummerlin.com</a>
+            <p class="feedback-text">??? Found an issue or have a suggestion?</p>
+            <a href="mailto:fixit@quantummerlin.com?subject=Quantum%20Merlin%20Feedback" class="footer-feedback-btn">?? fixit@quantummerlin.com</a>
         </div>
         <div class="legal-links">
             <a href="terms.html">Terms of Service</a>
@@ -482,7 +482,7 @@
         </div>
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">? Buy Us a Coffee</a>
         </div>
     </footer>
     <style>

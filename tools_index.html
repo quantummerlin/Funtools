@@ -403,6 +403,69 @@
             overflow: hidden;
         }
         
+        /* Favorite Star Button */
+        .favorite-btn {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: all 0.3s;
+            z-index: 5;
+            padding: 4px;
+            filter: grayscale(100%);
+        }
+        
+        .favorite-btn:hover {
+            opacity: 1;
+            transform: scale(1.2);
+            filter: grayscale(0%);
+        }
+        
+        .favorite-btn.active {
+            opacity: 1;
+            filter: grayscale(0%) drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+        }
+        
+        /* Favorites Section */
+        .favorites-section {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 0, 255, 0.1));
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: none;
+        }
+        
+        .favorites-section.show {
+            display: block;
+        }
+        
+        .favorites-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .favorites-header h3 {
+            font-family: 'Cinzel', serif;
+            color: #fbbf24;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .favorites-hint {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            font-style: italic;
+        }
+        
         /* Ad Space - Retro Style */
         .ad-space {
             background: linear-gradient(135deg, rgba(255, 0, 255, 0.1) 0%, rgba(0, 255, 255, 0.1) 100%);
@@ -686,12 +749,21 @@
             <div class="tools-grid" id="searchResultsGrid"></div>
         </div>
         
-        <!-- Categories (collapsible) - Alphabetical Order -->
+        <!-- Favorites Section (shown when user has favorites) -->
+        <div class="favorites-section" id="favoritesSection">
+            <div class="favorites-header">
+                <h3>⭐ Your Favorites</h3>
+                <span class="favorites-hint">Click ⭐ on any tool to add/remove</span>
+            </div>
+            <div class="tools-grid" id="favorites-grid"></div>
+        </div>
+        
+        <!-- Categories (collapsible) - Order: Astrology, Numerology, Purpose, Compatibility, Forecasts, Life Cycles -->
         <div class="categories-container" id="categoriesContainer">
             <!-- Astrology Section -->
             <div class="category-section">
                 <div class="category-header" onclick="toggleCategory('astrology')">
-                    <h2>⭐ Astrology <span class="count">(25 tools)</span></h2>
+                    <h2>⭐ Astrology <span class="count">(24 tools)</span></h2>
                     <span class="toggle-icon">▼</span>
                 </div>
                 <div class="category-content" id="astrology-content">
@@ -706,25 +778,14 @@
                 <span class="ad-space-cta">Inquire About This Space →</span>
             </div>
             
-            <!-- Forecasts Section -->
+            <!-- Numerology Section -->
             <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('forecasts')">
-                    <h2>📅 Forecasts <span class="count">(9 tools)</span></h2>
+                <div class="category-header" onclick="toggleCategory('numerology')">
+                    <h2>🔢 Numerology <span class="count">(16 tools)</span></h2>
                     <span class="toggle-icon">▼</span>
                 </div>
-                <div class="category-content" id="forecasts-content">
-                    <div class="tools-grid" id="forecasts-grid"></div>
-                </div>
-            </div>
-            
-            <!-- Life Cycles Section -->
-            <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('life')">
-                    <h2>📊 Life Cycles <span class="count">(3 tools)</span></h2>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="category-content" id="life-content">
-                    <div class="tools-grid" id="life-grid"></div>
+                <div class="category-content" id="numerology-content">
+                    <div class="tools-grid" id="numerology-grid"></div>
                 </div>
             </div>
             
@@ -746,25 +807,36 @@
                 <span class="ad-space-cta">Inquire About This Space →</span>
             </div>
             
-            <!-- Numerology Section -->
+            <!-- Compatibility Section -->
             <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('numerology')">
-                    <h2>🔢 Numerology <span class="count">(16 tools)</span></h2>
+                <div class="category-header" onclick="toggleCategory('compatibility')">
+                    <h2>💕 Compatibility <span class="count">(7 tools)</span></h2>
                     <span class="toggle-icon">▼</span>
                 </div>
-                <div class="category-content" id="numerology-content">
-                    <div class="tools-grid" id="numerology-grid"></div>
+                <div class="category-content" id="compatibility-content">
+                    <div class="tools-grid" id="compatibility-grid"></div>
                 </div>
             </div>
             
-            <!-- Relationship Section -->
+            <!-- Forecasts Section -->
             <div class="category-section">
-                <div class="category-header" onclick="toggleCategory('relationship')">
-                    <h2>💕 Relationship <span class="count">(7 tools)</span></h2>
+                <div class="category-header" onclick="toggleCategory('forecasts')">
+                    <h2>📅 Forecasts <span class="count">(5 tools)</span></h2>
                     <span class="toggle-icon">▼</span>
                 </div>
-                <div class="category-content" id="relationship-content">
-                    <div class="tools-grid" id="relationship-grid"></div>
+                <div class="category-content" id="forecasts-content">
+                    <div class="tools-grid" id="forecasts-grid"></div>
+                </div>
+            </div>
+            
+            <!-- Life Cycles Section -->
+            <div class="category-section">
+                <div class="category-header" onclick="toggleCategory('life')">
+                    <h2>📊 Life Cycles <span class="count">(3 tools)</span></h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="category-content" id="life-content">
+                    <div class="tools-grid" id="life-grid"></div>
                 </div>
             </div>
         </div>
@@ -857,9 +929,9 @@
     </div>
     
     <script>
-        // Version: 20260112083146 - Auto-generated cache buster
+        // Version: 20260120 - Updated categories and tools
         const tools = [
-            // Numerology Tools
+            // Numerology Tools (16)
             { title: "Life Path Number", description: "Calculate your life path number and reveal your true purpose in life.", category: "numerology", file: "life-path-calculator.html" },
             { title: "Destiny Number", description: "Uncover your destiny number and understand your life's mission.", category: "numerology", file: "destiny-number-calculator.html" },
             { title: "Soul Urge Number", description: "Reveal your soul urge number and discover your inner desires.", category: "numerology", file: "soul-urge-calculator.html" },
@@ -877,16 +949,16 @@
             { title: "Karmic Debt Reading", description: "Understand and transform your karmic patterns (13, 14, 16, 19).", category: "numerology", file: "karmic-debt-reading.html" },
             { title: "Master Number Deep Reading", description: "Master your 11, 22, or 33 spiritual potential.", category: "numerology", file: "master-number-reading.html" },
             
-            // Relationship Tools
-            { title: "Deep Love Compatibility", description: "Comprehensive numerological love compatibility analysis.", category: "relationship", file: "love-compatibility-reading.html" },
-            { title: "Venus-Mars Compatibility", description: "Discover your romantic and sexual chemistry.", category: "relationship", file: "venus-mars-compatibility.html" },
-            { title: "Soul Mate Connection", description: "Discover if you've found your true soul mate.", category: "relationship", file: "soul-mate-analysis.html" },
-            { title: "Relationship Life Path", description: "How your Life Path numbers interact in love.", category: "relationship", file: "relationship-life-path.html" },
-            { title: "Synastry Reading", description: "Explore the planetary aspects between you and your partner.", category: "relationship", file: "synastry-reading.html" },
-            { title: "Composite Chart Reading", description: "Discover the unique entity created when two souls merge.", category: "relationship", file: "composite-chart-reading.html" },
-            { title: "Relationship Karma Reading", description: "Discover past life bonds and karmic connections.", category: "relationship", file: "relationship-karma-reading.html" },
+            // Compatibility Tools (7) - renamed from Relationship
+            { title: "Deep Love Compatibility", description: "Comprehensive numerological love compatibility analysis.", category: "compatibility", file: "love-compatibility-reading.html" },
+            { title: "Venus-Mars Compatibility", description: "Discover your romantic and sexual chemistry.", category: "compatibility", file: "venus-mars-compatibility.html" },
+            { title: "Soul Mate Connection", description: "Discover if you've found your true soul mate.", category: "compatibility", file: "soul-mate-analysis.html" },
+            { title: "Relationship Life Path", description: "How your Life Path numbers interact in love.", category: "compatibility", file: "relationship-life-path.html" },
+            { title: "Synastry Reading", description: "Explore the planetary aspects between you and your partner.", category: "compatibility", file: "synastry-reading.html" },
+            { title: "Composite Chart Reading", description: "Discover the unique entity created when two souls merge.", category: "compatibility", file: "composite-chart-reading.html" },
+            { title: "Relationship Karma Reading", description: "Discover past life bonds and karmic connections.", category: "compatibility", file: "relationship-karma-reading.html" },
             
-            // Life Purpose Tools
+            // Life Purpose Tools (6)
             { title: "North Node Reading", description: "Discover your soul's evolutionary direction and life purpose.", category: "purpose", file: "north-node-reading.html" },
             { title: "South Node Reading", description: "Explore your past life gifts and karmic patterns.", category: "purpose", file: "south-node-reading.html" },
             { title: "Life Mission Reading", description: "Your complete life mission through numerology and astrology.", category: "purpose", file: "life-mission-reading.html" },
@@ -894,60 +966,123 @@
             { title: "Vocation Reading", description: "Discover your true career calling and vocational path.", category: "purpose", file: "vocation-reading.html" },
             { title: "Soul Contract Reading", description: "Reveal the spiritual agreements and life lessons you chose.", category: "purpose", file: "soul-contract-reading.html" },
             
-            // Astrology Tools
-            { title: "Zodiac Sign Calculator", description: "Find your zodiac sign based on your birth date.", category: "astrology", file: "zodiac-calculator.html" },
-            { title: "Moon Sign Reading", description: "Discover your emotional nature and inner world.", category: "astrology", file: "moon-sign-reading.html" },
+            // Astrology Tools (24) - Ordered: Rising → Moon → Personal Planets → Outer Planets → Points → Patterns → Extras
+            // The Angles & Luminaries
             { title: "Rising Sign Reading", description: "Reveal your outer personality through your Ascendant.", category: "astrology", file: "rising-sign-reading.html" },
-            { title: "Descendant Reading", description: "What you seek in partners and how others see you.", category: "astrology", file: "descendant-reading.html" },
-            { title: "Midheaven Sign Reading", description: "Discover your life purpose, career path, and public legacy.", category: "astrology", file: "midheaven-reading.html" },
+            { title: "Moon Sign Reading", description: "Discover your emotional nature and inner world.", category: "astrology", file: "moon-sign-reading.html" },
+            // Personal Planets (Mercury through Mars)
+            { title: "Mercury Sign Reading", description: "Discover how you think and communicate.", category: "astrology", file: "mercury-sign-reading.html" },
             { title: "Venus Sign Reading", description: "Discover how you love, attract, and express beauty.", category: "astrology", file: "venus-sign-reading.html" },
             { title: "Mars Sign Reading", description: "Reveal your drive, passion, and how you pursue desires.", category: "astrology", file: "mars-sign-reading.html" },
-            { title: "Mercury Sign Reading", description: "Discover how you think and communicate.", category: "astrology", file: "mercury-sign-reading.html" },
-            { title: "Mercury Retrograde Checker", description: "Check if Mercury is retrograde and what to expect.", category: "astrology", file: "mercury-retrograde-checker.html" },
+            // Social Planets
             { title: "Jupiter Sign Reading", description: "Reveal how you attract luck and abundance.", category: "astrology", file: "jupiter-sign-reading.html" },
             { title: "Saturn Sign Reading", description: "Discover your karmic lessons and path to mastery.", category: "astrology", file: "saturn-sign-reading.html" },
-            { title: "Chiron Reading", description: "Discover your deepest wound and greatest healing gift.", category: "astrology", file: "chiron-reading.html" },
-            { title: "Lilith Reading", description: "Explore your shadow self and primal power.", category: "astrology", file: "lilith-reading.html" },
-            { title: "Part of Fortune Reading", description: "Find your joy, luck, and natural prosperity.", category: "astrology", file: "part-of-fortune-reading.html" },
+            // Outer/Transpersonal Planets
             { title: "Uranus Sign Reading", description: "Reveal how you innovate and awaken to freedom.", category: "astrology", file: "uranus-sign-reading.html" },
             { title: "Neptune Sign Reading", description: "Discover your dreams and spiritual gifts.", category: "astrology", file: "neptune-sign-reading.html" },
             { title: "Pluto Sign Reading", description: "Reveal your path to transformation and power.", category: "astrology", file: "pluto-sign-reading.html" },
+            // Sensitive Points
+            { title: "Chiron Reading", description: "Discover your deepest wound and greatest healing gift.", category: "astrology", file: "chiron-reading.html" },
+            { title: "Lilith Reading", description: "Explore your shadow self and primal power.", category: "astrology", file: "lilith-reading.html" },
+            { title: "Midheaven Sign Reading", description: "Discover your life purpose, career path, and public legacy.", category: "astrology", file: "midheaven-reading.html" },
+            { title: "Descendant Reading", description: "What you seek in partners and how others see you.", category: "astrology", file: "descendant-reading.html" },
+            { title: "Part of Fortune Reading", description: "Find your joy, luck, and natural prosperity.", category: "astrology", file: "part-of-fortune-reading.html" },
+            // Chart Patterns
             { title: "Stellium Reading", description: "Discover concentrated planetary energy patterns in your chart.", category: "astrology", file: "stellium-reading.html" },
             { title: "Modality Balance Reading", description: "Discover how you initiate, sustain, and adapt to change.", category: "astrology", file: "modality-reading.html" },
+            // Lunar Tools
             { title: "Moon Phase Calculator", description: "Discover what moon phase you were born under.", category: "astrology", file: "moon-phase-calculator.html" },
             { title: "Void of Course Moon", description: "Check if the Moon is void - when matters tend to go astray.", category: "astrology", file: "void-of-course-moon.html" },
+            // Mercury Retrograde
+            { title: "Mercury Retrograde Checker", description: "Check if Mercury is retrograde and what to expect.", category: "astrology", file: "mercury-retrograde-checker.html" },
+            // Other Systems & Fun
             { title: "Chinese Zodiac Reading", description: "Discover your animal sign, element, and ancient wisdom.", category: "astrology", file: "chinese-zodiac-reading.html" },
             { title: "Element Calculator", description: "Discover which element (fire, earth, air, water) you are.", category: "astrology", file: "element-calculator.html" },
             { title: "Birthstone Finder", description: "Find your birthstone based on your birth month.", category: "astrology", file: "birthstone-finder.html" },
             { title: "Birth Flower Finder", description: "Discover your birth flower and its symbolism.", category: "astrology", file: "birth-flower-finder.html" },
             
-            // Life Tools
-            { title: "Age Calculator", description: "Calculate your exact age and life cycle phase.", category: "life", file: "age-calculator.html" },
-            { title: "Birthday Countdown", description: "Count down to your solar return - a new astrological year.", category: "life", file: "birthday-countdown.html" },
-            { title: "Life Progress", description: "See your life phases through numerology and astrology.", category: "life", file: "life-progress.html" },
-            
-            // Forecast Tools
+            // Forecast Tools (5 cosmic only - removed numerology forecasts)
             { title: "Cosmic Daily", description: "Complete daily forecast: numerology + moon + planets + zodiac.", category: "forecasts", file: "cosmic-daily-forecast.html", isNew: true },
             { title: "Cosmic Weekly", description: "Full week: numerology + lunar + planetary + Chinese zodiac.", category: "forecasts", file: "cosmic-weekly-forecast.html", isNew: true },
             { title: "Cosmic Monthly", description: "Lunar calendar + Chinese zodiac + full month cosmic guide.", category: "forecasts", file: "cosmic-monthly-forecast.html", isNew: true },
             { title: "Cosmic Yearly", description: "Chinese zodiac year + all retrogrades + month-by-month.", category: "forecasts", file: "cosmic-yearly-forecast.html", isNew: true },
-            { title: "Daily Forecast", description: "Your personalized numerology guidance for today.", category: "forecasts", file: "daily-forecast.html" },
-            { title: "Weekly Forecast", description: "Navigate your week with personalized energy insights.", category: "forecasts", file: "weekly-forecast.html" },
-            { title: "Monthly Forecast", description: "Discover the themes and opportunities of your current month.", category: "forecasts", file: "monthly-forecast.html" },
-            { title: "Yearly Forecast", description: "Your personal year overview with month-by-month guidance.", category: "forecasts", file: "yearly-forecast.html" },
-            { title: "Decade Forecast", description: "Long-term life cycles, pinnacles, and decade themes.", category: "forecasts", file: "decade-forecast.html" }
+            { title: "Decade Forecast", description: "Long-term life cycles, pinnacles, and decade themes.", category: "forecasts", file: "decade-forecast.html" },
+            
+            // Life Cycles Tools (3) - enhanced descriptions
+            { title: "Cosmic Age Calculator", description: "Discover your exact cosmic age and where you are in life's grand cycles.", category: "life", file: "age-calculator.html" },
+            { title: "Solar Return Countdown", description: "Count down to your solar return — your personal new year when the Sun returns to your birth position.", category: "life", file: "birthday-countdown.html" },
+            { title: "Life Journey Visualization", description: "See your complete life journey mapped across time with numerological phases.", category: "life", file: "life-progress.html" }
         ];
+        
+        // ===== FAVORITES SYSTEM =====
+        const FAVORITES_KEY = 'quantumMerlinFavorites';
+        
+        function getFavorites() {
+            const saved = localStorage.getItem(FAVORITES_KEY);
+            return saved ? JSON.parse(saved) : [];
+        }
+        
+        function saveFavorites(favorites) {
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+        }
+        
+        function toggleFavorite(file, event) {
+            event.stopPropagation(); // Prevent card click
+            const favorites = getFavorites();
+            const index = favorites.indexOf(file);
+            
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(file);
+            }
+            
+            saveFavorites(favorites);
+            renderFavorites();
+            initializeGrids(); // Re-render to update star states
+        }
+        
+        function renderFavorites() {
+            const favorites = getFavorites();
+            const section = document.getElementById('favoritesSection');
+            const grid = document.getElementById('favorites-grid');
+            
+            if (favorites.length === 0) {
+                section.classList.remove('show');
+                return;
+            }
+            
+            section.classList.add('show');
+            const favoriteTools = tools.filter(t => favorites.includes(t.file));
+            const usedTools = window.ToolTracker ? ToolTracker.getUsedTools() : [];
+            
+            grid.innerHTML = favoriteTools.map(tool => {
+                const isNew = !usedTools.includes(tool.file);
+                return `
+                <div class="tool-card${isNew ? ' new-tool' : ''}" onclick="window.location.href='${tool.file}'">
+                    <button class="favorite-btn active" onclick="toggleFavorite('${tool.file}', event)" title="Remove from favorites">⭐</button>
+                    ${isNew ? '<span class="new-badge">NEW</span>' : ''}
+                    <div class="tool-info">
+                        <div class="tool-title">${tool.title}</div>
+                        <div class="tool-description">${tool.description}</div>
+                    </div>
+                </div>
+            `}).join('');
+        }
         
         // Render tools for a specific category
         function renderCategoryTools(category) {
             const grid = document.getElementById(`${category}-grid`);
             const categoryTools = tools.filter(t => t.category === category);
             const usedTools = window.ToolTracker ? ToolTracker.getUsedTools() : [];
+            const favorites = getFavorites();
             
             grid.innerHTML = categoryTools.map(tool => {
                 const isNew = !usedTools.includes(tool.file);
+                const isFavorite = favorites.includes(tool.file);
                 return `
                 <div class="tool-card${isNew ? ' new-tool' : ''}" onclick="window.location.href='${tool.file}'">
+                    <button class="favorite-btn${isFavorite ? ' active' : ''}" onclick="toggleFavorite('${tool.file}', event)" title="${isFavorite ? 'Remove from' : 'Add to'} favorites">⭐</button>
                     ${isNew ? '<span class="new-badge">NEW</span>' : ''}
                     <div class="tool-info">
                         <div class="tool-title">${tool.title}</div>
@@ -1062,9 +1197,22 @@ ${formData.message}
             if (e.target === this) closeAdModal();
         });
         
-        // Initialize all category grids (alphabetical order)
-        ['astrology', 'forecasts', 'life', 'purpose', 'numerology', 'relationship'].forEach(cat => {
-            renderCategoryTools(cat);
+        // Initialize all category grids (order: astrology, numerology, purpose, compatibility, forecasts, life)
+        function initializeGrids() {
+            ['astrology', 'numerology', 'purpose', 'compatibility', 'forecasts', 'life'].forEach(cat => {
+                renderCategoryTools(cat);
+            });
+            renderFavorites();
+        }
+        initializeGrids();
+        
+        // Re-render grids when user navigates back (bfcache restoration)
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                // Page was restored from bfcache, re-render to update NEW badges
+                initializeGrids();
+                updateJourneyProgress();
+            }
         });
         
         // Update journey progress
@@ -1124,10 +1272,12 @@ ${formData.message}
                     <span class="feature-text"><strong>No Data Collection</strong> – Stays on your device</span>
                 </div>
                 <div class="welcome-feature">
-                    <span class="feature-icon">🛠️</span>
-                    <span class="feature-text"><strong>Ever Evolving</strong> – We're always improving</span>
+                    <span class="feature-icon">�</span>
+                    <span class="feature-text"><strong>Save to Home Screen</strong> – Best experience!</span>
                 </div>
             </div>
+            
+            <p class="welcome-tip">💡 <strong>Pro Tip:</strong> Add Quantum Merlin to your home screen for the best app-like experience. On iOS tap Share → Add to Home Screen. On Android tap Menu → Install App.</p>
             
             <p class="welcome-message">As this is an ever-evolving collection of mystical tools, occasional issues may slip through. Found a bug or have a suggestion? We'd love to hear from you!</p>
             
@@ -1214,6 +1364,22 @@ ${formData.message}
             margin: 12px 0;
         }
         
+        .welcome-tip {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05));
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 10px;
+            padding: 10px 12px;
+            color: #E8E4D9;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin: 12px 0;
+            text-align: left;
+        }
+        
+        .welcome-tip strong {
+            color: #fbbf24;
+        }
+        
         .feedback-link {
             display: inline-block;
             color: #06b6d4;
@@ -1284,7 +1450,7 @@ ${formData.message}
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
             <!-- Buy Me a Coffee button - placeholder for user's code -->
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
         </div>
     </footer>
     <style>

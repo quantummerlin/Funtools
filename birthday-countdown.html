@@ -20,8 +20,8 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="apple-touch-icon" href="RetroMerlin.jpg">
     <link rel="manifest" href="manifest.json">
-    <title>Birthday Countdown | Quantum Merlin</title>
-    <meta name="description" content="Count down days until your next birthday.">
+    <title>Solar Return Countdown | Quantum Merlin</title>
+    <meta name="description" content="Count down to your Solar Return - your cosmic birthday when the Sun returns to its exact birth position. Discover your upcoming Personal Year number and theme.">
 <meta name="keywords" content="numerology, astrology, horoscope, zodiac, spiritual tools, cosmic insights, free calculator">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -248,17 +248,90 @@
                 
                 const diffTime = nextBirthday - today;
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+                const diffWeeks = Math.floor(diffDays / 7);
+                const remainingDays = diffDays % 7;
                 
                 const ageAtNextBirthday = nextBirthday.getFullYear() - birthDate.getFullYear();
                 
-                document.getElementById('result-title').textContent = `🎂 ${diffDays} Days Until Your ${ageAtNextBirthday}th Birthday!`;
-                document.getElementById('result-text').textContent = `Your next birthday is on ${nextBirthday.toDateString()}\n\nYou're turning ${ageAtNextBirthday}!`;
+                // Get ordinal suffix
+                function getOrdinal(n) {
+                    const s = ['th', 'st', 'nd', 'rd'];
+                    const v = n % 100;
+                    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+                }
+                
+                // Calculate Personal Year number for the upcoming birthday year
+                const birthMonth = birthDate.getMonth() + 1;
+                const birthDay = birthDate.getDate();
+                const upcomingYear = nextBirthday.getFullYear();
+                let personalYear = birthMonth + birthDay + upcomingYear.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+                while (personalYear > 9 && personalYear !== 11 && personalYear !== 22 && personalYear !== 33) {
+                    personalYear = personalYear.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+                }
+                
+                // Personal Year meanings
+                const personalYearMeanings = {
+                    1: { theme: 'New Beginnings', insight: 'A year of fresh starts, independence, and planting seeds for the future. Take initiative!' },
+                    2: { theme: 'Partnership & Patience', insight: 'A year of cooperation, relationships, and finding balance. Patience brings rewards.' },
+                    3: { theme: 'Creative Expression', insight: 'A year of joy, creativity, and self-expression. Share your gifts with the world!' },
+                    4: { theme: 'Foundation Building', insight: 'A year of hard work, stability, and building lasting structures. Discipline pays off.' },
+                    5: { theme: 'Change & Freedom', insight: 'A year of adventure, change, and expansion. Embrace the unexpected!' },
+                    6: { theme: 'Love & Responsibility', insight: 'A year focused on home, family, and nurturing. Love deepens.' },
+                    7: { theme: 'Inner Growth', insight: 'A year of spiritual development, rest, and introspection. Trust your intuition.' },
+                    8: { theme: 'Power & Abundance', insight: 'A year of achievement, manifestation, and material success. Claim your power!' },
+                    9: { theme: 'Completion & Release', insight: 'A year of endings, letting go, and preparing for rebirth. Release what no longer serves you.' },
+                    11: { theme: 'Spiritual Awakening', insight: 'A master year of heightened intuition and spiritual insight. You are being called to inspire others.' },
+                    22: { theme: 'Master Builder', insight: 'A master year for manifesting big dreams into reality. Build your legacy.' },
+                    33: { theme: 'Master Teacher', insight: 'A master year of service and uplifting humanity. Your compassion transforms.' }
+                };
+                
+                const yearInfo = personalYearMeanings[personalYear];
+                
+                // Solar Return insight
+                let solarInsight = '';
+                if (diffDays <= 7) {
+                    solarInsight = '🌟 Your Solar Return is imminent! The Sun is about to return to its exact birth position. This is your cosmic new year!';
+                } else if (diffDays <= 30) {
+                    solarInsight = '✨ Your Solar Return approaches within a month. Start setting intentions for your new personal year.';
+                } else if (diffDays <= 90) {
+                    solarInsight = '🌙 Your Solar Return is on the horizon. This is a good time to reflect on the current year\'s lessons.';
+                } else {
+                    solarInsight = '🔮 You are in the midst of your current solar year. Keep working toward your intentions.';
+                }
+                
+                document.getElementById('result-title').textContent = `☀️ Solar Return Countdown`;
+                document.getElementById('result-text').innerHTML = `
+<strong style="font-size: 1.5em; color: #fbbf24;">🎂 ${diffDays} Days Until Your ${getOrdinal(ageAtNextBirthday)} Solar Return!</strong>
+
+<strong style="color: #06b6d4;">Countdown Details</strong>
+• <strong>${diffWeeks}</strong> weeks and <strong>${remainingDays}</strong> days remaining
+• <strong>${diffHours.toLocaleString()}</strong> hours to go
+• Your birthday: <strong>${nextBirthday.toDateString()}</strong>
+
+<strong style="color: #8b5cf6;">${solarInsight}</strong>
+
+<strong style="color: #ec4899;">Your Upcoming Personal Year: ${personalYear}</strong>
+<strong style="color: #fbbf24;">Theme: ${yearInfo.theme}</strong>
+${yearInfo.insight}
+
+<em style="color: #9ca3af;">When the Sun returns to its exact position at your birth, a new personal year begins. This "Solar Return" sets the cosmic tone for the year ahead.</em>
+`;
                 document.getElementById('result').classList.add('show');
             });
         
     
         // Load saved data from localStorage
-        ;
+        function loadSavedData() {
+            const savedData = localStorage.getItem('quantumMerlinUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const fieldMappings = {
+                    'birthDate': 'birthDate',
+                    'birthdate': 'birthDate',
+                    'date': 'birthDate',
+                    'dob': 'birthDate'
+                };
                 
                 Object.keys(fieldMappings).forEach(fieldId => {
                     const field = document.getElementById(fieldId);
@@ -356,7 +429,7 @@
         </div>
         <p class="copyright">&copy; 2026 Quantum Merlin. For entertainment purposes only.</p>
         <div class="coffee-section">
-            <a href="#" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
+            <a href="https://buymeacoffee.com/quantummerlin" target="_blank" class="coffee-btn" id="coffeeBtn">☕ Buy Us a Coffee</a>
         </div>
     </footer>
     <style>
