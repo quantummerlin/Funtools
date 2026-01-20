@@ -19,7 +19,17 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="apple-touch-icon" href="RetroMerlin.jpg">
     <link rel="manifest" href="manifest.json">
+    <!-- Preload critical resources for faster PWA startup -->
+    <link rel="preload" href="RetroMerlin.jpg" as="image">
+    <link rel="preload" href="quantum-merlin-styles.css" as="style">
     <title>Quantum Merlin | Ancient Patterns. Modern Interfaces.</title>
+    <!-- Instant loading screen - shows before any other CSS loads -->
+    <style id="instant-loader">
+        .pwa-loader{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a0f;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999}
+        .pwa-loader-orb{width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,#bf5af2 0%,#6366f1 50%,transparent 70%);animation:pulse 1.5s ease-in-out infinite}
+        .pwa-loader-text{color:#bf5af2;font-size:1rem;margin-top:20px;font-family:system-ui,sans-serif;letter-spacing:2px}
+        @keyframes pulse{0%,100%{transform:scale(1);opacity:0.8}50%{transform:scale(1.2);opacity:1}}
+    </style>
     <meta name="description" content="Quantum Merlin maps time, numbers, and celestial cycles into clear moments for aligned action — blending ancient pattern wisdom with modern interface clarity.">
 <meta name="keywords" content="numerology tools, astrology calculator, free horoscope, life path number, zodiac sign, cosmic forecast, spiritual tools">
     
@@ -720,6 +730,22 @@
     </script>
 </head>
 <body>
+    <!-- PWA Instant Loader - shows immediately while page loads -->
+    <div class="pwa-loader" id="pwaLoader">
+        <div class="pwa-loader-orb"></div>
+        <div class="pwa-loader-text">QUANTUM MERLIN</div>
+    </div>
+    <script>
+        // Hide loader when page is ready
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('pwaLoader');
+            if (loader) {
+                loader.style.opacity = '0';
+                loader.style.transition = 'opacity 0.3s';
+                setTimeout(function() { loader.remove(); }, 300);
+            }
+        });
+    </script>
     <div class="container">
         <div class="header">
             <img src="RetroMerlin.jpg" alt="Quantum Merlin" class="wizard-logo">
@@ -1242,11 +1268,16 @@ ${formData.message}
         }
         
         // Show welcome modal on page load for first-time visitors
-        setTimeout(showWelcomeModal, 500);
-        
-        // Close welcome modal on overlay click
-        document.getElementById('welcomeModal').addEventListener('click', function(e) {
-            if (e.target === this) closeWelcomeModal();
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(showWelcomeModal, 500);
+            
+            // Close welcome modal on overlay click
+            const modal = document.getElementById('welcomeModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) closeWelcomeModal();
+                });
+            }
         });
     </script>
     
