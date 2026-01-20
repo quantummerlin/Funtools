@@ -1256,15 +1256,29 @@ ${formData.message}
         
         // All categories start collapsed - user can expand as needed
         
-        // Welcome Modal for First-Time Visitors
+        // Welcome Modal for First-Time Visitors - with resilient storage check
         function showWelcomeModal() {
-            if (localStorage.getItem('quantumMerlinWelcomed')) return;
+            // Check multiple storage methods to be resilient to PWA storage clearing
+            const welcomed = localStorage.getItem('quantumMerlinWelcomed') || 
+                           sessionStorage.getItem('quantumMerlinWelcomed');
+            if (welcomed) return;
+            
+            // Also don't show if user has profiles (they've used the app before)
+            const hasProfiles = localStorage.getItem('quantumMerlinProfiles');
+            if (hasProfiles) {
+                // Re-set the welcomed flag since they're clearly a returning user
+                try { localStorage.setItem('quantumMerlinWelcomed', 'true'); } catch(e) {}
+                return;
+            }
+            
             document.getElementById('welcomeModal').classList.add('show');
         }
         
         function closeWelcomeModal() {
             document.getElementById('welcomeModal').classList.remove('show');
-            localStorage.setItem('quantumMerlinWelcomed', 'true');
+            // Save to both storage types for resilience
+            try { localStorage.setItem('quantumMerlinWelcomed', 'true'); } catch(e) {}
+            try { sessionStorage.setItem('quantumMerlinWelcomed', 'true'); } catch(e) {}
         }
         
         // Show welcome modal on page load for first-time visitors
