@@ -45,7 +45,7 @@ const ToolTracker = (function() {
         'descendant-reading.html': ['rising-sign-reading.html', 'venus-sign-reading.html', 'synastry-reading.html'],
         'part-of-fortune-reading.html': ['jupiter-sign-reading.html', 'north-node-reading.html', 'midheaven-reading.html'],
         'stellium-reading.html': ['modality-reading.html', 'moon-sign-reading.html', 'rising-sign-reading.html'],
-        'modality-reading.html': ['stellium-reading.html', 'element-calculator.html'],
+        'modality-reading.html': ['stellium-reading.html', 'rising-sign-reading.html'],
         'void-of-course-moon.html': ['moon-sign-reading.html', 'mercury-retrograde-checker.html'],
         'mercury-retrograde-checker.html': ['mercury-sign-reading.html', 'void-of-course-moon.html'],
         'chinese-zodiac-calculator.html': ['chinese-zodiac-reading.html', 'element-calculator.html'],
@@ -122,7 +122,7 @@ const ToolTracker = (function() {
         'vocation-reading.html': { title: 'Vocation', category: 'purpose', icon: '💼', desc: 'Your ideal career' },
         'soul-contract-reading.html': { title: 'Soul Contract', category: 'purpose', icon: '📜', desc: 'Your soul agreement' },
         
-        // Astrology (24 tools) - Ordered: Rising → Moon → Personal → Social → Outer → Points → Patterns → Extras
+        // Astrology (21 tools) - Ordered: Rising → Moon → Personal → Social → Outer → Points → Patterns → Extras
         'rising-sign-reading.html': { title: 'Rising Sign', category: 'astrology', icon: '🌅', desc: 'Your outer personality' },
         'moon-sign-reading.html': { title: 'Moon Sign', category: 'astrology', icon: '🌙', desc: 'Your emotional nature' },
         'mercury-sign-reading.html': { title: 'Mercury Sign', category: 'astrology', icon: '💭', desc: 'How you think' },
@@ -144,9 +144,6 @@ const ToolTracker = (function() {
         'void-of-course-moon.html': { title: 'Void Moon', category: 'astrology', icon: '🌑', desc: 'Timing your actions' },
         'mercury-retrograde-checker.html': { title: 'Mercury Retrograde', category: 'astrology', icon: '⚠️', desc: 'Communication chaos' },
         'chinese-zodiac-reading.html': { title: 'Chinese Zodiac', category: 'astrology', icon: '🐉', desc: 'Your animal sign' },
-        'element-calculator.html': { title: 'Element', category: 'astrology', icon: '🌍', desc: 'Your elemental nature' },
-        'birthstone-finder.html': { title: 'Birthstone', category: 'astrology', icon: '💎', desc: 'Your gemstone energy' },
-        'birth-flower-finder.html': { title: 'Birth Flower', category: 'astrology', icon: '🌸', desc: 'Your floral symbol' },
         
         // Forecasts (5 cosmic tools - removed numerology forecasts)
         'cosmic-daily-forecast.html': { title: 'Cosmic Daily', category: 'forecasts', icon: '✨', desc: 'Complete daily guidance' },
