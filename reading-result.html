@@ -708,7 +708,7 @@
             // Update "Try Another" button
             document.getElementById('tryAnotherBtn').href = reading.sourceUrl || 'tools_index.html';
             
-            // Load related tools - prioritize unused ones
+            // Load related tools - prioritize unused ones with context awareness
             loadRelatedTools(reading.toolType, reading.sourceUrl);
             
             // Update progress
@@ -719,11 +719,12 @@
             const relatedGrid = document.getElementById('relatedGrid');
             const relatedIntro = document.getElementById('relatedIntro');
             
-            // Get suggested tools from tracker (prioritizes unused for current profile)
+            // Get suggested tools from tracker with context awareness
             let suggestions = [];
             
             if (window.ToolTracker) {
-                suggestions = ToolTracker.getSuggestedTools(3, currentUrl);
+                // Pass currentUrl as both exclude and context for better recommendations
+                suggestions = ToolTracker.getSuggestedTools(3, currentUrl, null, currentUrl);
             }
             
             // Fallback to static related tools
@@ -734,27 +735,58 @@
                     title: t.title,
                     desc: t.desc,
                     icon: '🔮',
-                    usageCount: 0
+                    usageCount: 0,
+                    category: 'tool',
+                    reason: 'Recommended for you'
                 }));
             }
             
-            // Check if any are new (unused)
+            // Check if any are related or new
+            const hasRelated = suggestions.some(t => t.isRelated && t.usageCount === 0);
             const hasNewTools = suggestions.some(t => t.usageCount === 0);
             
-            if (hasNewTools) {
-                relatedIntro.textContent = "Discover readings you haven't explored yet:";
+            if (hasRelated) {
+                relatedIntro.textContent = "These readings complement what you just discovered:";
+            } else if (hasNewTools) {
+                relatedIntro.textContent = "Explore new dimensions of your cosmic blueprint:";
             } else {
                 relatedIntro.textContent = "Continue your journey of self-discovery:";
             }
             
+            // Category names for display
+            const CATEGORY_NAMES = {
+                'numerology': 'Numerology',
+                'astrology': 'Astrology',
+                'purpose': 'Life Purpose',
+                'relationship': 'Relationship',
+                'personality': 'Personality',
+                'forecasts': 'Forecasts',
+                'life': 'Life Cycles'
+            };
+            
             relatedGrid.innerHTML = suggestions.map(tool => {
                 const isNew = tool.usageCount === 0;
+                const isRelated = tool.isRelated && isNew;
+                const cardClass = isNew ? (isRelated ? 'new-tool related-tool' : 'new-tool') : '';
+                const categoryName = tool.categoryName || CATEGORY_NAMES[tool.category] || tool.category || 'Tool';
+                const reason = tool.reason || (isNew ? 'New for you' : 'Explore more');
+                
+                // Determine badge
+                let badge = '';
+                if (isNew) {
+                    badge = '<span class="new-badge">NEW</span>';
+                } else if (tool.isRelated) {
+                    badge = '<span class="recommended-badge">★</span>';
+                }
+                
                 return `
-                    <a href="${tool.url}" class="suggestion-card${isNew ? ' new-tool' : ''}">
+                    <a href="${tool.url}" class="suggestion-card ${cardClass}">
+                        <span class="category-badge ${tool.category || ''}">${categoryName}</span>
+                        ${badge}
                         <span class="suggestion-icon">${tool.icon || '🔮'}</span>
+                        <span class="suggestion-reason">${reason}</span>
                         <span class="suggestion-title">${tool.title}</span>
                         <span class="suggestion-desc">${tool.desc}</span>
-                        ${isNew ? '<span class="new-badge">NEW</span>' : ''}
                     </a>
                 `;
             }).join('');

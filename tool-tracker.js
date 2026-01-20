@@ -1,9 +1,74 @@
 // Tool Usage Tracker for Quantum Merlin
+// Version 2.0 - Enhanced with contextual recommendations
 // Tracks which tools users have used PER PROFILE and suggests unexplored ones
 
 const ToolTracker = (function() {
     const STORAGE_KEY = 'quantumMerlinToolUsage';
     const LEGACY_KEY = 'quantumMerlinToolsUsed'; // For migration
+    
+    // Tool relationships for contextual recommendations
+    const toolRelationships = {
+        // Numerology connections
+        'life-path-calculator.html': ['destiny-number-calculator.html', 'soul-urge-calculator.html', 'personal-year-reading.html', 'maturity-number-reading.html'],
+        'destiny-number-calculator.html': ['life-path-calculator.html', 'expression-number-reading.html', 'karmic-debt-reading.html', 'dharma-number-reading.html'],
+        'soul-urge-calculator.html': ['personality-number-calculator.html', 'hidden-passion-number.html', 'life-path-calculator.html'],
+        'personality-number-calculator.html': ['soul-urge-calculator.html', 'name-number-calculator.html', 'expression-number-reading.html'],
+        'name-number-calculator.html': ['destiny-number-calculator.html', 'expression-number-reading.html', 'personality-number-calculator.html'],
+        'karmic-debt-reading.html': ['master-number-reading.html', 'life-path-calculator.html', 'challenge-numbers-reading.html'],
+        'master-number-reading.html': ['karmic-debt-reading.html', 'life-path-calculator.html', 'pinnacle-numbers-reading.html'],
+        'personal-year-reading.html': ['personal-month-reading.html', 'personal-day-number.html', 'pinnacle-numbers-reading.html'],
+        'personal-month-reading.html': ['personal-year-reading.html', 'personal-day-number.html'],
+        'personal-day-number.html': ['personal-month-reading.html', 'personal-year-reading.html'],
+        'maturity-number-reading.html': ['life-path-calculator.html', 'destiny-number-calculator.html', 'pinnacle-numbers-reading.html'],
+        'pinnacle-numbers-reading.html': ['challenge-numbers-reading.html', 'maturity-number-reading.html', 'personal-year-reading.html'],
+        'challenge-numbers-reading.html': ['pinnacle-numbers-reading.html', 'karmic-debt-reading.html', 'life-path-calculator.html'],
+        'expression-number-reading.html': ['name-number-calculator.html', 'hidden-passion-number.html', 'soul-urge-calculator.html'],
+        'hidden-passion-number.html': ['expression-number-reading.html', 'soul-urge-calculator.html', 'personality-number-calculator.html'],
+        'birthday-number-reading.html': ['life-path-calculator.html', 'personal-year-reading.html', 'destiny-number-calculator.html'],
+        
+        // Astrology connections
+        'moon-sign-reading.html': ['rising-sign-reading.html', 'venus-sign-reading.html', 'mercury-sign-reading.html', 'synastry-reading.html'],
+        'rising-sign-reading.html': ['moon-sign-reading.html', 'midheaven-reading.html', 'descendant-reading.html'],
+        'venus-sign-reading.html': ['mars-sign-reading.html', 'venus-mars-compatibility.html', 'synastry-reading.html', 'moon-sign-reading.html'],
+        'mars-sign-reading.html': ['venus-sign-reading.html', 'venus-mars-compatibility.html', 'pluto-sign-reading.html'],
+        'mercury-sign-reading.html': ['moon-sign-reading.html', 'mercury-retrograde-checker.html', 'rising-sign-reading.html'],
+        'jupiter-sign-reading.html': ['saturn-sign-reading.html', 'north-node-reading.html', 'part-of-fortune-reading.html'],
+        'saturn-sign-reading.html': ['jupiter-sign-reading.html', 'karmic-debt-reading.html', 'pluto-sign-reading.html', 'chiron-reading.html'],
+        'uranus-sign-reading.html': ['neptune-sign-reading.html', 'pluto-sign-reading.html', 'north-node-reading.html'],
+        'neptune-sign-reading.html': ['uranus-sign-reading.html', 'pluto-sign-reading.html', 'lilith-reading.html'],
+        'pluto-sign-reading.html': ['saturn-sign-reading.html', 'lilith-reading.html', 'chiron-reading.html'],
+        'chiron-reading.html': ['lilith-reading.html', 'saturn-sign-reading.html', 'north-node-reading.html'],
+        'lilith-reading.html': ['chiron-reading.html', 'pluto-sign-reading.html', 'neptune-sign-reading.html'],
+        'north-node-reading.html': ['south-node-reading.html', 'life-mission-reading.html', 'dharma-number-reading.html'],
+        'south-node-reading.html': ['north-node-reading.html', 'karmic-debt-reading.html', 'saturn-sign-reading.html'],
+        'midheaven-reading.html': ['rising-sign-reading.html', 'vocation-reading.html', 'saturn-sign-reading.html'],
+        'descendant-reading.html': ['rising-sign-reading.html', 'venus-sign-reading.html', 'synastry-reading.html'],
+        'part-of-fortune-reading.html': ['jupiter-sign-reading.html', 'north-node-reading.html', 'midheaven-reading.html'],
+        'stellium-reading.html': ['modality-reading.html', 'moon-sign-reading.html', 'rising-sign-reading.html'],
+        'modality-reading.html': ['stellium-reading.html', 'element-calculator.html'],
+        'void-of-course-moon.html': ['moon-sign-reading.html', 'mercury-retrograde-checker.html'],
+        'mercury-retrograde-checker.html': ['mercury-sign-reading.html', 'void-of-course-moon.html'],
+        'chinese-zodiac-calculator.html': ['chinese-zodiac-reading.html', 'element-calculator.html'],
+        'chinese-zodiac-reading.html': ['chinese-zodiac-calculator.html', 'element-calculator.html'],
+        
+        // Relationship connections
+        'synastry-reading.html': ['composite-chart-reading.html', 'venus-mars-compatibility.html', 'relationship-karma-reading.html'],
+        'composite-chart-reading.html': ['synastry-reading.html', 'relationship-karma-reading.html', 'soul-contract-reading.html'],
+        'venus-mars-compatibility.html': ['synastry-reading.html', 'venus-sign-reading.html', 'mars-sign-reading.html'],
+        'relationship-karma-reading.html': ['soul-contract-reading.html', 'synastry-reading.html', 'south-node-reading.html'],
+        'soul-contract-reading.html': ['relationship-karma-reading.html', 'north-node-reading.html', 'life-mission-reading.html'],
+        
+        // Life Purpose connections
+        'dharma-number-reading.html': ['life-mission-reading.html', 'north-node-reading.html', 'destiny-number-calculator.html'],
+        'life-mission-reading.html': ['dharma-number-reading.html', 'north-node-reading.html', 'vocation-reading.html'],
+        'vocation-reading.html': ['midheaven-reading.html', 'life-mission-reading.html', 'saturn-sign-reading.html'],
+        
+        // Personality/Other
+        'element-calculator.html': ['modality-reading.html', 'chinese-zodiac-calculator.html'],
+        'aura-color-test.html': ['color-personality-test.html', 'element-calculator.html'],
+        'color-personality-test.html': ['aura-color-test.html', 'brain-type-test.html'],
+        'brain-type-test.html': ['color-personality-test.html', 'mercury-sign-reading.html']
+    };
     
     // All available tools with categories
     const allTools = {
@@ -175,61 +240,144 @@ const ToolTracker = (function() {
     // Priority categories for maximum impact (in order of priority)
     const PRIORITY_CATEGORIES = ['numerology', 'astrology', 'purpose', 'relationship'];
     
-    // Get suggested tools (prioritize unused, then least used, with high-impact categories first)
-    function getSuggestedTools(count = 3, excludeUrl = null, profileId = null) {
+    // Category display names
+    const CATEGORY_NAMES = {
+        'numerology': 'Numerology',
+        'astrology': 'Astrology',
+        'purpose': 'Life Purpose',
+        'relationship': 'Relationship',
+        'personality': 'Personality',
+        'forecasts': 'Forecasts',
+        'life': 'Life Cycles'
+    };
+    
+    // Get related tools for a given tool (contextual recommendations)
+    function getRelatedTools(toolUrl) {
+        const filename = toolUrl.split('/').pop().split('?')[0];
+        return toolRelationships[filename] || [];
+    }
+    
+    // Get the category of a tool
+    function getToolCategory(toolUrl) {
+        const filename = toolUrl.split('/').pop().split('?')[0];
+        return allTools[filename] ? allTools[filename].category : null;
+    }
+    
+    // Get suggested tools with contextual awareness
+    // Priority: 1) Related unused tools, 2) Same category unused, 3) Other priority categories unused, 4) Least used
+    function getSuggestedTools(count = 3, excludeUrl = null, profileId = null, contextToolUrl = null) {
         const pid = profileId || getActiveProfileId();
         const allData = getAllUsageData();
         const profileData = allData[pid] || {};
         
-        // Build list with usage counts
+        // Normalize exclude URL
+        const excludeFilename = excludeUrl ? excludeUrl.split('/').pop().split('?')[0] : null;
+        const contextFilename = contextToolUrl ? contextToolUrl.split('/').pop().split('?')[0] : excludeFilename;
+        
+        // Get related tools for context
+        const relatedToolUrls = contextFilename ? getRelatedTools(contextFilename) : [];
+        const currentCategory = contextFilename && allTools[contextFilename] ? allTools[contextFilename].category : null;
+        
+        // Build list with usage counts and recommendation reasons
         const toolList = [];
         for (const [url, info] of Object.entries(allTools)) {
-            if (url === excludeUrl) continue;
+            if (url === excludeFilename) continue;
+            
             const usage = profileData[url] || { count: 0, lastUsed: 0 };
-            // Assign priority score (lower = higher priority)
+            const isRelated = relatedToolUrls.includes(url);
+            const isSameCategory = currentCategory && info.category === currentCategory;
             const priorityIndex = PRIORITY_CATEGORIES.indexOf(info.category);
             const priorityScore = priorityIndex >= 0 ? priorityIndex : PRIORITY_CATEGORIES.length;
-            toolList.push({ url, ...info, usageCount: usage.count, lastUsed: usage.lastUsed, priorityScore });
+            
+            // Determine recommendation reason
+            let reason = '';
+            let reasonPriority = 10;
+            
+            if (isRelated && usage.count === 0) {
+                reason = 'Related to your reading';
+                reasonPriority = 0;
+            } else if (isSameCategory && usage.count === 0) {
+                reason = `More ${CATEGORY_NAMES[info.category] || info.category}`;
+                reasonPriority = 1;
+            } else if (usage.count === 0) {
+                reason = 'New for you';
+                reasonPriority = 2;
+            } else if (isRelated) {
+                reason = 'Complements your journey';
+                reasonPriority = 3;
+            } else if (isSameCategory) {
+                reason = 'Explore further';
+                reasonPriority = 4;
+            } else {
+                reason = 'Discover more';
+                reasonPriority = 5;
+            }
+            
+            toolList.push({ 
+                url, 
+                ...info, 
+                usageCount: usage.count, 
+                lastUsed: usage.lastUsed, 
+                priorityScore,
+                isRelated,
+                isSameCategory,
+                reason,
+                reasonPriority,
+                categoryName: CATEGORY_NAMES[info.category] || info.category
+            });
         }
         
-        // Sort by: priority category, then unused first, then least used, then oldest last used
+        // Sort by: reason priority, then usage (unused first), then category priority
         toolList.sort((a, b) => {
-            // Priority categories first
-            if (a.priorityScore !== b.priorityScore) return a.priorityScore - b.priorityScore;
-            // Unused (count 0) first
+            // Related unused first
+            if (a.reasonPriority !== b.reasonPriority) return a.reasonPriority - b.reasonPriority;
+            // Unused first
             if (a.usageCount === 0 && b.usageCount > 0) return -1;
             if (b.usageCount === 0 && a.usageCount > 0) return 1;
+            // Priority categories
+            if (a.priorityScore !== b.priorityScore) return a.priorityScore - b.priorityScore;
             // Then by count (ascending)
             if (a.usageCount !== b.usageCount) return a.usageCount - b.usageCount;
             // Then by last used (oldest first)
             return a.lastUsed - b.lastUsed;
         });
         
-        // Get a mix of priority categories from the prioritized list
-        const byCategory = {};
-        toolList.forEach(t => {
-            if (!byCategory[t.category]) byCategory[t.category] = [];
-            byCategory[t.category].push(t);
-        });
-        
+        // Get a diverse mix - prefer one from each reason type
         const result = [];
-        // Prioritize these categories in order, then add others
-        const priorityOrder = [...PRIORITY_CATEGORIES];
-        const otherCategories = Object.keys(byCategory).filter(c => !PRIORITY_CATEGORIES.includes(c));
-        const orderedCategories = [...priorityOrder.filter(c => byCategory[c]), ...otherCategories];
+        const usedReasons = new Set();
+        const usedCategories = new Set();
         
-        // Round-robin from categories (priority categories first)
-        let catIndex = 0;
-        while (result.length < count && toolList.length > 0) {
-            const cat = orderedCategories[catIndex % orderedCategories.length];
-            if (byCategory[cat] && byCategory[cat].length > 0) {
-                result.push(byCategory[cat].shift());
+        // First pass: get diverse suggestions
+        for (const tool of toolList) {
+            if (result.length >= count) break;
+            
+            // Prioritize diversity in reasons and categories
+            const reasonKey = tool.reason;
+            const catKey = tool.category;
+            
+            // Always take related tools
+            if (tool.isRelated && tool.usageCount === 0) {
+                result.push(tool);
+                usedReasons.add(reasonKey);
+                usedCategories.add(catKey);
+            } else if (!usedReasons.has(reasonKey) || !usedCategories.has(catKey)) {
+                result.push(tool);
+                usedReasons.add(reasonKey);
+                usedCategories.add(catKey);
             }
-            catIndex++;
-            if (catIndex > orderedCategories.length * count) break;
         }
         
-        return result;
+        // Second pass: fill remaining slots
+        if (result.length < count) {
+            for (const tool of toolList) {
+                if (result.length >= count) break;
+                if (!result.includes(tool)) {
+                    result.push(tool);
+                }
+            }
+        }
+        
+        return result.slice(0, count);
     }
     
     // Get progress stats for current profile
@@ -243,24 +391,45 @@ const ToolTracker = (function() {
         };
     }
     
-    // Render "Go Deeper" suggestion section
-    function renderGoDeeper(containerId = 'goDeeper', count = 3) {
+    // Render "Go Deeper" suggestion section with enhanced UI
+    function renderGoDeeper(containerId = 'goDeeper', count = 3, contextToolUrl = null) {
         const container = document.getElementById(containerId);
         if (!container) return;
         
         const currentPage = window.location.pathname.split('/').pop();
-        const suggestions = getSuggestedTools(count, currentPage);
+        const contextUrl = contextToolUrl || currentPage;
+        const suggestions = getSuggestedTools(count, currentPage, null, contextUrl);
         const progress = getProgress();
         
         if (suggestions.length === 0) {
-            container.innerHTML = '<p style="text-align: center; color: #9A8F7A;">You\'ve explored all available tools! 🎉</p>';
+            container.innerHTML = `
+                <div class="go-deeper-header">
+                    <h3>🎉 Journey Complete!</h3>
+                    <p>You've explored all available tools. Your cosmic knowledge is truly impressive!</p>
+                    <div class="progress-bar-mini">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                    <span class="progress-text">${progress.total} of ${progress.total} tools explored</span>
+                </div>
+            `;
             return;
+        }
+        
+        // Determine intro text based on whether there are related/new tools
+        const hasRelated = suggestions.some(t => t.isRelated && t.usageCount === 0);
+        const hasNew = suggestions.some(t => t.usageCount === 0);
+        let introText = 'Continue your journey of self-discovery';
+        
+        if (hasRelated) {
+            introText = 'These readings complement what you just discovered';
+        } else if (hasNew) {
+            introText = 'Explore new dimensions of your cosmic blueprint';
         }
         
         let html = `
             <div class="go-deeper-header">
                 <h3>✨ Go Deeper</h3>
-                <p>Continue your journey of self-discovery</p>
+                <p>${introText}</p>
                 <div class="progress-bar-mini">
                     <div class="progress-fill" style="width: ${progress.percentage}%"></div>
                 </div>
@@ -271,12 +440,25 @@ const ToolTracker = (function() {
         
         suggestions.forEach(tool => {
             const isNew = tool.usageCount === 0;
+            const isRelated = tool.isRelated && isNew;
+            const cardClass = isNew ? (isRelated ? 'new-tool related-tool' : 'new-tool') : '';
+            
+            // Determine which badge to show
+            let badge = '';
+            if (isNew) {
+                badge = '<span class="new-badge">NEW</span>';
+            } else if (tool.isRelated) {
+                badge = '<span class="recommended-badge">★</span>';
+            }
+            
             html += `
-                <a href="${tool.url}" class="suggestion-card ${isNew ? 'new-tool' : ''}">
+                <a href="${tool.url}" class="suggestion-card ${cardClass}">
+                    <span class="category-badge ${tool.category}">${tool.categoryName}</span>
+                    ${badge}
                     <span class="suggestion-icon">${tool.icon}</span>
+                    <span class="suggestion-reason">${tool.reason}</span>
                     <span class="suggestion-title">${tool.title}</span>
                     <span class="suggestion-desc">${tool.desc}</span>
-                    ${isNew ? '<span class="new-badge">NEW</span>' : ''}
                 </a>
             `;
         });
@@ -309,8 +491,11 @@ const ToolTracker = (function() {
         getSuggestedTools,
         getProgress,
         getToolUsageCount,
+        getRelatedTools,
+        getToolCategory,
         renderGoDeeper,
-        allTools
+        allTools,
+        CATEGORY_NAMES
     };
 })();
 
