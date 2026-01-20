@@ -75,20 +75,28 @@
 
         <form id="toolForm" class="tool-form" onsubmit="calculateDescendant(event)">
             <div class="form-group">
+                <label for="preferredName">Your Name</label>
+                <input type="text" id="preferredName" placeholder="How should we address you?" required>
+            </div>
+            <div class="form-group">
                 <label for="birthDate">Birth Date</label>
                 <input type="date" id="birthDate" required>
             </div>
-            <p style="text-align: center; opacity: 0.7; margin: 1rem 0;">
-                Note: Without birth time, we'll use your Sun sign to approximate your Rising sign,
-                which determines your Descendant. For most accurate results, get your full birth chart.
-            </p>
+            <div class="form-group">
+                <label for="birthTime">Birth Time</label>
+                <input type="time" id="birthTime" required>
+            </div>
+            <div class="form-group">
+                <label for="birthPlace">Birth Place</label>
+                <input type="text" id="birthPlace" placeholder="City, Country" required>
+            </div>
             <button type="submit" class="submit-btn">💑 Find My Descendant</button>
         </form>
 
         <div id="result" class="result-section" style="display: none;"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
     <script>
         const zodiacSigns = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
         const zodiacSymbols = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
@@ -240,12 +248,22 @@
             }
         };
 
-        function getSunSign(birthDate) {
-            const date = new Date(birthDate);
-            const sunPos = Astronomy.SunPosition(new Astronomy.AstroTime(date));
-            const eclipticLon = sunPos.elon;
-            const signIndex = Math.floor(eclipticLon / 30);
-            return zodiacSigns[signIndex];
+        async function geocodeLocation(locationString) {
+            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationString)}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            if (data && data.length > 0) {
+                return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+            }
+            throw new Error('Location not found');
+        }
+
+        function getZodiacSign(eclipticLongitude) {
+            let lon = eclipticLongitude % 360;
+            if (lon < 0) lon += 360;
+            const signIndex = Math.floor(lon / 30);
+            const safeIndex = Math.max(0, Math.min(11, signIndex));
+            return zodiacSigns[safeIndex];
         }
 
         function getOppositeSign(sign) {
@@ -254,34 +272,94 @@
             return zodiacSigns[oppositeIndex];
         }
 
-        function calculateDescendant(event) {
+        async function calculateDescendant(event) {
             event.preventDefault();
             
+            const preferredName = document.getElementById('preferredName').value;
             const birthDate = document.getElementById('birthDate').value;
+            const birthTime = document.getElementById('birthTime').value;
+            const birthPlace = document.getElementById('birthPlace').value;
             
-            // Get sun sign and approximate rising sign (opposite)
-            const sunSign = getSunSign(birthDate);
-            // For approximation, we'll use sun sign as potential rising influence
-            // Descendant is opposite the rising sign
-            // Since we don't have time, we'll create readings for all possibilities
-            // but present based on sun sign polarity
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '💑 Calculating...';
+            submitBtn.disabled = true;
             
-            // Use sun sign to approximate (Descendant = opposite of rising)
-            // We'll assume rising might be similar to sun or its opposite
-            const descendantSign = sunSign; // Simplified: using sun sign's descendant quality
-            
-            showResult(descendantSign);
+            try {
+                const coords = await geocodeLocation(birthPlace);
+                const [year, month, day] = birthDate.split('-').map(Number);
+                const [hours, minutes] = birthTime.split(':').map(Number);
+                
+                // Timezone estimation from longitude
+                let tzOffsetHours = coords.lon / 15;
+                if (coords.lon >= 51 && coords.lon <= 60 && coords.lat >= 22 && coords.lat <= 27) tzOffsetHours = 4;
+                if (coords.lon >= 68 && coords.lon <= 97 && coords.lat >= 8 && coords.lat <= 37) tzOffsetHours = 5.5;
+                if (coords.lon >= -5 && coords.lon <= 2 && coords.lat >= 49 && coords.lat <= 61) tzOffsetHours = 0;
+                if (coords.lon >= -10 && coords.lon <= 35 && coords.lat >= 35 && coords.lat <= 72) {
+                    if (coords.lon < 15) tzOffsetHours = 1;
+                    else tzOffsetHours = 2;
+                }
+                
+                // Convert to UTC
+                const totalLocalMinutes = hours * 60 + minutes;
+                const tzOffsetMinutes = tzOffsetHours * 60;
+                let totalUtcMinutes = totalLocalMinutes - tzOffsetMinutes;
+                
+                let utcDay = day, utcMonth = month, utcYear = year;
+                if (totalUtcMinutes < 0) {
+                    totalUtcMinutes += 1440;
+                    utcDay--;
+                    if (utcDay < 1) { utcMonth--; if (utcMonth < 1) { utcMonth = 12; utcYear--; } utcDay = new Date(utcYear, utcMonth, 0).getDate(); }
+                } else if (totalUtcMinutes >= 1440) {
+                    totalUtcMinutes -= 1440;
+                    utcDay++;
+                    const daysInMonth = new Date(utcYear, utcMonth, 0).getDate();
+                    if (utcDay > daysInMonth) { utcDay = 1; utcMonth++; if (utcMonth > 12) { utcMonth = 1; utcYear++; } }
+                }
+                
+                const utcHours = Math.floor(totalUtcMinutes / 60);
+                const utcMins = totalUtcMinutes % 60;
+                const utcTimestamp = Date.UTC(utcYear, utcMonth - 1, utcDay, utcHours, utcMins, 0);
+                const time = Astronomy.MakeTime(new Date(utcTimestamp));
+                
+                // Calculate Local Sidereal Time and Ascendant
+                const gst = Astronomy.SiderealTime(time);
+                const lst = gst + (coords.lon / 15);
+                const lstNorm = ((lst % 24) + 24) % 24;
+                const lstDeg = lstNorm * 15;
+                
+                const obliquity = 23.439292;
+                const lstRad = lstDeg * Math.PI / 180;
+                const obliqRad = obliquity * Math.PI / 180;
+                const latRad = coords.lat * Math.PI / 180;
+                
+                const y = -Math.cos(lstRad);
+                const x = Math.sin(lstRad) * Math.cos(obliqRad) + Math.tan(latRad) * Math.sin(obliqRad);
+                let ascRad = Math.atan2(y, x);
+                let ascLon = ascRad * 180 / Math.PI;
+                if (ascLon < 0) ascLon += 360;
+                
+                const risingSign = getZodiacSign(ascLon);
+                const descendantSign = getOppositeSign(risingSign);
+                
+                showResult(preferredName, descendantSign, risingSign);
+            } catch (error) {
+                alert('Error calculating Descendant: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
         }
 
-        function showResult(descendantSign) {
+        function showResult(name, descendantSign, risingSign) {
             const reading = descendantReadings[descendantSign];
             
             const resultHTML = `
                 <div class="result-card">
                     <div class="descendant-symbol">${reading.symbol}</div>
-                    <h2>Descendant in ${descendantSign}</h2>
+                    <h2>${name}, Your Descendant is in ${descendantSign}</h2>
                     <p style="text-align: center; font-style: italic; margin: 1rem 0;">
-                        (Approximate Rising Sign: ${reading.yourRising})
+                        Your Rising Sign: ${risingSign}
                     </p>
                     
                     <div class="reading-section">
