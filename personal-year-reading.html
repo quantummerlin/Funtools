@@ -27,6 +27,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap&v=20260111121803&v=20260111121858&v=20260111132525&v=20260112083146" rel="stylesheet">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
+    <link rel="stylesheet" href="go-deeper.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -321,22 +322,7 @@
         </div>
 
         <div class="tool-card">
-                        
-            <!-- Profile Management Section -->
-            <div class="profile-section" style="background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 12px; padding: 15px 20px; margin-bottom: 25px;">
-                <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
-                    <div style="display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px;">
-                        <label style="color: #BF5AF2; font-family: 'Cinzel', serif; white-space: nowrap; font-size: 0.95em;">👤 Profile:</label>
-                        </div>
-                    <button type="button" onclick="showDeleteProfileDialog()" class="profile-btn" style="background: rgba(236, 72, 153, 0.1); border: 1px solid rgba(236, 72, 153, 0.4); color: #ec4899; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-family: 'Cinzel', serif; font-size: 0.85em; transition: all 0.3s;">
-                        🗑️ Remove Profile
-                    </button>
-                </div>
-                <p style="color: #9A8F7A; font-size: 0.8em; margin-top: 10px; margin-bottom: 0;">
-                    ✨ Your info auto-saves as you type. Create profiles for friends & family!
-                </p>
-            </div>
-<form id="calculator-form" onsubmit="calculateReading(event)">
+            <form id="calculator-form" onsubmit="calculateReading(event)">
                 <div class="input-section">
                     <div class="section-title">✨ Personal Information</div>
                     
@@ -344,15 +330,12 @@
                         <label for="preferredName">Preferred Name</label>
                         <input type="text" id="preferredName" required>
                         <div class="helper-text">What you like to be called</div>
+                    </div>
 
                     <div class="input-group">
                         <label for="birthName">Birth Name <span style="color: #9ca3af; font-weight: normal;">(Optional)</span></label>
                         <input type="text" id="birthName">
-                        <div class="helper-text">The name given to you at birth - carries the energy of your naming</div>
-                    </div>
-                    </div>
-
-                    <div class="input-group">As it appears on your birth certificate</div>
+                        <div class="helper-text">As it appears on your birth certificate</div>
                     </div>
                 </div>
 
@@ -388,7 +371,12 @@
                 <button type="button" class="back-button" onclick="window.location.href='tools_index.html'">← Back to Quantum Merlin Hub</button>
             </div>
         </div>
+        
+        <!-- Go Deeper Section -->
+        <div class="go-deeper-section" id="goDeeper"></div>
     </div>
+    
+    <script src="go-deeper.js"></script>
 
     <script>
         // Version: 20260112083146 - Auto-generated cache buster
