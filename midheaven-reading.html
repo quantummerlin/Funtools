@@ -411,21 +411,24 @@
                 const utcTimestamp = Date.UTC(utcYear, utcMonth - 1, utcDay, utcHours, utcMins, 0);
                 const time = Astronomy.MakeTime(new Date(utcTimestamp));
                 
-                // Calculate houses (simplified - MC is approximately 90 degrees from Ascendant)
-                const observer = new Astronomy.Observer(coords.lat, coords.lon, 0);
-                const hourAngle = Astronomy.HourAngle('Sun', time, observer);
+                // Calculate MC (Midheaven) using Local Sidereal Time
+                // MC is the ecliptic longitude at the meridian
+                const gst = Astronomy.SiderealTime(time); // Greenwich Sidereal Time in hours
+                const lst = gst + (coords.lon / 15); // Local Sidereal Time (longitude in hours)
+                const lstNorm = ((lst % 24) + 24) % 24; // Normalize to 0-24 hours
                 
-                // Calculate MC (Midheaven) - the cusp of the 10th house
-                // MC is the ecliptic longitude at the upper meridian
-                const lst = hourAngle.ra + Astronomy.SiderealTime(time);
-                const obliquity = 23.439292; // Mean obliquity of ecliptic
-                
-                // Convert LST to ecliptic longitude for MC
-                const lstRad = lst * 15 * Math.PI / 180;
+                // Convert LST to degrees and then to ecliptic longitude for MC
+                const lstDeg = lstNorm * 15; // Convert hours to degrees (0-360)
+                const obliquity = 23.439292; // Mean obliquity of ecliptic in degrees
+                const lstRad = lstDeg * Math.PI / 180;
                 const obliqRad = obliquity * Math.PI / 180;
+                
+                // Calculate MC from Right Ascension to Ecliptic Longitude
+                // MC RA = LST, then convert RA to ecliptic longitude
                 const mcRad = Math.atan2(Math.sin(lstRad), Math.cos(lstRad) * Math.cos(obliqRad));
                 let mcLon = mcRad * 180 / Math.PI;
                 
+                // Normalize to 0-360
                 if (mcLon < 0) mcLon += 360;
                 
                 const mcSign = getZodiacSign(mcLon);

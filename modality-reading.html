@@ -314,10 +314,14 @@
         }
 
         function calculateRisingSign(time, observer) {
-            const hourAngle = Astronomy.HourAngle('Sun', time, observer);
-            const lst = hourAngle.ra + Astronomy.SiderealTime(time);
+            // Calculate Local Sidereal Time properly
+            const gst = Astronomy.SiderealTime(time); // Greenwich Sidereal Time in hours
+            const lst = gst + (observer.longitude / 15); // Local Sidereal Time
+            const lstNorm = ((lst % 24) + 24) % 24; // Normalize to 0-24 hours
+            const lstDeg = lstNorm * 15; // Convert to degrees
+            
             const obliquity = 23.439292;
-            const lstRad = lst * 15 * Math.PI / 180;
+            const lstRad = lstDeg * Math.PI / 180;
             const obliqRad = obliquity * Math.PI / 180;
             const latRad = observer.latitude * Math.PI / 180;
             
