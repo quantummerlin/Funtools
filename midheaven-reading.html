@@ -292,11 +292,17 @@
         };
 
         function getZodiacSign(eclipticLongitude) {
-            const signIndex = Math.floor(eclipticLongitude / 30);
-            const degrees = Math.floor(eclipticLongitude % 30);
-            const minutes = Math.floor((eclipticLongitude % 1) * 60);
+            // Normalize longitude to 0-360 range
+            let lon = eclipticLongitude % 360;
+            if (lon < 0) lon += 360;
+            
+            const signIndex = Math.floor(lon / 30);
+            // Safety check - ensure index is valid
+            const safeIndex = Math.max(0, Math.min(11, signIndex));
+            const degrees = Math.floor(lon % 30);
+            const minutes = Math.floor((lon % 1) * 60);
             return {
-                sign: ZODIAC_SIGNS[signIndex],
+                sign: ZODIAC_SIGNS[safeIndex],
                 degrees: degrees,
                 minutes: minutes
             };
@@ -424,8 +430,11 @@
                 
                 const mcSign = getZodiacSign(mcLon);
                 
-                // Get interpretation for this MC sign
+                // Get interpretation for this MC sign with fallback
                 const interpretation = midheavenInterpretations[mcSign.sign];
+                if (!interpretation) {
+                    throw new Error(`Could not find interpretation for ${mcSign.sign}. Please try again.`);
+                }
                 const personalizedReading = interpretation.replace(/{preferredName}/g, preferredName);
                 const paragraphs = personalizedReading.split('\n\n').map(p => `<p>${p}</p>`).join('');
                 
