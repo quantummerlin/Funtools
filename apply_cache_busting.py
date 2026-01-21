@@ -73,6 +73,20 @@ for filename in html_files:
                 content
             )
         
+        # Add version query string to share-utils.js
+        content = re.sub(
+            r'share-utils\.js(\?v=[^"]*)?',
+            f'share-utils.js?v={VERSION}',
+            content
+        )
+        
+        # Add version query string to tool-tracker.js
+        content = re.sub(
+            r'tool-tracker\.js(\?v=[^"]*)?',
+            f'tool-tracker.js?v={VERSION}',
+            content
+        )
+        
         # Add version query string to Google Fonts (optional, they handle their own caching)
         content = re.sub(
             r'(fonts\.googleapis\.com/css2\?[^"]+)"',
