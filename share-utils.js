@@ -51,10 +51,32 @@ window.QMShare = {
     },
     
     /**
-     * Get the current page URL
+     * Get a clean shareable URL (not encoded, for functions that encode it themselves)
+     */
+    getCleanUrl() {
+        const currentUrl = window.location.href;
+        
+        // If we're on reading-result.html with data params, use the source tool URL instead
+        if (currentUrl.includes('reading-result.html') && currentUrl.includes('data=')) {
+            if (this.currentResult && this.currentResult.sourceUrl) {
+                return this.baseUrl + this.currentResult.sourceUrl;
+            }
+            return this.baseUrl;
+        }
+        
+        // For other pages, use clean URL without query params if they're too long
+        if (currentUrl.length > 200) {
+            return window.location.origin + window.location.pathname;
+        }
+        
+        return currentUrl;
+    },
+    
+    /**
+     * Get a clean shareable URL (encoded for URL parameters)
      */
     getPageUrl() {
-        return encodeURIComponent(window.location.href);
+        return encodeURIComponent(this.getCleanUrl());
     },
     
     /**
@@ -92,7 +114,7 @@ window.QMShare = {
      */
     whatsapp(customText, customUrl) {
         const text = customText || this.getViralText();
-        const url = customUrl || window.location.href;
+        const url = customUrl || this.getCleanUrl();
         const message = encodeURIComponent(`${text}\n\n${url}`);
         window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
     },
@@ -102,7 +124,7 @@ window.QMShare = {
      */
     email(subject, body, customUrl) {
         const title = subject || `You need to try this! ${this.getViralText()}`;
-        const url = customUrl || window.location.href;
+        const url = customUrl || this.getCleanUrl();
         const emailBody = body || `Hey!\n\n${this.getViralText()}\n\nTry it yourself:\n${url}\n\n✨ It's eerily accurate!`;
         const mailtoUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(emailBody)}`;
         window.location.href = mailtoUrl;
@@ -113,7 +135,7 @@ window.QMShare = {
      */
     sms(customText, customUrl) {
         const text = customText || this.getViralText();
-        const url = customUrl || window.location.href;
+        const url = customUrl || this.getCleanUrl();
         const message = encodeURIComponent(`${text}\n${url}`);
         window.location.href = `sms:?body=${message}`;
     },
@@ -122,26 +144,26 @@ window.QMShare = {
      * Share on Pinterest
      */
     pinterest(imageUrl, description) {
-        const url = encodeURIComponent(window.location.href);
+        const url = this.getCleanUrl();
         const desc = encodeURIComponent(description || this.getViralText());
         const img = encodeURIComponent(imageUrl || 'https://funtools.quantummerlin.com/RetroMerlin.jpg');
-        window.open(`https://pinterest.com/pin/create/button/?url=${url}&media=${img}&description=${desc}`, '_blank', 'width=750,height=550');
+        window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${img}&description=${desc}`, '_blank', 'width=750,height=550');
     },
     
     /**
      * Share on Reddit
      */
     reddit(customTitle) {
-        const url = encodeURIComponent(window.location.href);
+        const url = this.getCleanUrl();
         const title = encodeURIComponent(customTitle || this.getViralText());
-        window.open(`https://reddit.com/submit?url=${url}&title=${title}`, '_blank', 'width=750,height=550');
+        window.open(`https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${title}`, '_blank', 'width=750,height=550');
     },
     
     /**
      * Share on Threads
      */
     threads(customText) {
-        const text = encodeURIComponent((customText || this.getViralText()) + '\n' + window.location.href);
+        const text = encodeURIComponent((customText || this.getViralText()) + '\n' + this.getCleanUrl());
         window.open(`https://threads.net/intent/post?text=${text}`, '_blank', 'width=550,height=420');
     },
     
@@ -150,7 +172,7 @@ window.QMShare = {
      */
     telegram(customText, customUrl) {
         const text = encodeURIComponent(customText || this.getViralText());
-        const url = encodeURIComponent(customUrl || window.location.href);
+        const url = encodeURIComponent(customUrl || this.getCleanUrl());
         window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank', 'width=550,height=420');
     },
     
@@ -158,7 +180,7 @@ window.QMShare = {
      * Copy link to clipboard
      */
     async copyLink(customUrl, showFeedback = true) {
-        const url = customUrl || window.location.href;
+        const url = customUrl || this.getCleanUrl();
         try {
             await navigator.clipboard.writeText(url);
             if (showFeedback) {
@@ -194,7 +216,7 @@ window.QMShare = {
      * Copy viral result text to clipboard (for easy sharing anywhere)
      */
     async copyViralText() {
-        const viralText = `${this.getViralText()}\n\n${window.location.href}`;
+        const viralText = `${this.getViralText()}\n\n${this.getCleanUrl()}`;
         try {
             await navigator.clipboard.writeText(viralText);
             this.showCopyFeedback('✨ Ready to paste & share!');
@@ -288,8 +310,8 @@ window.QMShare = {
     async native(shareData) {
         const data = {
             title: shareData?.title || document.querySelector('title')?.textContent || 'Quantum Merlin',
-            text: shareData?.text || document.querySelector('meta[name="description"]')?.content || '',
-            url: shareData?.url || window.location.href
+            text: shareData?.text || this.getViralText(),
+            url: shareData?.url || this.getCleanUrl()
         };
         
         if (navigator.share) {
