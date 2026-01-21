@@ -1,5 +1,5 @@
 // Quantum Merlin Service Worker - Version Management
-const CACHE_VERSION = '20260121223506';
+const CACHE_VERSION = '20260122073736';
 const CACHE_NAME = `quantum-merlin-v${CACHE_VERSION}`;
 
 // Files to cache (update this as needed)
