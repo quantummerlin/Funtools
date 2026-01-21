@@ -3,7 +3,7 @@
  * Enhanced sharing functionality with viral personalized content
  */
 
-const QMShare = {
+window.QMShare = {
     // Site base URL
     baseUrl: 'https://funtools.quantummerlin.com/',
     
