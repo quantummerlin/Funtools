@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="20260121162926">
+    <meta name="version" content="20260121163503">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#bf5af2">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,7 +20,7 @@
 <meta name="keywords" content="numerology, astrology, horoscope, zodiac, spiritual tools, cosmic insights, free calculator">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap&v=20260121162926" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap&v=20260121162926&v=20260121163503" rel="stylesheet">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <script src="auto-fill.js"></script>
     <script src="cosmic-loader.js"></script>
@@ -232,7 +232,11 @@
         @media (max-width: 600px) {
             .pinnacle-timeline { flex-wrap: wrap; gap: 15px; justify-content: center; }
             .pinnacle-timeline::before { display: none; }
+            .year-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
+        
+        .key-year { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         
         .legal-footer { margin-top: 50px; padding: 30px 20px; text-align: center; border-top: 1px solid rgba(191, 90, 242, 0.2); }
         .legal-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
@@ -323,6 +327,7 @@
     </footer>
     
     <script>
+        // Version: 20260121163503 - Auto-generated cache buster
         // Version: 20260121162926 - Auto-generated cache buster
         function reduceToSingle(num) {
             while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
@@ -391,6 +396,118 @@
             1: "New Starts", 2: "Partnership", 3: "Creativity", 4: "Building",
             5: "Change", 6: "Love", 7: "Wisdom", 8: "Power",
             9: "Completion", 11: "Awakening", 22: "Mastery", 33: "Teaching"
+        };
+        
+        // Detailed Personal Year Interpretations
+        const personalYearMeanings = {
+            1: {
+                title: "Year of New Beginnings",
+                icon: "🌱",
+                type: "power",
+                overview: "This is your year to start fresh. Plant seeds for the next 9-year cycle. Take initiative, be independent, and launch new projects.",
+                focus: ["Starting new ventures", "Self-improvement", "Taking the lead", "Breaking from the past"],
+                warning: "Don't wait for others—this is YOUR year to act. Hesitation wastes this powerful energy.",
+                bestFor: "Career changes, new relationships, moving, major life decisions"
+            },
+            2: {
+                title: "Year of Patience & Partnership",
+                icon: "🤝",
+                type: "receptive",
+                overview: "Slow down. This year favors cooperation, diplomacy, and nurturing what you started. Relationships take center stage.",
+                focus: ["Building partnerships", "Patience and timing", "Emotional intelligence", "Behind-the-scenes work"],
+                warning: "Don't force things. Progress may seem slow, but seeds are germinating underground.",
+                bestFor: "Strengthening relationships, collaboration, detailed work, intuitive development"
+            },
+            3: {
+                title: "Year of Creative Expression",
+                icon: "🎨",
+                type: "expressive",
+                overview: "Express yourself! This is a social, creative, and joyful year. Your words and creativity have power.",
+                focus: ["Self-expression", "Social connections", "Creative projects", "Communication"],
+                warning: "Avoid scattering energy. Fun is important, but don't neglect responsibilities.",
+                bestFor: "Writing, speaking, arts, social events, celebrating life"
+            },
+            4: {
+                title: "Year of Building Foundations",
+                icon: "🧱",
+                type: "work",
+                overview: "Time to work hard and build lasting structures. Discipline and effort are required. No shortcuts.",
+                focus: ["Hard work", "Organization", "Health routines", "Long-term planning"],
+                warning: "This can feel restrictive, but the foundations you build now support future success.",
+                bestFor: "Career building, home improvements, health habits, financial planning"
+            },
+            5: {
+                title: "Year of Change & Freedom",
+                icon: "🦋",
+                type: "change",
+                overview: "Expect the unexpected! Life accelerates with travel, change, and new experiences. Embrace freedom.",
+                focus: ["Embracing change", "Travel and adventure", "New experiences", "Breaking free from ruts"],
+                warning: "Too much change can scatter you. Stay grounded while exploring.",
+                bestFor: "Travel, new opportunities, marketing, public appearances, taking risks"
+            },
+            6: {
+                title: "Year of Love & Responsibility",
+                icon: "💕",
+                type: "nurturing",
+                overview: "Home, family, and relationships demand attention. Love expands through service and responsibility.",
+                focus: ["Family matters", "Home and domestic life", "Relationships", "Service to others"],
+                warning: "Balance giving with receiving. Don't become a martyr.",
+                bestFor: "Marriage, family, home purchases, healing, creative arts, beauty"
+            },
+            7: {
+                title: "Year of Inner Wisdom",
+                icon: "🔮",
+                type: "reflective",
+                overview: "Turn inward. This is a year for study, reflection, and spiritual development. Seek quality over quantity.",
+                focus: ["Self-reflection", "Study and learning", "Spiritual growth", "Solitude"],
+                warning: "Avoid isolation becoming loneliness. This energy requires alone time, not abandonment of life.",
+                bestFor: "Education, research, spiritual practice, writing, analysis, rest"
+            },
+            8: {
+                title: "Year of Power & Achievement",
+                icon: "👑",
+                type: "power",
+                overview: "Karma returns—good and challenging. Material success is highlighted. Step into your power with integrity.",
+                focus: ["Career advancement", "Financial matters", "Leadership", "Recognition"],
+                warning: "Handle power wisely. What you sow, you now reap—positively or negatively.",
+                bestFor: "Business, investments, promotions, major purchases, legal matters"
+            },
+            9: {
+                title: "Year of Completion & Release",
+                icon: "🌅",
+                type: "completion",
+                overview: "Endings clear the way for new beginnings. Let go of what no longer serves you. Serve humanity.",
+                focus: ["Letting go", "Completing projects", "Humanitarian service", "Forgiveness"],
+                warning: "Don't start major new ventures—complete what's in progress and prepare for rebirth.",
+                bestFor: "Finishing projects, charitable work, travel, releasing relationships, cleansing"
+            },
+            11: {
+                title: "Master Year of Inspiration",
+                icon: "⚡",
+                type: "master",
+                overview: "A rare, spiritually charged year. High inspiration but high tension. You're meant to illuminate and inspire.",
+                focus: ["Spiritual leadership", "Inspiration", "Intuitive guidance", "Higher purpose"],
+                warning: "This master energy can be overwhelming. Stay grounded while reaching for the stars.",
+                bestFor: "Spiritual work, inspirational speaking, intuitive development, visionary projects"
+            },
+            22: {
+                title: "Master Year of Building",
+                icon: "🏛️",
+                type: "master",
+                overview: "The Master Builder year. Tremendous potential to create lasting works that benefit many.",
+                focus: ["Large-scale projects", "Practical vision", "Leadership", "Legacy building"],
+                warning: "This power requires responsibility. Build for the good of all, not just yourself.",
+                bestFor: "Major enterprises, institutional work, practical visionary projects"
+            },
+            33: {
+                title: "Master Year of Service",
+                icon: "🕊️",
+                type: "master",
+                overview: "The rarest master year. Selfless service and unconditional love are your calling.",
+                focus: ["Healing others", "Teaching", "Unconditional love", "Sacrifice for higher good"],
+                warning: "Guard against martyrdom. Serve from overflow, not depletion.",
+                bestFor: "Healing work, teaching, humanitarian service, transformational leadership"
+            }
         };
         
         const pinnacleInterpretations = {
@@ -470,8 +587,8 @@
         
         const today = new Date();
         const currentYear = today.getFullYear();
-        const currentDecade = Math.floor(currentYear / 10) * 10;
-        document.getElementById('decadeDisplay').textContent = `The ${currentDecade}s`;
+        const currentMonth = today.toLocaleString('default', { month: 'long' });
+        document.getElementById('decadeDisplay').textContent = `${currentYear} - ${currentYear + 9}`;
         
         // Build profile selector dropdown
         function buildProfileSelector() {
@@ -523,73 +640,182 @@
             }
             
             const name = profile.preferredName || profile.name || 'Cosmic Soul';
-            document.getElementById('greeting').textContent = `${name}'s Life Journey`;
+            document.getElementById('greeting').textContent = `${name}'s Next 10 Years`;
             
             const currentAge = getCurrentAge(profile.birthDate);
             const pinnacles = calculatePinnacles(profile.birthDate);
-            
-            // Find current pinnacle
             const currentPinnacle = pinnacles.find(p => currentAge >= p.start && currentAge <= p.end) || pinnacles[3];
             const pinnacleInterp = pinnacleInterpretations[currentPinnacle.num];
             
-            // Decade years
-            const decadeYears = [];
-            for (let y = currentDecade; y < currentDecade + 10; y++) {
-                decadeYears.push({
-                    year: y,
-                    energy: calculatePersonalYear(profile.birthDate, y),
-                    isCurrent: y === currentYear
+            // Generate next 10 years starting from NOW
+            const nextTenYears = [];
+            for (let i = 0; i < 10; i++) {
+                const year = currentYear + i;
+                const energy = calculatePersonalYear(profile.birthDate, year);
+                const meaning = personalYearMeanings[energy];
+                const ageInYear = currentAge + i;
+                
+                // Check for pinnacle transitions
+                const pinnacleAtAge = pinnacles.find(p => ageInYear >= p.start && ageInYear <= p.end) || pinnacles[3];
+                const prevPinnacle = i > 0 ? pinnacles.find(p => (ageInYear - 1) >= p.start && (ageInYear - 1) <= p.end) : null;
+                const isPinnacleTransition = prevPinnacle && pinnacleAtAge !== prevPinnacle;
+                
+                nextTenYears.push({
+                    year,
+                    age: ageInYear,
+                    energy,
+                    meaning,
+                    isCurrent: i === 0,
+                    pinnacle: pinnacleAtAge,
+                    isPinnacleTransition,
+                    isKeyYear: energy === 1 || energy === 9 || energy >= 11 || isPinnacleTransition
                 });
             }
             
+            // Find key moments
+            const keyYears = nextTenYears.filter(y => y.isKeyYear);
+            const newBeginnings = nextTenYears.filter(y => y.energy === 1);
+            const completions = nextTenYears.filter(y => y.energy === 9);
+            const masterYears = nextTenYears.filter(y => y.energy >= 11);
+            const pinnacleShifts = nextTenYears.filter(y => y.isPinnacleTransition);
+            
+            // Current year details
+            const thisYear = nextTenYears[0];
+            
             document.getElementById('content').innerHTML = `
+                <!-- Current Year Spotlight -->
                 <div class="decade-card">
-                    <div class="age-range">Age ${currentAge} | Currently in your ${currentPinnacle.label}</div>
-                    <div class="pinnacle-label">Current Life Pinnacle</div>
-                    <div class="number">${currentPinnacle.num}</div>
-                    <div class="theme">${pinnacleInterp.theme}</div>
+                    <div class="age-range">Generated ${currentMonth} ${currentYear}</div>
+                    <div class="pinnacle-label">Your Current Personal Year</div>
+                    <div class="number">${thisYear.energy}</div>
+                    <div class="theme">${thisYear.meaning.title}</div>
                 </div>
                 
-                <div class="lifecycle-visual">
-                    <h2>Your Four Life Pinnacles</h2>
-                    <div class="pinnacle-timeline">
-                        ${pinnacles.map(p => `
-                            <div class="pinnacle-point ${p === currentPinnacle ? 'active' : ''}">
-                                <div class="num">${p.num}</div>
-                                <div class="ages">Ages ${p.start}-${p.end > 90 ? '∞' : p.end}</div>
-                                <div class="label">${shortThemes[p.num]}</div>
+                <div class="forecast-section">
+                    <h2>${thisYear.meaning.icon} ${currentYear}: ${thisYear.meaning.title}</h2>
+                    <p><strong>${thisYear.meaning.overview}</strong></p>
+                    <p><strong>Focus Areas:</strong></p>
+                    <ul style="margin-left: 20px; margin-bottom: 15px;">
+                        ${thisYear.meaning.focus.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                    <p><strong>⚠️ Watch Out:</strong> ${thisYear.meaning.warning}</p>
+                    <p><strong>✨ Best For:</strong> ${thisYear.meaning.bestFor}</p>
+                </div>
+                
+                <!-- Key Times to Watch -->
+                ${keyYears.length > 1 ? `
+                <div class="forecast-section" style="border-color: rgba(251, 191, 36, 0.5);">
+                    <h2>⭐ Key Times to Watch</h2>
+                    <p style="margin-bottom: 20px;">These years in your next decade carry special significance:</p>
+                    
+                    ${newBeginnings.length > 0 ? `
+                    <div style="margin-bottom: 15px; padding: 15px; background: rgba(6, 182, 212, 0.1); border-radius: 10px;">
+                        <strong style="color: #06b6d4;">🌱 New Cycle Begins:</strong> 
+                        ${newBeginnings.map(y => `<span style="color: #fbbf24;">${y.year}</span> (Age ${y.age})`).join(', ')}
+                        <p style="margin-top: 8px; font-size: 0.95em; color: #9ca3af;">A Personal Year 1 marks the start of a new 9-year cycle. Major life changes are favored.</p>
+                    </div>` : ''}
+                    
+                    ${completions.length > 0 ? `
+                    <div style="margin-bottom: 15px; padding: 15px; background: rgba(236, 72, 153, 0.1); border-radius: 10px;">
+                        <strong style="color: #ec4899;">🌅 Cycle Completes:</strong> 
+                        ${completions.map(y => `<span style="color: #fbbf24;">${y.year}</span> (Age ${y.age})`).join(', ')}
+                        <p style="margin-top: 8px; font-size: 0.95em; color: #9ca3af;">A Personal Year 9 is for endings and letting go. Clear the old to make room for new beginnings.</p>
+                    </div>` : ''}
+                    
+                    ${masterYears.length > 0 ? `
+                    <div style="margin-bottom: 15px; padding: 15px; background: rgba(139, 92, 246, 0.2); border-radius: 10px;">
+                        <strong style="color: #8b5cf6;">⚡ Master Number Years:</strong> 
+                        ${masterYears.map(y => `<span style="color: #fbbf24;">${y.year}</span> (${y.energy})`).join(', ')}
+                        <p style="margin-top: 8px; font-size: 0.95em; color: #9ca3af;">Master years carry heightened spiritual potential but also greater intensity.</p>
+                    </div>` : ''}
+                    
+                    ${pinnacleShifts.length > 0 ? `
+                    <div style="margin-bottom: 15px; padding: 15px; background: rgba(251, 191, 36, 0.15); border-radius: 10px;">
+                        <strong style="color: #fbbf24;">🔄 Life Pinnacle Shifts:</strong> 
+                        ${pinnacleShifts.map(y => `<span style="color: #ec4899;">${y.year}</span> → ${pinnacleInterpretations[y.pinnacle.num].theme}`).join(', ')}
+                        <p style="margin-top: 8px; font-size: 0.95em; color: #9ca3af;">Major life phase transitions. Expect significant theme changes in your journey.</p>
+                    </div>` : ''}
+                </div>` : ''}
+                
+                <!-- Year-by-Year Overview -->
+                <div class="forecast-section">
+                    <h2>📅 Your Next 10 Years: Year by Year</h2>
+                    <p style="margin-bottom: 20px;">Each year carries unique energy. Click any year to understand its theme:</p>
+                    <div class="year-grid" style="grid-template-columns: repeat(5, 1fr);">
+                        ${nextTenYears.map(y => `
+                            <div class="year-box ${y.isCurrent ? 'current' : ''} ${y.isKeyYear ? 'key-year' : ''}" 
+                                 style="cursor: pointer; ${y.isKeyYear ? 'border: 2px solid rgba(251, 191, 36, 0.5);' : ''}"
+                                 onclick="showYearDetails(${y.year}, ${y.energy}, ${y.age})">
+                                <div class="year">${y.year}</div>
+                                <div class="energy">${y.meaning.icon} ${y.energy}</div>
+                                <div style="font-size: 0.75em; color: #9ca3af;">Age ${y.age}</div>
                             </div>
                         `).join('')}
                     </div>
                 </div>
                 
+                <!-- Detailed Year Cards -->
+                <div id="yearDetails"></div>
+                
+                <!-- All Years Explained -->
                 <div class="forecast-section">
-                    <h2>🌟 Your Current Pinnacle</h2>
-                    <p>${pinnacleInterp.overview}</p>
+                    <h2>📖 Your Complete Decade Guide</h2>
+                    ${nextTenYears.slice(1).map(y => `
+                        <div style="margin-bottom: 25px; padding: 20px; background: rgba(20, 20, 30, 0.5); border-radius: 12px; border-left: 4px solid ${y.energy === 1 ? '#06b6d4' : y.energy === 9 ? '#ec4899' : y.energy >= 11 ? '#8b5cf6' : 'rgba(139, 92, 246, 0.3)'};">
+                            <h3 style="color: #fbbf24; margin-bottom: 10px;">${y.meaning.icon} ${y.year}: ${y.meaning.title} <span style="font-size: 0.8em; color: #9ca3af;">(Age ${y.age})</span></h3>
+                            <p style="margin-bottom: 10px;">${y.meaning.overview}</p>
+                            <p style="font-size: 0.95em;"><strong>Best For:</strong> ${y.meaning.bestFor}</p>
+                            ${y.isPinnacleTransition ? `<p style="margin-top: 10px; padding: 10px; background: rgba(251, 191, 36, 0.1); border-radius: 8px;"><strong>⚠️ Pinnacle Shift:</strong> You enter your ${y.pinnacle.label} this year, bringing the theme of "${pinnacleInterpretations[y.pinnacle.num].theme}"</p>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <!-- Current Life Pinnacle -->
+                <div class="forecast-section">
+                    <h2>🏔️ Your Current Life Pinnacle: ${pinnacleInterp.theme}</h2>
+                    <p><strong>Ages ${currentPinnacle.start} - ${currentPinnacle.end > 90 ? 'End of Life' : currentPinnacle.end}</strong></p>
+                    <p style="margin-top: 15px;">${pinnacleInterp.overview}</p>
                     <p><strong>Key Lessons:</strong> ${pinnacleInterp.lessons}</p>
                     <p><strong>Opportunities:</strong> ${pinnacleInterp.opportunities}</p>
                 </div>
                 
+                <!-- Understanding Personal Years -->
                 <div class="forecast-section">
-                    <h2>📅 The ${currentDecade}s: Year by Year</h2>
-                    <p>Each year of this decade carries its own personal energy for you:</p>
-                    <div class="year-grid">
-                        ${decadeYears.map(y => `
-                            <div class="year-box ${y.isCurrent ? 'current' : ''}">
-                                <div class="year">${y.year}</div>
-                                <div class="energy">${y.energy}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-                
-                <div class="forecast-section">
-                    <h2>🔮 Understanding Pinnacles</h2>
-                    <p>Pinnacles are the major life cycles that shape your journey. Unlike yearly cycles that change annually, pinnacles last for decades and represent the major themes and lessons of each life phase.</p>
-                    <p>Your First Pinnacle shapes your early life (roughly birth to your early 30s). Your Second and Third Pinnacles each last 9 years and bring concentrated lessons. Your Fourth Pinnacle carries you through your mature years, representing your ultimate life expression.</p>
-                    <p>Understanding your current pinnacle helps you work WITH life's energy rather than against it, recognizing that every phase serves your soul's evolution.</p>
+                    <h2>🔮 How Personal Years Work</h2>
+                    <p>Personal Years run in 9-year cycles, calculated from your birth date. Each year carries specific energy that influences your experiences and opportunities:</p>
+                    <ul style="margin: 15px 0 15px 20px;">
+                        <li><strong>Years 1-3:</strong> Planting, nurturing, and expressing</li>
+                        <li><strong>Years 4-6:</strong> Building, changing, and committing</li>
+                        <li><strong>Years 7-9:</strong> Reflecting, achieving, and releasing</li>
+                    </ul>
+                    <p>Your Personal Year begins on your birthday each year, not January 1st. The energy gradually shifts in the months before and after your birthday.</p>
+                    <p style="margin-top: 15px;"><em>Understanding your cycle helps you work WITH cosmic timing rather than against it—knowing when to push forward and when to step back.</em></p>
                 </div>
             `;
+        }
+        
+        // Show year details popup
+        function showYearDetails(year, energy, age) {
+            const meaning = personalYearMeanings[energy];
+            const details = document.getElementById('yearDetails');
+            details.innerHTML = `
+                <div class="forecast-section" style="border-color: rgba(251, 191, 36, 0.5); animation: fadeIn 0.3s;">
+                    <h2>${meaning.icon} ${year} Deep Dive: ${meaning.title}</h2>
+                    <p style="color: #9ca3af; margin-bottom: 15px;">Age ${age} | Personal Year ${energy}</p>
+                    <p><strong>${meaning.overview}</strong></p>
+                    <p style="margin-top: 15px;"><strong>Focus Areas:</strong></p>
+                    <ul style="margin-left: 20px; margin-bottom: 15px;">
+                        ${meaning.focus.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                    <p><strong>⚠️ Warning:</strong> ${meaning.warning}</p>
+                    <p style="margin-top: 10px;"><strong>✨ Best Activities:</strong> ${meaning.bestFor}</p>
+                    <button onclick="document.getElementById('yearDetails').innerHTML=''" 
+                            style="margin-top: 15px; padding: 10px 20px; background: rgba(139, 92, 246, 0.3); border: 1px solid rgba(139, 92, 246, 0.5); border-radius: 8px; color: #e0e0e0; cursor: pointer;">
+                        Close
+                    </button>
+                </div>
+            `;
+            details.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         
         // Share functions
