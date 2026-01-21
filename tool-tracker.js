@@ -8,21 +8,21 @@ const ToolTracker = (function() {
     
     // Tool relationships for contextual recommendations
     const toolRelationships = {
-        // Numerology connections
-        'life-path-calculator.html': ['destiny-number-calculator.html', 'soul-urge-calculator.html', 'personal-year-reading.html', 'maturity-number-reading.html'],
-        'destiny-number-calculator.html': ['life-path-calculator.html', 'expression-number-reading.html', 'karmic-debt-reading.html', 'dharma-number-reading.html'],
-        'soul-urge-calculator.html': ['personality-number-calculator.html', 'hidden-passion-number.html', 'life-path-calculator.html'],
-        'personality-number-calculator.html': ['soul-urge-calculator.html', 'name-number-calculator.html', 'expression-number-reading.html'],
+        // Numerology connections (ensuring bidirectional links)
+        'life-path-calculator.html': ['destiny-number-calculator.html', 'soul-urge-calculator.html', 'personal-year-reading.html', 'maturity-number-reading.html', 'birthday-number-reading.html', 'karmic-debt-reading.html', 'master-number-reading.html'],
+        'destiny-number-calculator.html': ['life-path-calculator.html', 'expression-number-reading.html', 'karmic-debt-reading.html', 'dharma-number-reading.html', 'maturity-number-reading.html', 'birthday-number-reading.html'],
+        'soul-urge-calculator.html': ['personality-number-calculator.html', 'hidden-passion-number.html', 'life-path-calculator.html', 'expression-number-reading.html'],
+        'personality-number-calculator.html': ['soul-urge-calculator.html', 'name-number-calculator.html', 'expression-number-reading.html', 'hidden-passion-number.html'],
         'name-number-calculator.html': ['destiny-number-calculator.html', 'expression-number-reading.html', 'personality-number-calculator.html'],
         'karmic-debt-reading.html': ['master-number-reading.html', 'life-path-calculator.html', 'challenge-numbers-reading.html'],
         'master-number-reading.html': ['karmic-debt-reading.html', 'life-path-calculator.html', 'pinnacle-numbers-reading.html'],
-        'personal-year-reading.html': ['personal-month-reading.html', 'personal-day-number.html', 'pinnacle-numbers-reading.html'],
+        'personal-year-reading.html': ['personal-month-reading.html', 'personal-day-number.html', 'pinnacle-numbers-reading.html', 'birthday-number-reading.html'],
         'personal-month-reading.html': ['personal-year-reading.html', 'personal-day-number.html'],
         'personal-day-number.html': ['personal-month-reading.html', 'personal-year-reading.html'],
-        'maturity-number-reading.html': ['life-path-calculator.html', 'destiny-number-calculator.html', 'pinnacle-numbers-reading.html'],
-        'pinnacle-numbers-reading.html': ['challenge-numbers-reading.html', 'maturity-number-reading.html', 'personal-year-reading.html'],
+        'maturity-number-reading.html': ['life-path-calculator.html', 'destiny-number-calculator.html', 'pinnacle-numbers-reading.html', 'expression-number-reading.html'],
+        'pinnacle-numbers-reading.html': ['challenge-numbers-reading.html', 'maturity-number-reading.html', 'personal-year-reading.html', 'master-number-reading.html'],
         'challenge-numbers-reading.html': ['pinnacle-numbers-reading.html', 'karmic-debt-reading.html', 'life-path-calculator.html'],
-        'expression-number-reading.html': ['name-number-calculator.html', 'hidden-passion-number.html', 'soul-urge-calculator.html'],
+        'expression-number-reading.html': ['name-number-calculator.html', 'hidden-passion-number.html', 'soul-urge-calculator.html', 'destiny-number-calculator.html', 'maturity-number-reading.html'],
         'hidden-passion-number.html': ['expression-number-reading.html', 'soul-urge-calculator.html', 'personality-number-calculator.html'],
         'birthday-number-reading.html': ['life-path-calculator.html', 'personal-year-reading.html', 'destiny-number-calculator.html'],
         
@@ -37,7 +37,7 @@ const ToolTracker = (function() {
         'uranus-sign-reading.html': ['neptune-sign-reading.html', 'pluto-sign-reading.html', 'north-node-reading.html'],
         'neptune-sign-reading.html': ['uranus-sign-reading.html', 'pluto-sign-reading.html', 'lilith-reading.html'],
         'pluto-sign-reading.html': ['saturn-sign-reading.html', 'lilith-reading.html', 'chiron-reading.html'],
-        'chiron-reading.html': ['lilith-reading.html', 'saturn-sign-reading.html', 'north-node-reading.html'],
+        'chiron-reading.html': ['age-calculator.html', 'lilith-reading.html', 'saturn-sign-reading.html', 'north-node-reading.html'],
         'lilith-reading.html': ['chiron-reading.html', 'pluto-sign-reading.html', 'neptune-sign-reading.html'],
         'north-node-reading.html': ['south-node-reading.html', 'life-mission-reading.html', 'dharma-number-reading.html'],
         'south-node-reading.html': ['north-node-reading.html', 'karmic-debt-reading.html', 'saturn-sign-reading.html'],
@@ -80,7 +80,7 @@ const ToolTracker = (function() {
         'decade-forecast.html': ['cosmic-yearly-forecast.html', 'pinnacle-numbers-reading.html'],
         
         // Life Cycles
-        'age-calculator.html': ['birthday-countdown.html', 'life-progress.html'],
+        'age-calculator.html': ['chiron-reading.html', 'birthday-countdown.html', 'life-progress.html', 'saturn-sign-reading.html'],
         'birthday-countdown.html': ['age-calculator.html', 'personal-year-reading.html'],
         'life-progress.html': ['age-calculator.html', 'decade-forecast.html']
     };
