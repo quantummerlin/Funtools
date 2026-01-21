@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="20260121164415">
+    <meta name="version" content="20260121170617">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#bf5af2">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,7 +20,7 @@
 <meta name="keywords" content="numerology, astrology, horoscope, zodiac, spiritual tools, cosmic insights, free calculator">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap&v=20260121162926&v=20260121163503&v=20260121164415" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap&v=20260121162926&v=20260121163503&v=20260121164415&v=20260121170617" rel="stylesheet">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <script src="auto-fill.js"></script>
     <script src="cosmic-loader.js"></script>
@@ -238,11 +238,19 @@
         .key-year { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .legal-footer { margin-top: 50px; padding: 30px 20px; text-align: center; border-top: 1px solid rgba(191, 90, 242, 0.2); }
-        .legal-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; }
-        .legal-links a { color: #9A8F7A; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.9rem; }
+        .legal-footer { margin-top: 50px; padding: 30px 20px; text-align: center; border-top: 1px solid rgba(191, 90, 242, 0.2); background: rgba(10, 10, 15, 0.8); }
+        .feedback-section { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(191, 90, 242, 0.15); }
+        .feedback-text { color: #9A8F7A; font-size: 0.9rem; margin-bottom: 10px; }
+        .footer-feedback-btn { display: inline-block; color: #06b6d4; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.95rem; padding: 10px 20px; border: 1px solid rgba(6, 182, 212, 0.4); border-radius: 25px; transition: all 0.3s; }
+        .footer-feedback-btn:hover { background: rgba(6, 182, 212, 0.15); border-color: #06b6d4; transform: translateY(-2px); }
+        .legal-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .legal-links a { color: #9A8F7A; text-decoration: none; font-family: 'Cinzel', serif; font-size: 0.9rem; transition: color 0.3s; }
+        .legal-links a:hover { color: #fbbf24; }
         .separator { color: rgba(191, 90, 242, 0.4); }
-        .copyright { color: #6B6B6B; font-size: 0.85rem; font-style: italic; }
+        .copyright { color: #6B6B6B; font-size: 0.85rem; font-style: italic; margin-bottom: 20px; }
+        .coffee-section { padding-top: 15px; border-top: 1px solid rgba(191, 90, 242, 0.15); }
+        .coffee-btn { display: inline-block; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0a0a0f; text-decoration: none; font-family: 'Cinzel', serif; font-weight: 600; font-size: 1rem; padding: 12px 25px; border-radius: 25px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3); }
+        .coffee-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 25px rgba(251, 191, 36, 0.5); }
     </style>
 <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
@@ -327,6 +335,7 @@
     </footer>
     
     <script>
+        // Version: 20260121170617 - Auto-generated cache buster
         // Version: 20260121164415 - Auto-generated cache buster
         // Version: 20260121163503 - Auto-generated cache buster
         // Version: 20260121162926 - Auto-generated cache buster
@@ -345,7 +354,34 @@
             return reduceToSingle(reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(year));
         }
         
+        // Personal Year starts on birthday, not January 1st
+        function getPersonalYearForDate(birthDate, targetDate) {
+            const birth = new Date(birthDate);
+            const target = new Date(targetDate);
+            const birthMonth = birth.getMonth();
+            const birthDay = birth.getDate();
+            const targetYear = target.getFullYear();
+            const targetMonth = target.getMonth();
+            const targetDay = target.getDate();
+            
+            // Check if we've passed the birthday this year
+            const hadBirthdayThisYear = (targetMonth > birthMonth) || 
+                                        (targetMonth === birthMonth && targetDay >= birthDay);
+            
+            // Use current year if past birthday, otherwise use previous year
+            const cycleYear = hadBirthdayThisYear ? targetYear : targetYear - 1;
+            
+            return reduceToSingle(reduceToSingle(birthDay) + reduceToSingle(birthMonth + 1) + reduceToSingle(cycleYear));
+        }
+        
         function calculatePersonalYear(birthDate, targetYear) {
+            // Legacy function - for future year projections, use calendar year
+            const date = new Date(birthDate);
+            return reduceToSingle(reduceToSingle(date.getDate()) + reduceToSingle(date.getMonth() + 1) + reduceToSingle(targetYear));
+        }
+        
+        function getPersonalYearForFutureYear(birthDate, targetYear) {
+            // For future years, assume we're looking at after-birthday
             const date = new Date(birthDate);
             return reduceToSingle(reduceToSingle(date.getDate()) + reduceToSingle(date.getMonth() + 1) + reduceToSingle(targetYear));
         }
@@ -408,7 +444,11 @@
                 overview: "This is your year to start fresh. Plant seeds for the next 9-year cycle. Take initiative, be independent, and launch new projects.",
                 focus: ["Starting new ventures", "Self-improvement", "Taking the lead", "Breaking from the past"],
                 warning: "Don't wait for others—this is YOUR year to act. Hesitation wastes this powerful energy.",
-                bestFor: "Career changes, new relationships, moving, major life decisions"
+                bestFor: "Career changes, new relationships, moving, major life decisions",
+                career: "Launch new initiatives. This is the ideal year to change jobs, start a business, or take on leadership roles. Assert yourself professionally.",
+                relationships: "New connections flourish. If single, you may meet someone significant. In relationships, initiate positive changes together.",
+                growth: "Develop independence and self-confidence. What you start now sets the tone for the next 9 years.",
+                affirmation: "I courageously begin my new cycle with confidence and vision."
             },
             2: {
                 title: "Year of Patience & Partnership",
@@ -417,7 +457,11 @@
                 overview: "Slow down. This year favors cooperation, diplomacy, and nurturing what you started. Relationships take center stage.",
                 focus: ["Building partnerships", "Patience and timing", "Emotional intelligence", "Behind-the-scenes work"],
                 warning: "Don't force things. Progress may seem slow, but seeds are germinating underground.",
-                bestFor: "Strengthening relationships, collaboration, detailed work, intuitive development"
+                bestFor: "Strengthening relationships, collaboration, detailed work, intuitive development",
+                career: "Work as a team player. Support others' initiatives. Negotiations and partnerships are favored over solo ventures.",
+                relationships: "Deepen existing bonds. Practice patience and diplomacy. This is a year for nurturing, not demanding.",
+                growth: "Develop emotional intelligence and intuition. Learn the power of timing and receptivity.",
+                affirmation: "I trust divine timing and nurture my connections with patience and grace."
             },
             3: {
                 title: "Year of Creative Expression",
@@ -426,7 +470,11 @@
                 overview: "Express yourself! This is a social, creative, and joyful year. Your words and creativity have power.",
                 focus: ["Self-expression", "Social connections", "Creative projects", "Communication"],
                 warning: "Avoid scattering energy. Fun is important, but don't neglect responsibilities.",
-                bestFor: "Writing, speaking, arts, social events, celebrating life"
+                bestFor: "Writing, speaking, arts, social events, celebrating life",
+                career: "Communicate your ideas. Networking, presentations, and creative projects thrive. Your social skills open doors.",
+                relationships: "Social life blossoms. Joy and laughter strengthen bonds. Express appreciation openly.",
+                growth: "Develop your creative voice. Learn to express feelings and ideas with confidence and joy.",
+                affirmation: "I express my authentic self with joy and creative freedom."
             },
             4: {
                 title: "Year of Building Foundations",
@@ -435,7 +483,11 @@
                 overview: "Time to work hard and build lasting structures. Discipline and effort are required. No shortcuts.",
                 focus: ["Hard work", "Organization", "Health routines", "Long-term planning"],
                 warning: "This can feel restrictive, but the foundations you build now support future success.",
-                bestFor: "Career building, home improvements, health habits, financial planning"
+                bestFor: "Career building, home improvements, health habits, financial planning",
+                career: "Put in the hard work. Build systems, improve skills, and create lasting structures. Promotions come through dedication.",
+                relationships: "Commit to stability. Work on relationship foundations. Less romance, more reliability.",
+                growth: "Develop discipline and perseverance. Build habits that will serve you for years to come.",
+                affirmation: "I build solid foundations with patience, discipline, and determination."
             },
             5: {
                 title: "Year of Change & Freedom",
@@ -444,7 +496,11 @@
                 overview: "Expect the unexpected! Life accelerates with travel, change, and new experiences. Embrace freedom.",
                 focus: ["Embracing change", "Travel and adventure", "New experiences", "Breaking free from ruts"],
                 warning: "Too much change can scatter you. Stay grounded while exploring.",
-                bestFor: "Travel, new opportunities, marketing, public appearances, taking risks"
+                bestFor: "Travel, new opportunities, marketing, public appearances, taking risks",
+                career: "Embrace change. New opportunities arrive unexpectedly. Be adaptable and take calculated risks.",
+                relationships: "Freedom and variety are themes. Relationships may shift dramatically. Avoid impulsive decisions.",
+                growth: "Expand your comfort zone. Learn through experience and adventure. Develop adaptability.",
+                affirmation: "I embrace change with courage and welcome new adventures."
             },
             6: {
                 title: "Year of Love & Responsibility",
@@ -453,7 +509,11 @@
                 overview: "Home, family, and relationships demand attention. Love expands through service and responsibility.",
                 focus: ["Family matters", "Home and domestic life", "Relationships", "Service to others"],
                 warning: "Balance giving with receiving. Don't become a martyr.",
-                bestFor: "Marriage, family, home purchases, healing, creative arts, beauty"
+                bestFor: "Marriage, family, home purchases, healing, creative arts, beauty",
+                career: "Focus on service and responsibility. Beautify your workspace. Mentoring and caregiving roles are highlighted.",
+                relationships: "Love deepens. Commitments may form. Family responsibilities increase. Nurture with healthy boundaries.",
+                growth: "Develop your capacity for love and responsibility. Learn the balance between giving and receiving.",
+                affirmation: "I love and serve others while honoring my own needs and boundaries."
             },
             7: {
                 title: "Year of Inner Wisdom",
@@ -462,7 +522,11 @@
                 overview: "Turn inward. This is a year for study, reflection, and spiritual development. Seek quality over quantity.",
                 focus: ["Self-reflection", "Study and learning", "Spiritual growth", "Solitude"],
                 warning: "Avoid isolation becoming loneliness. This energy requires alone time, not abandonment of life.",
-                bestFor: "Education, research, spiritual practice, writing, analysis, rest"
+                bestFor: "Education, research, spiritual practice, writing, analysis, rest",
+                career: "Focus on expertise. Research, analysis, and specialized knowledge are favored. Quality over quantity.",
+                relationships: "Seek depth over breadth. Fewer but more meaningful connections. Some may need solitude.",
+                growth: "Develop wisdom through reflection. Study, meditate, and trust your intuition.",
+                affirmation: "I seek wisdom within and trust my inner guidance."
             },
             8: {
                 title: "Year of Power & Achievement",
@@ -471,7 +535,11 @@
                 overview: "Karma returns—good and challenging. Material success is highlighted. Step into your power with integrity.",
                 focus: ["Career advancement", "Financial matters", "Leadership", "Recognition"],
                 warning: "Handle power wisely. What you sow, you now reap—positively or negatively.",
-                bestFor: "Business, investments, promotions, major purchases, legal matters"
+                bestFor: "Business, investments, promotions, major purchases, legal matters",
+                career: "Step into leadership. Major achievements and recognition are possible. Financial gains through effort and integrity.",
+                relationships: "Balance power in relationships. Avoid control issues. Success attracts new connections.",
+                growth: "Develop your relationship with power, money, and success. Lead with integrity.",
+                affirmation: "I step into my power with integrity and attract abundance."
             },
             9: {
                 title: "Year of Completion & Release",
@@ -480,7 +548,11 @@
                 overview: "Endings clear the way for new beginnings. Let go of what no longer serves you. Serve humanity.",
                 focus: ["Letting go", "Completing projects", "Humanitarian service", "Forgiveness"],
                 warning: "Don't start major new ventures—complete what's in progress and prepare for rebirth.",
-                bestFor: "Finishing projects, charitable work, travel, releasing relationships, cleansing"
+                bestFor: "Finishing projects, charitable work, travel, releasing relationships, cleansing",
+                career: "Complete projects. Tie up loose ends. Prepare for the new cycle ahead. Service work is meaningful.",
+                relationships: "Release what's ending naturally. Forgive and let go. Some relationships complete their purpose.",
+                growth: "Practice letting go with grace. Develop compassion and prepare your heart for new beginnings.",
+                affirmation: "I release the old with gratitude and prepare for rebirth."
             },
             11: {
                 title: "Master Year of Inspiration",
@@ -489,7 +561,11 @@
                 overview: "A rare, spiritually charged year. High inspiration but high tension. You're meant to illuminate and inspire.",
                 focus: ["Spiritual leadership", "Inspiration", "Intuitive guidance", "Higher purpose"],
                 warning: "This master energy can be overwhelming. Stay grounded while reaching for the stars.",
-                bestFor: "Spiritual work, inspirational speaking, intuitive development, visionary projects"
+                bestFor: "Spiritual work, inspirational speaking, intuitive development, visionary projects",
+                career: "Inspire others through your vision. Leadership in spiritual or humanitarian fields. Trust intuitive guidance.",
+                relationships: "Seek spiritually aligned connections. You may attract or become a catalyst for others' growth.",
+                growth: "Develop your intuitive and inspirational gifts. Balance high ideals with grounded action.",
+                affirmation: "I channel divine inspiration to illuminate the path for myself and others."
             },
             22: {
                 title: "Master Year of Building",
@@ -498,7 +574,11 @@
                 overview: "The Master Builder year. Tremendous potential to create lasting works that benefit many.",
                 focus: ["Large-scale projects", "Practical vision", "Leadership", "Legacy building"],
                 warning: "This power requires responsibility. Build for the good of all, not just yourself.",
-                bestFor: "Major enterprises, institutional work, practical visionary projects"
+                bestFor: "Major enterprises, institutional work, practical visionary projects",
+                career: "Build something lasting. Major enterprises, institutions, or projects that benefit many. Think legacy.",
+                relationships: "Partnerships must align with your larger vision. Build relationships that support your mission.",
+                growth: "Develop your capacity to manifest vision in practical form. Balance idealism with pragmatism.",
+                affirmation: "I build lasting structures that serve the highest good of all."
             },
             33: {
                 title: "Master Year of Service",
@@ -507,7 +587,11 @@
                 overview: "The rarest master year. Selfless service and unconditional love are your calling.",
                 focus: ["Healing others", "Teaching", "Unconditional love", "Sacrifice for higher good"],
                 warning: "Guard against martyrdom. Serve from overflow, not depletion.",
-                bestFor: "Healing work, teaching, humanitarian service, transformational leadership"
+                bestFor: "Healing work, teaching, humanitarian service, transformational leadership",
+                career: "Teach, heal, or lead through compassion. Your work may transform lives. Service professions shine.",
+                relationships: "Unconditional love is the lesson. Family and community bonds deepen. Forgiveness heals old wounds.",
+                growth: "Develop your capacity for selfless love and service. Master the art of giving while staying whole.",
+                affirmation: "I serve with unconditional love while honoring my own sacred worth."
             }
         };
         
@@ -648,11 +732,24 @@
             const currentPinnacle = pinnacles.find(p => currentAge >= p.start && currentAge <= p.end) || pinnacles[3];
             const pinnacleInterp = pinnacleInterpretations[currentPinnacle.num];
             
+            // Get birthday info for display
+            const birthDate = new Date(profile.birthDate);
+            const birthMonth = birthDate.getMonth();
+            const birthDay = birthDate.getDate();
+            const birthdayStr = birthDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+            const today = new Date();
+            const hadBirthdayThisYear = (today.getMonth() > birthMonth) || 
+                                        (today.getMonth() === birthMonth && today.getDate() >= birthDay);
+            
             // Generate next 10 years starting from NOW
             const nextTenYears = [];
             for (let i = 0; i < 10; i++) {
                 const year = currentYear + i;
-                const energy = calculatePersonalYear(profile.birthDate, year);
+                // For current year, use birthday-aware calculation
+                // For future years, use the after-birthday value
+                const energy = (i === 0) 
+                    ? getPersonalYearForDate(profile.birthDate, today)
+                    : getPersonalYearForFutureYear(profile.birthDate, year);
                 const meaning = personalYearMeanings[energy];
                 const ageInYear = currentAge + i;
                 
@@ -682,11 +779,14 @@
             
             // Current year details
             const thisYear = nextTenYears[0];
+            const birthdayNote = hadBirthdayThisYear 
+                ? `(Your birthday was ${birthdayStr})` 
+                : `(Your birthday is ${birthdayStr} - energy shifts then)`;
             
             document.getElementById('content').innerHTML = `
                 <!-- Current Year Spotlight -->
                 <div class="decade-card">
-                    <div class="age-range">Generated ${currentMonth} ${currentYear}</div>
+                    <div class="age-range">Generated ${currentMonth} ${currentYear} ${birthdayNote}</div>
                     <div class="pinnacle-label">Your Current Personal Year</div>
                     <div class="number">${thisYear.energy}</div>
                     <div class="theme">${thisYear.meaning.title}</div>
@@ -695,12 +795,33 @@
                 <div class="forecast-section">
                     <h2>${thisYear.meaning.icon} ${currentYear}: ${thisYear.meaning.title}</h2>
                     <p><strong>${thisYear.meaning.overview}</strong></p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 20px 0;">
+                        <div style="padding: 20px; background: rgba(6, 182, 212, 0.1); border-radius: 12px; border-left: 3px solid #06b6d4;">
+                            <h4 style="color: #06b6d4; margin-bottom: 10px;">💼 Career & Work</h4>
+                            <p>${thisYear.meaning.career || thisYear.meaning.overview}</p>
+                        </div>
+                        <div style="padding: 20px; background: rgba(236, 72, 153, 0.1); border-radius: 12px; border-left: 3px solid #ec4899;">
+                            <h4 style="color: #ec4899; margin-bottom: 10px;">❤️ Relationships</h4>
+                            <p>${thisYear.meaning.relationships || 'Let the energy of this year guide your connections.'}</p>
+                        </div>
+                        <div style="padding: 20px; background: rgba(139, 92, 246, 0.1); border-radius: 12px; border-left: 3px solid #8b5cf6;">
+                            <h4 style="color: #8b5cf6; margin-bottom: 10px;">🌱 Personal Growth</h4>
+                            <p>${thisYear.meaning.growth || 'Focus on what this year type naturally cultivates.'}</p>
+                        </div>
+                    </div>
+                    
                     <p><strong>Focus Areas:</strong></p>
                     <ul style="margin-left: 20px; margin-bottom: 15px;">
                         ${thisYear.meaning.focus.map(f => `<li>${f}</li>`).join('')}
                     </ul>
                     <p><strong>⚠️ Watch Out:</strong> ${thisYear.meaning.warning}</p>
                     <p><strong>✨ Best For:</strong> ${thisYear.meaning.bestFor}</p>
+                    
+                    <div style="margin-top: 25px; padding: 25px; background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(139, 92, 246, 0.15)); border-radius: 15px; text-align: center;">
+                        <h4 style="color: #fbbf24; margin-bottom: 12px;">✨ Your ${currentYear} Affirmation</h4>
+                        <p style="font-size: 1.25em; font-style: italic; color: #e0e0e0;">"${thisYear.meaning.affirmation || 'I embrace the energy of this year and trust in my journey.'}"</p>
+                    </div>
                 </div>
                 
                 <!-- Key Times to Watch -->
