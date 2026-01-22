@@ -150,8 +150,8 @@ DEFAULT_META = {
     'description': 'Discover your cosmic destiny with numerology, astrology, and mystical calculators'
 }
 
-BASE_URL = 'https://funtools.quantummerlin.com/'
-IMAGE_URL = 'https://funtools.quantummerlin.com/RetroMerlin.jpg'
+BASE_URL = 'https://quantummerlin.com/classic/'
+IMAGE_URL = 'https://quantummerlin.com/classic/RetroMerlin.jpg'
 
 def generate_og_tags(filename):
     """Generate Open Graph and Twitter Card meta tags for a file."""

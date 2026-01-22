@@ -5,7 +5,7 @@
 
 window.QMShare = {
     // Site base URL
-    baseUrl: 'https://funtools.quantummerlin.com/',
+    baseUrl: 'https://quantummerlin.com/classic/',
     
     // Current reading result (set dynamically)
     currentResult: null,
@@ -146,7 +146,7 @@ window.QMShare = {
     pinterest(imageUrl, description) {
         const url = this.getCleanUrl();
         const desc = encodeURIComponent(description || this.getViralText());
-        const img = encodeURIComponent(imageUrl || 'https://funtools.quantummerlin.com/RetroMerlin.jpg');
+        const img = encodeURIComponent(imageUrl || 'https://quantummerlin.com/classic/RetroMerlin.jpg');
         window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&media=${img}&description=${desc}`, '_blank', 'width=750,height=550');
     },
     

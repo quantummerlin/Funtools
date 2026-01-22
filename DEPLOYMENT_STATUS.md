@@ -1,8 +1,8 @@
-# Deployment Status - funtools.quantummerlin.com
+# Deployment Status - quantummerlin.com/classic
 
 ## ✅ Current Status
 - **Site is LIVE**: Both HTTP and HTTPS are working
-- **URL**: https://funtools.quantummerlin.com
+- **URL**: https://quantummerlin.com/classic
 - **DNS**: Correctly configured (pointing to Cloudflare)
 - **CNAME**: Configured in repository
 
@@ -38,8 +38,8 @@ Proxy status: DNS only (gray cloud)
 
 ## 🧪 Testing
 Your site is accessible at:
-- ✅ http://funtools.quantummerlin.com (200 OK)
-- ✅ https://funtools.quantummerlin.com (200 OK)
+- ✅ http://quantummerlin.com/classic (200 OK)
+- ✅ https://quantummerlin.com/classic (200 OK)
 
 ## 📝 Next Steps
 1. Choose Cloudflare SSL (easier) or GitHub SSL
@@ -47,4 +47,4 @@ Your site is accessible at:
 3. If using GitHub: Switch DNS to "DNS only" mode and wait for verification
 
 ## 🎯 Current Working URL
-**https://funtools.quantummerlin.com** is live and functional right now!
+**https://quantummerlin.com/classic** is live and functional right now!

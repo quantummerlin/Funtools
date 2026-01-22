@@ -95,7 +95,7 @@ After initial deployment completes:
 
 1. Go to your Pages project → **Custom domains**
 2. Click **Set up a custom domain**
-3. Enter: `funtools.quantummerlin.com`
+3. Enter: `quantummerlin.com/classic`
 4. Cloudflare will provide DNS records to add
 
 **If you're using Cloudflare DNS:**
@@ -183,7 +183,7 @@ After initial deployment completes:
    ```html
    <meta property="og:title" content="🔮 Quantum Merlin" />
    <meta property="og:description" content="Ancient Patterns. Modern Interfaces." />
-   <meta property="og:image" content="https://funtools.quantummerlin.com/og-image.png" />
+   <meta property="og:image" content="https://quantummerlin.com/classic/og-image.png" />
    <meta name="twitter:card" content="summary_large_image" />
    ```
 
@@ -242,7 +242,7 @@ Merlin doesn't chase attention. People come to him.
 
 1. Push to GitHub (see commands above)
 2. Connect to Cloudflare Pages
-3. Set up custom domain: `funtools.quantummerlin.com`
+3. Set up custom domain: `quantummerlin.com/classic`
 4. Let the patterns reveal themselves
 
 **Ancient wisdom. Modern clarity. Quantum Merlin.**

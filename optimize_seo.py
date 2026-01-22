@@ -11,7 +11,7 @@ import os
 import re
 import glob
 
-BASE_URL = "https://funtools.quantummerlin.com"
+BASE_URL = "https://quantummerlin.com/classic"
 
 # SEO data for each page
 SEO_DATA = {

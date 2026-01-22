@@ -4,9 +4,9 @@ const CACHE_NAME = `quantum-merlin-v${CACHE_VERSION}`;
 
 // Files to cache (update this as needed)
 const STATIC_CACHE = [
-  '/',
-  '/tools_index.html',
-  '/index.html'
+  '/classic/',
+  '/classic/tools_index.html',
+  '/classic/index.html'
 ];
 
 // Install event - cache static assets
@@ -53,7 +53,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Network first strategy for HTML files (always get latest)
-  if (event.request.url.endsWith('.html') || event.request.url === self.location.origin + '/') {
+  if (event.request.url.endsWith('.html') || event.request.url === self.location.origin + '/classic/') {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
