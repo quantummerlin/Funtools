@@ -4,6 +4,7 @@
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VW4LGE7L1T"></script>
     <script>
+        // Version: 20260122170552 - Auto-generated cache buster
         // Version: 20260122165534 - Auto-generated cache buster
         // Version: 20260122150214 - Auto-generated cache buster
         // Version: 20260122145556 - Auto-generated cache buster
@@ -18,7 +19,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="20260122165534">
+    <meta name="version" content="20260122170552">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#bf5af2">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -39,7 +40,7 @@
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <script src="auto-fill.js"></script>
     <script src="cosmic-loader.js"></script>
-    <script src="tool-tracker.js?v=20260122165534"></script>
+    <script src="tool-tracker.js?v=20260122170552"></script>
     <style>
         .result-card { background: linear-gradient(135deg, rgba(255, 20, 147, 0.2), rgba(220, 20, 60, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(255, 20, 147, 0.4); }
         .compatibility-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
@@ -136,18 +137,17 @@
         }
 
         function getPlanetSign(date, planet) {
+            const time = Astronomy.MakeTime(date);
             if (planet === 'Sun') {
-                const sunPos = Astronomy.SunPosition(new Astronomy.AstroTime(date));
+                const sunPos = Astronomy.SunPosition(time);
                 return getSign(sunPos.elon);
             } else if (planet === 'Venus' || planet === 'Mars') {
-                const body = planet === 'Venus' ? 'Venus' : 'Mars';
-                const coords = Astronomy.EclipticGeoMoon(new Astronomy.AstroTime(date));
-                // Simplified: using approximation based on sun position with offset
-                const sunPos = Astronomy.SunPosition(new Astronomy.AstroTime(date));
-                const offset = planet === 'Venus' ? 45 : 60; // Venus never far from Sun, Mars varies
-                const approxLon = (sunPos.elon + offset) % 360;
-                return getSign(approxLon);
+                // Use actual astronomical calculation with GeoVector
+                const geo = Astronomy.GeoVector(planet, time, true);
+                const ecl = Astronomy.Ecliptic(geo);
+                return getSign(ecl.elon);
             }
+            return getSign(0);
         }
 
         function getCompatibilityScore(sign1, sign2) {
@@ -185,32 +185,14 @@
         function calculateCompatibility(event) {
             event.preventDefault();
             
-            const date1 = new Date(document.getElementById('date1').value);
-            const date2 = new Date(document.getElementById('date2').value);
+            const date1 = new Date(document.getElementById('date1').value + 'T12:00:00');
+            const date2 = new Date(document.getElementById('date2').value + 'T12:00:00');
             
-            // Get Venus and Mars for both people
-            // Note: This is simplified - true Venus/Mars positions need ephemeris
-            // We'll use Sun sign with offsets as approximation
-            const sunSign1 = getPlanetSign(date1, 'Sun');
-            const sunSign2 = getPlanetSign(date2, 'Sun');
-            
-            // Approximate Venus/Mars (in reality, need ephemeris)
-            // For demo, we'll vary based on date
-            const venus1Index = (Math.floor(eclipticLon1/30) + 1) % 12;
-            const mars1Index = (Math.floor(eclipticLon1/30) + 2) % 12;
-            const venus2Index = (Math.floor(eclipticLon2/30) + 1) % 12;
-            const mars2Index = (Math.floor(eclipticLon2/30) + 2) % 12;
-            
-            // Using sun position as base
-            const sunPos1 = Astronomy.SunPosition(new Astronomy.AstroTime(date1));
-            const sunPos2 = Astronomy.SunPosition(new Astronomy.AstroTime(date2));
-            const eclipticLon1 = sunPos1.elon;
-            const eclipticLon2 = sunPos2.elon;
-            
-            const venus1 = getSign((eclipticLon1 + (date1.getDate() * 12)) % 360);
-            const mars1 = getSign((eclipticLon1 + (date1.getMonth() * 30)) % 360);
-            const venus2 = getSign((eclipticLon2 + (date2.getDate() * 12)) % 360);
-            const mars2 = getSign((eclipticLon2 + (date2.getMonth() * 30)) % 360);
+            // Get actual Venus and Mars positions using astronomy-engine
+            const venus1 = getPlanetSign(date1, 'Venus');
+            const mars1 = getPlanetSign(date1, 'Mars');
+            const venus2 = getPlanetSign(date2, 'Venus');
+            const mars2 = getPlanetSign(date2, 'Mars');
             
             // Calculate compatibility scores
             const venusVenusScore = getCompatibilityScore(venus1.name, venus2.name);
