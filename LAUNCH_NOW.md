@@ -2,7 +2,7 @@
 
 ## ✅ COMPLETE - Everything is Ready!
 
-Your Quantum Merlin funtools collection is fully branded and ready for deployment at **funtools.quantummerlin.com**
+Your Quantum Merlin funtools collection is fully branded and ready for deployment at **quantummerlin.com/classic**
 
 ---
 
@@ -74,10 +74,10 @@ After deployment completes:
 
 1. Go to your project → **Custom domains**
 2. Click **Set up a custom domain**
-3. Enter: **funtools.quantummerlin.com**
+3. Enter: **quantummerlin.com/classic**
 4. Follow Cloudflare's DNS instructions
 
-**Done!** Your site will be live at funtools.quantummerlin.com
+**Done!** Your site will be live at quantummerlin.com/classic
 
 ---
 
@@ -257,4 +257,4 @@ Everything is prepared. Just follow the 4 steps above:
 
 *© 2026 Quantum Merlin | Ancient wisdom. Modern clarity.*
 
-**funtools.quantummerlin.com** — launching today!
+**quantummerlin.com/classic** — launching today!

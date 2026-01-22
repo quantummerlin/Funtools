@@ -107,7 +107,7 @@ funtools/
 3. **Custom Domain Setup**
    - In Cloudflare Pages project settings
    - **Custom domains** → **Set up a custom domain**
-   - Add: `funtools.quantummerlin.com`
+   - Add: `quantummerlin.com/classic`
    - Cloudflare will automatically configure DNS
 
 4. **SSL/HTTPS**
@@ -120,7 +120,7 @@ funtools/
 # In repository settings
 # Enable GitHub Pages
 # Source: main branch / root
-# Custom domain: funtools.quantummerlin.com
+# Custom domain: quantummerlin.com/classic
 # Enforce HTTPS: ✓
 ```
 

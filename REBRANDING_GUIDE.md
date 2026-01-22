@@ -1,7 +1,7 @@
 # Quantum Merlin Website - Comprehensive Rebranding Guide
 
 > **Last Updated:** January 21, 2026  
-> **Site URL:** https://funtools.quantummerlin.com  
+> **Site URL:** https://quantummerlin.com/classic  
 > **Total Tools:** 58 (16 Numerology + 21 Astrology + 7 Compatibility + 6 Life Purpose + 5 Forecasts + 3 Life Cycles)
 
 ---
@@ -198,7 +198,7 @@ Shows "Consulting the Cosmic Patterns" animation with:
 
 **Configuration:**
 ```javascript
-baseUrl: 'https://funtools.quantummerlin.com/'
+baseUrl: 'https://quantummerlin.com/classic/'
 hashtags: 'quantummerlin,numerology'
 ```
 
@@ -262,7 +262,7 @@ hashtags: 'quantummerlin,numerology'
 |------|---------|
 | `manifest.json` | PWA manifest |
 | `sw.js` | Service worker |
-| `CNAME` | Custom domain (funtools.quantummerlin.com) |
+| `CNAME` | Custom domain (quantummerlin.com/classic) |
 | `robots.txt` | Search engine directives |
 | `sitemap.xml` | Sitemap for SEO |
 | `ads.txt` | Ads configuration |
@@ -359,37 +359,37 @@ hashtags: 'quantummerlin,numerology'
 
 ### 6.2 Domain/URL Replacements
 
-#### Domain: `funtools.quantummerlin.com`
+#### Domain: `quantummerlin.com/classic`
 
 **Appears in:**
 
 1. **CNAME file**
    ```
-   funtools.quantummerlin.com
+   quantummerlin.com/classic
    ```
 
 2. **Canonical URLs** (all HTML files)
    ```html
-   <link rel="canonical" href="https://funtools.quantummerlin.com/[page].html">
+   <link rel="canonical" href="https://quantummerlin.com/classic/[page].html">
    ```
 
 3. **Open Graph URLs** (all HTML files)
    ```html
-   <meta property="og:url" content="https://funtools.quantummerlin.com/[page].html">
-   <meta property="og:image" content="https://funtools.quantummerlin.com/RetroMerlin.jpg">
-   <meta name="twitter:url" content="https://funtools.quantummerlin.com/[page].html">
-   <meta name="twitter:image" content="https://funtools.quantummerlin.com/RetroMerlin.jpg">
+   <meta property="og:url" content="https://quantummerlin.com/classic/[page].html">
+   <meta property="og:image" content="https://quantummerlin.com/classic/RetroMerlin.jpg">
+   <meta name="twitter:url" content="https://quantummerlin.com/classic/[page].html">
+   <meta name="twitter:image" content="https://quantummerlin.com/classic/RetroMerlin.jpg">
    ```
 
 4. **JSON-LD Schema** (all HTML files)
    ```json
-   "url": "https://funtools.quantummerlin.com/[page].html"
-   "provider": { "url": "https://funtools.quantummerlin.com" }
+   "url": "https://quantummerlin.com/classic/[page].html"
+   "provider": { "url": "https://quantummerlin.com/classic" }
    ```
 
 5. **share-utils.js**
    ```javascript
-   baseUrl: 'https://funtools.quantummerlin.com/'
+   baseUrl: 'https://quantummerlin.com/classic/'
    ```
 
 ### 6.3 Email Addresses
@@ -662,7 +662,7 @@ function migrateLocalStorage() {
 | `quantum-merlin` | `[new-brand-name]` |
 | `quantumMerlin` | `[newBrandName]` |
 | `QUANTUM MERLIN` | `[NEW BRAND NAME]` |
-| `funtools.quantummerlin.com` | `[new.domain.com]` |
+| `quantummerlin.com/classic` | `[new.domain.com]` |
 | `RetroMerlin.jpg` | `[new-logo.jpg]` |
 | `fixit@quantummerlin.com` | `[support@newdomain.com]` |
 | `ads@quantummerlin.com` | `[ads@newdomain.com]` |

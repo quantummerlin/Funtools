@@ -2,8 +2,8 @@
   "name": "Quantum Merlin - Ancient Patterns. Modern Interfaces.",
   "short_name": "Quantum Merlin",
   "description": "Map time, numbers, and celestial cycles into clear moments for aligned action — blending ancient pattern wisdom with modern interface clarity.",
-  "start_url": "/tools_index.html",
-  "scope": "/",
+  "start_url": "/classic/tools_index.html",
+  "scope": "/classic/",
   "id": "quantum-merlin-pwa",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
@@ -32,21 +32,21 @@
       "name": "Life Path Calculator",
       "short_name": "Life Path",
       "description": "Calculate your Life Path number",
-      "url": "/life-path-calculator.html",
+      "url": "/classic/life-path-calculator.html",
       "icons": [{"src": "favicon.svg", "sizes": "any"}]
     },
     {
       "name": "Daily Fortune",
       "short_name": "Fortune",
       "description": "Get your daily mystical guidance",
-      "url": "/daily-fortune.html",
+      "url": "/classic/daily-fortune.html",
       "icons": [{"src": "favicon.svg", "sizes": "any"}]
     },
     {
       "name": "Moon Phase",
       "short_name": "Moon",
       "description": "Check current moon phase",
-      "url": "/moon-phase-calculator.html",
+      "url": "/classic/moon-phase-calculator.html",
       "icons": [{"src": "favicon.svg", "sizes": "any"}]
     }
   ],
