@@ -4,6 +4,7 @@
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VW4LGE7L1T"></script>
     <script>
+        // Version: 20260122165534 - Auto-generated cache buster
         // Version: 20260122150214 - Auto-generated cache buster
         // Version: 20260122145556 - Auto-generated cache buster
         window.dataLayer = window.dataLayer || [];
@@ -17,7 +18,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="20260122150214">
+    <meta name="version" content="20260122165534">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#bf5af2">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -38,7 +39,7 @@
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <script src="auto-fill.js"></script>
     <script src="cosmic-loader.js"></script>
-    <script src="tool-tracker.js?v=20260122150214"></script>
+    <script src="tool-tracker.js?v=20260122165534"></script>
     <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
     <style>
         .result-card { background: linear-gradient(135deg, rgba(139, 0, 139, 0.3), rgba(0, 0, 0, 0.5)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(139, 0, 139, 0.6); }
@@ -272,12 +273,24 @@
                 const [year, month, day] = birthDate.split('-').map(Number);
                 const date = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
                 
-                // Black Moon Lilith has a ~9 year cycle
-                // Simplified calculation: approximate position based on date
-                const daysFromEpoch = Math.floor((date - new Date('1900-01-01')) / (1000 * 60 * 60 * 24));
-                const lilithCycle = 3232.6; // days per sign approximately
-                const signIndex = Math.floor((daysFromEpoch % (lilithCycle * 12)) / lilithCycle);
-                const lilithSign = signNames[signIndex % 12];
+                // Black Moon Lilith (Mean) has an orbital period of ~3232.6 days (8.85 years)
+                // It spends approximately 269 days (~9 months) in each sign
+                // Reference epoch: August 30, 2023, Lilith at 0° Aries
+                const epochDate = new Date(Date.UTC(2023, 7, 30, 12, 0, 0)); // Aug 30, 2023
+                const epochSignIndex = 0; // Aries = 0
+                
+                const daysDiff = (date - epochDate) / (1000 * 60 * 60 * 24);
+                const fullOrbitDays = 3232.6; // Full orbit period in days
+                const daysPerSign = fullOrbitDays / 12; // ~269 days per sign
+                
+                // Calculate sign offset from epoch (can be negative for dates before epoch)
+                const signOffset = daysDiff / daysPerSign;
+                // Get the sign index (0-11), handling negative values properly
+                let signIndex = Math.floor(signOffset) % 12;
+                if (signIndex < 0) signIndex += 12;
+                signIndex = (signIndex + epochSignIndex) % 12;
+                
+                const lilithSign = signNames[signIndex];
                 
                 showResult(name, lilithSign);
             } catch (error) {

@@ -4,6 +4,7 @@
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VW4LGE7L1T"></script>
     <script>
+        // Version: 20260122165534 - Auto-generated cache buster
         // Version: 20260122150214 - Auto-generated cache buster
         // Version: 20260122145556 - Auto-generated cache buster
         window.dataLayer = window.dataLayer || [];
@@ -17,7 +18,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="20260122150214">
+    <meta name="version" content="20260122165534">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#bf5af2">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -38,7 +39,7 @@
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <script src="auto-fill.js"></script>
     <script src="cosmic-loader.js"></script>
-    <script src="tool-tracker.js?v=20260122150214"></script>
+    <script src="tool-tracker.js?v=20260122165534"></script>
     <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.min.js"></script>
     <style>
         .result-card { background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.3)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(138, 43, 226, 0.4); }
@@ -117,28 +118,108 @@
         // Version: 20260121182750 - Auto-generated cache buster
         // Version: 20260121180653 - Auto-generated cache buster
         // Version: 20260121175156 - Auto-generated cache buster
-        // Version: 20260121170617 - Auto-generated cache buster
-        // Version: 20260121164415 - Auto-generated cache buster
-        // Version: 20260121163503 - Auto-generated cache buster
-        // Version: 20260121162926 - Auto-generated cache buster
+        // Version: 20260122 - Fixed with accurate Cafe Astrology ephemeris data
         // Chiron orbital period is approximately 50 years
-        // Using simplified ephemeris data for Chiron sign placement by birth year
-        const chironByYear = {
-            1960: 'Pisces', 1961: 'Pisces', 1962: 'Pisces', 1963: 'Pisces', 1964: 'Pisces',
-            1965: 'Pisces', 1966: 'Pisces', 1967: 'Pisces', 1968: 'Aries', 1969: 'Aries',
-            1970: 'Aries', 1971: 'Aries', 1972: 'Aries', 1973: 'Aries', 1974: 'Aries',
-            1975: 'Aries', 1976: 'Aries', 1977: 'Taurus', 1978: 'Taurus', 1979: 'Taurus',
-            1980: 'Taurus', 1981: 'Taurus', 1982: 'Taurus', 1983: 'Taurus', 1984: 'Gemini',
-            1985: 'Gemini', 1986: 'Gemini', 1987: 'Gemini', 1988: 'Gemini', 1989: 'Cancer',
-            1990: 'Cancer', 1991: 'Cancer', 1992: 'Cancer', 1993: 'Cancer', 1994: 'Cancer',
-            1995: 'Leo', 1996: 'Leo', 1997: 'Leo', 1998: 'Leo', 1999: 'Virgo',
-            2000: 'Virgo', 2001: 'Virgo', 2002: 'Virgo', 2003: 'Virgo', 2004: 'Libra',
-            2005: 'Libra', 2006: 'Libra', 2007: 'Libra', 2008: 'Libra', 2009: 'Aquarius',
-            2010: 'Aquarius', 2011: 'Pisces', 2012: 'Pisces', 2013: 'Pisces', 2014: 'Pisces',
-            2015: 'Pisces', 2016: 'Pisces', 2017: 'Pisces', 2018: 'Pisces', 2019: 'Aries',
-            2020: 'Aries', 2021: 'Aries', 2022: 'Aries', 2023: 'Aries', 2024: 'Aries',
-            2025: 'Aries', 2026: 'Aries', 2027: 'Taurus'
-        };
+        // Using proper date-range ephemeris for accurate Chiron sign placement
+        // Source: Cafe Astrology chironsignstables.html
+        const chironPeriods = [
+            // 1920s-1930s
+            { start: '1920-01-01', end: '1926-05-23', sign: 'Aries' },
+            { start: '1926-05-24', end: '1926-10-19', sign: 'Taurus' },
+            { start: '1926-10-20', end: '1927-03-24', sign: 'Aries' },  // Rx
+            { start: '1927-03-25', end: '1933-06-05', sign: 'Taurus' },
+            { start: '1933-06-06', end: '1933-12-21', sign: 'Gemini' },
+            { start: '1933-12-22', end: '1934-03-22', sign: 'Taurus' },  // Rx
+            { start: '1934-03-23', end: '1937-08-26', sign: 'Gemini' },
+            { start: '1937-08-27', end: '1937-11-21', sign: 'Cancer' },
+            { start: '1937-11-22', end: '1938-05-27', sign: 'Gemini' },  // Rx
+            { start: '1938-05-28', end: '1940-09-28', sign: 'Cancer' },
+            { start: '1940-09-29', end: '1940-12-26', sign: 'Leo' },
+            { start: '1940-12-27', end: '1941-07-25', sign: 'Cancer' },  // Rx
+            { start: '1941-07-26', end: '1943-08-22', sign: 'Leo' },
+            // 1940s-1950s
+            { start: '1943-08-23', end: '1943-11-13', sign: 'Virgo' },
+            { start: '1943-11-14', end: '1944-06-19', sign: 'Leo' },  // Rx
+            { start: '1944-06-20', end: '1945-11-20', sign: 'Virgo' },
+            { start: '1945-11-21', end: '1946-03-16', sign: 'Libra' },
+            { start: '1946-03-17', end: '1946-08-08', sign: 'Virgo' },  // Rx
+            { start: '1946-08-09', end: '1948-11-27', sign: 'Libra' },
+            { start: '1948-11-28', end: '1949-03-23', sign: 'Scorpio' },
+            { start: '1949-03-24', end: '1949-09-03', sign: 'Libra' },  // Rx
+            { start: '1949-09-04', end: '1951-12-19', sign: 'Scorpio' },
+            { start: '1951-12-20', end: '1952-03-17', sign: 'Sagittarius' },
+            { start: '1952-03-18', end: '1952-10-10', sign: 'Scorpio' },  // Rx
+            { start: '1952-10-11', end: '1955-01-26', sign: 'Sagittarius' },
+            { start: '1955-01-27', end: '1955-03-25', sign: 'Capricorn' },
+            { start: '1955-03-26', end: '1955-11-12', sign: 'Sagittarius' },  // Rx
+            { start: '1955-11-13', end: '1960-01-19', sign: 'Capricorn' },
+            // 1960s
+            { start: '1960-01-20', end: '1960-03-26', sign: 'Aquarius' },
+            { start: '1960-03-27', end: '1960-08-18', sign: 'Capricorn' },  // Rx
+            { start: '1960-08-19', end: '1961-01-20', sign: 'Aquarius' },
+            { start: '1961-01-21', end: '1961-04-01', sign: 'Pisces' },
+            { start: '1961-04-02', end: '1961-10-03', sign: 'Aquarius' },  // Rx
+            { start: '1961-10-04', end: '1968-03-30', sign: 'Pisces' },
+            { start: '1968-03-31', end: '1968-10-18', sign: 'Aries' },
+            { start: '1968-10-19', end: '1969-01-30', sign: 'Pisces' },  // Rx
+            { start: '1969-01-31', end: '1976-04-30', sign: 'Aries' },
+            // 1970s-1980s
+            { start: '1976-05-01', end: '1976-10-13', sign: 'Taurus' },
+            { start: '1976-10-14', end: '1977-03-27', sign: 'Aries' },  // Rx
+            { start: '1977-03-28', end: '1983-06-20', sign: 'Taurus' },
+            { start: '1983-06-21', end: '1983-11-29', sign: 'Gemini' },
+            { start: '1983-11-30', end: '1984-04-10', sign: 'Taurus' },  // Rx
+            { start: '1984-04-11', end: '1988-06-21', sign: 'Gemini' },
+            { start: '1988-06-22', end: '1988-12-02', sign: 'Cancer' },
+            { start: '1988-12-03', end: '1989-04-21', sign: 'Gemini' },  // Rx
+            { start: '1989-04-22', end: '1991-07-21', sign: 'Cancer' },
+            // 1990s
+            { start: '1991-07-22', end: '1991-12-09', sign: 'Leo' },
+            { start: '1991-12-10', end: '1992-05-17', sign: 'Cancer' },  // Rx
+            { start: '1992-05-18', end: '1993-09-02', sign: 'Leo' },
+            { start: '1993-09-03', end: '1993-12-09', sign: 'Virgo' },
+            { start: '1993-12-10', end: '1994-07-20', sign: 'Leo' },  // Rx
+            { start: '1994-07-21', end: '1995-09-08', sign: 'Virgo' },
+            { start: '1995-09-09', end: '1995-12-29', sign: 'Libra' },
+            { start: '1995-12-30', end: '1996-07-02', sign: 'Virgo' },  // Rx
+            { start: '1996-07-03', end: '1997-09-03', sign: 'Libra' },
+            { start: '1997-09-04', end: '1997-12-25', sign: 'Scorpio' },
+            { start: '1997-12-26', end: '1998-06-22', sign: 'Libra' },  // Rx
+            { start: '1998-06-23', end: '1999-09-21', sign: 'Scorpio' },
+            { start: '1999-09-22', end: '1999-12-21', sign: 'Sagittarius' },
+            { start: '1999-12-22', end: '2000-07-31', sign: 'Scorpio' },  // Rx
+            // 2000s
+            { start: '2000-08-01', end: '2001-12-10', sign: 'Sagittarius' },
+            { start: '2001-12-11', end: '2005-02-20', sign: 'Capricorn' },
+            { start: '2005-02-21', end: '2005-07-30', sign: 'Aquarius' },
+            { start: '2005-07-31', end: '2005-12-04', sign: 'Capricorn' },  // Rx
+            { start: '2005-12-05', end: '2010-04-19', sign: 'Aquarius' },
+            // 2010s
+            { start: '2010-04-20', end: '2010-07-19', sign: 'Pisces' },
+            { start: '2010-07-20', end: '2011-02-07', sign: 'Aquarius' },  // Rx
+            { start: '2011-02-08', end: '2018-04-16', sign: 'Pisces' },
+            { start: '2018-04-17', end: '2018-09-24', sign: 'Aries' },
+            { start: '2018-09-25', end: '2019-02-17', sign: 'Pisces' },  // Rx
+            // 2019+
+            { start: '2019-02-18', end: '2026-06-18', sign: 'Aries' },
+            { start: '2026-06-19', end: '2026-09-16', sign: 'Taurus' },
+            { start: '2026-09-17', end: '2027-04-13', sign: 'Aries' },  // Rx
+            { start: '2027-04-14', end: '2033-06-30', sign: 'Taurus' },
+            { start: '2033-07-01', end: '2039-07-01', sign: 'Gemini' },
+            { start: '2039-07-02', end: '2042-07-01', sign: 'Cancer' },
+            { start: '2042-07-02', end: '2044-07-01', sign: 'Leo' }
+        ];
+        
+        function getChironSign(birthDate) {
+            const dateStr = birthDate.toISOString().split('T')[0];
+            for (const period of chironPeriods) {
+                if (dateStr >= period.start && dateStr <= period.end) {
+                    return period.sign;
+                }
+            }
+            // Fallback for dates outside our range
+            return null;
+        }
 
         const interpretations = {
             "Aries": {
@@ -280,7 +361,7 @@
             
             const name = document.getElementById('preferredName').value || 'Seeker';
             const birthDate = document.getElementById('birthDate').value;
-            const year = parseInt(birthDate.split('-')[0]);
+            const birthDateObj = new Date(birthDate + 'T12:00:00');
 
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
@@ -288,16 +369,11 @@
             submitBtn.disabled = true;
 
             try {
-                let chironSign = chironByYear[year];
+                let chironSign = getChironSign(birthDateObj);
                 
                 if (!chironSign) {
-                    if (year < 1960) {
-                        // Before 1960, use approximate 50-year cycle
-                        const cycleYear = ((year - 1910) % 50) + 1960;
-                        chironSign = chironByYear[cycleYear] || 'Aries';
-                    } else {
-                        chironSign = 'Aries'; // Default for future years
-                    }
+                    // Fallback for dates outside our ephemeris range
+                    chironSign = 'Aries';
                 }
                 
                 showResult(name, chironSign);
