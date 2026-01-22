@@ -4,6 +4,7 @@
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VW4LGE7L1T"></script>
     <script>
+        // Version: 20260122150214 - Auto-generated cache buster
         // Version: 20260122145556 - Auto-generated cache buster
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -35,12 +36,12 @@
 <meta name="keywords" content="north node, karmic astrology, soul evolution, lunar nodes, life direction">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap&v=20260121162926&v=20260121163503&v=20260121164415&v=20260121170617&v=20260121175156&v=20260121180653&v=20260121182750&v=20260121203732&v=20260121204029&v=20260121204740&v=20260121211614&v=20260121223506&v=20260122073736&v=20260122145556" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap&v=20260121162926&v=20260121163503&v=20260121164415&v=20260121170617&v=20260121175156&v=20260121180653&v=20260121182750&v=20260121203732&v=20260121204029&v=20260121204740&v=20260121211614&v=20260121223506&v=20260122073736&v=20260122145556&v=20260122150214" rel="stylesheet">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <link rel="stylesheet" href="go-deeper.css">
     <script src="auto-fill.js"></script>
     <script src="cosmic-loader.js"></script>
-    <script src="tool-tracker.js?v=20260122145556"></script>
+    <script src="tool-tracker.js?v=20260122150214"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -394,86 +395,70 @@
             }
         };
 
-        // North Node ephemeris - the North Node moves backwards through the zodiac
+        // North Node ephemeris - TRUE NODE from Cafe Astrology
+        // Source: https://cafeastrology.com/northnodetables.html
         const northNodePeriods = [
-            { start: '1900-01-01', end: '1901-08-22', sign: 'Sagittarius' },
-            { start: '1901-08-22', end: '1903-03-17', sign: 'Scorpio' },
-            { start: '1903-03-17', end: '1904-10-08', sign: 'Libra' },
-            { start: '1904-10-08', end: '1906-04-30', sign: 'Virgo' },
-            { start: '1906-04-30', end: '1907-11-21', sign: 'Leo' },
-            { start: '1907-11-21', end: '1909-06-12', sign: 'Cancer' },
-            { start: '1909-06-12', end: '1911-01-02', sign: 'Gemini' },
-            { start: '1911-01-02', end: '1912-07-24', sign: 'Taurus' },
-            { start: '1912-07-24', end: '1914-02-13', sign: 'Aries' },
-            { start: '1914-02-13', end: '1915-09-05', sign: 'Pisces' },
-            { start: '1915-09-05', end: '1917-03-27', sign: 'Aquarius' },
-            { start: '1917-03-27', end: '1918-10-17', sign: 'Capricorn' },
-            { start: '1918-10-17', end: '1920-05-08', sign: 'Sagittarius' },
-            { start: '1920-05-08', end: '1921-11-28', sign: 'Scorpio' },
-            { start: '1921-11-28', end: '1923-06-20', sign: 'Libra' },
-            { start: '1923-06-20', end: '1925-01-10', sign: 'Virgo' },
-            { start: '1925-01-10', end: '1926-08-02', sign: 'Leo' },
-            { start: '1926-08-02', end: '1928-02-22', sign: 'Cancer' },
-            { start: '1928-02-22', end: '1929-09-14', sign: 'Gemini' },
-            { start: '1929-09-14', end: '1931-04-06', sign: 'Taurus' },
-            { start: '1931-04-06', end: '1932-10-27', sign: 'Aries' },
-            { start: '1932-10-27', end: '1934-05-19', sign: 'Pisces' },
-            { start: '1934-05-19', end: '1935-12-09', sign: 'Aquarius' },
-            { start: '1935-12-09', end: '1937-07-01', sign: 'Capricorn' },
-            { start: '1937-07-01', end: '1939-01-21', sign: 'Sagittarius' },
-            { start: '1939-01-21', end: '1940-08-12', sign: 'Scorpio' },
-            { start: '1940-08-12', end: '1942-03-04', sign: 'Libra' },
-            { start: '1942-03-04', end: '1943-09-24', sign: 'Virgo' },
-            { start: '1943-09-24', end: '1945-04-16', sign: 'Leo' },
-            { start: '1945-04-16', end: '1946-11-06', sign: 'Cancer' },
-            { start: '1946-11-06', end: '1948-05-28', sign: 'Gemini' },
-            { start: '1948-05-28', end: '1949-12-18', sign: 'Taurus' },
-            { start: '1949-12-18', end: '1951-07-10', sign: 'Aries' },
-            { start: '1951-07-10', end: '1953-01-30', sign: 'Pisces' },
-            { start: '1953-01-30', end: '1954-08-22', sign: 'Aquarius' },
-            { start: '1954-08-22', end: '1956-03-14', sign: 'Capricorn' },
-            { start: '1956-03-14', end: '1957-10-04', sign: 'Sagittarius' },
-            { start: '1957-10-04', end: '1959-04-26', sign: 'Scorpio' },
-            { start: '1959-04-26', end: '1960-11-16', sign: 'Libra' },
-            { start: '1960-11-16', end: '1962-06-08', sign: 'Virgo' },
-            { start: '1962-06-08', end: '1963-12-29', sign: 'Leo' },
-            { start: '1963-12-29', end: '1965-07-21', sign: 'Cancer' },
-            { start: '1965-07-21', end: '1967-02-10', sign: 'Gemini' },
-            { start: '1967-02-10', end: '1968-09-01', sign: 'Taurus' },
-            { start: '1968-09-01', end: '1970-03-24', sign: 'Aries' },
-            { start: '1970-03-24', end: '1971-10-14', sign: 'Pisces' },
-            { start: '1971-10-14', end: '1973-05-06', sign: 'Aquarius' },
-            { start: '1973-05-06', end: '1974-11-26', sign: 'Capricorn' },
-            { start: '1974-11-26', end: '1976-06-18', sign: 'Sagittarius' },
-            { start: '1976-06-18', end: '1978-01-08', sign: 'Scorpio' },
-            { start: '1978-01-08', end: '1979-07-31', sign: 'Libra' },
-            { start: '1979-07-31', end: '1981-02-20', sign: 'Virgo' },
-            { start: '1981-02-20', end: '1982-09-12', sign: 'Leo' },
-            { start: '1982-09-12', end: '1984-04-03', sign: 'Cancer' },
-            { start: '1984-04-03', end: '1985-10-24', sign: 'Gemini' },
-            { start: '1985-10-24', end: '1987-05-16', sign: 'Taurus' },
-            { start: '1987-05-16', end: '1988-12-06', sign: 'Aries' },
-            { start: '1988-12-06', end: '1990-06-28', sign: 'Pisces' },
-            { start: '1990-06-28', end: '1992-01-18', sign: 'Aquarius' },
-            { start: '1992-01-18', end: '1993-08-01', sign: 'Capricorn' },
-            { start: '1993-08-01', end: '1995-02-01', sign: 'Sagittarius' },
-            { start: '1995-02-01', end: '1996-08-01', sign: 'Scorpio' },
-            { start: '1996-08-01', end: '1998-01-25', sign: 'Libra' },
-            { start: '1998-04-14', end: '1999-11-04', sign: 'Virgo' },
-            { start: '1999-11-04', end: '2001-05-27', sign: 'Leo' },
-            { start: '2001-05-27', end: '2002-12-17', sign: 'Cancer' },
-            { start: '2002-12-17', end: '2004-07-08', sign: 'Gemini' },
-            { start: '2004-07-08', end: '2006-01-28', sign: 'Taurus' },
-            { start: '2006-01-28', end: '2007-08-20', sign: 'Aries' },
-            { start: '2007-08-20', end: '2009-03-12', sign: 'Pisces' },
-            { start: '2009-03-12', end: '2010-10-02', sign: 'Aquarius' },
-            { start: '2010-10-02', end: '2012-04-24', sign: 'Capricorn' },
-            { start: '2012-04-24', end: '2013-11-14', sign: 'Sagittarius' },
-            { start: '2013-11-14', end: '2015-06-06', sign: 'Scorpio' },
-            { start: '2015-06-06', end: '2016-12-27', sign: 'Libra' },
-            { start: '2016-12-27', end: '2018-07-19', sign: 'Virgo' },
-            { start: '2018-07-19', end: '2020-02-09', sign: 'Leo' },
-            { start: '2020-02-09', end: '2020-05-05', sign: 'Cancer' },
+            // 1940s
+            { start: '1940-01-01', end: '1941-05-24', sign: 'Libra' },
+            { start: '1941-05-24', end: '1942-11-21', sign: 'Virgo' },
+            { start: '1942-11-21', end: '1944-05-11', sign: 'Leo' },
+            { start: '1944-05-11', end: '1945-12-03', sign: 'Cancer' },
+            { start: '1945-12-03', end: '1947-08-02', sign: 'Gemini' },
+            { start: '1947-08-02', end: '1949-01-26', sign: 'Taurus' },
+            { start: '1949-01-26', end: '1950-07-26', sign: 'Aries' },
+            // 1950s
+            { start: '1950-07-26', end: '1952-03-28', sign: 'Pisces' },
+            { start: '1952-03-28', end: '1953-10-09', sign: 'Aquarius' },
+            { start: '1953-10-09', end: '1955-04-02', sign: 'Capricorn' },
+            { start: '1955-04-02', end: '1956-10-04', sign: 'Sagittarius' },
+            { start: '1956-10-04', end: '1958-06-16', sign: 'Scorpio' },
+            { start: '1958-06-16', end: '1959-12-15', sign: 'Libra' },
+            { start: '1959-12-15', end: '1961-06-10', sign: 'Virgo' },
+            // 1960s
+            { start: '1961-06-10', end: '1962-12-23', sign: 'Leo' },
+            { start: '1962-12-23', end: '1964-08-25', sign: 'Cancer' },
+            { start: '1964-08-25', end: '1966-02-19', sign: 'Gemini' },
+            { start: '1966-02-19', end: '1967-08-19', sign: 'Taurus' },
+            { start: '1967-08-19', end: '1969-04-19', sign: 'Aries' },
+            { start: '1969-04-19', end: '1970-11-02', sign: 'Pisces' },
+            // 1970s
+            { start: '1970-11-02', end: '1972-04-27', sign: 'Aquarius' },
+            { start: '1972-04-27', end: '1973-10-27', sign: 'Capricorn' },
+            { start: '1973-10-27', end: '1975-07-09', sign: 'Sagittarius' },
+            { start: '1975-07-09', end: '1977-01-07', sign: 'Scorpio' },
+            { start: '1977-01-07', end: '1978-07-05', sign: 'Libra' },
+            { start: '1978-07-05', end: '1980-01-05', sign: 'Virgo' },
+            // 1980s
+            { start: '1980-01-05', end: '1981-09-24', sign: 'Leo' },
+            { start: '1981-09-24', end: '1983-03-16', sign: 'Cancer' },
+            { start: '1983-03-16', end: '1984-09-11', sign: 'Gemini' },
+            { start: '1984-09-11', end: '1986-04-06', sign: 'Taurus' },
+            { start: '1986-04-06', end: '1987-12-02', sign: 'Aries' },
+            { start: '1987-12-02', end: '1989-05-22', sign: 'Pisces' },
+            { start: '1989-05-22', end: '1990-11-18', sign: 'Aquarius' },
+            // 1990s
+            { start: '1990-11-18', end: '1992-08-01', sign: 'Capricorn' },
+            { start: '1992-08-01', end: '1994-02-01', sign: 'Sagittarius' },
+            { start: '1994-02-01', end: '1995-07-31', sign: 'Scorpio' },
+            { start: '1995-07-31', end: '1997-01-25', sign: 'Libra' },
+            { start: '1997-01-25', end: '1998-10-20', sign: 'Virgo' },
+            { start: '1998-10-20', end: '2000-04-09', sign: 'Leo' },
+            // 2000s
+            { start: '2000-04-09', end: '2001-10-13', sign: 'Cancer' },
+            { start: '2001-10-13', end: '2003-04-14', sign: 'Gemini' },
+            { start: '2003-04-14', end: '2004-12-26', sign: 'Taurus' },
+            { start: '2004-12-26', end: '2006-06-22', sign: 'Aries' },
+            { start: '2006-06-22', end: '2007-12-18', sign: 'Pisces' },
+            { start: '2007-12-18', end: '2009-08-21', sign: 'Aquarius' },
+            { start: '2009-08-21', end: '2011-03-03', sign: 'Capricorn' },
+            // 2010s
+            { start: '2011-03-03', end: '2012-08-30', sign: 'Sagittarius' },
+            { start: '2012-08-30', end: '2014-02-18', sign: 'Scorpio' },
+            { start: '2014-02-18', end: '2015-11-12', sign: 'Libra' },
+            { start: '2015-11-12', end: '2017-05-09', sign: 'Virgo' },
+            { start: '2017-05-09', end: '2018-11-06', sign: 'Leo' },
+            { start: '2018-11-06', end: '2020-05-05', sign: 'Cancer' },
+            // 2020s
             { start: '2020-05-05', end: '2022-01-18', sign: 'Gemini' },
             { start: '2022-01-18', end: '2023-07-17', sign: 'Taurus' },
             { start: '2023-07-17', end: '2025-01-11', sign: 'Aries' },
@@ -481,6 +466,7 @@
             { start: '2026-07-26', end: '2028-02-15', sign: 'Aquarius' },
             { start: '2028-02-15', end: '2029-09-07', sign: 'Capricorn' },
             { start: '2029-09-07', end: '2031-03-30', sign: 'Sagittarius' },
+            // 2030s
             { start: '2031-03-30', end: '2032-10-19', sign: 'Scorpio' },
             { start: '2032-10-19', end: '2034-05-11', sign: 'Libra' },
             { start: '2034-05-11', end: '2035-12-01', sign: 'Virgo' },
