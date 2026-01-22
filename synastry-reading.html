@@ -4,6 +4,7 @@
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VW4LGE7L1T"></script>
     <script>
+        // Version: 20260123070550 - Auto-generated cache buster
         // Version: 20260122170552 - Auto-generated cache buster
         // Version: 20260122165534 - Auto-generated cache buster
         // Version: 20260122150214 - Auto-generated cache buster
@@ -19,7 +20,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="20260122170552">
+    <meta name="version" content="20260123070550">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#bf5af2">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -40,7 +41,8 @@
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <script src="auto-fill.js"></script>
     <script src="cosmic-loader.js"></script>
-    <script src="tool-tracker.js?v=20260122170552"></script>
+    <script src="storage-fix.js?v=20260123"></script>
+    <script src="tool-tracker.js?v=20260123070550"></script>
     <style>
         .result-card { background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(138, 43, 226, 0.2)); border-radius: 20px; padding: 2rem; margin: 1rem 0; border: 1px solid rgba(255, 105, 180, 0.4); }
         .synastry-symbol { font-size: 4rem; text-align: center; margin: 1rem 0; }
@@ -336,14 +338,7 @@
                 sourceUrl: 'synastry-reading.html'
             };
             // Try sessionStorage first, fallback to URL params for private browsing
-            try {
-                sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
-                window.location.href = 'reading-loading.html';
-            } catch (e) {
-                // Private browsing mode - pass data via URL
-                const encodedData = encodeURIComponent(JSON.stringify(readingData));
-                window.location.href = 'reading-loading.html?data=' + encodedData;
-            }
+            QMStorage.navigateWithReading(readingData, 'reading-loading.html');
         }
     </script>
 

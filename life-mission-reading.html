@@ -4,6 +4,7 @@
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VW4LGE7L1T"></script>
     <script>
+        // Version: 20260123070550 - Auto-generated cache buster
         // Version: 20260122170552 - Auto-generated cache buster
         // Version: 20260122165534 - Auto-generated cache buster
         // Version: 20260122150214 - Auto-generated cache buster
@@ -38,12 +39,13 @@
 <meta name="keywords" content="life mission, life purpose, soul purpose, dharma, destiny reading, spiritual path">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap&v=20260121162926&v=20260121163503&v=20260121164415&v=20260121170617&v=20260121175156&v=20260121180653&v=20260121182750&v=20260121203732&v=20260121204029&v=20260121204740&v=20260121211614&v=20260121223506&v=20260122073736&v=20260122145556&v=20260122150214&v=20260122165534&v=20260122170552" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap&v=20260121162926&v=20260121163503&v=20260121164415&v=20260121170617&v=20260121175156&v=20260121180653&v=20260121182750&v=20260121203732&v=20260121204029&v=20260121204740&v=20260121211614&v=20260121223506&v=20260122073736&v=20260122145556&v=20260122150214&v=20260122165534&v=20260122170552&v=20260123070550" rel="stylesheet">
     <link rel="stylesheet" href="quantum-merlin-styles.css">
     <link rel="stylesheet" href="go-deeper.css">
     <script src="auto-fill.js"></script>
     <script src="cosmic-loader.js"></script>
-    <script src="tool-tracker.js?v=20260122170552"></script>
+    <script src="storage-fix.js?v=20260123"></script>
+    <script src="tool-tracker.js?v=20260123070550"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -515,14 +517,7 @@
                 sourceUrl: 'life-mission-reading.html'
             };
             // Try sessionStorage first, fallback to URL params for private browsing
-            try {
-                sessionStorage.setItem('quantumMerlinReading', JSON.stringify(readingData));
-                window.location.href = 'reading-loading.html';
-            } catch (e) {
-                // Private browsing mode - pass data via URL
-                const encodedData = encodeURIComponent(JSON.stringify(readingData));
-                window.location.href = 'reading-loading.html?data=' + encodedData;
-            }
+            QMStorage.navigateWithReading(readingData, 'reading-loading.html');
         }
     </script>
 

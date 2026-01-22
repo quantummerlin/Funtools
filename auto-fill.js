@@ -40,20 +40,69 @@
 
     function getProfiles() {
         try {
-            return JSON.parse(localStorage.getItem(PROFILES_KEY) || '{}');
-        } catch (e) { return {}; }
+            const data = localStorage.getItem(PROFILES_KEY);
+            if (!data) return {};
+            const profiles = JSON.parse(data);
+            // Validate structure to prevent corrupted data
+            if (typeof profiles !== 'object' || Array.isArray(profiles)) {
+                console.warn('Auto-fill: Corrupted profiles data, resetting');
+                return {};
+            }
+            return profiles;
+        } catch (e) { 
+            console.warn('Auto-fill: Failed to load profiles', e);
+            return {}; 
+        }
     }
 
     function saveProfiles(profiles) {
-        try { localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles)); } catch (e) {}
+        try { 
+            // Validate before saving
+            if (typeof profiles !== 'object' || Array.isArray(profiles)) {
+                console.error('Auto-fill: Invalid profiles data, not saving');
+                return false;
+            }
+            const data = JSON.stringify(profiles);
+            localStorage.setItem(PROFILES_KEY, data);
+            // Verify save succeeded (iOS Safari can fail silently)
+            const verify = localStorage.getItem(PROFILES_KEY);
+            if (verify !== data) {
+                console.warn('Auto-fill: Save verification failed');
+                return false;
+            }
+            return true;
+        } catch (e) {
+            console.warn('Auto-fill: Failed to save profiles', e);
+            return false;
+        }
     }
 
     function getActiveProfile() {
-        try { return localStorage.getItem(ACTIVE_KEY) || ''; } catch (e) { return ''; }
+        try { 
+            const name = localStorage.getItem(ACTIVE_KEY) || '';
+            // Verify this profile actually exists
+            if (name) {
+                const profiles = getProfiles();
+                if (!profiles[name]) {
+                    console.warn('Auto-fill: Active profile not found, clearing');
+                    setActiveProfile('');
+                    return '';
+                }
+            }
+            return name;
+        } catch (e) { 
+            return ''; 
+        }
     }
 
     function setActiveProfile(name) {
-        try { localStorage.setItem(ACTIVE_KEY, name); } catch (e) {}
+        try { 
+            localStorage.setItem(ACTIVE_KEY, name);
+            return true;
+        } catch (e) {
+            console.warn('Auto-fill: Failed to set active profile', e);
+            return false;
+        }
     }
     
     function findElement(possibleIds) {
@@ -92,11 +141,30 @@
         const name = nameEl.value.trim();
         if (!name) return;
         
+        const newData = getFormData();
+        
+        // Validate data before saving
+        if (!newData.birthDate && !newData.birthTime && !newData.birthPlace) {
+            // Don't save empty profiles
+            return;
+        }
+        
         const profiles = getProfiles();
-        profiles[name] = getFormData();
-        saveProfiles(profiles);
-        setActiveProfile(name);
-        updateDropdowns();
+        
+        // Check if data actually changed to avoid unnecessary saves
+        if (profiles[name] && JSON.stringify(profiles[name]) === JSON.stringify(newData)) {
+            return; // No changes, skip save
+        }
+        
+        profiles[name] = newData;
+        
+        const saved = saveProfiles(profiles);
+        if (saved) {
+            setActiveProfile(name);
+            updateDropdowns();
+        } else {
+            console.warn('Auto-fill: Failed to auto-save profile');
+        }
     }
     
     function isDualPersonTool() {
